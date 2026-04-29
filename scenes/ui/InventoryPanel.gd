@@ -41,6 +41,7 @@ func _on_component_added(comp: EntryComponent) -> void:
 func _on_component_removed(comp: EntryComponent) -> void:
 	for card in cards_container.get_children():
 		if card is ComponentCardScript and card.component == comp:
+			cards_container.remove_child(card)
 			card.queue_free()
 			return
 
