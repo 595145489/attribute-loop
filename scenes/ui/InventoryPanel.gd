@@ -11,6 +11,9 @@ var inventory: Inventory = null
 @onready var cards_container: HBoxContainer = $CardsContainer
 
 func setup(inv: Inventory) -> void:
+	if inventory != null:
+		inventory.component_added.disconnect(_on_component_added)
+		inventory.component_removed.disconnect(_on_component_removed)
 	inventory = inv
 	inventory.component_added.connect(_on_component_added)
 	inventory.component_removed.connect(_on_component_removed)
@@ -22,6 +25,7 @@ func _notification(what: int) -> void:
 
 func _refresh() -> void:
 	for child in cards_container.get_children():
+		cards_container.remove_child(child)
 		child.queue_free()
 	for comp in inventory.components:
 		_add_card(comp)
