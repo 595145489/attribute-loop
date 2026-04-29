@@ -23,6 +23,7 @@ const PLAYER_ATTACK_RANGE: float = 50.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	$World.process_mode = Node.PROCESS_MODE_PAUSABLE
 	game_state = GameStateScript.new()
 	add_child(game_state)
 
