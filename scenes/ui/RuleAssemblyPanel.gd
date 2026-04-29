@@ -3,7 +3,6 @@ extends Panel
 
 const Rule = preload("res://scripts/core/Rule.gd")
 const EntryComponent = preload("res://scripts/core/EntryComponent.gd")
-const RuleSlotScript = preload("res://scenes/ui/RuleSlot.gd")
 const Inventory = preload("res://scripts/systems/Inventory.gd")
 
 var _player = null
@@ -13,7 +12,12 @@ var _flashing: bool = false
 @onready var trigger_slot = $SlotsContainer/TriggerSlot
 @onready var effect_slot = $SlotsContainer/EffectSlot
 
+var _is_setup: bool = false
+
 func setup(p_player, p_inventory: Inventory) -> void:
+	if _is_setup:
+		return
+	_is_setup = true
 	_player = p_player
 	trigger_slot.setup(EntryComponent.SlotType.TRIGGER, p_inventory)
 	effect_slot.setup(EntryComponent.SlotType.EFFECT, p_inventory)
@@ -52,6 +56,8 @@ func _flash_slots() -> void:
 	trigger_slot.modulate = Color(1.5, 1.5, 0.3)
 	effect_slot.modulate = Color(1.5, 1.5, 0.3)
 	await get_tree().create_timer(0.5).timeout
+	if not is_instance_valid(self):
+		return
 	trigger_slot.modulate = Color(1, 1, 1)
 	effect_slot.modulate = Color(1, 1, 1)
 	_flashing = false
