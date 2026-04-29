@@ -19,6 +19,7 @@ func setup(comp: EntryComponent, enemy_ref = null) -> void:
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if not draggable:
 		return null
+	modulate.a = 0.3
 	var preview := Panel.new()
 	preview.size = Vector2(80, 50)
 	var lbl := Label.new()
@@ -30,5 +31,4 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
-		if get_viewport().gui_is_drag_successful():
-			queue_free()
+		modulate.a = 1.0
