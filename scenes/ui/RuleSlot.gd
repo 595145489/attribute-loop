@@ -38,12 +38,18 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if data["enemy"] != null:
 		return false
 	var comp := data["component"] as EntryComponent
+	if comp == null:
+		return false
 	return comp.slot_type == accepted_type and held_component == null
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if inventory == null:
+		push_error("RuleSlot._drop_data called before setup()")
+		return
 	var component := data["component"] as EntryComponent
-	if inventory != null:
-		inventory.remove(component)
+	if component == null:
+		return
+	inventory.remove(component)
 	held_component = component
 	var card = ComponentCard.instantiate()
 	card_container.add_child(card)
