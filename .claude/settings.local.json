@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(where godot *)",
+      "Bash(where godot4 *)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(S:/Godot_v4.6.2-stable_mono_win64/Godot_v4.6.2-stable_mono_win64.exe *)",
+      "Bash(\"S:/Godot_v4.6.2-stable_mono_win64/Godot_v4.6.2-stable_mono_win64.exe\" --path \"S:/attribute-loop\" --headless --quit)",
+      "Bash(echo \"EXIT:$?\")",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(gh api *)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(mkdir -p \"C:/Users/happyelements/.claude/plugins/marketplaces/obra-superpowers/plugins/superpowers/.claude-plugin\")",
+      "Bash(mkdir -p \"C:/Users/happyelements/.claude/plugins/marketplaces/obra-superpowers/plugins/superpowers/commands\")",
+      "Bash(mkdir -p \"C:/Users/happyelements/.claude/plugins/marketplaces/obra-superpowers/plugins/superpowers/hooks\")",
+      "Bash(mkdir -p \"C:/Users/happyelements/.claude/plugins/marketplaces/obra-superpowers/plugins/superpowers/skills/brainstorming\")",
+      "Bash(mkdir -p \"C:/Users/happyelements/.claude/plugins/marketplaces/obra-superpowers/plugins/superpowers/skills/dispatching-parallel-agents\")",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/CLAUDE.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/brainstorming/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/requesting-code-review/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/subagent-driven-development/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/systematic-debugging/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/using-superpowers/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "PowerShell($r = Invoke-RestMethod \"https://api.github.com/repos/obra/superpowers/contents/skills/writing-plans/SKILL.md\"; [System.Text.Encoding]::UTF8.GetString\\([System.Convert]::FromBase64String\\($r.content\\)\\))",
+      "Skill(update-config)",
+      "Bash(bash \"C:/Users/happyelements/.claude/plugins/marketplaces/superpowers-dev/hooks/session-start\")",
+      "Bash(CLAUDE_PLUGIN_ROOT=\"C:/Users/happyelements/.claude/plugins/marketplaces/superpowers-dev\" bash \"C:/Users/happyelements/.claude/plugins/marketplaces/superpowers-dev/hooks/session-start\")",
+      "PowerShell(\\(Get-Content \"C:/Users/happyelements/.claude/settings.json\" | ConvertFrom-Json\\).hooks.SessionStart[0].hooks[0].command)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
