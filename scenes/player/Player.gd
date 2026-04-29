@@ -8,6 +8,7 @@ const Inventory = preload("res://scripts/systems/Inventory.gd")
 signal rule_fired(rule: Rule, effect_type: String)
 signal took_damage(amount: float)
 signal healed(amount: float)
+signal player_died
 
 @export var speed: float = 80.0
 
@@ -35,6 +36,9 @@ func _process(delta: float) -> void:
 func receive_damage(amount: float) -> void:
 	hp = clampf(hp - amount, 0.0, max_hp)
 	took_damage.emit(amount)
+	if hp <= 0.0:
+		player_died.emit()
+		return
 	_fire_rules("on_hit", {"owner": self, "amount": amount})
 
 func _fire_rules(event: String, context: Dictionary) -> void:

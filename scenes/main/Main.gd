@@ -30,6 +30,7 @@ func _ready() -> void:
 	player.track = track
 	player.took_damage.connect(_on_player_took_damage)
 	player.healed.connect(_on_player_healed)
+	player.player_died.connect(_on_player_died)
 	game_state.state_changed.connect(_on_state_changed)
 
 	_give_player_starter_rule()
@@ -100,3 +101,6 @@ func _on_player_healed(_amount: float) -> void:
 
 func _on_state_changed(new_state: int) -> void:
 	hud.set_paused(new_state == 1)
+
+func _on_player_died() -> void:
+	get_tree().reload_current_scene()
