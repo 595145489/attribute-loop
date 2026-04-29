@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://compcard001"]
+[gd_scene format=3 uid="uid://compcard001"]
 
 [ext_resource type="Script" path="res://scenes/ui/ComponentCard.gd" id="1"]
 

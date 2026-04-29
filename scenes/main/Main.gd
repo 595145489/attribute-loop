@@ -6,15 +6,13 @@ const HUDScript = preload("res://scenes/ui/HUD.gd")
 const GameStateScript = preload("res://scripts/systems/GameState.gd")
 const EntryComponent = preload("res://scripts/core/EntryComponent.gd")
 const Rule = preload("res://scripts/core/Rule.gd")
-const EnemyScript = preload("res://scenes/enemy/Enemy.gd")
-
 @onready var track: Node2D = $World/Track
 @onready var player: Node2D = $World/Player
 @onready var enemies_node: Node2D = $World/Enemies
 @onready var hud: CanvasLayer = $HUD
 
 var game_state: Node
-var enemy_scene: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
+var enemy_a_scene: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
 var enemy_b_scene: PackedScene = preload("res://scenes/enemy/EnemyB.tscn")
 var _spawn_timer: float = 0.0
 var _spawn_interval: float = 5.0
@@ -61,7 +59,7 @@ func _input(event: InputEvent) -> void:
 
 func _spawn_enemy() -> void:
 	var use_b := randf() > 0.5
-	var scene := enemy_b_scene if use_b else enemy_scene
+	var scene := enemy_b_scene if use_b else enemy_a_scene
 	var enemy := scene.instantiate()
 	enemies_node.add_child(enemy)
 	enemy.position = track.get_position_at(randf())
@@ -82,6 +80,11 @@ func _make_enemy_a_components() -> Array[EntryComponent]:
 	return [trigger, effect]
 
 func _make_enemy_b_components() -> Array[EntryComponent]:
+	var trigger := EntryComponent.new()
+	trigger.slot_type = EntryComponent.SlotType.TRIGGER
+	trigger.label = "受到攻击时"
+	trigger.data = {"event": "on_hit"}
+
 	var effect1 := EntryComponent.new()
 	effect1.slot_type = EntryComponent.SlotType.EFFECT
 	effect1.label = "反弹伤害"
@@ -92,7 +95,7 @@ func _make_enemy_b_components() -> Array[EntryComponent]:
 	effect2.label = "恢复生命"
 	effect2.data = {"type": "heal"}
 
-	return [effect1, effect2]
+	return [trigger, effect1, effect2]
 
 func _give_player_starter_rule() -> void:
 	var trigger := EntryComponent.new()

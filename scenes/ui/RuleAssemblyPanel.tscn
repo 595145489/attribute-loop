@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ruleassembly001"]
+[gd_scene format=3 uid="uid://b68g6b0i7qose"]
 
 [ext_resource type="Script" path="res://scenes/ui/RuleAssemblyPanel.gd" id="1"]
 [ext_resource type="Script" path="res://scenes/ui/RuleSlot.gd" id="2"]
