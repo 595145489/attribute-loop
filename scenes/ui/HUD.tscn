@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://hud001"]
+[gd_scene load_steps=5 format=3 uid="uid://hud001"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://enemyoverlay001" path="res://scenes/ui/EnemyCardOverlay.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://invpanel001" path="res://scenes/ui/InventoryPanel.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://ruleassembly001" path="res://scenes/ui/RuleAssemblyPanel.tscn" id="4"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1")
@@ -34,18 +37,11 @@ text = "[ PAUSED - DRAG MODE ]"
 horizontal_alignment = 1
 visible = false
 
-[node name="InventoryPanel" type="Panel" parent="."]
-anchors_preset = 7
-anchor_left = 0.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -120.0
-offset_bottom = 0.0
+[node name="EnemyCardOverlay" parent="." instance=ExtResource("2")]
+visible = false
 
-[node name="InventoryLabel" type="Label" parent="InventoryPanel"]
-offset_left = 8.0
-offset_top = 4.0
-offset_right = 200.0
-offset_bottom = 24.0
-text = "INVENTORY"
+[node name="InventoryPanel" parent="." instance=ExtResource("3")]
+visible = false
+
+[node name="RuleAssemblyPanel" parent="." instance=ExtResource("4")]
+visible = false
