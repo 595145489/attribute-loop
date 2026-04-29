@@ -15,6 +15,7 @@ const EnemyScript = preload("res://scenes/enemy/Enemy.gd")
 
 var game_state: Node
 var enemy_scene: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
+var enemy_b_scene: PackedScene = preload("res://scenes/enemy/EnemyB.tscn")
 var _spawn_timer: float = 0.0
 var _spawn_interval: float = 5.0
 var _player_attack_timer: float = 0.0
@@ -35,6 +36,7 @@ func _ready() -> void:
 
 	_give_player_starter_rule()
 	hud.update_hp(player.hp, player.max_hp)
+	hud.setup(player, player.inventory, enemies_node)
 
 func _process(delta: float) -> void:
 	if get_tree().paused:
@@ -58,37 +60,52 @@ func _input(event: InputEvent) -> void:
 		game_state.toggle()
 
 func _spawn_enemy() -> void:
-	var enemy = enemy_scene.instantiate()
+	var use_b := randf() > 0.5
+	var scene := enemy_b_scene if use_b else enemy_scene
+	var enemy := scene.instantiate()
 	enemies_node.add_child(enemy)
 	enemy.position = track.get_position_at(randf())
 	enemy.player_ref = player
-	enemy.setup_components(_make_enemy_components())
+	enemy.setup_components(_make_enemy_b_components() if use_b else _make_enemy_a_components())
 
-func _make_enemy_components() -> Array[EntryComponent]:
-	var trigger = EntryComponent.new()
+func _make_enemy_a_components() -> Array[EntryComponent]:
+	var trigger := EntryComponent.new()
 	trigger.slot_type = EntryComponent.SlotType.TRIGGER
 	trigger.label = "受到攻击时"
 	trigger.data = {"event": "on_hit"}
 
-	var effect = EntryComponent.new()
+	var effect := EntryComponent.new()
 	effect.slot_type = EntryComponent.SlotType.EFFECT
 	effect.label = "召唤分身"
 	effect.data = {"type": "summon_clone"}
 
 	return [trigger, effect]
 
+func _make_enemy_b_components() -> Array[EntryComponent]:
+	var effect1 := EntryComponent.new()
+	effect1.slot_type = EntryComponent.SlotType.EFFECT
+	effect1.label = "反弹伤害"
+	effect1.data = {"type": "reflect_damage"}
+
+	var effect2 := EntryComponent.new()
+	effect2.slot_type = EntryComponent.SlotType.EFFECT
+	effect2.label = "恢复生命"
+	effect2.data = {"type": "heal"}
+
+	return [effect1, effect2]
+
 func _give_player_starter_rule() -> void:
-	var trigger = EntryComponent.new()
+	var trigger := EntryComponent.new()
 	trigger.slot_type = EntryComponent.SlotType.TRIGGER
 	trigger.label = "受到攻击时"
 	trigger.data = {"event": "on_hit"}
 
-	var effect = EntryComponent.new()
+	var effect := EntryComponent.new()
 	effect.slot_type = EntryComponent.SlotType.EFFECT
 	effect.label = "恢复生命"
 	effect.data = {"type": "heal"}
 
-	var rule = Rule.new()
+	var rule := Rule.new()
 	rule.trigger = trigger
 	rule.effect = effect
 	player.add_rule(rule)
@@ -99,8 +116,8 @@ func _on_player_took_damage(_amount: float) -> void:
 func _on_player_healed(_amount: float) -> void:
 	hud.update_hp(player.hp, player.max_hp)
 
-func _on_state_changed(new_state: int) -> void:
-	hud.set_paused(new_state == 1)
-
 func _on_player_died() -> void:
 	get_tree().reload_current_scene()
+
+func _on_state_changed(new_state: int) -> void:
+	hud.set_paused(new_state == 1)
