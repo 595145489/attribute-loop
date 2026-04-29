@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://invpanel001"]
+
+[ext_resource type="Script" path="res://scenes/ui/InventoryPanel.gd" id="1"]
+
+[node name="InventoryPanel" type="Panel"]
+anchors_preset = 7
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_bottom = 0.0
+script = ExtResource("1")
+
+[node name="TitleLabel" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 200.0
+offset_bottom = 22.0
+text = "INVENTORY"
+
+[node name="CardsContainer" type="HBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 26.0
+offset_right = 900.0
+offset_bottom = 94.0
