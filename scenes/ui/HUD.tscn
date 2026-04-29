@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://hud001"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://enemyoverlay001" path="res://scenes/ui/EnemyCardOverlay.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://invpanel001" path="res://scenes/ui/InventoryPanel.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://ruleassembly001" path="res://scenes/ui/RuleAssemblyPanel.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/ui/EnemyCardOverlay.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/InventoryPanel.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/RuleAssemblyPanel.tscn" id="4"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1")
