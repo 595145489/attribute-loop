@@ -2,15 +2,12 @@ class_name EnemyCardOverlay
 extends Control
 
 const ComponentCard = preload("res://scenes/ui/ComponentCard.tscn")
-const Inventory = preload("res://scripts/systems/Inventory.gd")
 
 var enemies_node: Node2D = null
-var inventory: Inventory = null
 var _enemy_containers: Dictionary = {}
 
-func setup(p_enemies_node: Node2D, p_inventory: Inventory) -> void:
+func setup(p_enemies_node: Node2D) -> void:
 	enemies_node = p_enemies_node
-	inventory = p_inventory
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_VISIBILITY_CHANGED:
