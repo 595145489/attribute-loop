@@ -187,15 +187,35 @@ func _make_tile_components() -> Array[EntryComponent]:
 
 	return [trigger, effect]
 
+func _make_tile_boost_components() -> Array[EntryComponent]:
+	var trigger := EntryComponent.new()
+	trigger.slot_type = EntryComponent.SlotType.TRIGGER
+	trigger.label = "经过时"
+	trigger.data = {"event": "on_pass"}
+
+	var effect := EntryComponent.new()
+	effect.slot_type = EntryComponent.SlotType.EFFECT
+	effect.label = "加速"
+	effect.data = {"type": "boost_speed"}
+
+	return [trigger, effect]
+
 func _seed_initial_tiles() -> void:
-	if track.tiles.size() < 4:
+	if track.tiles.size() < 7:
 		return
-	var comps = _make_tile_components()
-	var tile = track.tiles[0] as Tile
-	for comp in comps:
-		tile.add_component(comp)
-	tile.pass_count = 3
-	Log.info("seeded tile 0 with on_pass+heal (pass_count=3)", "Main")
+	var heal_comps = _make_tile_components()
+	var tile0 = track.tiles[0] as Tile
+	for comp in heal_comps:
+		tile0.add_component(comp)
+	tile0.pass_count = 3
+
+	var boost_comps = _make_tile_boost_components()
+	var tile6 = track.tiles[6] as Tile
+	for comp in boost_comps:
+		tile6.add_component(comp)
+	tile6.pass_count = 0
+
+	Log.info("seeded tile 0 (heal, harvestable) + tile 6 (boost_speed, accumulating)", "Main")
 
 func _on_player_took_damage(_amount: float) -> void:
 	hud.update_hp(player.hp, player.max_hp)
