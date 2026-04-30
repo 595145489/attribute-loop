@@ -10,9 +10,9 @@ const Inventory = preload("res://scripts/systems/Inventory.gd")
 @onready var inventory_panel = $InventoryPanel
 @onready var rule_assembly_panel = $RuleAssemblyPanel
 
-func setup(player, inventory: Inventory, enemies_node: Node2D) -> void:
+func setup(player, inventory: Inventory, enemies_node: Node2D, track = null) -> void:
 	enemy_card_overlay.setup(enemies_node)
-	inventory_panel.setup(inventory)
+	inventory_panel.setup(player, inventory)
 	rule_assembly_panel.setup(player, inventory)
 
 func update_hp(current: float, maximum: float) -> void:

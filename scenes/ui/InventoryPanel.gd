@@ -7,10 +7,12 @@ const ComponentCardScript = preload("res://scenes/ui/ComponentCard.gd")
 const Inventory = preload("res://scripts/systems/Inventory.gd")
 
 var inventory: Inventory = null
+var player_ref = null
 
 @onready var cards_container: HBoxContainer = $CardsContainer
 
-func setup(inv: Inventory) -> void:
+func setup(player, inv: Inventory) -> void:
+	player_ref = player
 	if inventory != null:
 		inventory.component_added.disconnect(_on_component_added)
 		inventory.component_removed.disconnect(_on_component_removed)
@@ -33,7 +35,7 @@ func _refresh() -> void:
 func _add_card(comp: EntryComponent) -> void:
 	var card = ComponentCard.instantiate()
 	cards_container.add_child(card)
-	card.setup(comp, null)
+	card.setup(comp, null, null, true)
 
 func _on_component_added(comp: EntryComponent) -> void:
 	_add_card(comp)
@@ -46,14 +48,21 @@ func _on_component_removed(comp: EntryComponent) -> void:
 			return
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if not (data is Dictionary and data.has("component") and data.has("enemy")):
+	if not (data is Dictionary and data.has("component")):
 		return false
-	return data["enemy"] != null
+	var from_enemy = data.get("enemy") != null
+	var from_tile = data.get("tile") != null
+	return from_enemy or from_tile
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var component := data["component"] as EntryComponent
-	var enemy = data["enemy"]
-	if is_instance_valid(enemy):
+	var enemy = data.get("enemy")
+	var tile = data.get("tile")
+	if enemy != null and is_instance_valid(enemy):
 		enemy.strip_component(component)
-	if not inventory.components.has(component):
+	elif tile != null:
+		tile.strip_component(component)
+		if player_ref != null and player_ref.has_method("receive_damage"):
+			player_ref.receive_damage(float(tile.pass_count * 2))
+	if inventory != null and not inventory.components.has(component):
 		inventory.add(component)

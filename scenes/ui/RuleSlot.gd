@@ -35,7 +35,7 @@ func _gui_input(event: InputEvent) -> void:
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not (data is Dictionary and data.has("component") and data.has("enemy")):
 		return false
-	if data["enemy"] != null:
+	if data.get("enemy") != null:
 		return false
 	var comp := data["component"] as EntryComponent
 	if comp == null:
@@ -49,10 +49,13 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var component := data["component"] as EntryComponent
 	if component == null:
 		return
-	inventory.remove(component)
+	var tile = data.get("tile")
+	if tile != null:
+		tile.strip_component(component)
+	else:
+		inventory.remove(component)
 	held_component = component
 	var card = ComponentCard.instantiate()
 	card_container.add_child(card)
-	card.setup(component, null)
-	card.draggable = false
+	card.setup(component, null, null, false)
 	component_placed.emit(component)
