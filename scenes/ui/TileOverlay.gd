@@ -86,7 +86,7 @@ func _create_tile_container(idx: int, tile: Tile) -> void:
 		var harvestable = tile.pass_count >= tile.harvest_threshold
 		var card = ComponentCard.instantiate()
 		container.add_child(card)
-		card.setup(comp, nil, tile, harvestable)
+		card.setup(comp, null, tile, harvestable)
 
 func _clear_tile_cards() -> void:
 	for container in _tile_containers.values():
