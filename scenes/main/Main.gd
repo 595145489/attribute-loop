@@ -6,6 +6,8 @@ const HUDScript = preload("res://scenes/ui/HUD.gd")
 const GameStateScript = preload("res://scripts/systems/GameState.gd")
 const EntryComponent = preload("res://scripts/core/EntryComponent.gd")
 const Rule = preload("res://scripts/core/Rule.gd")
+const Tile = preload("res://scripts/core/Tile.gd")
+
 @onready var track: Node2D = $World/Track
 @onready var player: Node2D = $World/Player
 @onready var enemies_node: Node2D = $World/Enemies
@@ -14,12 +16,16 @@ const Rule = preload("res://scripts/core/Rule.gd")
 var game_state: Node
 var enemy_a_scene: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
 var enemy_b_scene: PackedScene = preload("res://scenes/enemy/EnemyB.tscn")
+
 var _spawn_timer: float = 0.0
 var _spawn_interval: float = 5.0
 var _player_attack_timer: float = 0.0
+var _last_player_tile_index: int = -1
+
 const PLAYER_ATTACK_INTERVAL: float = 1.0
 const PLAYER_ATTACK_DAMAGE: float = 20.0
 const PLAYER_ATTACK_RANGE: float = 50.0
+const EMPTY_SHELL_CLEAR_RANGE: float = 30.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -34,7 +40,8 @@ func _ready() -> void:
 	game_state.state_changed.connect(_on_state_changed)
 
 	hud.update_hp(player.hp, player.max_hp)
-	hud.setup(player, player.inventory, enemies_node)
+	hud.setup(player, player.inventory, enemies_node, track)
+	_seed_initial_tiles()
 
 func _process(delta: float) -> void:
 	if get_tree().paused:
@@ -47,11 +54,54 @@ func _process(delta: float) -> void:
 	if _player_attack_timer >= PLAYER_ATTACK_INTERVAL:
 		_player_attack_timer = 0.0
 		_attack_nearby_enemies()
+	_check_player_tile()
+	_clear_nearby_empty_shells()
+
+func _check_player_tile() -> void:
+	if track.tiles.is_empty():
+		return
+	var idx = track.get_tile_index_for_t(player.track_t)
+	if idx == _last_player_tile_index:
+		return
+	_last_player_tile_index = idx
+	_on_player_entered_tile(idx)
+
+func _on_player_entered_tile(tile_index: int) -> void:
+	var tile = track.tiles[tile_index] as Tile
+	tile.pass_count += 1
+	Log.info("entered tile %d, pass_count=%d" % [tile_index, tile.pass_count], "Main")
+	var effect_type = tile.try_fire()
+	if effect_type == "":
+		return
+	var mult = tile.effect_multiplier()
+	match effect_type:
+		"heal":
+			player.receive_heal(15.0 * mult)
+			Log.info("tile heal %.1f" % (15.0 * mult), "Main")
+		"boost_speed":
+			player.apply_speed_boost(1.5)
+			Log.info("tile boost_speed x1.5", "Main")
+		"deal_damage_nearby":
+			var dmg = 10.0 * mult
+			for enemy in enemies_node.get_children():
+				if not is_instance_valid(enemy):
+					continue
+				if enemy.global_position.distance_to(player.global_position) <= 100.0:
+					enemy.receive_damage(dmg)
+			Log.info("tile deal_damage_nearby %.1f" % dmg, "Main")
+
+func _clear_nearby_empty_shells() -> void:
+	for enemy in enemies_node.get_children():
+		if not is_instance_valid(enemy):
+			continue
+		if enemy.is_empty_shell and enemy.global_position.distance_to(player.global_position) <= EMPTY_SHELL_CLEAR_RANGE:
+			enemy.queue_free()
 
 func _attack_nearby_enemies() -> void:
 	for enemy in enemies_node.get_children():
-		if enemy.global_position.distance_to(player.global_position) <= PLAYER_ATTACK_RANGE:
-			enemy.receive_damage(PLAYER_ATTACK_DAMAGE)
+		if is_instance_valid(enemy) and not enemy.is_empty_shell:
+			if enemy.global_position.distance_to(player.global_position) <= PLAYER_ATTACK_RANGE:
+				enemy.receive_damage(PLAYER_ATTACK_DAMAGE)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
@@ -61,10 +111,37 @@ func _spawn_enemy() -> void:
 	var use_b := randf() > 0.5
 	var scene := enemy_b_scene if use_b else enemy_a_scene
 	var enemy := scene.instantiate()
-	enemy.setup_components(_make_enemy_b_components() if use_b else _make_enemy_a_components())
+	var components = _make_enemy_b_components() if use_b else _make_enemy_a_components()
+	enemy.setup_components(components)
 	enemies_node.add_child(enemy)
-	enemy.position = track.get_position_at(randf())
+	var t = randf()
+	enemy.position = track.get_position_at(t)
+	enemy.spawn_t = t
 	enemy.player_ref = player
+	enemy.enemy_defeated.connect(_on_enemy_defeated.bind(enemy))
+
+func _on_enemy_defeated(enemy: Node) -> void:
+	if enemy.components.is_empty():
+		return
+	var nearest = _find_nearest_tile_to_t(enemy.spawn_t)
+	if nearest == null:
+		return
+	for comp in enemy.components.duplicate():
+		nearest.add_component(comp)
+	Log.info("enemy death → %d components → tile (pass_count=%d)" % [enemy.components.size(), nearest.pass_count], "Main")
+
+func _find_nearest_tile_to_t(t: float) -> Tile:
+	if track.tiles.is_empty():
+		return null
+	var best_tile: Tile = null
+	var best_dist := INF
+	for tile in track.tiles:
+		var d = absf(tile.track_t - t)
+		d = minf(d, 1.0 - d)
+		if d < best_dist:
+			best_dist = d
+			best_tile = tile
+	return best_tile
 
 func _make_enemy_a_components() -> Array[EntryComponent]:
 	var trigger := EntryComponent.new()
@@ -96,6 +173,29 @@ func _make_enemy_b_components() -> Array[EntryComponent]:
 	effect2.data = {"type": "heal"}
 
 	return [trigger, effect1, effect2]
+
+func _make_tile_components() -> Array[EntryComponent]:
+	var trigger := EntryComponent.new()
+	trigger.slot_type = EntryComponent.SlotType.TRIGGER
+	trigger.label = "经过时"
+	trigger.data = {"event": "on_pass"}
+
+	var effect := EntryComponent.new()
+	effect.slot_type = EntryComponent.SlotType.EFFECT
+	effect.label = "治愈"
+	effect.data = {"type": "heal"}
+
+	return [trigger, effect]
+
+func _seed_initial_tiles() -> void:
+	if track.tiles.size() < 4:
+		return
+	var comps = _make_tile_components()
+	var tile = track.tiles[0] as Tile
+	for comp in comps:
+		tile.add_component(comp)
+	tile.pass_count = 3
+	Log.info("seeded tile 0 with on_pass+heal (pass_count=3)", "Main")
 
 func _on_player_took_damage(_amount: float) -> void:
 	hud.update_hp(player.hp, player.max_hp)
