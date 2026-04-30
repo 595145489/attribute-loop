@@ -18,6 +18,10 @@ var hp: float = 100.0
 var max_hp: float = 100.0
 var rules: Array[Rule] = []
 var inventory: Inventory
+var speed_multiplier: float = 1.0
+
+var _speed_boost_timer: float = 0.0
+const SPEED_BOOST_DURATION: float = 3.0
 
 func _ready() -> void:
 	inventory = Inventory.new()
@@ -28,10 +32,14 @@ func _process(delta: float) -> void:
 	if track == null:
 		return
 	var length = track.get_total_length()
-	track_t += (speed / length) * delta
+	track_t += (speed * speed_multiplier / length) * delta
 	if track_t >= 1.0:
 		track_t -= 1.0
 	position = track.get_position_at(track_t)
+	if _speed_boost_timer > 0.0:
+		_speed_boost_timer -= delta
+		if _speed_boost_timer <= 0.0:
+			speed_multiplier = 1.0
 
 func receive_damage(amount: float) -> void:
 	hp = clampf(hp - amount, 0.0, max_hp)
@@ -41,6 +49,14 @@ func receive_damage(amount: float) -> void:
 		player_died.emit()
 		return
 	_fire_rules("on_hit", {"owner": self, "amount": amount})
+
+func receive_heal(amount: float) -> void:
+	hp = clampf(hp + amount, 0.0, max_hp)
+	healed.emit(amount)
+
+func apply_speed_boost(multiplier: float) -> void:
+	speed_multiplier = multiplier
+	_speed_boost_timer = SPEED_BOOST_DURATION
 
 func _fire_rules(event: String, context: Dictionary) -> void:
 	for rule in rules:
@@ -52,9 +68,7 @@ func add_rule(rule: Rule) -> void:
 func _on_rule_fired(_rule: Rule, effect_type: String) -> void:
 	match effect_type:
 		"heal":
-			hp = clampf(hp + 15.0, 0.0, max_hp)
-			Log.info("rule heal → hp=%.1f" % hp, "Player")
-			healed.emit(15.0)
+			receive_heal(15.0)
 		"reflect_damage":
 			pass
 		"summon_clone":
