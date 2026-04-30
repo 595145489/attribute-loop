@@ -14,9 +14,17 @@ config/name="AttributeLoop"
 run/main_scene="res://scenes/main/Main.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
+[autoload]
+
+Log="*res://scripts/systems/Log.gd"
+
 [dotnet]
 
 project/assembly_name="attribute_loop"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
 
 [physics]
 

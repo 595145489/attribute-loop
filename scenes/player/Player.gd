@@ -37,6 +37,7 @@ func receive_damage(amount: float) -> void:
 	hp = clampf(hp - amount, 0.0, max_hp)
 	took_damage.emit(amount)
 	if hp <= 0.0:
+		Log.warn("player died", "Player")
 		player_died.emit()
 		return
 	_fire_rules("on_hit", {"owner": self, "amount": amount})
@@ -52,6 +53,7 @@ func _on_rule_fired(_rule: Rule, effect_type: String) -> void:
 	match effect_type:
 		"heal":
 			hp = clampf(hp + 15.0, 0.0, max_hp)
+			Log.info("rule heal → hp=%.1f" % hp, "Player")
 			healed.emit(15.0)
 		"reflect_damage":
 			pass

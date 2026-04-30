@@ -33,7 +33,6 @@ func _ready() -> void:
 	player.player_died.connect(_on_player_died)
 	game_state.state_changed.connect(_on_state_changed)
 
-	_give_player_starter_rule()
 	hud.update_hp(player.hp, player.max_hp)
 	hud.setup(player, player.inventory, enemies_node)
 
@@ -62,10 +61,10 @@ func _spawn_enemy() -> void:
 	var use_b := randf() > 0.5
 	var scene := enemy_b_scene if use_b else enemy_a_scene
 	var enemy := scene.instantiate()
+	enemy.setup_components(_make_enemy_b_components() if use_b else _make_enemy_a_components())
 	enemies_node.add_child(enemy)
 	enemy.position = track.get_position_at(randf())
 	enemy.player_ref = player
-	enemy.setup_components(_make_enemy_b_components() if use_b else _make_enemy_a_components())
 
 func _make_enemy_a_components() -> Array[EntryComponent]:
 	var trigger := EntryComponent.new()
@@ -97,22 +96,6 @@ func _make_enemy_b_components() -> Array[EntryComponent]:
 	effect2.data = {"type": "heal"}
 
 	return [trigger, effect1, effect2]
-
-func _give_player_starter_rule() -> void:
-	var trigger := EntryComponent.new()
-	trigger.slot_type = EntryComponent.SlotType.TRIGGER
-	trigger.label = "受到攻击时"
-	trigger.data = {"event": "on_hit"}
-
-	var effect := EntryComponent.new()
-	effect.slot_type = EntryComponent.SlotType.EFFECT
-	effect.label = "恢复生命"
-	effect.data = {"type": "heal"}
-
-	var rule := Rule.new()
-	rule.trigger = trigger
-	rule.effect = effect
-	player.add_rule(rule)
 
 func _on_player_took_damage(_amount: float) -> void:
 	hud.update_hp(player.hp, player.max_hp)
