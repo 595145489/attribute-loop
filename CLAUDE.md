@@ -24,6 +24,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 > Use `--headless --quit` instead of `--check-only`. The latter has a class_name registration order bug in headless mode.
 
+## MCP Server
+
+Prefer Godot MCP Server tools (`mcp__godot__*`) for all scene, node, script, and resource operations over direct file reads/writes or CLI commands. Fall back to file tools or Bash only when MCP cannot cover the operation (e.g., bulk text search, git, script syntax validation).
+
+## Documentation Language
+
+All documentation — CLAUDE.md, doc/*.md, comments, and any other written docs — must be in English.
+
 ## Key Convention
 
 All cross-file custom type references use `const Foo = preload("res://...")` instead of bare class names. This is required for headless compatibility — Godot headless does not auto-build the global class registry.
