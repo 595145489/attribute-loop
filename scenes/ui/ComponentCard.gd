@@ -6,15 +6,19 @@ const EntryComponent = preload("res://scripts/core/EntryComponent.gd")
 var component: EntryComponent = null
 var draggable: bool = true
 var _enemy_ref = null
+var _tile_ref = null
 
 @onready var type_label: Label = $TypeLabel
 @onready var name_label: Label = $NameLabel
 
-func setup(comp: EntryComponent, enemy_ref = null) -> void:
+func setup(comp: EntryComponent, enemy_ref = null, tile_ref = null, is_draggable: bool = true) -> void:
 	component = comp
 	_enemy_ref = enemy_ref
+	_tile_ref = tile_ref
+	draggable = is_draggable
 	type_label.text = EntryComponent.SlotType.keys()[comp.slot_type]
 	name_label.text = comp.label
+	modulate.a = 1.0 if is_draggable else 0.4
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if not draggable:
@@ -27,8 +31,8 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	lbl.add_theme_font_size_override("font_size", 11)
 	preview.add_child(lbl)
 	set_drag_preview(preview)
-	return {"component": component, "enemy": _enemy_ref}
+	return {"component": component, "enemy": _enemy_ref, "tile": _tile_ref}
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
-		modulate.a = 1.0
+		modulate.a = 1.0 if draggable else 0.4
