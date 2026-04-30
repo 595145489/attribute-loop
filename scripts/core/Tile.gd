@@ -9,7 +9,7 @@ signal strip_damage_requested(amount: float)
 const MAX_COMPONENTS: int = 3
 
 @export var track_t: float = 0.0
-@export var pass_count: int = 0
+var pass_count: int = 0
 @export var harvest_threshold: int = 3
 
 var components: Array[EntryComponent] = []
@@ -34,6 +34,7 @@ func try_fire() -> String:
 			break
 	if not has_on_pass_trigger:
 		return ""
+	# returns only the first EFFECT; multi-effect tiles are not supported
 	for comp in components:
 		if comp.slot_type == EntryComponent.SlotType.EFFECT:
 			return comp.data.get("type", "")
