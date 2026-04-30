@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://tileslot001"]
+
+[ext_resource type="Script" path="res://scenes/ui/TileSlot.gd" id="1"]
+
+[node name="TileSlot" type="Panel"]
+custom_minimum_size = Vector2(80, 30)
+script = ExtResource("1")
