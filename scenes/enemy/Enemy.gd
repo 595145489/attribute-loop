@@ -12,14 +12,17 @@ signal enemy_defeated
 
 var max_hp: float = 40.0
 var components: Array[EntryComponent] = []
-var _attack_timer: float = 0.0
 var player_ref: Node2D = null
+var spawn_t: float = 0.0
+var is_empty_shell: bool = false
+
+var _attack_timer: float = 0.0
 
 func _ready() -> void:
 	max_hp = hp
 
 func _process(delta: float) -> void:
-	if player_ref == null:
+	if is_empty_shell or player_ref == null:
 		return
 	_attack_timer += delta
 	if _attack_timer >= attack_interval:
@@ -34,10 +37,22 @@ func _attack_player() -> void:
 		player_ref.receive_damage(attack_damage)
 
 func strip_component(component: EntryComponent) -> void:
-	if component in components:
-		components.erase(component)
-		component_stripped.emit(component)
-		Log.info("stripped '%s', remaining=%d" % [component.label, components.size()], "Enemy")
+	if component not in components:
+		return
+	components.erase(component)
+	component_stripped.emit(component)
+	Log.info("stripped '%s', remaining=%d" % [component.label, components.size()], "Enemy")
+	if player_ref and player_ref.has_method("receive_damage"):
+		player_ref.receive_damage(5.0)
+	if components.is_empty():
+		_become_empty_shell()
+
+func _become_empty_shell() -> void:
+	if player_ref and player_ref.has_method("receive_damage"):
+		player_ref.receive_damage(attack_damage)
+		Log.info("final attack (%.1f) before becoming shell" % attack_damage, "Enemy")
+	is_empty_shell = true
+	Log.info("became empty shell", "Enemy")
 
 func receive_damage(amount: float) -> void:
 	hp -= amount
