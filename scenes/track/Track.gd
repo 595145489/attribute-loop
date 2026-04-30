@@ -38,6 +38,9 @@ func _draw_track() -> void:
 	visual.points = PackedVector2Array(pts)
 
 func _generate_tiles() -> void:
+	if tile_count <= 0:
+		push_warning("Track: tile_count must be > 0")
+		tile_count = 1
 	tiles.clear()
 	for i in tile_count:
 		var tile = Tile.new()
