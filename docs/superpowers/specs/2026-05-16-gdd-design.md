@@ -278,20 +278,18 @@ Each Phase grants one buff from a pool:
 
 ---
 
-## 10. Endgame — 裁决 (The Verdict)
+## 10. Endgame — 裁决圈 (The Verdict Loop)
 
-Triggered after Phase 10 is completed (Altar filled or world pressure).
+Triggered after Phase 10 Altar is filled by the player.
 
-Inspired by Slay the Spire's final boss structure:
+- The track enters **裁决圈** — a special endless-pressure loop state
+- Enemies spawn at **maximum density and maximum Phase 10 stats**
+- No world pressure timer — urgency comes entirely from enemy intensity
+- No boss entity — the endgame is a pure survival test
+- **Win condition:** Survive a set number of loops (exact count TBD by balance, tentatively 5 loops)
+- **Lose condition:** HP reaches 0
 
-- **Boss: 律法执行者 (Law Enforcer)**
-- Multiple HP bars — each bar represents one form
-- Each form defeated → next form activates with new mechanics
-- The boss uses components drawn from **what the player invested in the Altar** — it fights with the player's own rules
-- Defeating all forms = **True Ending**
-- Player death during endgame = normal failure
-
-Specific form count and mechanics to be designed in a dedicated boss design document.
+The 裁决圈 is a direct test of everything the player has built across 10 Phases — their personal rules, their tile network, and how well they managed their component economy.
 
 ---
 
@@ -300,7 +298,7 @@ Specific form count and mechanics to be designed in a dedicated boss design docu
 | Outcome | Condition |
 |---------|-----------|
 | Failure | Player HP reaches 0 at any point |
-| True Victory | Defeat all forms of 律法执行者 in the endgame |
+| True Victory | Survive the required loops in 裁决圈 |
 | Pressure Spiral | Repeated world pressure triggers without player buff accumulation — functionally leads to failure |
 
 ---
@@ -312,4 +310,4 @@ Specific form count and mechanics to be designed in a dedicated boss design docu
 - Entry will / component migration
 - Multi-map or level structure
 - Sound effects and art pass
-- Boss form details (separate design doc)
+- 裁决圈 exact loop count (balance work)
