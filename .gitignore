@@ -5,3 +5,7 @@
 /android/
 *.gd.uid
 game.log
+tests/screenshots/current_*.png
+/export/
+tests/node_modules/
+tests/dist/

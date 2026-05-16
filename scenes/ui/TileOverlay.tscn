@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://tileoverlay001"]
-
-[ext_resource type="Script" path="res://scenes/ui/TileOverlay.gd" id="1"]
-
-[node name="TileOverlay" type="Control"]
-mouse_filter = 2
-script = ExtResource("1")

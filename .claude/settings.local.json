@@ -60,7 +60,20 @@
       "mcp__godot__list_nodes",
       "mcp__godot__get_script",
       "mcp__godot__execute_editor_script",
-      "mcp__godot__edit_script"
+      "mcp__godot__edit_script",
+      "Bash(ls -d .worktrees)",
+      "Bash(ls -d worktrees)",
+      "Bash(grep -i \"worktree.*director\" CLAUDE.md)",
+      "Bash(git worktree *)",
+      "Bash(\"S:/Godot_v4.6.2-stable_mono_win64/Godot_v4.6.2-stable_mono_win64.exe\" --path \"S:/attribute-loop/.worktrees/v2-tile-entry\" --headless --quit)",
+      "Bash(tee godot_validation.log)",
+      "Bash(echo \"EXIT_CODE:$?\")",
+      "Bash(echo \"Validation passed: exit code $?\")",
+      "Skill(superpowers:brainstorming)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "aiart"
+  ]
 }

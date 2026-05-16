@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "aiart": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "S:\\attribute-loop\\.claude\\aiart-mcp\\dist\\mcp\\server.js"
+      ],
+      "env": {
+        "AIART_ACCESS_KEY": "st-c5c8e2d790d7493b880bb288db30ab5e",
+        "AIART_WORKSPACE_ID": "617258681158952018"
+      }
+    }
+  }
+}
