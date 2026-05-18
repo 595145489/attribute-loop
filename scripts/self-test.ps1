@@ -8,7 +8,7 @@ if ([string]::IsNullOrWhiteSpace($godotExe)) {
     exit 1
 }
 
-$projectPath = "S:\attribute-loop"
+$projectPath = Split-Path -Parent $PSScriptRoot
 $resultsFile = Join-Path $projectPath "tests\results.json"
 
 # Remove old results
@@ -40,6 +40,10 @@ if (-not (Test-Path $resultsFile)) {
 # Parse results
 try {
     $results = Get-Content $resultsFile -Raw | ConvertFrom-Json
+    if ($null -eq $results -or $null -eq $results.totals) {
+        Write-Error "results.json has unexpected format — missing 'totals' key"
+        exit 1
+    }
     $total = $results.totals.tests
     $passing = $results.totals.passing
     $failing = $results.totals.failing
@@ -60,6 +64,6 @@ try {
     Write-Host "All $total tests passed."
     exit 0
 } catch {
-    Write-Host "Could not parse results.json: $_"
-    exit 0
+    Write-Error "Could not parse results.json: $_"
+    exit 1
 }
