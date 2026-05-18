@@ -10,27 +10,9 @@ config_version=5
 
 [application]
 
-config/name="AttributeLoop"
-run/main_scene="res://scenes/main/Main.tscn"
+config/name="新建游戏项目"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-
-[autoload]
-
-Log="*res://scripts/systems/Log.gd"
-
-[display]
-
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/resizable=false
-
-[dotnet]
-
-project/assembly_name="attribute_loop"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+config/icon="res://icon.svg"
 
 [physics]
 
