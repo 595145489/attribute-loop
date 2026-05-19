@@ -14,6 +14,17 @@ config/name="新建游戏项目"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+TestHelper="*res://src/autoloads/TestHelper.gd"
+EventBus="*res://src/autoloads/EventBus.gd"
+GameState="*res://src/autoloads/GameState.gd"
+DataTables="*res://src/autoloads/DataTables.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -23,11 +34,3 @@ config/icon="res://icon.svg"
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-
-[autoload]
-
-TestHelper="*res://src/autoloads/TestHelper.gd"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
