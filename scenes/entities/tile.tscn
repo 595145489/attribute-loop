@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://8ixlkgbew2tg"]
 
-[node name="tile" type="Node2D" unique_id=145233933]
+[ext_resource type="Script" uid="uid://ctvtgr58qennn" path="res://src/entities/Tile.gd" id="1_qypnx"]
+
+[node name="Tile" type="Node2D" unique_id=145233933]
+script = ExtResource("1_qypnx")
 
 [node name="Visual" type="ColorRect" parent="." unique_id=352870719]
-color = Color(0, 0, 0, 1)
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.3, 0.5, 0.8, 1)
