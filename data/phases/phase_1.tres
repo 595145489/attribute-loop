@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://c4see0e3gihrx"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_dfe55"]
+
+[resource]
+script = ExtResource("1_dfe55")
+phase_name = "觉醒"
+altar_requirement = 2
+spawn_weights = {
+"守卫者": 50,
+"汲取者": 50
+}

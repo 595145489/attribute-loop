@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cq6tjscutptne"]
+
+[ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_0fmkg"]
+
+[resource]
+script = ExtResource("1_0fmkg")
+id = "急袭者"
+hp_base = 25
+dmg_base = 10
+gold_min = 20
+gold_max = 50
+unlock_phase = 4
+attack_interval = 0.4

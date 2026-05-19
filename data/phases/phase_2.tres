@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://lvidxu8cpa6r"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_fe2go"]
+
+[resource]
+script = ExtResource("1_fe2go")
+phase_id = 2
+phase_name = "萌动"
+altar_requirement = 3
+world_pressure_window = 9
+spawn_weights = {
+"守卫者": 45,
+"汲取者": 45
+}

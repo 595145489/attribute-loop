@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://bdo0tbeifeyg5"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_j4ftm"]
+
+[resource]
+script = ExtResource("1_j4ftm")
+phase_id = 6
+phase_name = "碰撞"
+altar_requirement = 7
+world_pressure_window = 5
+spawn_count_min = 2
+spawn_count_max = 4
+spawn_weights = {
+"守卫者": 30,
+"急袭者": 40,
+"汲取者": 30
+}
+enemy_component_count_min = 3
+enemy_component_count_max = 4

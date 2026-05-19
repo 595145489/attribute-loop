@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d0ejj7kft78qn"]
+
+[ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_lqekq"]
+
+[resource]
+script = ExtResource("1_lqekq")
+id = "守卫者"
+hp_base = 80
+dmg_base = 16
+gold_min = 5
+gold_max = 15
+attack_interval = 1.2

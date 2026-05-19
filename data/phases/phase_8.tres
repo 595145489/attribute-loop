@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://c6p6ekua7ueob"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_am628"]
+
+[resource]
+script = ExtResource("1_am628")
+phase_id = 8
+phase_name = "压制"
+altar_requirement = 9
+world_pressure_window = 3
+spawn_count_min = 2
+spawn_count_max = 5
+spawn_weights = {
+"复制者": 30,
+"守卫者": 20,
+"急袭者": 30,
+"汲取者": 20
+}
+enemy_component_count_min = 4
+enemy_component_count_max = 5

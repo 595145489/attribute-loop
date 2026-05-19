@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://mk17sqw62vyr"]
+
+[ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_3vxa7"]
+
+[resource]
+script = ExtResource("1_3vxa7")
+id = "先驱者"
+hp_base = 100
+dmg_base = 20
+gold_min = 20
+gold_max = 50
+unlock_phase = 10
+attack_interval = 0.8

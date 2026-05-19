@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://e4apjkqbqj0v"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_h4op4"]
+
+[resource]
+script = ExtResource("1_h4op4")
+phase_id = 7
+phase_name = "觉醒II"
+altar_requirement = 8
+world_pressure_window = 4
+spawn_count_min = 2
+spawn_count_max = 5
+spawn_weights = {
+"复制者": 20,
+"守卫者": 25,
+"急袭者": 30,
+"汲取者": 25
+}
+enemy_component_count_min = 4
+enemy_component_count_max = 5

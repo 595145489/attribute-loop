@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3 uid="uid://cbp12a2ue7s2c"]
+
+[ext_resource type="Script" uid="uid://cby2a7yf7y0uk" path="res://src/resources/PhaseData.gd" id="1_krfrh"]
+
+[resource]
+script = ExtResource("1_krfrh")
+phase_id = 4
+phase_name = "侵蚀"
+altar_requirement = 5
+world_pressure_window = 7
+spawn_count_min = 2
+spawn_count_max = 4
+spawn_weights = {
+"守卫者": 40,
+"急袭者": 20,
+"汲取者": 40
+}
+enemy_component_count_min = 2
+enemy_component_count_max = 3
