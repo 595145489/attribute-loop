@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://8ixlkgbew2tg"]
+
+[node name="tile" type="Node2D" unique_id=145233933]
+
+[node name="Visual" type="ColorRect" parent="." unique_id=352870719]
+color = Color(0, 0, 0, 1)
