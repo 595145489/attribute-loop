@@ -9,61 +9,54 @@ if ([string]::IsNullOrWhiteSpace($godotExe)) {
 }
 
 $projectPath = Split-Path -Parent $PSScriptRoot
-$resultsFile = Join-Path $projectPath "tests\results.json"
-
-# Remove old results
-if (Test-Path $resultsFile) { Remove-Item $resultsFile -Force }
 
 Write-Host "Running GUT unit tests..."
 
-# Run GUT headlessly
+# Run GUT headlessly with explicit test directory
 $gutArgs = @(
     "--headless",
     "--path", $projectPath,
     "-s", "res://addons/gut/gut_cmdln.gd",
     "-gdir=$TestDir",
-    "-gjson=res://tests/results.json",
-    "-gpo",
     "-gexit"
 )
 
-& $godotExe @gutArgs 2>&1 | Write-Host
-$exitCode = $LASTEXITCODE
+$output = @()
+& $godotExe @gutArgs 2>&1 | ForEach-Object {
+    $output += $_
+    Write-Host $_
+}
 
-# Check if results file was written
-if (-not (Test-Path $resultsFile)) {
-    Write-Host "No results.json produced — no tests found or GUT could not run"
-    Write-Host "Pass (no tests yet)"
+# Parse test results from console output
+# GUT 9.6.0 prints results like:
+# ---- All tests passed! ----
+# or includes test counts in summary
+
+$outputStr = $output -join "`n"
+
+# Check for all tests passed
+if ($outputStr -match "All tests passed") {
+    # Try to extract test count from summary
+    if ($outputStr -match "Tests\s+(\d+)") {
+        $totalTests = [int]$matches[1]
+        Write-Host "`nResults: $totalTests/$totalTests passed"
+    }
+    Write-Host "All tests passed."
     exit 0
 }
 
-# Parse results
-try {
-    $results = Get-Content $resultsFile -Raw | ConvertFrom-Json
-    if ($null -eq $results -or $null -eq $results.totals) {
-        Write-Error "results.json has unexpected format — missing 'totals' key"
-        exit 1
-    }
-    $total = $results.totals.tests
-    $passing = $results.totals.passing
-    $failing = $results.totals.failing
-    $errors = $results.totals.errors
-
-    Write-Host "`nResults: $passing/$total passed, $failing failed, $errors errors"
-
-    if ($failing -gt 0 -or $errors -gt 0) {
-        Write-Error "Self-test FAILED: $failing failures, $errors errors"
-        exit 1
-    }
-
-    if ($total -eq 0) {
-        Write-Host "No tests found in $TestDir — pass"
-        exit 0
-    }
-
-    Write-Host "All $total tests passed."
-    exit 0
-} catch {
-    Write-Error "Could not parse results.json: $_"
+# Check for test failures in output
+if ($outputStr -match "(\d+)/(\d+) passed" -or $outputStr -match "Failing Tests\s+(\d+)") {
+    Write-Error "Self-test FAILED: Tests did not all pass"
     exit 1
 }
+
+# If no tests were found, that's OK for now
+if ($outputStr -match "No tests found") {
+    Write-Host "No tests found in $TestDir — pass"
+    exit 0
+}
+
+# Unknown output: fail safe — require an explicit "All tests passed" signal
+Write-Error "Self-test FAILED: Could not confirm all tests passed. GUT output did not match any known pattern."
+exit 1
