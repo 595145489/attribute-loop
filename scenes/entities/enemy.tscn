@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://csx3v85luxwmk"]
+
+[ext_resource type="Script" path="res://src/entities/Enemy.gd" id="1_w1qvq"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_w1qvq")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.8, 0.2, 0.2, 1)
