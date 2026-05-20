@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://main_scene_v1"]
+
+[ext_resource type="Script" path="res://src/Main.gd" id="1_main"]
+[ext_resource type="Script" path="res://src/systems/CombatSystem.gd" id="2_combat"]
+[ext_resource type="Script" path="res://src/systems/GameLoop.gd" id="3_gameloop"]
+[ext_resource type="PackedScene" path="res://scenes/entities/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+
+[sub_resource type="Curve2D" id="Curve2D_track"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 150, 120, 0, 0, 0, 0, 1130, 120, 0, 0, 0, 0, 1130, 580, 0, 0, 0, 0, 150, 580),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+closed = true
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Track" type="Path2D" parent="."]
+curve = SubResource("Curve2D_track")
+
+[node name="PlayerFollow" type="PathFollow2D" parent="Track"]
+rotates = false
+
+[node name="Player" parent="Track/PlayerFollow" instance=ExtResource("4_player")]
+
+[node name="TilesContainer" type="Node2D" parent="."]
+
+[node name="EnemiesContainer" type="Node2D" parent="."]
+
+[node name="CombatSystem" type="Node" parent="."]
+script = ExtResource("2_combat")
+
+[node name="GameLoop" type="Node" parent="."]
+script = ExtResource("3_gameloop")
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]
