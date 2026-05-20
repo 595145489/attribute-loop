@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://hud_scene_v1"]
+
+[ext_resource type="Script" path="res://src/ui/HUD.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 280.0
+offset_bottom = 90.0
+
+[node name="HPLabel" type="Label" parent="VBox"]
+text = "HP: 100 / 100"
+
+[node name="LoopsLabel" type="Label" parent="VBox"]
+text = "Loops: 0"
+
+[node name="PhaseLabel" type="Label" parent="VBox"]
+text = "Phase 1 — 觉醒"
