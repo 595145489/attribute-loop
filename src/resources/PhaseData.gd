@@ -11,3 +11,6 @@ extends Resource
 @export var spawn_weights: Dictionary = {}
 @export var enemy_component_count_min: int = 1
 @export var enemy_component_count_max: int = 2
+@export var component_count_bonus: int = 0
+## Keys: component id (String), Values: weight multiplier (float)
+@export var component_weight_modifiers: Dictionary = {}

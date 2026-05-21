@@ -1,6 +1,8 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d0ejj7kft78qn"]
 
+[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_01.tres" id="1_1oq1k"]
 [ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_lqekq"]
+[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_02.tres" id="2_ad81j"]
 
 [resource]
 script = ExtResource("1_lqekq")
@@ -10,3 +12,17 @@ dmg_base = 16
 gold_min = 5
 gold_max = 15
 attack_interval = 1.2
+trigger_weights = {
+"击杀": 25,
+"受击": 35,
+"完成圈数": 25,
+"经过": 15
+}
+effect_weights = {
+"反射": 40,
+"治愈": 60
+}
+phase_drop_presets = {
+1: ExtResource("1_1oq1k"),
+3: ExtResource("2_ad81j")
+}

@@ -57,3 +57,26 @@ func test_get_drop_preset_tier1_has_受击_range() -> void:
 	assert_true(dp.component_ranges.has("受击"))
 	var r = dp.component_ranges["受击"]
 	assert_true(r.has("trigger"))
+
+func test_enemy_汲取者_has_component_pair_range() -> void:
+	var e: EnemyData = DataTables.get_enemy("汲取者")
+	assert_gte(e.component_pair_max, e.component_pair_min)
+	assert_gte(e.component_pair_min, 1)
+
+func test_enemy_汲取者_has_trigger_weights() -> void:
+	var e: EnemyData = DataTables.get_enemy("汲取者")
+	assert_false(e.trigger_weights.is_empty())
+
+func test_enemy_汲取者_has_phase_drop_preset() -> void:
+	var e: EnemyData = DataTables.get_enemy("汲取者")
+	assert_true(e.phase_drop_presets.has(1))
+
+func test_phase1_has_component_count_bonus() -> void:
+	var p: PhaseData = DataTables.get_phase(1)
+	assert_eq(p.component_count_bonus, 0)
+
+func test_config_has_inventory_cap() -> void:
+	assert_eq(DataTables.config.inventory_cap, 12)
+
+func test_config_has_rule_slot_count() -> void:
+	assert_eq(DataTables.config.rule_slot_count_base, 2)
