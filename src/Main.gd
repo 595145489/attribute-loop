@@ -8,13 +8,20 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 @onready var player: Player = $Track/PlayerFollow/Player
 @onready var tiles_container: Node2D = $TilesContainer
 @onready var enemies_container: Node2D = $EnemiesContainer
-@onready var combat_system: CombatSystem = $CombatSystem
-@onready var game_loop: GameLoop = $GameLoop
+@onready var combat_system: CombatSystem = $Systems/CombatSystem
+@onready var game_loop: GameLoop = $Systems/GameLoop
+@onready var strip_manager: StripManager = $Systems/StripManager
+@onready var strip_panel: StripPanel = $UI/StripPanel
+@onready var inventory_panel: InventoryPanel = $UI/InventoryPanel
+@onready var hud: HUD = $UI/HUD
 
 func _ready() -> void:
     var tiles = _build_tiles()
     player.setup(player_follow, track)
     game_loop.setup(tiles, enemies_container, player, combat_system)
+    strip_manager.setup(strip_panel)
+    strip_panel.setup(inventory_panel)
+    hud.setup(inventory_panel)
     EventBus.player_died.connect(_on_player_died)
 
 func _build_tiles() -> Array:
