@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://strip_panel_v1"]
+
+[ext_resource type="Script" path="res://src/ui/StripPanel.gd" id="1_sp"]
+
+[node name="StripPanel" type="PanelContainer"]
+script = ExtResource("1_sp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox"]
+text = "拾取零件"
+horizontal_alignment = 1
+
+[node name="ComponentGrid" type="GridContainer" parent="VBox"]
+columns = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+
+[node name="BagButton" type="Button" parent="VBox/HBox"]
+text = "[B] 打开背包"
+
+[node name="ContinueButton" type="Button" parent="VBox/HBox"]
+text = "继续 →"

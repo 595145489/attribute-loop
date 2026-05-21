@@ -1,0 +1,88 @@
+class_name StripPanel
+extends PanelContainer
+
+var _on_complete: Callable
+var _inventory_panel = null  # InventoryPanel — set via setup()
+
+@onready var _grid: GridContainer = $VBox/ComponentGrid
+@onready var _continue_btn: Button = $VBox/HBox/ContinueButton
+@onready var _bag_btn: Button = $VBox/HBox/BagButton
+
+const SLOT_TYPE_COLORS = {
+    0: Color(1.0, 0.6, 0.1, 1),
+    1: Color(0.2, 0.9, 0.3, 1),
+    2: Color(0.3, 0.6, 1.0, 1),
+}
+
+func _ready() -> void:
+    hide()
+    _continue_btn.pressed.connect(_on_continue)
+    _bag_btn.pressed.connect(_on_open_bag)
+
+func setup(inv_panel) -> void:
+    _inventory_panel = inv_panel
+
+func show_for_enemy(enemy: Enemy, on_complete: Callable) -> void:
+    _on_complete = on_complete
+    _build_grid(enemy.components)
+    show()
+    GameState.is_paused = true
+
+func _build_grid(components: Array[ComponentData]) -> void:
+    for child in _grid.get_children():
+        child.queue_free()
+    for comp in components:
+        _grid.add_child(_make_card(comp))
+
+func _make_card(comp: ComponentData) -> PanelContainer:
+    var card := PanelContainer.new()
+    var style := StyleBoxFlat.new()
+    style.border_color = SLOT_TYPE_COLORS.get(comp.slot_type, Color.WHITE)
+    style.border_width_left = 2
+    style.border_width_right = 2
+    style.border_width_top = 2
+    style.border_width_bottom = 2
+    card.add_theme_stylebox_override("panel", style)
+    var vbox := VBoxContainer.new()
+    card.add_child(vbox)
+    var name_lbl := Label.new()
+    name_lbl.text = comp.display_name
+    vbox.add_child(name_lbl)
+    var val_lbl := Label.new()
+    if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY:
+        val_lbl.text = "每 %.0f 次" % comp.trigger_value
+    elif comp.slot_type == ComponentData.SlotType.EFFECT_ONLY:
+        val_lbl.text = "值: %.1f" % comp.effect_value
+    else:
+        val_lbl.text = "T:%.0f E:%.1f" % [comp.trigger_value, comp.effect_value]
+    vbox.add_child(val_lbl)
+    var take_btn := Button.new()
+    take_btn.text = "取走"
+    take_btn.disabled = not GameState.inventory_has_space()
+    take_btn.pressed.connect(func():
+        GameState.add_to_inventory(comp)
+        take_btn.disabled = true
+        take_btn.text = "已取"
+        _refresh_take_buttons()
+    )
+    vbox.add_child(take_btn)
+    return card
+
+func _refresh_take_buttons() -> void:
+    var has_space = GameState.inventory_has_space()
+    for card in _grid.get_children():
+        for child in card.get_children():
+            if child is VBoxContainer:
+                for btn_node in child.get_children():
+                    if btn_node is Button and btn_node.text == "取走":
+                        btn_node.disabled = not has_space
+
+func _on_continue() -> void:
+    hide()
+    GameState.is_paused = false
+    if _on_complete.is_valid():
+        _on_complete.call()
+
+func _on_open_bag() -> void:
+    if _inventory_panel != null:
+        _inventory_panel.toggle()
