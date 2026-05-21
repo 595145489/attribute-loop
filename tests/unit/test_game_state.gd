@@ -37,3 +37,81 @@ func test_reset_clears_loops_and_kills() -> void:
 
 func test_is_paused_defaults_false() -> void:
     assert_false(GameState.is_paused)
+
+func test_inventory_empty_after_reset() -> void:
+    var c = ComponentData.new()
+    GameState.add_to_inventory(c)
+    GameState.reset()
+    assert_eq(GameState.inventory.size(), 0)
+
+func test_inventory_has_space_when_empty() -> void:
+    assert_true(GameState.inventory_has_space())
+
+func test_inventory_full_at_cap() -> void:
+    for i in DataTables.config.inventory_cap:
+        GameState.add_to_inventory(ComponentData.new())
+    assert_false(GameState.inventory_has_space())
+
+func test_add_to_inventory_appends() -> void:
+    var c = ComponentData.new()
+    c.id = "受击"
+    GameState.add_to_inventory(c)
+    assert_true(GameState.inventory.has(c))
+
+func test_remove_from_inventory() -> void:
+    var c = ComponentData.new()
+    GameState.add_to_inventory(c)
+    GameState.remove_from_inventory(c)
+    assert_false(GameState.inventory.has(c))
+
+func test_delete_component_removes_from_inventory() -> void:
+    var c = ComponentData.new()
+    GameState.add_to_inventory(c)
+    GameState.delete_component(c)
+    assert_false(GameState.inventory.has(c))
+
+func test_rule_slots_initialized_after_reset() -> void:
+    GameState.reset()
+    assert_eq(GameState.rule_slots.size(), 2)
+
+func test_equip_trigger_only_into_trigger_sub_slot() -> void:
+    var c = ComponentData.new()
+    c.id = "受击"
+    c.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+    GameState.add_to_inventory(c)
+    GameState.equip(c, 0, true)
+    assert_eq(GameState.rule_slots[0]["trigger"], c)
+    assert_false(GameState.inventory.has(c))
+
+func test_equip_effect_only_into_effect_sub_slot() -> void:
+    var c = ComponentData.new()
+    c.slot_type = ComponentData.SlotType.EFFECT_ONLY
+    GameState.add_to_inventory(c)
+    GameState.equip(c, 0, false)
+    assert_eq(GameState.rule_slots[0]["effect"], c)
+
+func test_equip_swaps_when_slot_occupied() -> void:
+    var old_c = ComponentData.new()
+    old_c.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+    GameState.add_to_inventory(old_c)
+    GameState.equip(old_c, 0, true)
+    var new_c = ComponentData.new()
+    new_c.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+    GameState.add_to_inventory(new_c)
+    GameState.equip(new_c, 0, true)
+    assert_eq(GameState.rule_slots[0]["trigger"], new_c)
+    assert_true(GameState.inventory.has(old_c))
+
+func test_unequip_moves_to_inventory() -> void:
+    var c = ComponentData.new()
+    c.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+    GameState.add_to_inventory(c)
+    GameState.equip(c, 0, true)
+    GameState.unequip(0, true)
+    assert_eq(GameState.rule_slots[0]["trigger"], null)
+    assert_true(GameState.inventory.has(c))
+
+func test_pending_reflect_ratio_zero_after_reset() -> void:
+    GameState.pending_reflect_ratio = 0.5
+    GameState.reset()
+    assert_eq(GameState.pending_reflect_ratio, 0.0)
