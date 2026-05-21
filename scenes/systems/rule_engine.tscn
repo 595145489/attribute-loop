@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rule_engine_v1"]
+
+[ext_resource type="Script" path="res://src/systems/RuleEngine.gd" id="1_re"]
+
+[node name="RuleEngine" type="Node"]
+script = ExtResource("1_re")
