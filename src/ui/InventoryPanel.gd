@@ -45,7 +45,7 @@ func _build_rule_slots() -> void:
         _rule_slot_container.add_child(hbox)
         var t_comp: ComponentData = slot["trigger"]
         var t_btn := Button.new()
-        t_btn.text = (t_comp.display_name + " [%.0f/%d]" % [t_comp.trigger_value, t_comp.trigger_count]) if t_comp else "[T 空]"
+        t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
