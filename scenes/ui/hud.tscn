@@ -8,14 +8,27 @@ script = ExtResource("1_hud")
 [node name="VBox" type="VBoxContainer" parent="."]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 280.0
-offset_bottom = 90.0
+offset_right = 320.0
+offset_bottom = 150.0
 
 [node name="HPLabel" type="Label" parent="VBox"]
 text = "HP: 100 / 100"
 
 [node name="LoopsLabel" type="Label" parent="VBox"]
-text = "Loops: 0"
+text = "圈数: 0"
 
 [node name="PhaseLabel" type="Label" parent="VBox"]
-text = "Phase 1 — 觉醒"
+text = "阶段 1 — 觉醒"
+
+[node name="RulesLabel" type="Label" parent="VBox"]
+text = "空 / 空"
+
+[node name="BagButton" type="Button" parent="VBox"]
+text = "背包 [B] 0/12"
+
+[node name="FloatLabel" type="Label" parent="."]
+offset_left = 500.0
+offset_top = 300.0
+offset_right = 700.0
+offset_bottom = 340.0
+horizontal_alignment = 1

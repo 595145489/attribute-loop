@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://inventory_panel_v1"]
+
+[ext_resource type="Script" path="res://src/ui/InventoryPanel.gd" id="1_ip"]
+
+[node name="InventoryPanel" type="PanelContainer"]
+script = ExtResource("1_ip")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -240.0
+offset_right = 280.0
+offset_bottom = 240.0
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+text = "背包与规则槽"
+horizontal_alignment = 1
+
+[node name="RuleSlots" type="VBoxContainer" parent="VBox"]
+
+[node name="InvLabel" type="Label" parent="VBox"]
+text = "背包 0/12"
+
+[node name="InventoryGrid" type="GridContainer" parent="VBox"]
+columns = 4
+
+[node name="DeleteButton" type="Button" parent="VBox"]
+text = "删除"
+
+[node name="CloseButton" type="Button" parent="VBox"]
+text = "关闭 [Tab]"
