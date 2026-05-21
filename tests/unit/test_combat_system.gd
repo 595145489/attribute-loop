@@ -34,10 +34,10 @@ func test_enemy_damage_uses_phase_scaled_dmg() -> void:
     var expected_dmg = DataTables.calc_stat(DataTables.get_enemy("汲取者").dmg_base, 1)
     assert_eq(enemy.dmg, expected_dmg)
 
-func test_combat_resolved_emitted_when_enemy_dies() -> void:
+func test_enemy_killed_emitted_when_enemy_dies() -> void:
     watch_signals(EventBus)
     var enemy = Enemy.new()
     enemy.init("汲取者")
     enemy.hp = 1
     combat._apply_player_attack(enemy)
-    assert_signal_emitted(EventBus, "combat_resolved")
+    assert_signal_emitted(EventBus, "enemy_killed")
