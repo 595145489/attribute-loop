@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://bsmh2tc8skoqb"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_76pj6"]
+
+[resource]
+script = ExtResource("1_76pj6")
+id = "治愈"
+display_name = "治愈"
+description = "触发时恢复生命值"
+slot_type = 2
+trigger_formula = "fires_every"
+effect_formula = "heal"

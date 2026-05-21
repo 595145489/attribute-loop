@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://byt3kxh67uip"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_omdo7"]
+
+[resource]
+script = ExtResource("1_omdo7")
+id = "受击"
+display_name = "受击"
+description = "每被攻击N次触发"
+trigger_formula = "fires_every"

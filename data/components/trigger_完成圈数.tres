@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://bdf3d5iy7cc1e"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_loeq8"]
+
+[resource]
+script = ExtResource("1_loeq8")
+id = "完成圈数"
+display_name = "完成圈数"
+description = "每完成N圈触发"
+trigger_formula = "fires_every"

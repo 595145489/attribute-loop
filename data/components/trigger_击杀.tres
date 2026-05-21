@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://c86o06qjybwfq"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_ub6xk"]
+
+[resource]
+script = ExtResource("1_ub6xk")
+id = "击杀"
+display_name = "击杀"
+description = "每击杀N个敌人触发"
+trigger_formula = "fires_every"

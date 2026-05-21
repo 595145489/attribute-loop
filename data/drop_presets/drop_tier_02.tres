@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DropPreset" format=3]
+
+[ext_resource type="Script" uid="uid://dny0f3pbst2ge" path="res://src/resources/DropPreset.gd" id="1_dp02"]
+
+[resource]
+script = ExtResource("1_dp02")
+preset_name = "tier_02"
+component_ranges = {
+"受击": {"trigger": Vector2(2, 2)},
+"击杀": {"trigger": Vector2(2, 2)},
+"完成圈数": {"trigger": Vector2(1, 2)},
+"经过": {"trigger": Vector2(2, 4)},
+"治愈": {"trigger": Vector2(2, 2), "effect": Vector2(10, 18)},
+"反射": {"trigger": Vector2(2, 2), "effect": Vector2(0.3, 0.45)}
+}

@@ -39,3 +39,21 @@ func test_get_phase_returns_correct_data() -> void:
 func test_get_enemy_returns_correct_data() -> void:
 	var e = DataTables.get_enemy("守卫者")
 	assert_eq(e.id, "守卫者")
+
+func test_get_component_受击_is_trigger_only() -> void:
+	var c: ComponentData = DataTables.get_component("受击")
+	assert_eq(c.slot_type, ComponentData.SlotType.TRIGGER_ONLY)
+
+func test_get_component_治愈_is_both() -> void:
+	var c: ComponentData = DataTables.get_component("治愈")
+	assert_eq(c.slot_type, ComponentData.SlotType.BOTH)
+
+func test_get_component_反射_is_both() -> void:
+	var c: ComponentData = DataTables.get_component("反射")
+	assert_eq(c.slot_type, ComponentData.SlotType.BOTH)
+
+func test_get_drop_preset_tier1_has_受击_range() -> void:
+	var dp: DropPreset = DataTables.get_drop_preset(1)
+	assert_true(dp.component_ranges.has("受击"))
+	var r = dp.component_ranges["受击"]
+	assert_true(r.has("trigger"))
