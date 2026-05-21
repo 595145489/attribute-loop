@@ -44,14 +44,18 @@ func _apply_player_attack(enemy: Enemy) -> void:
         _finish_combat(enemy)
 
 func _apply_enemy_attack(enemy: Enemy) -> void:
-    GameState.take_damage(enemy.dmg)
+    var dmg := enemy.dmg
+    GameState.take_damage(dmg)
+    EventBus.player_hit.emit(dmg)
+    if GameState.pending_reflect_ratio > 0.0:
+        enemy.take_damage(int(dmg * GameState.pending_reflect_ratio))
+        GameState.pending_reflect_ratio = 0.0
 
 func _finish_combat(enemy: Enemy = null) -> void:
     var resolved := enemy if enemy != null else _active_enemy
     if resolved == null:
         return
-    var killed_id := resolved.enemy_id
     stop()
     GameState.enemies_killed += 1
-    EventBus.enemy_killed.emit(killed_id)
-    EventBus.combat_resolved.emit()
+    EventBus.enemy_killed.emit(resolved)
+    # combat_resolved is now emitted by StripManager after strip flow completes
