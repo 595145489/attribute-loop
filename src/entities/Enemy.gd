@@ -6,18 +6,28 @@ var hp: int = 0
 var hp_max: int = 0
 var dmg: int = 0
 var attack_interval: float = 1.0
+var components: Array[ComponentData] = []
+
+@onready var _hp_label: Label = $HPLabel
 
 func init(id: String) -> void:
-	enemy_id = id
-	var data: EnemyData = DataTables.get_enemy(id)
-	var phase = GameState.current_phase
-	hp_max = DataTables.calc_stat(data.hp_base, phase)
-	hp = hp_max
-	dmg = DataTables.calc_stat(data.dmg_base, phase)
-	attack_interval = data.attack_interval
+    enemy_id = id
+    var data: EnemyData = DataTables.get_enemy(id)
+    var phase = GameState.current_phase
+    hp_max = DataTables.calc_stat(data.hp_base, phase)
+    hp = hp_max
+    dmg = DataTables.calc_stat(data.dmg_base, phase)
+    attack_interval = data.attack_interval
+    components = []
+    _refresh_label()
 
 func take_damage(amount: int) -> void:
-	hp = max(0, hp - amount)
+    hp = max(0, hp - amount)
+    _refresh_label()
 
 func is_dead() -> bool:
-	return hp <= 0
+    return hp <= 0
+
+func _refresh_label() -> void:
+    if _hp_label:
+        _hp_label.text = "%d/%d" % [hp, hp_max]

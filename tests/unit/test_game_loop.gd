@@ -1,31 +1,68 @@
 extends GutTest
 
 func test_roll_spawn_count_within_range() -> void:
-	var phase: PhaseData = DataTables.get_phase(1)
-	for i in 100:
-		var count = GameLoop._roll_spawn_count(phase)
-		assert_gte(count, phase.spawn_count_min)
-		assert_lte(count, phase.spawn_count_max)
+    var phase: PhaseData = DataTables.get_phase(1)
+    for i in 100:
+        var count = GameLoop._roll_spawn_count(phase)
+        assert_gte(count, phase.spawn_count_min)
+        assert_lte(count, phase.spawn_count_max)
 
 func test_pick_enemy_id_only_unlocked() -> void:
-	var phase: PhaseData = DataTables.get_phase(1)
-	for i in 50:
-		var id = GameLoop._pick_enemy_id(phase, 1)
-		var enemy_data: EnemyData = DataTables.get_enemy(id)
-		assert_lte(enemy_data.unlock_phase, 1)
+    var phase: PhaseData = DataTables.get_phase(1)
+    for i in 50:
+        var id = GameLoop._pick_enemy_id(phase, 1)
+        var enemy_data: EnemyData = DataTables.get_enemy(id)
+        assert_lte(enemy_data.unlock_phase, 1)
 
 func test_pick_enemy_id_from_weights() -> void:
-	var phase: PhaseData = DataTables.get_phase(1)
-	var id = GameLoop._pick_enemy_id(phase, 1)
-	assert_true(id == "汲取者" or id == "守卫者")
+    var phase: PhaseData = DataTables.get_phase(1)
+    var id = GameLoop._pick_enemy_id(phase, 1)
+    assert_true(id == "汲取者" or id == "守卫者")
 
 func test_pick_distinct_tile_indices_correct_count() -> void:
-	var indices = GameLoop._pick_tile_indices(3, 12)
-	assert_eq(indices.size(), 3)
+    var indices = GameLoop._pick_tile_indices(3, 12)
+    assert_eq(indices.size(), 3)
 
 func test_pick_distinct_tile_indices_no_duplicates() -> void:
-	var indices = GameLoop._pick_tile_indices(5, 12)
-	var unique = {}
-	for i in indices:
-		unique[i] = true
-	assert_eq(unique.size(), 5)
+    var indices = GameLoop._pick_tile_indices(5, 12)
+    var unique = {}
+    for i in indices:
+        unique[i] = true
+    assert_eq(unique.size(), 5)
+
+func test_weighted_pick_with_modifiers_returns_valid_id() -> void:
+    var weights = {"受击": 50, "击杀": 50}
+    var phase_data: PhaseData = DataTables.get_phase(1)
+    var result = GameLoop._weighted_pick_with_modifiers(weights, phase_data)
+    assert_true(result == "受击" or result == "击杀")
+
+func test_weighted_pick_excludes_zero_weight() -> void:
+    var weights = {"受击": 100, "击杀": 0}
+    var phase_data: PhaseData = DataTables.get_phase(1)
+    for i in 20:
+        var result = GameLoop._weighted_pick_with_modifiers(weights, phase_data)
+        assert_eq(result, "受击")
+
+func test_create_component_trigger_only_sets_trigger_value() -> void:
+    var preset: DropPreset = DataTables.get_drop_preset(1)
+    var comp = GameLoop._create_component("受击", preset)
+    assert_gt(comp.trigger_value, 0.0)
+    assert_eq(comp.effect_value, 0.0)
+
+func test_create_component_both_sets_both_values() -> void:
+    var preset: DropPreset = DataTables.get_drop_preset(1)
+    var comp = GameLoop._create_component("治愈", preset)
+    assert_gt(comp.trigger_value, 0.0)
+    assert_gt(comp.effect_value, 0.0)
+
+func test_create_component_returns_duplicate_not_original() -> void:
+    var preset: DropPreset = DataTables.get_drop_preset(1)
+    var original: ComponentData = DataTables.get_component("受击")
+    var comp = GameLoop._create_component("受击", preset)
+    assert_ne(comp, original)
+    assert_eq(comp.id, "受击")
+
+func test_resolve_drop_preset_picks_closest_lower_phase() -> void:
+    var enemy_data: EnemyData = DataTables.get_enemy("汲取者")
+    var preset = GameLoop._resolve_drop_preset(enemy_data, 2)
+    assert_not_null(preset)
