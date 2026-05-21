@@ -85,4 +85,4 @@ func _on_continue() -> void:
 
 func _on_open_bag() -> void:
     if _inventory_panel != null:
-        _inventory_panel.toggle()
+        _inventory_panel.toggle(false)

@@ -22,13 +22,15 @@ func _input(event: InputEvent) -> void:
         toggle()
         get_viewport().set_input_as_handled()
 
-func toggle() -> void:
+func toggle(manage_pause: bool = true) -> void:
     if visible:
         hide()
-        GameState.is_paused = false
+        if manage_pause:
+            GameState.is_paused = false
     else:
         show()
-        GameState.is_paused = true
+        if manage_pause:
+            GameState.is_paused = true
         _refresh()
 
 func _refresh() -> void:
