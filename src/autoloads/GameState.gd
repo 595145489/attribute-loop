@@ -43,6 +43,12 @@ func delete_component(c: ComponentData) -> void:
 	inventory.erase(c)
 
 func equip(c: ComponentData, slot_idx: int, as_trigger: bool) -> void:
+	# Remove c from any rule slot it already occupies (move, not copy)
+	for s in rule_slots:
+		if s["trigger"] == c:
+			s["trigger"] = null
+		if s["effect"] == c:
+			s["effect"] = null
 	var slot = rule_slots[slot_idx]
 	var sub_key = "trigger" if as_trigger else "effect"
 	var displaced = slot[sub_key]

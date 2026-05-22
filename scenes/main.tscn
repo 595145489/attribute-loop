@@ -12,7 +12,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_track"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 150, 120, 0, 0, 0, 0, 1130, 120, 0, 0, 0, 0, 1130, 580, 0, 0, 0, 0, 150, 580, 0, 0, 0, 0, 150, 120),
+"points": PackedVector2Array(0, 0, 0, 0, 86, 70, 0, 0, 0, 0, 1066, 70, 0, 0, 0, 0, 1066, 530, 0, 0, 0, 0, 86, 530, 0, 0, 0, 0, 86, 70),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 
@@ -32,7 +32,7 @@ rotates = false
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
 [node name="TrackLine" type="Line2D" parent="."]
-points = PackedVector2Array(150, 120, 1130, 120, 1130, 580, 150, 580, 150, 120)
+points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
 width = 2.0
 default_color = Color(0.4, 0.4, 0.4, 1)
 
