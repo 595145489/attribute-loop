@@ -95,3 +95,37 @@ func test_no_fire_when_effect_slot_empty() -> void:
     GameState.hp = 50
     EventBus.player_hit.emit(5)
     assert_eq(GameState.hp, 50)
+
+func _make_rule_slot1(trigger_id: String, trigger_value: float, effect_id: String, effect_value: float) -> void:
+    var t = ComponentData.new()
+    t.id = trigger_id
+    t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+    t.trigger_value = trigger_value
+    t.trigger_count = 0
+    var e = ComponentData.new()
+    e.id = effect_id
+    e.slot_type = ComponentData.SlotType.EFFECT_ONLY
+    e.effect_value = effect_value
+    GameState.rule_slots[1]["trigger"] = t
+    GameState.rule_slots[1]["effect"] = e
+
+func test_heal_trigger_increments_when_heal_fires() -> void:
+    _make_rule("受击", 1.0, "治愈", 10.0)
+    _make_rule_slot1("治愈", 2.0, "反射", 0.3)
+    GameState.hp = 50
+    EventBus.player_hit.emit(5)
+    assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 1)
+
+func test_heal_trigger_does_not_increment_without_heal() -> void:
+    _make_rule("受击", 5.0, "治愈", 10.0)
+    _make_rule_slot1("治愈", 1.0, "反射", 0.3)
+    EventBus.player_hit.emit(5)
+    assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 0)
+
+func test_heal_trigger_does_not_fire_at_full_hp() -> void:
+    # rule_fired must NOT emit when hp did not change (already at max)
+    _make_rule("受击", 1.0, "治愈", 10.0)
+    _make_rule_slot1("治愈", 1.0, "反射", 0.3)
+    GameState.hp = GameState.hp_max
+    EventBus.player_hit.emit(5)
+    assert_eq(GameState.pending_reflect_ratio, 0.0, "heal trigger must not fire when no HP was gained")

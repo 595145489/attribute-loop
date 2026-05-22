@@ -57,8 +57,10 @@ func _evaluate_triggers(trigger_ids: Array) -> void:
 func _execute_effect(slot_idx: int, effect: ComponentData) -> void:
     match effect.id:
         "治愈":
+            var prev_hp = GameState.hp
             GameState.hp = min(GameState.hp + int(effect.effect_value), GameState.hp_max)
-            EventBus.rule_fired.emit(slot_idx, "治愈", effect.effect_value)
+            if GameState.hp > prev_hp:
+                EventBus.rule_fired.emit(slot_idx, "治愈", effect.effect_value)
         "反射":
             GameState.pending_reflect_ratio = effect.effect_value
             EventBus.rule_fired.emit(slot_idx, "反射", effect.effect_value)
