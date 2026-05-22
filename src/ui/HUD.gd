@@ -1,58 +1,93 @@
 class_name HUD
 extends CanvasLayer
 
-var _inventory_panel = null  # InventoryPanel
+var _inventory_panel = null
 var _float_tween: Tween = null
 
-@onready var hp_label: Label = $VBox/HPLabel
-@onready var loops_label: Label = $VBox/LoopsLabel
-@onready var phase_label: Label = $VBox/PhaseLabel
-@onready var rules_label: Label = $VBox/RulesLabel
-@onready var bag_btn: Button = $VBox/BagButton
+@onready var hp_label: Label = $BottomBar/HContent/HPPill/HPLabel
+@onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
+@onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
+@onready var bag_btn: Button = $BottomBar/HContent/BagButton
 @onready var float_label: Label = $FloatLabel
 
+@onready var _t_name: Array[Label] = [
+	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TName0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TName1,
+]
+@onready var _t_bar: Array[ProgressBar] = [
+	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TBar0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TBar1,
+]
+@onready var _t_count: Array[Label] = [
+	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TCount0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TCount1,
+]
+@onready var _e_name: Array[Label] = [
+	$BottomBar/HContent/RulePanel0/RuleVBox0/ERow0/EName0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/ERow1/EName1,
+]
+@onready var _e_value: Array[Label] = [
+	$BottomBar/HContent/RulePanel0/RuleVBox0/ERow0/EValue0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/ERow1/EValue1,
+]
+
 func _ready() -> void:
-    bag_btn.pressed.connect(_on_bag_pressed)
-    float_label.hide()
-    EventBus.rule_fired.connect(_on_rule_fired)
+	bag_btn.pressed.connect(_on_bag_pressed)
+	float_label.hide()
+	EventBus.rule_fired.connect(_on_rule_fired)
 
 func setup(inv_panel) -> void:
-    _inventory_panel = inv_panel
+	_inventory_panel = inv_panel
 
 func _process(_delta: float) -> void:
-    hp_label.text = "HP: %d / %d" % [GameState.hp, GameState.hp_max]
-    loops_label.text = "圈数: %d" % GameState.loops_completed
-    var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-    phase_label.text = "阶段 %d — %s" % [GameState.current_phase, phase_data.phase_name]
-    rules_label.text = _build_rules_summary()
-    bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
+	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
+	loop_label.text = "圈 × %d" % GameState.loops_completed
+	var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+	phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
+	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
+	for i in GameState.rule_slots.size():
+		_update_rule_panel(i)
 
-func _build_rules_summary() -> String:
-    var parts: Array = []
-    for slot in GameState.rule_slots:
-        var t: ComponentData = slot["trigger"]
-        var e: ComponentData = slot["effect"]
-        if t != null and e != null:
-            parts.append("%s→%s" % [t.display_name, e.display_name])
-        else:
-            parts.append("空")
-    return " / ".join(parts)
+func _update_rule_panel(i: int) -> void:
+	var slot = GameState.rule_slots[i]
+	var t: ComponentData = slot.get("trigger")
+	var e: ComponentData = slot.get("effect")
+	if t == null or e == null:
+		_t_name[i].text = "— 空槽 —"
+		_t_bar[i].max_value = 1
+		_t_bar[i].value = 0
+		_t_count[i].text = ""
+		_e_name[i].text = ""
+		_e_value[i].text = ""
+		return
+	_t_name[i].text = t.display_name
+	_t_bar[i].max_value = t.trigger_value
+	_t_bar[i].value = t.trigger_count
+	_t_count[i].text = "%d/%d" % [t.trigger_count, int(t.trigger_value)]
+	_e_name[i].text = e.display_name
+	match e.id:
+		"治愈":
+			_e_value[i].text = "+%d" % int(e.effect_value)
+		"反射":
+			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
+		_:
+			_e_value[i].text = ""
 
 func _on_bag_pressed() -> void:
-    if _inventory_panel != null:
-        _inventory_panel.toggle()
+	if _inventory_panel != null:
+		_inventory_panel.toggle()
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
-    if effect_id == "治愈":
-        float_label.text = "+%.0f 治愈" % value
-    elif effect_id == "反射":
-        float_label.text = "反射 %.0f%%" % (value * 100)
-    else:
-        float_label.text = effect_id
-    float_label.show()
-    float_label.modulate = Color.WHITE
-    if _float_tween:
-        _float_tween.kill()
-    _float_tween = create_tween()
-    _float_tween.tween_property(float_label, "modulate:a", 0.0, 1.0)
-    _float_tween.tween_callback(float_label.hide)
+	if effect_id == "治愈":
+		float_label.text = "+%.0f 治愈" % value
+	elif effect_id == "反射":
+		float_label.text = "反射 %.0f%%" % (value * 100)
+	else:
+		float_label.text = effect_id
+	float_label.show()
+	float_label.modulate = Color.WHITE
+	if _float_tween:
+		_float_tween.kill()
+	_float_tween = create_tween()
+	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.0)
+	_float_tween.tween_callback(float_label.hide)

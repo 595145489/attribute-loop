@@ -1,38 +1,286 @@
-[gd_scene load_steps=2 format=3 uid="uid://hud_scene_v1"]
+[gd_scene load_steps=10 format=3 uid="uid://hud_scene_v1"]
 
 [ext_resource type="Script" path="res://src/ui/HUD.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
+bg_color = Color(0.031, 0.031, 0.094, 0.94)
+border_width_top = 1
+border_color = Color(0.2, 0.2, 0.4, 1)
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp"]
+bg_color = Color(0.165, 0.039, 0.039, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.663, 0.2, 0.2, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loop"]
+bg_color = Color(0.102, 0.102, 0.165, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.267, 0.267, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phase"]
+bg_color = Color(0.039, 0.125, 0.063, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.278, 0.455, 0.278, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rule"]
+bg_color = Color(0.039, 0.039, 0.133, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.267, 0.267, 0.467, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbar_bg"]
+bg_color = Color(0.102, 0.102, 0.212, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbar_fill"]
+bg_color = Color(0.267, 0.267, 1.0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bag"]
+bg_color = Color(0.102, 0.165, 0.314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.333, 0.333, 0.667, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="BottomBar" type="PanelContainer" parent="."]
+anchor_left = 0.0
 anchor_top = 1.0
-anchor_bottom = 1.0
 anchor_right = 1.0
-offset_top = -90.0
+anchor_bottom = 1.0
+offset_top = -48.0
 offset_bottom = 0.0
-offset_left = 0.0
-offset_right = 0.0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
 
-[node name="HPLabel" type="Label" parent="VBox"]
-text = "HP: 100 / 100"
+[node name="HContent" type="HBoxContainer" parent="BottomBar"]
+layout_mode = 2
+theme_override_constants/separation = 6
 
-[node name="LoopsLabel" type="Label" parent="VBox"]
-text = "圈数: 0"
+[node name="HPPill" type="PanelContainer" parent="BottomBar/HContent"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_hp")
 
-[node name="PhaseLabel" type="Label" parent="VBox"]
-text = "阶段 1 — 觉醒"
+[node name="HPLabel" type="Label" parent="BottomBar/HContent/HPPill"]
+layout_mode = 2
+text = "❤ 100 / 100"
+theme_override_colors/font_color = Color(1.0, 0.533, 0.533, 1)
+theme_override_font_sizes/font_size = 11
 
-[node name="RulesLabel" type="Label" parent="VBox"]
-text = "空 / 空"
+[node name="LoopPill" type="PanelContainer" parent="BottomBar/HContent"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_loop")
 
-[node name="BagButton" type="Button" parent="VBox"]
+[node name="LoopLabel" type="Label" parent="BottomBar/HContent/LoopPill"]
+layout_mode = 2
+text = "圈 × 0"
+theme_override_colors/font_color = Color(0.6, 0.6, 0.733, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="PhasePill" type="PanelContainer" parent="BottomBar/HContent"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_phase")
+
+[node name="PhaseLabel" type="Label" parent="BottomBar/HContent/PhasePill"]
+layout_mode = 2
+text = "阶段 1 · 觉醒"
+theme_override_colors/font_color = Color(0.533, 0.867, 0.533, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="RulePanel0" type="PanelContainer" parent="BottomBar/HContent"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rule")
+
+[node name="RuleVBox0" type="VBoxContainer" parent="BottomBar/HContent/RulePanel0"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TRow0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TTag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0"]
+layout_mode = 2
+text = "T:"
+theme_override_colors/font_color = Color(0.8, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="TName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0"]
+layout_mode = 2
+text = "—"
+theme_override_colors/font_color = Color(1.0, 1.0, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="TBar0" type="ProgressBar" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 6)
+value = 0.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_tbar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tbar_fill")
+
+[node name="TCount0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0"]
+layout_mode = 2
+text = "0/0"
+theme_override_colors/font_color = Color(1.0, 1.0, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="ERow0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ETag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0"]
+layout_mode = 2
+text = "E:"
+theme_override_colors/font_color = Color(0.8, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="EName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0"]
+layout_mode = 2
+text = "—"
+theme_override_colors/font_color = Color(0.533, 0.667, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="EValue0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0"]
+layout_mode = 2
+text = ""
+theme_override_colors/font_color = Color(0.533, 0.667, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="RulePanel1" type="PanelContainer" parent="BottomBar/HContent"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rule")
+
+[node name="RuleVBox1" type="VBoxContainer" parent="BottomBar/HContent/RulePanel1"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TRow1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TTag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1"]
+layout_mode = 2
+text = "T:"
+theme_override_colors/font_color = Color(0.8, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="TName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1"]
+layout_mode = 2
+text = "—"
+theme_override_colors/font_color = Color(1.0, 1.0, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="TBar1" type="ProgressBar" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 6)
+value = 0.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_tbar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tbar_fill")
+
+[node name="TCount1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1"]
+layout_mode = 2
+text = "0/0"
+theme_override_colors/font_color = Color(1.0, 1.0, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="ERow1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ETag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1"]
+layout_mode = 2
+text = "E:"
+theme_override_colors/font_color = Color(0.8, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="EName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1"]
+layout_mode = 2
+text = "—"
+theme_override_colors/font_color = Color(0.533, 0.667, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="EValue1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1"]
+layout_mode = 2
+text = ""
+theme_override_colors/font_color = Color(0.533, 0.667, 1.0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="BagButton" type="Button" parent="BottomBar/HContent"]
 text = "背包 [B] 0/12"
+theme_override_styles/normal = SubResource("StyleBoxFlat_bag")
+theme_override_colors/font_color = Color(0.6, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 11
 
 [node name="FloatLabel" type="Label" parent="."]
 offset_left = 400.0
-offset_top = 280.0
+offset_top = 260.0
 offset_right = 700.0
-offset_bottom = 320.0
+offset_bottom = 300.0
 horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
