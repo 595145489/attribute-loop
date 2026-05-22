@@ -122,10 +122,11 @@ func test_heal_trigger_does_not_increment_without_heal() -> void:
     EventBus.player_hit.emit(5)
     assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 0)
 
-func test_heal_trigger_does_not_fire_at_full_hp() -> void:
-    # rule_fired must NOT emit when hp did not change (already at max)
+func test_heal_trigger_fires_even_at_full_hp() -> void:
+    # 治愈 effect always emits rule_fired regardless of HP cap; HP just cannot exceed max
     _make_rule("受击", 1.0, "治愈", 10.0)
     _make_rule_slot1("治愈", 1.0, "反射", 0.3)
     GameState.hp = GameState.hp_max
     EventBus.player_hit.emit(5)
-    assert_eq(GameState.pending_reflect_ratio, 0.0, "heal trigger must not fire when no HP was gained")
+    assert_eq(GameState.hp, GameState.hp_max)
+    assert_eq(GameState.pending_reflect_ratio, 0.3, "heal trigger should still fire even at full HP")
