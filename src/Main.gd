@@ -28,7 +28,7 @@ func _build_tiles() -> Array:
     var tiles: Array = []
     var curve = track.curve
     var length = curve.get_baked_length()
-    for i in 12:
+    for i in 13:
         var t = float(i) / 12.0
         var pos = curve.sample_baked(t * length)
         var tile: Tile = TILE_SCENE.instantiate()

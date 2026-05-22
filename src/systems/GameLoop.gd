@@ -152,6 +152,6 @@ static func _pick_enemy_id(phase: PhaseData, current_phase: int) -> String:
 	return eligible.keys()[0]
 
 static func _pick_tile_indices(count: int, total: int) -> Array:
-	var pool = range(total)
+	var pool = range(1, total)
 	pool.shuffle()
 	return pool.slice(0, count)

@@ -66,3 +66,12 @@ func test_resolve_drop_preset_picks_closest_lower_phase() -> void:
     var enemy_data: EnemyData = DataTables.get_enemy("汲取者")
     var preset = GameLoop._resolve_drop_preset(enemy_data, 2)
     assert_not_null(preset)
+
+func test_pick_tile_indices_never_returns_zero() -> void:
+    for i in 200:
+        var indices = GameLoop._pick_tile_indices(5, 13)
+        assert_false(0 in indices, "Starting tile index 0 must never be in spawn pool")
+
+func test_pick_tile_indices_correct_count_with_13_tiles() -> void:
+    var indices = GameLoop._pick_tile_indices(3, 13)
+    assert_eq(indices.size(), 3)
