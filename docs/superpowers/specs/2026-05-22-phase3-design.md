@@ -33,13 +33,20 @@
 
 ### Tile Data Structure
 
-Each tile holds up to 3 rule slots. Each slot is a T+E pair:
+Each tile holds up to N rule slots (N configured per tile index in DataTables). Each slot is a T+E pair:
 
 ```gdscript
 var pass_count: int = 0
-var rule_slots: Array = []  # max 3, each: {"trigger": ComponentData|null, "effect": ComponentData|null}
-const MAX_RULES := 3
+var rule_slots: Array = []  # size = DataTables.TILE_MAX_RULES[tile_index]
 ```
+
+`DataTables` defines the per-tile rule slot capacity:
+
+```gdscript
+const TILE_MAX_RULES := [1, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 2]  # index = tile_index
+```
+
+Tile initializes `rule_slots` to its configured capacity on `_ready`.
 
 ### Tile T Slot Constraint
 
@@ -59,8 +66,12 @@ if not tile.visited_this_loop:
 ### Effect Value Scaling (Tile Only)
 
 ```
-actual_value = base_value × (1 + growth_rate × pass_count)
+scaled = base_value × (1 + growth_rate × pass_count ^ scale_exponent)
+actual  = scaled                              if max_scale == 0
+actual  = min(scaled, base_value × max_scale) if max_scale > 0
 ```
+
+All three parameters (`growth_rate`, `scale_exponent`, `max_scale`) are fields on `ComponentData`, configurable per effect type in `.tres` files. Default: `scale_exponent = 1.0` (linear), `max_scale = 0.0` (no cap).
 
 Player rule slots always use `base_value` (pass_count = 0). Tile rules use the full formula.
 
@@ -202,20 +213,28 @@ var altar_bonuses: Dictionary = {}  # {"治愈": 2.5, "反射": 0.03, ...}
 ```gdscript
 func _on_enemy_killed(enemy: Enemy) -> void:
     var ed := DataTables.get_enemy(enemy.enemy_id)
-    var phase_mult := 1.0 + (GameState.current_phase - 1) * 0.3
+    var phase_mult := 1.0 + (GameState.current_phase - 1) * ed.gold_scale
     var amount := int(randi_range(ed.gold_min, ed.gold_max) * phase_mult)
     GameState.gold += amount
     EventBus.gold_changed.emit(GameState.gold)
 ```
 
-Base gold ranges per enemy type:
+Base gold ranges and scale per enemy type (in EnemyData):
 
-| Enemy | gold_min | gold_max |
-|-------|----------|----------|
-| 汲取者 | 5 | 15 |
-| 守卫者 | 5 | 15 |
+| Enemy | gold_min | gold_max | gold_scale |
+|-------|----------|----------|------------|
+| 汲取者 | 5 | 15 | 0.3 |
+| 守卫者 | 5 | 15 | 0.3 |
 
-(Higher enemy types are Phase 4.)
+`gold_scale` controls how fast gold drops grow with Phase. Higher enemy types (Phase 4) will have their own values.
+
+### EnemyData Addition
+
+```gdscript
+@export var gold_min: int
+@export var gold_max: int
+@export var gold_scale: float = 0.3
+```
 
 ### Deletion Cost — Global Escalating
 
