@@ -19,6 +19,7 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 @onready var hud: HUD = $UI/HUD
 
 func _ready() -> void:
+	get_viewport().physics_object_picking = true
 	var tiles = _build_tiles()
 	player.setup(player_follow, track)
 	game_loop.setup(tiles, enemies_container, player, combat_system)
