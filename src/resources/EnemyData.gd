@@ -6,6 +6,7 @@ extends Resource
 @export var dmg_base: int = 0
 @export var gold_min: int = 0
 @export var gold_max: int = 0
+@export var gold_scale: float = 0.3
 @export var unlock_phase: int = 1
 @export var attack_interval: float = 1.0
 @export var component_pair_min: int = 1

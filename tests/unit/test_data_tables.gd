@@ -80,3 +80,16 @@ func test_config_has_inventory_cap() -> void:
 
 func test_config_has_rule_slot_count() -> void:
 	assert_eq(DataTables.config.rule_slot_count_base, 2)
+
+func test_enemy_has_gold_scale() -> void:
+	var ed: EnemyData = DataTables.get_enemy("汲取者")
+	assert_eq(ed.gold_scale, 0.3)
+
+func test_config_has_deletion_cost_sequence() -> void:
+	assert_eq(DataTables.config.deletion_cost_sequence.size(), 3)
+	assert_eq(DataTables.config.deletion_cost_sequence[0], 20)
+	assert_eq(DataTables.config.deletion_cost_sequence[1], 50)
+	assert_eq(DataTables.config.deletion_cost_sequence[2], 100)
+
+func test_config_has_deletion_cost_multiplier() -> void:
+	assert_eq(DataTables.config.deletion_cost_multiplier, 2.0)

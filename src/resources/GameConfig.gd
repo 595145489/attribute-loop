@@ -7,3 +7,5 @@ extends Resource
 @export var rule_slot_count_base: int = 2
 @export var rule_slot_count_max: int = 5
 @export var low_hp_threshold: float = 0.3
+@export var deletion_cost_sequence: Array[int] = [20, 50, 100]
+@export var deletion_cost_multiplier: float = 2.0
