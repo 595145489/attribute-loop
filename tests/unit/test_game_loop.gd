@@ -1,4 +1,4 @@
-extends GutTest
+﻿extends GutTest
 
 func test_roll_spawn_count_within_range() -> void:
     var phase: PhaseData = DataTables.get_phase(1)
@@ -75,3 +75,24 @@ func test_pick_tile_indices_never_returns_zero() -> void:
 func test_pick_tile_indices_correct_count_with_13_tiles() -> void:
     var indices = GameLoop._pick_tile_indices(3, 13)
     assert_eq(indices.size(), 3)
+
+func test_altar_is_full_false_when_empty_array() -> void:
+    var tile := Tile.new()
+    tile.altar_slots = []
+    assert_false(GameLoop._altar_is_full(tile))
+    tile.free()
+
+func test_altar_is_full_false_when_any_slot_null() -> void:
+    var tile := Tile.new()
+    var c := ComponentData.new()
+    tile.altar_slots = [c, null]
+    assert_false(GameLoop._altar_is_full(tile))
+    tile.free()
+
+func test_altar_is_full_true_when_all_slots_filled() -> void:
+    var tile := Tile.new()
+    var c1 := ComponentData.new()
+    var c2 := ComponentData.new()
+    tile.altar_slots = [c1, c2]
+    assert_true(GameLoop._altar_is_full(tile))
+    tile.free()

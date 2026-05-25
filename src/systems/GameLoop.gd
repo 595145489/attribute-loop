@@ -1,4 +1,4 @@
-class_name GameLoop
+﻿class_name GameLoop
 extends Node
 
 enum State { WALKING, COMBAT, GAME_OVER }
@@ -52,6 +52,11 @@ func check_tile_for_enemy(tile: Tile) -> void:
 
 func _on_loop_completed() -> void:
 	if state == State.WALKING:
+		GameState.loops_in_phase += 1
+		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+		if GameState.loops_in_phase >= phase_data.world_pressure_window:
+			if not _altar_is_full(_tiles[0]):
+				GameState.force_phase_advance()
 		for tile in _tiles:
 			tile.visited_this_loop = false
 		spawn_enemies()
@@ -155,3 +160,11 @@ static func _pick_tile_indices(count: int, total: int) -> Array:
 	var pool = range(1, total)
 	pool.shuffle()
 	return pool.slice(0, count)
+
+static func _altar_is_full(altar: Tile) -> bool:
+	if altar.altar_slots.is_empty():
+		return false
+	for slot in altar.altar_slots:
+		if slot == null:
+			return false
+	return true
