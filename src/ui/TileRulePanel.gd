@@ -46,7 +46,7 @@ func _build_slots() -> void:
 		_slots_container.add_child(hbox)
 
 		var t_btn := Button.new()
-		t_btn.text = ("%s (%d)" % [t.display_name, int(t.trigger_value)]) if t else "[T 经过]"
+		t_btn.text = ("%s (%d)" % [t.display_name, int(t.trigger_value)]) if t else "[T 空 — 放入经过]"
 		var idx = i
 		t_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, true))
 		hbox.add_child(t_btn)
