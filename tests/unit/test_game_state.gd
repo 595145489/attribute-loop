@@ -115,3 +115,60 @@ func test_pending_reflect_ratio_zero_after_reset() -> void:
     GameState.pending_reflect_ratio = 0.5
     GameState.reset()
     assert_eq(GameState.pending_reflect_ratio, 0.0)
+
+func test_gold_zero_after_reset() -> void:
+    GameState.gold = 50
+    GameState.reset()
+    assert_eq(GameState.gold, 0)
+
+func test_deletion_count_zero_after_reset() -> void:
+    GameState.deletion_count = 3
+    GameState.reset()
+    assert_eq(GameState.deletion_count, 0)
+
+func test_altar_bonuses_empty_after_reset() -> void:
+    GameState.altar_bonuses["治愈"] = 5.0
+    GameState.reset()
+    assert_eq(GameState.altar_bonuses.size(), 0)
+
+func test_get_deletion_cost_first_deletion() -> void:
+    GameState.reset()
+    assert_eq(GameState.get_deletion_cost(), 20)
+
+func test_get_deletion_cost_second_deletion() -> void:
+    GameState.deletion_count = 1
+    assert_eq(GameState.get_deletion_cost(), 50)
+
+func test_get_deletion_cost_third_deletion() -> void:
+    GameState.deletion_count = 2
+    assert_eq(GameState.get_deletion_cost(), 100)
+
+func test_get_deletion_cost_fourth_uses_multiplier() -> void:
+    GameState.deletion_count = 3
+    assert_eq(GameState.get_deletion_cost(), 200)
+
+func test_get_deletion_cost_fifth_doubles_again() -> void:
+    GameState.deletion_count = 4
+    assert_eq(GameState.get_deletion_cost(), 400)
+
+func test_can_afford_deletion_true_when_enough_gold() -> void:
+    GameState.gold = 20
+    GameState.deletion_count = 0
+    assert_true(GameState.can_afford_deletion())
+
+func test_can_afford_deletion_false_when_insufficient() -> void:
+    GameState.gold = 19
+    GameState.deletion_count = 0
+    assert_false(GameState.can_afford_deletion())
+
+func test_pay_deletion_cost_deducts_gold() -> void:
+    GameState.gold = 100
+    GameState.deletion_count = 0
+    GameState.pay_deletion_cost()
+    assert_eq(GameState.gold, 80)
+
+func test_pay_deletion_cost_increments_deletion_count() -> void:
+    GameState.gold = 100
+    GameState.deletion_count = 0
+    GameState.pay_deletion_cost()
+    assert_eq(GameState.deletion_count, 1)

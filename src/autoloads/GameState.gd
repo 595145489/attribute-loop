@@ -8,7 +8,10 @@ var current_phase: int = 1
 var is_paused: bool = false
 var pending_reflect_ratio: float = 0.0
 var inventory: Array[ComponentData] = []
-var rule_slots: Array = []  # Array of {"trigger": ComponentData|null, "effect": ComponentData|null}
+var rule_slots: Array = []
+var gold: int = 0
+var deletion_count: int = 0
+var altar_bonuses: Dictionary = {}
 
 func _ready() -> void:
 	reset()
@@ -27,6 +30,9 @@ func reset() -> void:
 	pending_reflect_ratio = 0.0
 	inventory = []
 	rule_slots = []
+	gold = 0
+	deletion_count = 0
+	altar_bonuses = {}
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
 
@@ -43,7 +49,6 @@ func delete_component(c: ComponentData) -> void:
 	inventory.erase(c)
 
 func equip(c: ComponentData, slot_idx: int, as_trigger: bool) -> void:
-	# Remove c from any rule slot it already occupies (move, not copy)
 	for s in rule_slots:
 		if s["trigger"] == c:
 			s["trigger"] = null
@@ -64,3 +69,20 @@ func unequip(slot_idx: int, as_trigger: bool) -> void:
 	if c != null:
 		slot[sub_key] = null
 		inventory.append(c)
+
+func get_deletion_cost() -> int:
+	var seq: Array = DataTables.config.deletion_cost_sequence
+	if deletion_count < seq.size():
+		return seq[deletion_count]
+	var cost: int = seq[-1]
+	for i in deletion_count - (seq.size() - 1):
+		cost = int(cost * DataTables.config.deletion_cost_multiplier)
+	return cost
+
+func can_afford_deletion() -> bool:
+	return gold >= get_deletion_cost()
+
+func pay_deletion_cost() -> void:
+	gold -= get_deletion_cost()
+	deletion_count += 1
+	EventBus.gold_changed.emit(gold)
