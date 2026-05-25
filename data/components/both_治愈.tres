@@ -10,3 +10,5 @@ description = "触发时恢复生命值"
 slot_type = 2
 trigger_formula = "fires_every"
 effect_formula = "heal"
+growth_rate = 0.15
+altar_ratio = 0.1

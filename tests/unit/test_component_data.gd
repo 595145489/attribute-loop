@@ -25,3 +25,19 @@ func test_drop_preset_ranges_dictionary() -> void:
 	var dp := DropPreset.new()
 	dp.component_ranges["受击"] = {"trigger": Vector2(2, 3)}
 	assert_eq(dp.component_ranges["受击"]["trigger"], Vector2(2, 3))
+
+func test_growth_rate_default_zero() -> void:
+	var c := ComponentData.new()
+	assert_eq(c.growth_rate, 0.0)
+
+func test_scale_exponent_default_one() -> void:
+	var c := ComponentData.new()
+	assert_eq(c.scale_exponent, 1.0)
+
+func test_max_scale_default_zero() -> void:
+	var c := ComponentData.new()
+	assert_eq(c.max_scale, 0.0)
+
+func test_altar_ratio_default_zero() -> void:
+	var c := ComponentData.new()
+	assert_eq(c.altar_ratio, 0.0)
