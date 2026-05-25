@@ -41,6 +41,7 @@ func _build_tiles() -> Array:
 		tile.tile_index = i
 		tile.is_altar = (i == 0)
 		tile.position = pos
+		tile.clicked.connect(_on_tile_clicked)
 		tiles_container.add_child(tile)
 		tiles.append(tile)
 	return tiles
@@ -63,18 +64,11 @@ func _check_player_tile() -> void:
 				EventBus.tile_passed.emit(tile.tile_index)
 			return
 
-func _unhandled_input(event: InputEvent) -> void:
-	if GameState.is_paused:
-		return
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var pos = get_global_mouse_position()
-		for tile in tiles_container.get_children():
-			if pos.distance_to(tile.global_position) < 20.0:
-				if tile.is_altar:
-					altar_panel.open(tile)
-				else:
-					tile_rule_panel.open(tile)
-				return
+func _on_tile_clicked(tile: Tile) -> void:
+	if tile.is_altar:
+		altar_panel.open(tile)
+	else:
+		tile_rule_panel.open(tile)
 
 func reset_tiles() -> void:
 	for tile in tiles_container.get_children():
