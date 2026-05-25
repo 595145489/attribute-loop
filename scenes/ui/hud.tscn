@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c6x1nyk4wvrgq"]
+﻿[gd_scene format=3 uid="uid://c6x1nyk4wvrgq"]
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
 
@@ -288,6 +288,13 @@ layout_mode = 2
 [node name="GoldLabel" type="Label" parent="BottomBar/HContent/GoldPill" unique_id=764494320]
 layout_mode = 2
 text = "金: 0"
+
+[node name="PressurePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=312987654]
+layout_mode = 2
+
+[node name="PressureLabel" type="Label" parent="BottomBar/HContent/PressurePill" unique_id=312987655]
+layout_mode = 2
+text = "压力: 0/10圈"
 
 [node name="FloatLabel" type="Label" parent="." unique_id=249889570]
 offset_left = 400.0
