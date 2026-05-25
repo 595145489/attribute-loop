@@ -1,4 +1,4 @@
-class_name AltarPanel
+﻿class_name AltarPanel
 extends PanelContainer
 
 var _tile: Tile = null
@@ -113,5 +113,6 @@ func _on_activate() -> void:
 		GameState.altar_bonuses[comp.id] = GameState.altar_bonuses.get(comp.id, 0.0) as float + bonus
 	_tile.altar_slots.fill(null)
 	GameState.current_phase += 1
+	GameState.loops_in_phase = 0
 	EventBus.phase_changed.emit(GameState.current_phase)
 	close()
