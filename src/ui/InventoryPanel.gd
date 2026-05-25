@@ -95,11 +95,16 @@ func _build_inventory_grid() -> void:
 
 func _select(comp: ComponentData) -> void:
     _selected = comp
+    var cost = GameState.get_deletion_cost()
+    _delete_btn.text = "删除 ¥%d" % cost
+    _delete_btn.disabled = not GameState.can_afford_deletion()
     _delete_btn.show()
     _refresh()
 
 func _on_delete() -> void:
     if _selected == null:
+        return
+    if not GameState.can_afford_deletion():
         return
     for i in GameState.rule_slots.size():
         var slot = GameState.rule_slots[i]
@@ -107,6 +112,7 @@ func _on_delete() -> void:
             slot["trigger"] = null
         if slot["effect"] == _selected:
             slot["effect"] = null
+    GameState.pay_deletion_cost()
     GameState.delete_component(_selected)
     _selected = null
     _delete_btn.hide()

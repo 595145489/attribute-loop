@@ -8,6 +8,7 @@ var _float_tween: Tween = null
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
 @onready var bag_btn: Button = $BottomBar/HContent/BagButton
+@onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldLabel
 @onready var float_label: Label = $FloatLabel
 
 @onready var _t_name: Array[Label] = [
@@ -45,6 +46,7 @@ func _process(_delta: float) -> void:
 	var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 	phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
+	gold_label.text = "金: %d" % GameState.gold
 	for i in GameState.rule_slots.size():
 		_update_rule_panel(i)
 
