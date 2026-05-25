@@ -2,10 +2,8 @@ class_name RuleEngine
 extends Node
 
 var _tiles: Array = []
-var _log_file: FileAccess = null
 
 func _ready() -> void:
-	_log_file = FileAccess.open("res://tests/rule_debug.log", FileAccess.WRITE)
 	EventBus.player_hit.connect(_on_player_hit)
 	EventBus.enemy_killed.connect(_on_enemy_killed)
 	EventBus.loop_completed.connect(_on_loop_completed)
@@ -14,12 +12,6 @@ func _ready() -> void:
 
 func set_tiles(tiles: Array) -> void:
 	_tiles = tiles
-
-func _log(msg: String) -> void:
-	if _log_file:
-		_log_file.store_line(msg)
-		_log_file.flush()
-	print(msg)
 
 func _on_player_hit(_damage: int) -> void:
 	_evaluate_player_triggers(["受击"])
@@ -49,9 +41,6 @@ func _evaluate_player_triggers(trigger_ids: Array) -> void:
 		if trigger.id not in trigger_ids:
 			continue
 		trigger.trigger_count += 1
-		_log("[slot%d] T=%s count=%d/%.0f E=%s eff_val=%.2f" % [
-			i, trigger.id, trigger.trigger_count, trigger.trigger_value,
-			effect.id, effect.effect_value])
 		if trigger.trigger_count >= trigger.trigger_value:
 			trigger.trigger_count = 0
 			_execute_effect(i, effect, 0)
@@ -64,7 +53,6 @@ func _evaluate_tile_rules(tile: Tile) -> void:
 			continue
 		var n := int(t.trigger_value)
 		if n > 0 and tile.pass_count % n == 0:
-			_log("[tile%d] 经过(%d) pass=%d FIRE E=%s" % [tile.tile_index, n, tile.pass_count, e.id])
 			_execute_effect(-1, e, tile.pass_count)
 
 func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> void:
@@ -79,9 +67,6 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 	var bonus: float = GameState.altar_bonuses.get(effect.id, 0.0)
 	var final_value: float = actual + bonus
 
-	_log("[FIRE] E=%s pass=%d scale=%.2f actual=%.2f bonus=%.2f final=%.2f hp_before=%d" % [
-		effect.id, pass_count, scale_factor, actual, bonus, final_value, GameState.hp])
-
 	match effect.id:
 		"治愈":
 			GameState.hp = min(GameState.hp + int(final_value), GameState.hp_max)
@@ -89,7 +74,3 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 		"反射":
 			GameState.pending_reflect_ratio = final_value
 			EventBus.rule_fired.emit(slot_idx, "反射", final_value)
-		_:
-			_log("[FIRE] unknown effect id: '" + effect.id + "'")
-
-	_log("[FIRE] hp_after=%d" % GameState.hp)
