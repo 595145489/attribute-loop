@@ -2,8 +2,11 @@ class_name HUD
 extends CanvasLayer
 
 var _inventory_panel = null
+var _altar_panel = null
+var _altar_tile = null
 var _float_tween: Tween = null
 
+@onready var altar_btn: Button = $BottomBar/HContent/AltarButton
 @onready var hp_label: Label = $BottomBar/HContent/HPPill/HPLabel
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
@@ -34,11 +37,16 @@ var _float_tween: Tween = null
 
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
+	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
 	EventBus.rule_fired.connect(_on_rule_fired)
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
+
+func setup_altar(panel, tile) -> void:
+	_altar_panel = panel
+	_altar_tile = tile
 
 func _process(_delta: float) -> void:
 	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
@@ -78,6 +86,14 @@ func _update_rule_panel(i: int) -> void:
 func _on_bag_pressed() -> void:
 	if _inventory_panel != null:
 		_inventory_panel.toggle()
+
+func _on_altar_pressed() -> void:
+	if _altar_panel == null or _altar_tile == null:
+		return
+	if _altar_panel.visible:
+		_altar_panel.close()
+	else:
+		_altar_panel.open(_altar_tile)
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	if effect_id == "治愈":

@@ -25,6 +25,7 @@ func _ready() -> void:
 	strip_manager.setup(strip_panel)
 	strip_panel.setup(inventory_panel)
 	hud.setup(inventory_panel)
+	hud.setup_altar(altar_panel, tiles[0])
 	rule_engine.set_tiles(tiles)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)

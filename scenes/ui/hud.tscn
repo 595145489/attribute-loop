@@ -121,6 +121,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
 layout_mode = 2
 theme_override_constants/separation = 6
 
+[node name="AltarButton" type="Button" parent="BottomBar/HContent" unique_id=1939459428]
+layout_mode = 2
+text = "祭坛"
+
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hp")
