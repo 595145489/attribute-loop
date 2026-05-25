@@ -64,11 +64,6 @@ func _build_altar_slots() -> void:
 		slot_btn.pressed.connect(func(): _on_altar_slot_clicked(idx))
 		hbox.add_child(slot_btn)
 
-		if comp != null:
-			var take_btn := Button.new()
-			take_btn.text = "取回"
-			take_btn.pressed.connect(func(): _on_take_back(idx))
-			hbox.add_child(take_btn)
 
 func _build_bonuses_label() -> void:
 	if GameState.altar_bonuses.is_empty():
@@ -108,13 +103,6 @@ func _on_inv_pick(comp: ComponentData) -> void:
 	_inv_picker.hide()
 	_refresh()
 
-func _on_take_back(slot_idx: int) -> void:
-	var comp := _tile.altar_slots[slot_idx] as ComponentData
-	if comp == null:
-		return
-	_tile.altar_slots[slot_idx] = null
-	GameState.add_to_inventory(comp)
-	_refresh()
 
 func _on_activate() -> void:
 	for raw in _tile.altar_slots:
