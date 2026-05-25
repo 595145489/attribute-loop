@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://d6kk8olumpwl"]
+
+[ext_resource type="Script" path="res://src/ui/TileRulePanel.gd" id="1_ynhln"]
+
+[node name="TileRulePanel" type="PanelContainer" unique_id=1901766401]
+custom_minimum_size = Vector2(400, 300)
+script = ExtResource("1_ynhln")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=310248638]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox" unique_id=1920989337]
+layout_mode = 2
+text = "地块规则"
+
+[node name="Slots" type="VBoxContainer" parent="VBox" unique_id=1687061272]
+layout_mode = 2
+
+[node name="InvPicker" type="VBoxContainer" parent="VBox" unique_id=809690828]
+visible = false
+layout_mode = 2
+
+[node name="InvLabel" type="Label" parent="VBox/InvPicker" unique_id=716484426]
+layout_mode = 2
+text = "选择组件"
+
+[node name="InvGrid" type="GridContainer" parent="VBox/InvPicker" unique_id=1066206457]
+layout_mode = 2
+columns = 3
+
+[node name="CloseButton" type="Button" parent="VBox" unique_id=337841513]
+layout_mode = 2
+text = "关闭"

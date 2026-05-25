@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bkpxrfdqerp75"]
+
+[node name="AltarPanel" type="PanelContainer" unique_id=524408031]
+custom_minimum_size = Vector2(450, 350)
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=329013949]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox" unique_id=2126416594]
+layout_mode = 2
+text = "祭坛"
+
+[node name="Progress" type="Label" parent="VBox" unique_id=2107237084]
+layout_mode = 2
+text = "进度 0 / 0"
+
+[node name="AltarSlots" type="VBoxContainer" parent="VBox" unique_id=123769888]
+layout_mode = 2
+
+[node name="BonusesLabel" type="Label" parent="VBox" unique_id=1890528474]
+layout_mode = 2
+text = "当前祭坛加成：无"
+
+[node name="ActivateButton" type="Button" parent="VBox" unique_id=650473870]
+layout_mode = 2
+text = "激活祭坛"
+
+[node name="InvPicker" type="VBoxContainer" parent="VBox" unique_id=219696469]
+visible = false
+layout_mode = 2
+
+[node name="InvGrid" type="GridContainer" parent="VBox/InvPicker" unique_id=436512756]
+layout_mode = 2
+columns = 3
+
+[node name="CloseButton" type="Button" parent="VBox" unique_id=464425377]
+layout_mode = 2
+text = "关闭"
