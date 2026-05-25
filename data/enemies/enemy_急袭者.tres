@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cq6tjscutptne"]
 
 [ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_0fmkg"]
+[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_03.tres" id="2_jirush"]
 
 [resource]
 script = ExtResource("1_0fmkg")
@@ -9,5 +10,20 @@ hp_base = 25
 dmg_base = 10
 gold_min = 20
 gold_max = 50
+gold_scale = 0.3
 unlock_phase = 4
 attack_interval = 0.4
+component_pair_min = 1
+component_pair_max = 2
+trigger_weights = {
+"受击": 35,
+"击杀": 35,
+"经过": 30
+}
+effect_weights = {
+"治愈": 50,
+"反射": 50
+}
+phase_drop_presets = {
+4: ExtResource("2_jirush")
+}

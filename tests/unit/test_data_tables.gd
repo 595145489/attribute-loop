@@ -1,4 +1,4 @@
-extends GutTest
+﻿extends GutTest
 
 func test_game_config_loaded() -> void:
 	assert_not_null(DataTables.config)
@@ -104,3 +104,28 @@ func test_tile_max_rules_values_in_range() -> void:
 	for i in range(1, DataTables.TILE_MAX_RULES.size()):
 		var v = DataTables.TILE_MAX_RULES[i]
 		assert_true(v >= 1 and v <= 3, "tile %d has invalid max_rules %d" % [i, v])
+
+func test_急袭者_has_trigger_weights() -> void:
+	var e: EnemyData = DataTables.get_enemy("急袭者")
+	assert_false(e.trigger_weights.is_empty(), "急袭者 must have trigger_weights")
+
+func test_急袭者_has_effect_weights() -> void:
+	var e: EnemyData = DataTables.get_enemy("急袭者")
+	assert_false(e.effect_weights.is_empty(), "急袭者 must have effect_weights")
+
+func test_急袭者_has_drop_preset() -> void:
+	var e: EnemyData = DataTables.get_enemy("急袭者")
+	assert_false(e.phase_drop_presets.is_empty(), "急袭者 must have phase_drop_presets")
+
+func test_急袭者_unlock_phase_is_4() -> void:
+	var e: EnemyData = DataTables.get_enemy("急袭者")
+	assert_eq(e.unlock_phase, 4)
+
+func test_pick_enemy_id_can_return_急袭者_at_phase_4() -> void:
+	var phase: PhaseData = DataTables.get_phase(4)
+	var found := false
+	for i in 200:
+		if GameLoop._pick_enemy_id(phase, 4) == "急袭者":
+			found = true
+			break
+	assert_true(found, "急袭者 must be pickable from phase 4 spawn weights")
