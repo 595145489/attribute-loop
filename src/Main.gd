@@ -64,11 +64,12 @@ func _check_player_tile() -> void:
 			return
 
 func _unhandled_input(event: InputEvent) -> void:
+	if GameState.is_paused:
+		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var pos = get_global_mouse_position()
 		for tile in tiles_container.get_children():
-			var tile_rect := Rect2(tile.global_position - Vector2(12, 12), Vector2(24, 24))
-			if tile_rect.has_point(pos):
+			if pos.distance_to(tile.global_position) < 20.0:
 				if tile.is_altar:
 					altar_panel.open(tile)
 				else:
