@@ -1,59 +1,74 @@
-[gd_scene load_steps=10 format=3 uid="uid://main_scene_v1"]
+[gd_scene format=3 uid="uid://e4tq5wl3aqmo"]
 
-[ext_resource type="Script" path="res://src/Main.gd" id="1_main"]
-[ext_resource type="Script" path="res://src/systems/CombatSystem.gd" id="2_combat"]
-[ext_resource type="Script" path="res://src/systems/GameLoop.gd" id="3_gameloop"]
-[ext_resource type="Script" path="res://src/systems/RuleEngine.gd" id="4_re"]
-[ext_resource type="Script" path="res://src/systems/StripManager.gd" id="5_sm"]
-[ext_resource type="PackedScene" path="res://scenes/entities/player.tscn" id="6_player"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="7_hud"]
+[ext_resource type="Script" uid="uid://ck0gol4027h40" path="res://src/Main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://d0kvyb08mi04x" path="res://src/systems/CombatSystem.gd" id="2_combat"]
+[ext_resource type="Script" uid="uid://dpu2i1x48chas" path="res://src/systems/GameLoop.gd" id="3_gameloop"]
+[ext_resource type="Script" uid="uid://dmm2ns1b5o1w7" path="res://src/systems/RuleEngine.gd" id="4_re"]
+[ext_resource type="Script" uid="uid://bgc11ai00kpvo" path="res://src/systems/StripManager.gd" id="5_sm"]
+[ext_resource type="PackedScene" uid="uid://dtro6q0mcaml" path="res://scenes/entities/player.tscn" id="6_player"]
+[ext_resource type="Script" uid="uid://dxgdd1ivtcf8b" path="res://src/systems/EconomyManager.gd" id="7_choun"]
+[ext_resource type="PackedScene" uid="uid://c6x1nyk4wvrgq" path="res://scenes/ui/hud.tscn" id="7_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/strip_panel.tscn" id="8_strip"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory_panel.tscn" id="9_inv"]
+[ext_resource type="PackedScene" uid="uid://d6kk8olumpwl" path="res://scenes/ui/tile_rule_panel.tscn" id="11_trceg"]
+[ext_resource type="Script" uid="uid://da3hkkhv7pvor" path="res://src/ui/TileRulePanel.gd" id="12_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://bkpxrfdqerp75" path="res://scenes/ui/altar_panel.tscn" id="13_jkv2x"]
 
 [sub_resource type="Curve2D" id="Curve2D_track"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 86, 70, 0, 0, 0, 0, 1066, 70, 0, 0, 0, 0, 1066, 530, 0, 0, 0, 0, 86, 530, 0, 0, 0, 0, 86, 70),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 86, 70, 0, 0, 0, 0, 1066, 70, 0, 0, 0, 0, 1066, 530, 0, 0, 0, 0, 86, 530, 0, 0, 0, 0, 86, 70)
 }
+point_count = 5
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1791836967]
 script = ExtResource("1_main")
 
-[node name="Track" type="Path2D" parent="."]
+[node name="Track" type="Path2D" parent="." unique_id=1999103066]
 curve = SubResource("Curve2D_track")
 
-[node name="PlayerFollow" type="PathFollow2D" parent="Track"]
+[node name="PlayerFollow" type="PathFollow2D" parent="Track" unique_id=1624764954]
+position = Vector2(86, 70)
 rotates = false
 
-[node name="Player" parent="Track/PlayerFollow" instance=ExtResource("6_player")]
+[node name="Player" parent="Track/PlayerFollow" unique_id=714067380 instance=ExtResource("6_player")]
 
-[node name="TilesContainer" type="Node2D" parent="."]
+[node name="TilesContainer" type="Node2D" parent="." unique_id=1696837434]
 
-[node name="EnemiesContainer" type="Node2D" parent="."]
+[node name="EnemiesContainer" type="Node2D" parent="." unique_id=1702795812]
 
-[node name="TrackLine" type="Line2D" parent="."]
+[node name="TrackLine" type="Line2D" parent="." unique_id=1620710]
 points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
 width = 2.0
 default_color = Color(0.4, 0.4, 0.4, 1)
 
-[node name="Systems" type="Node" parent="."]
+[node name="Systems" type="Node" parent="." unique_id=53247820]
 
-[node name="CombatSystem" type="Node" parent="Systems"]
+[node name="CombatSystem" type="Node" parent="Systems" unique_id=673235025]
 script = ExtResource("2_combat")
 
-[node name="GameLoop" type="Node" parent="Systems"]
+[node name="GameLoop" type="Node" parent="Systems" unique_id=1869171208]
 script = ExtResource("3_gameloop")
 
-[node name="RuleEngine" type="Node" parent="Systems"]
+[node name="RuleEngine" type="Node" parent="Systems" unique_id=688364042]
 script = ExtResource("4_re")
 
-[node name="StripManager" type="Node" parent="Systems"]
+[node name="StripManager" type="Node" parent="Systems" unique_id=999074985]
 script = ExtResource("5_sm")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="EconomyManager" type="Node" parent="Systems" unique_id=1456410390]
+script = ExtResource("7_choun")
 
-[node name="HUD" parent="UI" instance=ExtResource("7_hud")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=2098422999]
 
-[node name="StripPanel" parent="UI" instance=ExtResource("8_strip")]
+[node name="HUD" parent="UI" unique_id=1040373391 instance=ExtResource("7_hud")]
 
-[node name="InventoryPanel" parent="UI" instance=ExtResource("9_inv")]
+[node name="StripPanel" parent="UI" unique_id=285933306 instance=ExtResource("8_strip")]
+
+[node name="InventoryPanel" parent="UI" unique_id=388834648 instance=ExtResource("9_inv")]
+
+[node name="TileRulePanel" type="PanelContainer" parent="UI" unique_id=1901766401 instance=ExtResource("11_trceg")]
+custom_minimum_size = Vector2(400, 300)
+script = ExtResource("12_a8y0u")
+
+[node name="AltarPanel" type="PanelContainer" parent="UI" unique_id=524408031 instance=ExtResource("13_jkv2x")]
+custom_minimum_size = Vector2(450, 350)

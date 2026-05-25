@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_pwh6o")
+deletion_cost_sequence = Array[int]([20, 50, 100])
+deletion_cost_multiplier = 2.0

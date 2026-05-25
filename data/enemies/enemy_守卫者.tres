@@ -11,6 +11,7 @@ hp_base = 80
 dmg_base = 16
 gold_min = 5
 gold_max = 15
+gold_scale = 0.3
 attack_interval = 1.2
 trigger_weights = {
 "击杀": 25,
