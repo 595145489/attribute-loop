@@ -1,132 +1,211 @@
-extends GutTest
+﻿extends GutTest
 
 var engine: RuleEngine
 
 func before_each() -> void:
-    GameState.reset()
-    engine = RuleEngine.new()
-    add_child_autofree(engine)
+	GameState.reset()
+	engine = RuleEngine.new()
+	add_child_autofree(engine)
 
 func _make_rule(trigger_id: String, trigger_value: float, effect_id: String, effect_value: float) -> void:
-    var t = ComponentData.new()
-    t.id = trigger_id
-    t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
-    t.trigger_value = trigger_value
-    t.trigger_count = 0
-    var e = ComponentData.new()
-    e.id = effect_id
-    e.slot_type = ComponentData.SlotType.EFFECT_ONLY
-    e.effect_value = effect_value
-    GameState.rule_slots[0]["trigger"] = t
-    GameState.rule_slots[0]["effect"] = e
+	var t = ComponentData.new()
+	t.id = trigger_id
+	t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+	t.trigger_value = trigger_value
+	t.trigger_count = 0
+	var e = ComponentData.new()
+	e.id = effect_id
+	e.slot_type = ComponentData.SlotType.EFFECT_ONLY
+	e.effect_value = effect_value
+	GameState.rule_slots[0]["trigger"] = t
+	GameState.rule_slots[0]["effect"] = e
 
 func test_trigger_count_increments_on_player_hit() -> void:
-    _make_rule("受击", 3.0, "治愈", 10.0)
-    var t = GameState.rule_slots[0]["trigger"]
-    EventBus.player_hit.emit(5)
-    assert_eq(t.trigger_count, 1)
+	_make_rule("受击", 3.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.player_hit.emit(5)
+	assert_eq(t.trigger_count, 1)
 
 func test_trigger_count_increments_on_enemy_killed() -> void:
-    _make_rule("击杀", 2.0, "治愈", 10.0)
-    var t = GameState.rule_slots[0]["trigger"]
-    var dummy = Enemy.new()
-    dummy.init("汲取者")
-    EventBus.enemy_killed.emit(dummy)
-    assert_eq(t.trigger_count, 1)
+	_make_rule("击杀", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	var dummy = Enemy.new()
+	dummy.init("汲取者")
+	EventBus.enemy_killed.emit(dummy)
+	assert_eq(t.trigger_count, 1)
 
 func test_trigger_count_increments_on_loop_completed() -> void:
-    _make_rule("完成圈数", 2.0, "治愈", 10.0)
-    var t = GameState.rule_slots[0]["trigger"]
-    EventBus.loop_completed.emit()
-    assert_eq(t.trigger_count, 1)
+	_make_rule("完成圈数", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.loop_completed.emit()
+	assert_eq(t.trigger_count, 1)
 
 func test_trigger_count_increments_on_tile_passed() -> void:
-    _make_rule("经过", 3.0, "治愈", 10.0)
-    var t = GameState.rule_slots[0]["trigger"]
-    EventBus.tile_passed.emit(0)
-    assert_eq(t.trigger_count, 1)
+	_make_rule("经过", 3.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.tile_passed.emit(0)
+	assert_eq(t.trigger_count, 1)
 
 func test_heal_fires_when_threshold_reached() -> void:
-    _make_rule("受击", 1.0, "治愈", 15.0)
-    GameState.hp = 50
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.hp, 65)
+	_make_rule("受击", 1.0, "治愈", 15.0)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, 65)
 
 func test_heal_resets_trigger_count() -> void:
-    _make_rule("受击", 1.0, "治愈", 10.0)
-    var t = GameState.rule_slots[0]["trigger"]
-    EventBus.player_hit.emit(5)
-    assert_eq(t.trigger_count, 0)
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.player_hit.emit(5)
+	assert_eq(t.trigger_count, 0)
 
 func test_heal_capped_at_hp_max() -> void:
-    _make_rule("受击", 1.0, "治愈", 999.0)
-    GameState.hp = 90
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.hp, GameState.hp_max)
+	_make_rule("受击", 1.0, "治愈", 999.0)
+	GameState.hp = 90
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, GameState.hp_max)
 
 func test_reflect_sets_pending_ratio() -> void:
-    _make_rule("受击", 1.0, "反射", 0.5)
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.pending_reflect_ratio, 0.5)
+	_make_rule("受击", 1.0, "反射", 0.5)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.pending_reflect_ratio, 0.5)
 
 func test_rule_fired_signal_emitted_on_effect() -> void:
-    watch_signals(EventBus)
-    _make_rule("受击", 1.0, "治愈", 10.0)
-    GameState.hp = 50
-    EventBus.player_hit.emit(5)
-    assert_signal_emitted(EventBus, "rule_fired")
+	watch_signals(EventBus)
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_signal_emitted(EventBus, "rule_fired")
 
 func test_no_fire_when_trigger_slot_empty() -> void:
-    var e = ComponentData.new()
-    e.id = "治愈"
-    e.effect_value = 10.0
-    GameState.rule_slots[0]["effect"] = e
-    GameState.rule_slots[0]["trigger"] = null
-    GameState.hp = 50
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.hp, 50)
+	var e = ComponentData.new()
+	e.id = "治愈"
+	e.effect_value = 10.0
+	GameState.rule_slots[0]["effect"] = e
+	GameState.rule_slots[0]["trigger"] = null
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, 50)
 
 func test_no_fire_when_effect_slot_empty() -> void:
-    var t = ComponentData.new()
-    t.id = "受击"
-    t.trigger_value = 1.0
-    GameState.rule_slots[0]["trigger"] = t
-    GameState.rule_slots[0]["effect"] = null
-    GameState.hp = 50
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.hp, 50)
+	var t = ComponentData.new()
+	t.id = "受击"
+	t.trigger_value = 1.0
+	GameState.rule_slots[0]["trigger"] = t
+	GameState.rule_slots[0]["effect"] = null
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, 50)
 
 func _make_rule_slot1(trigger_id: String, trigger_value: float, effect_id: String, effect_value: float) -> void:
-    var t = ComponentData.new()
-    t.id = trigger_id
-    t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
-    t.trigger_value = trigger_value
-    t.trigger_count = 0
-    var e = ComponentData.new()
-    e.id = effect_id
-    e.slot_type = ComponentData.SlotType.EFFECT_ONLY
-    e.effect_value = effect_value
-    GameState.rule_slots[1]["trigger"] = t
-    GameState.rule_slots[1]["effect"] = e
+	var t = ComponentData.new()
+	t.id = trigger_id
+	t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+	t.trigger_value = trigger_value
+	t.trigger_count = 0
+	var e = ComponentData.new()
+	e.id = effect_id
+	e.slot_type = ComponentData.SlotType.EFFECT_ONLY
+	e.effect_value = effect_value
+	GameState.rule_slots[1]["trigger"] = t
+	GameState.rule_slots[1]["effect"] = e
 
 func test_heal_trigger_increments_when_heal_fires() -> void:
-    _make_rule("受击", 1.0, "治愈", 10.0)
-    _make_rule_slot1("治愈", 2.0, "反射", 0.3)
-    GameState.hp = 50
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 1)
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	_make_rule_slot1("治愈", 2.0, "反射", 0.3)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 1)
 
 func test_heal_trigger_does_not_increment_without_heal() -> void:
-    _make_rule("受击", 5.0, "治愈", 10.0)
-    _make_rule_slot1("治愈", 1.0, "反射", 0.3)
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 0)
+	_make_rule("受击", 5.0, "治愈", 10.0)
+	_make_rule_slot1("治愈", 1.0, "反射", 0.3)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.rule_slots[1]["trigger"].trigger_count, 0)
 
 func test_heal_trigger_fires_even_at_full_hp() -> void:
-    # 治愈 effect always emits rule_fired regardless of HP cap; HP just cannot exceed max
-    _make_rule("受击", 1.0, "治愈", 10.0)
-    _make_rule_slot1("治愈", 1.0, "反射", 0.3)
-    GameState.hp = GameState.hp_max
-    EventBus.player_hit.emit(5)
-    assert_eq(GameState.hp, GameState.hp_max)
-    assert_eq(GameState.pending_reflect_ratio, 0.3, "heal trigger should still fire even at full HP")
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	_make_rule_slot1("治愈", 1.0, "反射", 0.3)
+	GameState.hp = GameState.hp_max
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, GameState.hp_max)
+	assert_eq(GameState.pending_reflect_ratio, 0.3, "heal trigger should still fire even at full HP")
+
+func _make_tile_with_rule(tile_idx: int, n: int, effect_id: String, effect_value: float, growth_rate: float = 0.0) -> Tile:
+	var tile := Tile.new()
+	tile.tile_index = tile_idx
+	tile.is_altar = false
+	add_child_autofree(tile)
+	tile.rule_slots.clear()
+	var t := ComponentData.new()
+	t.id = "经过"
+	t.slot_type = ComponentData.SlotType.TRIGGER_ONLY
+	t.trigger_value = float(n)
+	var e := ComponentData.new()
+	e.id = effect_id
+	e.slot_type = ComponentData.SlotType.EFFECT_ONLY
+	e.effect_value = effect_value
+	e.growth_rate = growth_rate
+	e.scale_exponent = 1.0
+	e.max_scale = 0.0
+	e.altar_ratio = 0.0
+	tile.rule_slots.append({"trigger": t, "effect": e})
+	return tile
+
+func test_tile_rule_fires_on_nth_pass() -> void:
+	var tile := _make_tile_with_rule(1, 2, "治愈", 10.0)
+	engine.set_tiles([null, tile])
+	GameState.hp = 50
+	tile.pass_count = 1
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 50, "should not fire on pass 1 (need 2)")
+	tile.pass_count = 2
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 60, "should fire on pass 2")
+
+func test_tile_rule_does_not_fire_with_incomplete_slot() -> void:
+	var tile := Tile.new()
+	tile.tile_index = 1
+	tile.is_altar = false
+	add_child_autofree(tile)
+	tile.rule_slots.append({"trigger": null, "effect": null})
+	engine.set_tiles([null, tile])
+	GameState.hp = 50
+	tile.pass_count = 1
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 50)
+
+func test_tile_rule_scales_with_pass_count() -> void:
+	var tile := _make_tile_with_rule(1, 1, "治愈", 10.0, 0.1)
+	engine.set_tiles([null, tile])
+	GameState.hp = 0
+	GameState.hp_max = 9999
+	tile.pass_count = 10
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 20)
+
+func test_altar_bonus_applied_to_player_rule() -> void:
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	GameState.altar_bonuses["治愈"] = 5.0
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, 65, "heal should be 10 base + 5 altar bonus = 15")
+
+func test_altar_bonus_applied_to_tile_rule() -> void:
+	var tile := _make_tile_with_rule(1, 1, "治愈", 10.0)
+	engine.set_tiles([null, tile])
+	GameState.altar_bonuses["治愈"] = 5.0
+	GameState.hp = 0
+	GameState.hp_max = 9999
+	tile.pass_count = 1
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 15, "heal should be 10 + 5 altar bonus = 15")
+
+func test_max_scale_caps_tile_effect() -> void:
+	var tile := _make_tile_with_rule(1, 1, "治愈", 10.0, 1.0)
+	tile.rule_slots[0]["effect"].max_scale = 2.0
+	engine.set_tiles([null, tile])
+	GameState.hp = 0
+	GameState.hp_max = 9999
+	tile.pass_count = 100
+	EventBus.tile_passed.emit(1)
+	assert_eq(GameState.hp, 20, "should be capped at base * max_scale = 10 * 2 = 20")
