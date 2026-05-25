@@ -56,7 +56,7 @@ func _build_altar_slots() -> void:
 
 		var slot_btn := Button.new()
 		if comp:
-			var preview_bonus := comp.effect_value * comp.altar_ratio
+			var preview_bonus: float = comp.effect_value * comp.altar_ratio
 			slot_btn.text = "%s → +%.2f %s" % [comp.display_name, preview_bonus, comp.id]
 		else:
 			slot_btn.text = "[空 — 放入E组件]"
@@ -120,8 +120,8 @@ func _on_activate() -> void:
 	for comp in _tile.altar_slots:
 		if comp == null:
 			continue
-		var bonus := comp.effect_value * comp.altar_ratio
-		GameState.altar_bonuses[comp.id] = GameState.altar_bonuses.get(comp.id, 0.0) + bonus
+		var bonus: float = comp.effect_value * comp.altar_ratio
+		GameState.altar_bonuses[comp.id] = GameState.altar_bonuses.get(comp.id, 0.0) as float + bonus
 	_tile.altar_slots.fill(null)
 	GameState.current_phase += 1
 	EventBus.phase_changed.emit(GameState.current_phase)
