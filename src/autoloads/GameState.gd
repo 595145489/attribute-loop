@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 var hp: int
 var hp_max: int = 100
@@ -12,6 +12,7 @@ var rule_slots: Array = []
 var gold: int = 0
 var deletion_count: int = 0
 var altar_bonuses: Dictionary = {}
+var loops_in_phase: int = 0
 
 func _ready() -> void:
 	reset()
@@ -33,6 +34,7 @@ func reset() -> void:
 	gold = 0
 	deletion_count = 0
 	altar_bonuses = {}
+	loops_in_phase = 0
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
 
@@ -86,3 +88,9 @@ func pay_deletion_cost() -> void:
 	gold -= get_deletion_cost()
 	deletion_count += 1
 	EventBus.gold_changed.emit(gold)
+
+func force_phase_advance() -> void:
+	current_phase += 1
+	loops_in_phase = 0
+	EventBus.phase_changed.emit(current_phase)
+

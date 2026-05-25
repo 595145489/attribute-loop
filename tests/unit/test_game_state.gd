@@ -172,3 +172,23 @@ func test_pay_deletion_cost_increments_deletion_count() -> void:
     GameState.deletion_count = 0
     GameState.pay_deletion_cost()
     assert_eq(GameState.deletion_count, 1)
+
+func test_loops_in_phase_zero_after_reset() -> void:
+    GameState.loops_in_phase = 5
+    GameState.reset()
+    assert_eq(GameState.loops_in_phase, 0)
+
+func test_force_phase_advance_increments_phase() -> void:
+    GameState.current_phase = 1
+    GameState.force_phase_advance()
+    assert_eq(GameState.current_phase, 2)
+
+func test_force_phase_advance_resets_loops_in_phase() -> void:
+    GameState.loops_in_phase = 7
+    GameState.force_phase_advance()
+    assert_eq(GameState.loops_in_phase, 0)
+
+func test_force_phase_advance_emits_phase_changed() -> void:
+    watch_signals(EventBus)
+    GameState.force_phase_advance()
+    assert_signal_emitted(EventBus, "phase_changed")
