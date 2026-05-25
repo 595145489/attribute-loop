@@ -46,7 +46,7 @@ func _build_slots() -> void:
 		_slots_container.add_child(hbox)
 
 		var t_btn := Button.new()
-		t_btn.text = ("%s (%d)" % [t.display_name, int(t.trigger_value)]) if t else "[T 空 — 放入经过]"
+		t_btn.text = ("每%d次 → %s" % [int(t.trigger_value), t.display_name]) if t else "[T 空 — 放入经过]"
 		var idx = i
 		t_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, true))
 		hbox.add_child(t_btn)
@@ -55,7 +55,7 @@ func _build_slots() -> void:
 		if e:
 			var scale_factor = 1.0 + e.growth_rate * pow(float(_tile.pass_count), e.scale_exponent)
 			var val = e.effect_value * scale_factor
-			e_btn.text = "%s (%.1f)" % [e.display_name, val]
+			e_btn.text = "%s +%.1f" % [e.display_name, val]
 		else:
 			e_btn.text = "[E 空]"
 		e_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, false))
@@ -86,7 +86,10 @@ func _show_inv_picker(trigger_only: bool) -> void:
 		if not ok:
 			continue
 		var btn := Button.new()
-		btn.text = comp.display_name
+		if trigger_only:
+			btn.text = "%s  每%.0f次" % [comp.display_name, comp.trigger_value]
+		else:
+			btn.text = "%s  +%.1f" % [comp.display_name, comp.effect_value]
 		var c = comp
 		btn.pressed.connect(func(): _on_inv_pick(c))
 		_inv_grid.add_child(btn)
