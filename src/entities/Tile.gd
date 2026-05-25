@@ -12,8 +12,6 @@ var rule_slots: Array = []
 var altar_slots: Array = []
 
 func _ready() -> void:
-	if has_node("Clickbox"):
-		$Clickbox.input_event.connect(_on_input_event)
 	if is_altar:
 		var req := DataTables.get_phase(GameState.current_phase).altar_requirement
 		altar_slots.resize(req)
@@ -23,10 +21,18 @@ func _ready() -> void:
 		for i in max_rules:
 			rule_slots.append({"trigger": null, "effect": null})
 
-func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if not GameState.is_paused:
-			clicked.emit(self)
+func _input(event: InputEvent) -> void:
+	if GameState.is_paused:
+		return
+	if not (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+		return
+	var local_event := make_input_local(event) as InputEventMouseButton
+	if local_event == null:
+		return
+	var p := local_event.position
+	if abs(p.x) <= 14.0 and abs(p.y) <= 14.0:
+		get_viewport().set_input_as_handled()
+		clicked.emit(self)
 
 func has_enemy() -> bool:
 	return enemy != null
