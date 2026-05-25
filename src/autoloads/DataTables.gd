@@ -1,11 +1,14 @@
 extends Node
 
+# Index 0 = altar (capacity managed by AltarPanel). Indices 1-12 = normal tiles.
+const TILE_MAX_RULES: Array[int] = [0, 1, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 2]
+
 var config: GameConfig
 var player: PlayerData
-var enemies: Dictionary = {}   # String → EnemyData
-var phases: Dictionary = {}    # int → PhaseData
-var components: Dictionary = {}  # String → ComponentData
-var drop_presets: Dictionary = {}  # int → DropPreset (tier number)
+var enemies: Dictionary = {}   # String -> EnemyData
+var phases: Dictionary = {}    # int -> PhaseData
+var components: Dictionary = {}  # String -> ComponentData
+var drop_presets: Dictionary = {}  # int -> DropPreset (tier number)
 
 func _ready() -> void:
 	config = load("res://data/game_config.tres")

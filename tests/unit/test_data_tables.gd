@@ -93,3 +93,14 @@ func test_config_has_deletion_cost_sequence() -> void:
 
 func test_config_has_deletion_cost_multiplier() -> void:
 	assert_eq(DataTables.config.deletion_cost_multiplier, 2.0)
+
+func test_tile_max_rules_has_13_entries() -> void:
+	assert_eq(DataTables.TILE_MAX_RULES.size(), 13)
+
+func test_tile_max_rules_altar_at_index_0() -> void:
+	assert_eq(DataTables.TILE_MAX_RULES[0], 0)
+
+func test_tile_max_rules_values_in_range() -> void:
+	for i in range(1, DataTables.TILE_MAX_RULES.size()):
+		var v = DataTables.TILE_MAX_RULES[i]
+		assert_true(v >= 1 and v <= 3, "tile %d has invalid max_rules %d" % [i, v])
