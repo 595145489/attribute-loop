@@ -50,12 +50,12 @@ func _build_altar_slots() -> void:
 		child.queue_free()
 
 	for i in _tile.altar_slots.size():
-		var comp: ComponentData = _tile.altar_slots[i]
+		var comp := _tile.altar_slots[i] as ComponentData
 		var hbox := HBoxContainer.new()
 		_slots_container.add_child(hbox)
 
 		var slot_btn := Button.new()
-		if comp:
+		if comp != null:
 			var preview_bonus: float = comp.effect_value * comp.altar_ratio
 			slot_btn.text = "%s → +%.2f %s" % [comp.display_name, preview_bonus, comp.id]
 		else:
@@ -64,7 +64,7 @@ func _build_altar_slots() -> void:
 		slot_btn.pressed.connect(func(): _on_altar_slot_clicked(idx))
 		hbox.add_child(slot_btn)
 
-		if comp:
+		if comp != null:
 			var take_btn := Button.new()
 			take_btn.text = "取回"
 			take_btn.pressed.connect(func(): _on_take_back(idx))
@@ -109,7 +109,7 @@ func _on_inv_pick(comp: ComponentData) -> void:
 	_refresh()
 
 func _on_take_back(slot_idx: int) -> void:
-	var comp: ComponentData = _tile.altar_slots[slot_idx]
+	var comp := _tile.altar_slots[slot_idx] as ComponentData
 	if comp == null:
 		return
 	_tile.altar_slots[slot_idx] = null
@@ -117,7 +117,8 @@ func _on_take_back(slot_idx: int) -> void:
 	_refresh()
 
 func _on_activate() -> void:
-	for comp in _tile.altar_slots:
+	for raw in _tile.altar_slots:
+		var comp := raw as ComponentData
 		if comp == null:
 			continue
 		var bonus: float = comp.effect_value * comp.altar_ratio

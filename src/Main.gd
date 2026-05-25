@@ -35,7 +35,7 @@ func _build_tiles() -> Array:
 	var curve = track.curve
 	var length = curve.get_baked_length()
 	for i in 13:
-		var t = float(i) / 12.0
+		var t = float(i) / 13.0
 		var pos = curve.sample_baked(t * length)
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
@@ -67,7 +67,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var pos = get_global_mouse_position()
 		for tile in tiles_container.get_children():
-			if pos.distance_to(tile.global_position) < 30.0:
+			var tile_rect := Rect2(tile.global_position - Vector2(12, 12), Vector2(24, 24))
+			if tile_rect.has_point(pos):
 				if tile.is_altar:
 					altar_panel.open(tile)
 				else:
