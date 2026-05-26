@@ -5,15 +5,12 @@ var hp_max: int = 500
 var loops_completed: int = 0
 var enemies_killed: int = 0
 var current_phase: int = 1
-var is_paused: bool = false:
-	set(value):
-		is_paused = value
-		_apply_time_scale()
+var is_paused: bool = false
 
 var speed_multiplier: float = 1.0:
 	set(value):
 		speed_multiplier = value
-		_apply_time_scale()
+		Engine.time_scale = value
 
 var pending_reflect_ratio: float = 0.0
 var inventory: Array[ComponentData] = []
@@ -51,9 +48,6 @@ func reset() -> void:
 	verdict_loops_survived = 0
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
-
-func _apply_time_scale() -> void:
-	Engine.time_scale = 0.0 if is_paused else speed_multiplier
 
 func inventory_has_space() -> bool:
 	return inventory.size() < DataTables.config.inventory_cap
