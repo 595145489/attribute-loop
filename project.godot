@@ -38,5 +38,5 @@ renderer/rendering_method.mobile="gl_compatibility"
 
 [gui]
 
-theme/default_font="res://resources/fonts/simhei.ttf"
-theme/default_font_size=16
+theme/custom_font="res://resources/fonts/simhei.ttf"
+theme/custom_font_size=16
