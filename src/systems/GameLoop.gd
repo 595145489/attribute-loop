@@ -1,4 +1,4 @@
-﻿class_name GameLoop
+class_name GameLoop
 extends Node
 
 enum State { WALKING, COMBAT, GAME_OVER }
@@ -19,6 +19,7 @@ func setup(tiles: Array, enemies_container: Node, player: Player, combat: Combat
 	EventBus.loop_completed.connect(_on_loop_completed)
 	EventBus.combat_resolved.connect(_on_combat_resolved)
 	EventBus.player_died.connect(_on_player_died)
+	EventBus.verdict_loop_entered.connect(spawn_enemies)
 	spawn_enemies()
 
 func spawn_enemies() -> void:
@@ -27,18 +28,22 @@ func spawn_enemies() -> void:
 	for tile in _tiles:
 		tile.clear_enemy()
 
-	var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+	var config: GameConfig = DataTables.config
+	var spawn_phase := config.verdict_spawn_phase if GameState.in_verdict_loop else GameState.current_phase
+	var stat_phase := config.verdict_enemy_phase if GameState.in_verdict_loop else GameState.current_phase
+
+	var phase_data: PhaseData = DataTables.get_phase(spawn_phase)
 	var count = _roll_spawn_count(phase_data)
 	var indices = _pick_tile_indices(count, _tiles.size())
 
 	for idx in indices:
-		var enemy_id = _pick_enemy_id(phase_data, GameState.current_phase)
+		var enemy_id = _pick_enemy_id(phase_data, stat_phase)
 		var enemy: Enemy = _enemy_scene.instantiate()
 		_enemies_container.add_child(enemy)
-		enemy.init(enemy_id)
+		enemy.init(enemy_id, stat_phase)
 		enemy.position = _tiles[idx].position
 		_tiles[idx].place_enemy(enemy)
-		_assign_components(enemy)
+		_assign_components(enemy, stat_phase)
 
 func check_tile_for_enemy(tile: Tile) -> void:
 	if state != State.WALKING:
@@ -52,11 +57,20 @@ func check_tile_for_enemy(tile: Tile) -> void:
 
 func _on_loop_completed() -> void:
 	if state == State.WALKING:
-		GameState.loops_in_phase += 1
-		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-		if GameState.loops_in_phase >= phase_data.world_pressure_window:
-			if not _altar_is_full(_tiles[0]):
-				GameState.force_phase_advance()
+		if GameState.in_verdict_loop:
+			GameState.verdict_loops_survived += 1
+			var config: GameConfig = DataTables.config
+			if GameState.verdict_loops_survived >= config.verdict_survive_loops:
+				state = State.GAME_OVER
+				GameState.is_paused = true
+				EventBus.game_won.emit()
+				return
+		else:
+			GameState.loops_in_phase += 1
+			var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+			if GameState.loops_in_phase >= phase_data.world_pressure_window:
+				if not _altar_is_full(_tiles[0]):
+					GameState.force_phase_advance()
 		for tile in _tiles:
 			tile.visited_this_loop = false
 		spawn_enemies()
@@ -77,10 +91,11 @@ func _on_player_died() -> void:
 	_combat_system.stop()
 	GameState.is_paused = true
 
-func _assign_components(enemy: Enemy) -> void:
+func _assign_components(enemy: Enemy, stat_phase: int = -1) -> void:
 	var enemy_data: EnemyData = DataTables.get_enemy(enemy.enemy_id)
-	var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-	var preset: DropPreset = _resolve_drop_preset(enemy_data, GameState.current_phase)
+	var effective_phase := stat_phase if stat_phase > 0 else GameState.current_phase
+	var phase_data: PhaseData = DataTables.get_phase(effective_phase)
+	var preset: DropPreset = _resolve_drop_preset(enemy_data, effective_phase)
 	if preset == null:
 		return
 	var pairs = randi_range(

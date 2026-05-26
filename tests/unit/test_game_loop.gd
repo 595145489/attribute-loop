@@ -1,4 +1,4 @@
-﻿extends GutTest
+extends GutTest
 
 func test_roll_spawn_count_within_range() -> void:
     var phase: PhaseData = DataTables.get_phase(1)
@@ -96,3 +96,14 @@ func test_altar_is_full_true_when_all_slots_filled() -> void:
     tile.altar_slots = [c1, c2]
     assert_true(GameLoop._altar_is_full(tile))
     tile.free()
+
+func test_pick_enemy_id_phase11_includes_all_five_types() -> void:
+    var phase_11: PhaseData = DataTables.get_phase(11)
+    var found: Dictionary = {}
+    for i in 300:
+        found[GameLoop._pick_enemy_id(phase_11, 10)] = true
+    assert_true(found.has("汲取者"), "汲取者 should appear in 裁决圈 spawns")
+    assert_true(found.has("守卫者"), "守卫者 should appear in 裁决圈 spawns")
+    assert_true(found.has("急袭者"), "急袭者 should appear in 裁决圈 spawns")
+    assert_true(found.has("复制者"), "复制者 should appear in 裁决圈 spawns")
+    assert_true(found.has("先驱者"), "先驱者 should appear in 裁决圈 spawns")
