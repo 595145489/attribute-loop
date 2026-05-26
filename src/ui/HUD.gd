@@ -7,6 +7,8 @@ var _altar_tile = null
 var _float_tween: Tween = null
 
 @onready var altar_btn: Button = $BottomBar/HContent/AltarButton
+@onready var log_btn: Button = $BottomBar/HContent/LogButton
+@onready var log_panel: LogPanel = $LogPanel
 @onready var hp_label: Label = $BottomBar/HContent/HPPill/HPLabel
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
@@ -38,6 +40,7 @@ var _float_tween: Tween = null
 
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
+	log_btn.pressed.connect(log_panel.toggle)
 	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
 	EventBus.rule_fired.connect(_on_rule_fired)

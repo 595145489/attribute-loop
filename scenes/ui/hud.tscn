@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c6x1nyk4wvrgq"]
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
+[ext_resource type="PackedScene" uid="uid://log_panel_001" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
 content_margin_left = 8.0
@@ -295,6 +296,12 @@ layout_mode = 2
 [node name="PressureLabel" type="Label" parent="BottomBar/HContent/PressurePill" unique_id=312987655]
 layout_mode = 2
 text = "压力: 0/10圈"
+
+[node name="LogButton" type="Button" parent="BottomBar/HContent" unique_id=999000001]
+layout_mode = 2
+text = "日志"
+
+[node name="LogPanel" parent="." instance=ExtResource("2_logpanel")]
 
 [node name="FloatLabel" type="Label" parent="." unique_id=249889570]
 offset_left = 400.0
