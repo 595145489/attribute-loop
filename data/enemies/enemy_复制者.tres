@@ -6,8 +6,8 @@
 script = ExtResource("1_o7c7t")
 id = "复制者"
 hp_base = 50
-dmg_base = 12
+dmg_base = 2
 gold_min = 20
 gold_max = 50
 unlock_phase = 7
-attack_interval = 0.6
+attack_interval = 1.0

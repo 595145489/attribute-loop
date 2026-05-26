@@ -6,8 +6,8 @@
 script = ExtResource("1_3vxa7")
 id = "先驱者"
 hp_base = 100
-dmg_base = 20
+dmg_base = 3
 gold_min = 20
 gold_max = 50
 unlock_phase = 10
-attack_interval = 0.8
+attack_interval = 1.2

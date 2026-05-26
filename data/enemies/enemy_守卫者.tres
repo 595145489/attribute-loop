@@ -8,11 +8,11 @@
 script = ExtResource("1_lqekq")
 id = "守卫者"
 hp_base = 80
-dmg_base = 16
+dmg_base = 3
 gold_min = 5
 gold_max = 15
 gold_scale = 0.3
-attack_interval = 1.2
+attack_interval = 1.8
 trigger_weights = {
 "击杀": 25,
 "受击": 35,

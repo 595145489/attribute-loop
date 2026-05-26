@@ -7,12 +7,12 @@
 script = ExtResource("1_0fmkg")
 id = "急袭者"
 hp_base = 25
-dmg_base = 10
+dmg_base = 2
 gold_min = 20
 gold_max = 50
 gold_scale = 0.3
 unlock_phase = 4
-attack_interval = 0.4
+attack_interval = 0.8
 component_pair_min = 1
 component_pair_max = 2
 trigger_weights = {
