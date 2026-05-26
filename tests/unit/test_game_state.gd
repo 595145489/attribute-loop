@@ -192,3 +192,13 @@ func test_force_phase_advance_emits_phase_changed() -> void:
     watch_signals(EventBus)
     GameState.force_phase_advance()
     assert_signal_emitted(EventBus, "phase_changed")
+
+func test_in_verdict_loop_false_after_reset() -> void:
+    GameState.in_verdict_loop = true
+    GameState.reset()
+    assert_false(GameState.in_verdict_loop)
+
+func test_verdict_loops_survived_zero_after_reset() -> void:
+    GameState.verdict_loops_survived = 3
+    GameState.reset()
+    assert_eq(GameState.verdict_loops_survived, 0)
