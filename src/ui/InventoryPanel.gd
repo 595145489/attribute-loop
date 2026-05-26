@@ -2,7 +2,6 @@ class_name InventoryPanel
 extends PanelContainer
 
 var _selected: ComponentData = null
-var _owns_pause: bool = false
 
 @onready var _rule_slot_container: VBoxContainer = $VBox/RuleSlots
 @onready var _inv_grid: GridContainer = $VBox/InventoryGrid
@@ -26,17 +25,10 @@ func _input(event: InputEvent) -> void:
 func toggle() -> void:
     if visible:
         hide()
-        if _owns_pause:
-            GameState.is_paused = false
-            _owns_pause = false
+        GameState.unpause_for_panel()
     else:
         show()
-        # Only take ownership of pause if game isn't already paused by something else
-        if not GameState.is_paused:
-            GameState.is_paused = true
-            _owns_pause = true
-        else:
-            _owns_pause = false
+        GameState.pause_for_panel()
         _refresh()
 
 func _refresh() -> void:

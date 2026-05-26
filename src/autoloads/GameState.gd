@@ -10,7 +10,9 @@ var is_paused: bool = false
 var speed_multiplier: float = 1.0:
 	set(value):
 		speed_multiplier = value
-		Engine.time_scale = value
+		_apply_time_scale()
+
+var _panel_pause_count: int = 0
 
 var pending_reflect_ratio: float = 0.0
 var inventory: Array[ComponentData] = []
@@ -36,6 +38,7 @@ func reset() -> void:
 	enemies_killed = 0
 	current_phase = 1
 	is_paused = false
+	_panel_pause_count = 0
 	speed_multiplier = 1.0
 	pending_reflect_ratio = 0.0
 	inventory = []
@@ -48,6 +51,17 @@ func reset() -> void:
 	verdict_loops_survived = 0
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
+
+func pause_for_panel() -> void:
+	_panel_pause_count += 1
+	_apply_time_scale()
+
+func unpause_for_panel() -> void:
+	_panel_pause_count = max(0, _panel_pause_count - 1)
+	_apply_time_scale()
+
+func _apply_time_scale() -> void:
+	Engine.time_scale = 0.0 if _panel_pause_count > 0 else speed_multiplier
 
 func inventory_has_space() -> bool:
 	return inventory.size() < DataTables.config.inventory_cap

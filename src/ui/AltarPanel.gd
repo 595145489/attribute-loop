@@ -13,37 +13,25 @@ var _tile: Tile = null
 @onready var _close_btn: Button = $VBox/CloseButton
 
 var _selecting_slot_idx: int = -1
-var _pause_before_open: bool = false
 
 func _ready() -> void:
 	hide()
 	_close_btn.pressed.connect(close)
 	_activate_btn.pressed.connect(_on_activate)
-	EventBus.combat_resolved.connect(_on_combat_resolved)
 
 func open(tile: Tile) -> void:
 	_tile = tile
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
-	_pause_before_open = GameState.is_paused
-	GameState.is_paused = true
+	GameState.pause_for_panel()
 	show()
 	_refresh()
 
 func close() -> void:
 	hide()
 	_tile = null
-	GameState.is_paused = _pause_before_open
+	GameState.unpause_for_panel()
 
-func _on_combat_resolved() -> void:
-	if not visible:
-		return
-	_pause_before_open = false
-	call_deferred(&"_reassert_pause")
-
-func _reassert_pause() -> void:
-	if visible:
-		GameState.is_paused = true
 
 func _refresh() -> void:
 	var req := _tile.altar_slots.size()

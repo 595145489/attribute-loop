@@ -26,7 +26,7 @@ func show_for_enemy(enemy: Enemy, on_complete: Callable) -> void:
     _on_complete = on_complete
     _build_grid(enemy.components)
     show()
-    GameState.is_paused = true
+    GameState.pause_for_panel()
 
 func _build_grid(components: Array[ComponentData]) -> void:
     for child in _grid.get_children():
@@ -79,7 +79,7 @@ func _refresh_take_buttons() -> void:
 
 func _on_continue() -> void:
     hide()
-    GameState.is_paused = false
+    GameState.unpause_for_panel()
     if _on_complete.is_valid():
         _on_complete.call()
 

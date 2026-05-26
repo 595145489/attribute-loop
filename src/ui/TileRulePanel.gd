@@ -20,14 +20,14 @@ func open(tile: Tile) -> void:
 	_tile = tile
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
-	GameState.is_paused = true
+	GameState.pause_for_panel()
 	show()
 	_refresh()
 
 func close() -> void:
 	hide()
 	_tile = null
-	GameState.is_paused = false
+	GameState.unpause_for_panel()
 
 func _refresh() -> void:
 	_title.text = "地块 #%d — 经过 %d 次" % [_tile.tile_index, _tile.pass_count]
