@@ -1,4 +1,4 @@
-﻿class_name HUD
+class_name HUD
 extends CanvasLayer
 
 var _inventory_panel = null
@@ -52,11 +52,16 @@ func setup_altar(panel, tile) -> void:
 func _process(_delta: float) -> void:
 	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
 	loop_label.text = "圈 × %d" % GameState.loops_completed
-	var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-	phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 	gold_label.text = "金: %d" % GameState.gold
-	pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
+	if GameState.in_verdict_loop:
+		var cfg: GameConfig = DataTables.config
+		phase_label.text = "裁决圈"
+		pressure_label.text = "进度: %d/%d圈" % [GameState.verdict_loops_survived, cfg.verdict_survive_loops]
+	else:
+		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+		phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
+		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
 	for i in GameState.rule_slots.size():
 		_update_rule_panel(i)
 
