@@ -13,3 +13,4 @@ extends Resource
 @export var verdict_survive_loops: int = 5
 @export var verdict_enemy_phase: int = 10
 @export var verdict_spawn_phase: int = 11
+@export var combat_log_max_entries: int = 50

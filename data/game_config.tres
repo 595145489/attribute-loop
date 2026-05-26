@@ -10,3 +10,4 @@ verdict_trigger_phase = 5
 verdict_survive_loops = 5
 verdict_enemy_phase = 10
 verdict_spawn_phase = 11
+combat_log_max_entries = 50
