@@ -4,3 +4,5 @@
 
 # Claude Code internal
 .claude/
+
+exports/
