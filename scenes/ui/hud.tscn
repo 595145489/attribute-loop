@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" uid="uid://log_panel_001" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
+[ext_resource type="Script" path="res://src/ui/SpeedControl.gd" id="3_speedcontrol"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
 content_margin_left = 8.0
@@ -310,3 +311,7 @@ offset_right = 700.0
 offset_bottom = 300.0
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
+[node name="SpeedControl" type="HBoxContainer" parent="." unique_id=888000001]
+script = ExtResource("3_speedcontrol")
+offset_right = 160.0
+offset_bottom = 36.0
