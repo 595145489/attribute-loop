@@ -30,6 +30,7 @@ func _ready() -> void:
 	rule_engine.set_tiles(tiles)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
+	EventBus.game_won.connect(_on_game_won)
 
 func _build_tiles() -> Array:
 	var tiles: Array = []
@@ -85,6 +86,12 @@ func reset_tiles() -> void:
 
 func _on_player_died() -> void:
 	var go = GAME_OVER_SCENE.instantiate()
+	go.outcome = "lose"
+	add_child(go)
+
+func _on_game_won() -> void:
+	var go = GAME_OVER_SCENE.instantiate()
+	go.outcome = "win"
 	add_child(go)
 
 func _on_phase_changed(new_phase: int) -> void:
