@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://di6dqtti6gno1"]
+
+[ext_resource type="Script" path="res://src/ui/SpeedControl.gd" id="1_speed"]
+
+[node name="SpeedControl" type="HBoxContainer"]
+script = ExtResource("1_speed")
