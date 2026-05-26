@@ -41,6 +41,8 @@ echo [OK] Export done!
 
 :: Copy start.bat template
 copy /y "%~dp0start_web_template.bat" "%OUT_DIR%\start.bat" >nul
+copy /y "%~dp0serve.py" "%OUT_DIR%\serve.py" >nul
+echo [OK] serve.py copied.
 echo [OK] start.bat copied.
 
 echo.

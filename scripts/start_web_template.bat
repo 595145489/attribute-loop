@@ -7,7 +7,7 @@ echo.
 echo URL: http://localhost:8080
 echo Close this window to stop the server.
 echo.
-start /b python -m http.server 8080
+start /b python serve.py 8080
 ping -n 2 127.0.0.1 >nul
 start "" "http://localhost:8080"
 echo.
