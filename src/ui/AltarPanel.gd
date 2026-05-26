@@ -13,6 +13,7 @@ var _tile: Tile = null
 @onready var _close_btn: Button = $VBox/CloseButton
 
 var _selecting_slot_idx: int = -1
+var _owns_pause: bool = false
 
 func _ready() -> void:
 	hide()
@@ -23,14 +24,20 @@ func open(tile: Tile) -> void:
 	_tile = tile
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
-	GameState.is_paused = true
+	if not GameState.is_paused:
+		GameState.is_paused = true
+		_owns_pause = true
+	else:
+		_owns_pause = false
 	show()
 	_refresh()
 
 func close() -> void:
 	hide()
 	_tile = null
-	GameState.is_paused = false
+	if _owns_pause:
+		GameState.is_paused = false
+		_owns_pause = false
 
 func _refresh() -> void:
 	var req := _tile.altar_slots.size()
