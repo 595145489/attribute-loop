@@ -10,12 +10,10 @@ echo.
 :: ── 1. 找 Godot 可执行文件 ──────────────────────────────────────
 set GODOT_EXE=
 
-:: 优先读本地配置（scripts/godot_path.txt）
 if exist "%~dp0godot_path.txt" (
     set /p GODOT_EXE=<"%~dp0godot_path.txt"
 )
 
-:: 自动搜索常见位置
 if not defined GODOT_EXE (
     for %%P in (
         "C:\Godot\Godot_v4*.exe"
@@ -34,10 +32,8 @@ if not defined GODOT_EXE (
 
 if not defined GODOT_EXE (
     echo [ERROR] 找不到 Godot 可执行文件。
-    echo.
-    echo 请在 scripts\godot_path.txt 里填写 Godot.exe 的完整路径，例如：
+    echo 请在 scripts\godot_path.txt 里填写完整路径，例如：
     echo   S:\Godot_v4.6.2-stable_win64_temp\Godot_v4.6.2-stable_win64.exe
-    echo.
     pause
     exit /b 1
 )
@@ -74,13 +70,35 @@ if %EXPORT_CODE% neq 0 (
 )
 
 echo [OK] 导出成功！
+
+:: ── 4. 写入 start.bat ────────────────────────────────────────────
 echo.
+echo 正在生成 start.bat...
 
-:: ── 4. 打开输出文件夹 ────────────────────────────────────────────
+(
+echo @echo off
+echo chcp 65001 ^>nul
+echo echo ========================================
+echo echo   AttributeLoop - 本地启动
+echo echo ========================================
+echo echo.
+echo echo 服务器地址: http://localhost:8080
+echo echo 关闭此窗口即停止服务器
+echo echo.
+echo :: 先起服务器，再开浏览器
+echo start /b python -m http.server 8080
+echo ping -n 2 127.0.0.1 ^>nul
+echo start "" "http://localhost:8080"
+echo echo.
+echo echo 按任意键关闭服务器...
+echo pause ^>nul
+echo taskkill /f /im python.exe ^>nul 2^>^&1
+) > "%OUT_DIR%\start.bat"
+
+echo [OK] start.bat 已生成
+
+:: ── 5. 打开输出文件夹 ────────────────────────────────────────────
+echo.
 explorer "%OUT_DIR%"
-
-echo 本地预览（需要 Python）：
-echo   cd "%OUT_DIR%" ^&^& python -m http.server 8080
-echo   然后访问 http://localhost:8080
 echo.
 pause
