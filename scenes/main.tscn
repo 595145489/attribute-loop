@@ -16,8 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://bbppvxc4yr2rn" path="res://resources/tiles/track_path.png" id="15_track"]
 
 [sub_resource type="Gradient" id="Gradient_track"]
-offsets = PackedFloat32Array(0, 0.05, 0.15, 0.5, 0.85, 0.95, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0.95, 0.72, 0.25, 0.9, 0.5, 0.32, 0.05, 0.2, 1, 0.88, 0.48, 0.85, 0.5, 0.32, 0.05, 0.2, 0.95, 0.72, 0.25, 0.9, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.12, 0.28, 0.42, 0.5, 0.58, 0.72, 0.88, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.9, 0.65, 0.18, 0.25, 0.98, 0.78, 0.32, 0.72, 0.6, 0.38, 0.08, 0.38, 1, 0.9, 0.55, 0.52, 0.6, 0.38, 0.08, 0.38, 0.98, 0.78, 0.32, 0.72, 0.9, 0.65, 0.18, 0.25, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_track"]
 gradient = SubResource("Gradient_track")
@@ -43,12 +43,13 @@ texture = ExtResource("14_bg")
 
 [node name="TrackLine" type="Line2D" parent="." unique_id=1620710]
 points = PackedVector2Array(576, 70, 1066, 70, 1066, 530, 86, 530, 86, 70, 576, 70)
-width = 56.0
+width = 64.0
 default_color = Color(1, 1, 1, 1)
 texture = SubResource("GradientTexture2D_track")
 texture_mode = 1
-begin_cap_mode = 2
-end_cap_mode = 2
+joint_mode = 2
+begin_cap_mode = 0
+end_cap_mode = 0
 
 [node name="Track" type="Path2D" parent="." unique_id=1999103066]
 curve = SubResource("Curve2D_track")
