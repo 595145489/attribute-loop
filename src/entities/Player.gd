@@ -46,7 +46,10 @@ func exit_combat() -> void:
 
 func _process(delta: float) -> void:
 	if GameState.is_paused:
-		_sprite.pause()
+		if _in_combat:
+			_sprite.play("idle")
+		else:
+			_sprite.pause()
 		return
 	if _in_combat:
 		_sprite.play("idle")
