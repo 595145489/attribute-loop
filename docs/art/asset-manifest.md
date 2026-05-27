@@ -13,7 +13,7 @@
 - [x] trigger_loop.png         — 完成一圈 · circular arrow, loop motif
 - [x] trigger_pass.png         — 经过 · footstep or arrow crossing a line
 - [x] trigger_rule_fire.png    — 规则触发 · chain link or spark cascade
-- [ ] trigger_low_hp.png       — 低血 · cracked heart, red warning
+- [x] trigger_low_hp.png       — 低血 · cracked heart, red warning
 - [ ] trigger_full_hp.png      — 满血 · full glowing heart, bright aura
 
 ### Effect Icons
