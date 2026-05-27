@@ -11,10 +11,9 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/strip_panel.tscn" id="8_strip"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory_panel.tscn" id="9_inv"]
 [ext_resource type="PackedScene" uid="uid://d6kk8olumpwl" path="res://scenes/ui/tile_rule_panel.tscn" id="11_trceg"]
-[ext_resource type="Script" uid="uid://da3hkkhv7pvor" path="res://src/ui/TileRulePanel.gd" id="12_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://bkpxrfdqerp75" path="res://scenes/ui/altar_panel.tscn" id="13_jkv2x"]
-[ext_resource type="Texture2D" path="res://resources/backgrounds/bg_ground.png" id="14_bg"]
-[ext_resource type="Texture2D" path="res://resources/tiles/track_path.png" id="15_track"]
+[ext_resource type="Texture2D" uid="uid://crqallxam48kt" path="res://resources/backgrounds/bg_ground.png" id="14_bg"]
+[ext_resource type="Texture2D" uid="uid://bbppvxc4yr2rn" path="res://resources/tiles/track_path.png" id="15_track"]
 
 [sub_resource type="Curve2D" id="Curve2D_track"]
 _data = {
@@ -26,17 +25,30 @@ point_count = 5
 script = ExtResource("1_main")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1100000001]
-position = Vector2(576, 324)
+position = Vector2(594, 320)
 scale = Vector2(1.125, 0.844)
 texture = ExtResource("14_bg")
-centered = true
+
+[node name="TrackGlow" type="Line2D" parent="." unique_id=1620708]
+points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
+width = 64.0
+default_color = Color(0.85, 0.62, 0.18, 0.18)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="TrackMid" type="Line2D" parent="." unique_id=1620709]
+points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
+width = 32.0
+default_color = Color(0.92, 0.72, 0.28, 0.55)
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="TrackLine" type="Line2D" parent="." unique_id=1620710]
 points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
-width = 40.0
-default_color = Color(1, 1, 1, 1)
-texture = ExtResource("15_track")
-texture_mode = 1
+width = 12.0
+default_color = Color(1.0, 0.92, 0.65, 0.9)
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="Track" type="Path2D" parent="." unique_id=1999103066]
 curve = SubResource("Curve2D_track")
@@ -76,9 +88,9 @@ script = ExtResource("7_choun")
 
 [node name="InventoryPanel" parent="UI" unique_id=388834648 instance=ExtResource("9_inv")]
 
-[node name="TileRulePanel" type="PanelContainer" parent="UI" unique_id=1901766401 instance=ExtResource("11_trceg")]
+[node name="TileRulePanel" parent="UI" unique_id=1901766401 instance=ExtResource("11_trceg")]
 custom_minimum_size = Vector2(400, 300)
-script = ExtResource("12_a8y0u")
 
-[node name="AltarPanel" type="PanelContainer" parent="UI" unique_id=524408031 instance=ExtResource("13_jkv2x")]
+[node name="AltarPanel" parent="UI" unique_id=524408031 instance=ExtResource("13_jkv2x")]
 custom_minimum_size = Vector2(450, 350)
+anchors_preset = 8
