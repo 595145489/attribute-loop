@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://d6kk8olumpwl" path="res://scenes/ui/tile_rule_panel.tscn" id="11_trceg"]
 [ext_resource type="Script" uid="uid://da3hkkhv7pvor" path="res://src/ui/TileRulePanel.gd" id="12_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://bkpxrfdqerp75" path="res://scenes/ui/altar_panel.tscn" id="13_jkv2x"]
+[ext_resource type="Texture2D" path="res://resources/backgrounds/bg_ground.png" id="14_bg"]
+[ext_resource type="Texture2D" path="res://resources/tiles/track_path.png" id="15_track"]
 
 [sub_resource type="Curve2D" id="Curve2D_track"]
 _data = {
@@ -22,6 +24,19 @@ point_count = 5
 
 [node name="Main" type="Node2D" unique_id=1791836967]
 script = ExtResource("1_main")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1100000001]
+position = Vector2(576, 324)
+scale = Vector2(1.125, 0.844)
+texture = ExtResource("14_bg")
+centered = true
+
+[node name="TrackLine" type="Line2D" parent="." unique_id=1620710]
+points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
+width = 40.0
+default_color = Color(1, 1, 1, 1)
+texture = ExtResource("15_track")
+texture_mode = 1
 
 [node name="Track" type="Path2D" parent="." unique_id=1999103066]
 curve = SubResource("Curve2D_track")
@@ -35,11 +50,6 @@ rotates = false
 [node name="TilesContainer" type="Node2D" parent="." unique_id=1696837434]
 
 [node name="EnemiesContainer" type="Node2D" parent="." unique_id=1702795812]
-
-[node name="TrackLine" type="Line2D" parent="." unique_id=1620710]
-points = PackedVector2Array(86, 70, 1066, 70, 1066, 530, 86, 530, 86, 70)
-width = 2.0
-default_color = Color(0.4, 0.4, 0.4, 1)
 
 [node name="Systems" type="Node" parent="." unique_id=53247820]
 
