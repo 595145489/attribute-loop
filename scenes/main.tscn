@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://d6kk8olumpwl" path="res://scenes/ui/tile_rule_panel.tscn" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://bkpxrfdqerp75" path="res://scenes/ui/altar_panel.tscn" id="13_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://crqallxam48kt" path="res://resources/backgrounds/bg_ground.png" id="14_bg"]
-[ext_resource type="Texture2D" uid="uid://bbppvxc4yr2rn" path="res://resources/tiles/track_path.png" id="15_track"]
 
 [sub_resource type="Gradient" id="Gradient_track"]
 offsets = PackedFloat32Array(0, 0.12, 0.28, 0.42, 0.5, 0.58, 0.72, 0.88, 1)
@@ -29,7 +28,7 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="Curve2D" id="Curve2D_track"]
 _data = {
-"points": PackedVector2Array(0, 0, 576, 70, 0, 0, 0, 0, 1066, 70, 0, 0, 0, 0, 1066, 530, 0, 0, 0, 0, 86, 530, 0, 0, 0, 0, 86, 70, 0, 0, 0, 0, 576, 70, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 576, 70, 0, 0, 0, 0, 1066, 70, 0, 0, 0, 0, 1066, 530, 0, 0, 0, 0, 86, 530, 0, 0, 0, 0, 86, 70, 0, 0, 0, 0, 576, 70)
 }
 point_count = 6
 
@@ -55,7 +54,6 @@ end_cap_mode = 0
 curve = SubResource("Curve2D_track")
 
 [node name="PlayerFollow" type="PathFollow2D" parent="Track" unique_id=1624764954]
-position = Vector2(576, 70)
 rotates = false
 
 [node name="Player" parent="Track/PlayerFollow" unique_id=714067380 instance=ExtResource("6_player")]

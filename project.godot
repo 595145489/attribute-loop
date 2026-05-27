@@ -22,9 +22,18 @@ EventBus="*res://src/autoloads/EventBus.gd"
 GameState="*res://src/autoloads/GameState.gd"
 DataTables="*res://src/autoloads/DataTables.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
+
+[gui]
+
+theme/custom_font="res://resources/fonts/simhei.ttf"
+theme/custom_font_size=16
 
 [physics]
 
@@ -35,15 +44,3 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-
-[display]
-
-window/size/viewport_width=1152
-window/size/viewport_height=648
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
-
-[gui]
-
-theme/custom_font="res://resources/fonts/simhei.ttf"
-theme/custom_font_size=16

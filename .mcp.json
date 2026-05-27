@@ -7,7 +7,8 @@
       ],
       "env": {
         "AIART_ACCESS_KEY": "st-c5c8e2d790d7493b880bb288db30ab5e",
-        "AIART_WORKSPACE_ID": "617258681158952018"
+        "AIART_WORKSPACE_ID": "617258681158952018",
+        "AIART_BASE_URL": "https://aiart.happyelements.com"
       }
     }
   }

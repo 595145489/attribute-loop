@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2kuk5yuiage8"]
+[gd_scene format=3 uid="uid://c2kuk5yuiage8"]
 
 [ext_resource type="Script" path="res://addons/godot_mcp/ui/mcp_panel.gd" id="1_3cbiu"]
 

@@ -1,0 +1,127 @@
+<h2>AI 美术生产流程 v2 — aiart 集成版</h2>
+<p class="subtitle">Claude 负责决策和协调，aiart MCP 负责生成图片</p>
+
+<!-- Step 0: Style Bible -->
+<div class="section">
+  <div class="label">第一步（只做一次）— 建立风格圣经</div>
+  <div style="display:flex;gap:8px;align-items:stretch;margin-top:8px;flex-wrap:wrap">
+    <div style="background:#1a237e;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:130px">
+      <div style="font-weight:bold;margin-bottom:4px">① 你描述大方向</div>
+      <div style="opacity:0.8">"暗黑风格，组件图标"</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+    <div style="background:#1b5e20;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:130px">
+      <div style="font-weight:bold;margin-bottom:4px">② Claude 构造测试 prompt</div>
+      <div style="opacity:0.8;font-size:11px">positive + negative prompt</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+    <div style="background:#4a148c;border:2px solid #9c27b0;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:130px">
+      <div style="font-weight:bold;margin-bottom:4px">③ aiart.create_image_task</div>
+      <div style="opacity:0.8;font-size:11px">并行生成 4 张，等待完成</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+    <div style="background:#e65100;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:130px">
+      <div style="font-weight:bold;margin-bottom:4px">④ 浏览器展示 4 张</div>
+      <div style="opacity:0.8">你选一张 / 迭代</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+    <div style="background:#b71c1c;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:130px">
+      <div style="font-weight:bold;margin-bottom:4px">⑤ 固化 style-bible.md</div>
+      <div style="opacity:0.8;font-size:11px">prompt前缀 + negative + 参考图 ID</div>
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:10px;background:#1a1a2e;border-radius:6px;font-size:12px;color:#aaa">
+    <strong style="color:#9c27b0">风格圣经里存什么：</strong> positivePrompt 前缀 · negativePrompt · artSpecIds（art pack ID）· 第一批好图的 imageId（用于后续 referenceImages）
+  </div>
+</div>
+
+<!-- Step 1: Per-asset generation loop -->
+<div class="section">
+  <div class="label">第二步（每次生产会话）— 单资源生产循环</div>
+  <div style="margin-top:8px">
+
+    <div style="display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin-bottom:8px">
+      <div style="background:#0d47a1;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:110px">
+        <div style="font-weight:bold;margin-bottom:4px">① 读取清单</div>
+        <div style="opacity:0.8;font-size:11px">选一个"待生成"资源，读取描述</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+      <div style="background:#1b5e20;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:110px">
+        <div style="font-weight:bold;margin-bottom:4px">② 构造 prompt</div>
+        <div style="opacity:0.8;font-size:11px">风格圣经前缀 + 本资源描述</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+      <div style="background:#4a148c;border:2px solid #9c27b0;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:110px">
+        <div style="font-weight:bold;margin-bottom:4px">③ aiart × 4 并行</div>
+        <div style="opacity:0.8;font-size:11px">create_image_task × 4<br>referenceImages 传风格锚定图</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+      <div style="background:#e65100;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:110px">
+        <div style="font-weight:bold;margin-bottom:4px">④ 浏览器选图</div>
+        <div style="opacity:0.8;font-size:11px">4 张并排展示，你点选</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#555;font-size:18px">→</div>
+      <div style="background:#b71c1c;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:110px">
+        <div style="font-weight:bold;margin-bottom:4px">⑤ 保存 + 更新清单</div>
+        <div style="opacity:0.8;font-size:11px">存到 resources/<br>manifest 标 ✓</div>
+      </div>
+    </div>
+
+    <!-- Retry path -->
+    <div style="padding:10px;background:#1a1a2e;border-radius:6px;font-size:12px;color:#aaa;border-left:3px solid #f39c12">
+      <strong style="color:#f39c12">不满意时：</strong> 你给文字反馈（"太亮了"/"换成圆形"） → Claude 调整 prompt → 重新调 aiart × 4 → 再选。<br>
+      <strong style="color:#64b5f6">一致性保障：</strong> 用 <code style="color:#9c27b0">referenceImages</code> 把之前确认过的好图传进去做风格参考，新图自然跟老图搭。
+    </div>
+  </div>
+</div>
+
+<!-- aiart API breakdown -->
+<div class="section">
+  <div class="label">aiart MCP 调用明细</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+    <div style="background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:12px">
+      <div style="color:#9c27b0;font-size:12px;font-weight:bold;margin-bottom:8px">生成阶段</div>
+      <div style="font-family:monospace;font-size:11px;color:#7ec8e3;line-height:1.8">
+        <div style="color:#888">// 并行调 4 次</div>
+        <div>create_image_task({</div>
+        <div>&nbsp;&nbsp;taskType: "general",</div>
+        <div>&nbsp;&nbsp;positivePrompt:</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;[风格圣经] + [资源描述],</div>
+        <div>&nbsp;&nbsp;negativePrompt: [禁止项],</div>
+        <div>&nbsp;&nbsp;referenceImages: [锚定图],</div>
+        <div>&nbsp;&nbsp;aspectRatio: "1:1",</div>
+        <div>&nbsp;&nbsp;waitForCompletion: true</div>
+        <div>})</div>
+      </div>
+    </div>
+    <div style="background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:12px">
+      <div style="color:#4caf50;font-size:12px;font-weight:bold;margin-bottom:8px">可选增强</div>
+      <div style="font-size:12px;color:#ccc;line-height:1.8">
+        <div>🎨 <strong>artSpecIds</strong> — 锁定 art pack，最强风格一致性</div>
+        <div>🖼️ <strong>referenceImages</strong> — 传入已确认的好图做风格参考</div>
+        <div>⬆️ <strong>creativeUpscale</strong> — 选完后放大提升细节</div>
+        <div>✂️ <strong>removeBackground</strong> — sprite 类资源自动去背景</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Folder structure -->
+<div class="section">
+  <div class="label">目录结构</div>
+  <div style="font-family:monospace;font-size:12px;color:#7ec8e3;background:#1a1a2e;padding:12px;border-radius:8px;line-height:1.8;margin-top:8px">
+    <div>resources/</div>
+    <div>&nbsp;&nbsp;├── icons/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 组件图标 (heal.png, shield.png…)</span></div>
+    <div>&nbsp;&nbsp;├── sprites/</div>
+    <div>&nbsp;&nbsp;│&nbsp;&nbsp; ├── player/</div>
+    <div>&nbsp;&nbsp;│&nbsp;&nbsp; └── enemies/</div>
+    <div>&nbsp;&nbsp;├── ui/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 面板/按钮/背景</span></div>
+    <div>&nbsp;&nbsp;└── tiles/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 轨道 tile、祭坛</span></div>
+    <br>
+    <div>docs/art/</div>
+    <div>&nbsp;&nbsp;├── style-bible.md</div>
+    <div>&nbsp;&nbsp;└── asset-manifest.md</div>
+  </div>
+</div>
+
+<p style="margin-top:16px;color:#666;font-size:13px">这个设计 OK 吗？确认后我来写 spec 文档。</p>

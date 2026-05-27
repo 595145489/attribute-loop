@@ -1,0 +1,257 @@
+<h2>Phase 2 — 所有界面总览</h2>
+<p class="subtitle">点击任意界面选中，告诉我哪里需要调整</p>
+
+<div style="display:flex;flex-direction:column;gap:16px">
+
+  <!-- Screen 1: Main walking -->
+  <div class="card" data-choice="screen1" onclick="toggleSelect(this)" style="max-width:100%">
+    <div class="card-body" style="padding-bottom:4px">
+      <h3>① 主界面 — 走路中</h3>
+      <p>底部常驻 HUD，游戏正常运行</p>
+    </div>
+    <div class="card-image" style="padding:0 12px 12px">
+      <div style="background:#12121f;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc">
+        <!-- Track area -->
+        <div style="background:#0a0a15;border-radius:4px;height:140px;display:flex;align-items:center;justify-content:center;color:#333;margin-bottom:8px;position:relative">
+          <div style="position:absolute;width:160px;height:100px;border:2px solid #2a2a4a;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#444;font-size:10px">循环轨道</div>
+          <!-- player dot -->
+          <div style="position:absolute;left:85px;top:30px;width:8px;height:8px;background:#4af;border-radius:50%"></div>
+          <!-- tile dots -->
+          <div style="position:absolute;left:60px;top:20px;width:5px;height:5px;background:#333;border-radius:50%"></div>
+          <div style="position:absolute;left:120px;top:20px;width:5px;height:5px;background:#f84;border-radius:50%"></div>
+          <div style="position:absolute;right:60px;top:60px;width:5px;height:5px;background:#333;border-radius:50%"></div>
+        </div>
+        <!-- HUD bar -->
+        <div style="background:#0d0d1a;border:1px solid #2a2a3a;border-radius:5px;padding:6px 10px;display:flex;align-items:center;gap:8px">
+          <div>
+            <div style="font-size:7px;color:#666">HP</div>
+            <div style="font-size:11px;color:#f66">80<span style="color:#444">/100</span></div>
+          </div>
+          <div style="color:#222">|</div>
+          <div>
+            <div style="font-size:7px;color:#666">圈数</div>
+            <div style="font-size:11px;color:#aaa">3</div>
+          </div>
+          <div style="color:#222">|</div>
+          <div>
+            <div style="font-size:7px;color:#666">Phase</div>
+            <div style="font-size:11px;color:#aaa">1<span style="font-size:8px;color:#555"> 觉醒</span></div>
+          </div>
+          <div style="flex:1"></div>
+          <div>
+            <div style="font-size:7px;color:#666;margin-bottom:2px">规则槽</div>
+            <div style="display:flex;gap:3px">
+              <div style="background:#1e2a3a;border:1px solid #4af;border-radius:3px;padding:1px 5px;font-size:8px;color:#4af">受击→治愈</div>
+              <div style="background:#111;border:1px dashed #333;border-radius:3px;padding:1px 5px;font-size:8px;color:#333">空</div>
+            </div>
+          </div>
+          <div style="color:#222">|</div>
+          <div style="background:#1a2a1a;border:1px solid #4af;border-radius:4px;padding:3px 7px;font-size:8px;color:#4af;cursor:pointer;text-align:center">
+            背包<br/><span style="font-size:7px;color:#555">3/12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: Inventory panel open -->
+  <div class="card" data-choice="screen2" onclick="toggleSelect(this)" style="max-width:100%">
+    <div class="card-body" style="padding-bottom:4px">
+      <h3>② 背包面板 — Tab 打开（走路暂停）</h3>
+      <p>显示背包格子 + 规则槽，点词条选中后点规则槽装入；点已装备词条可删除</p>
+    </div>
+    <div class="card-image" style="padding:0 12px 12px">
+      <div style="background:#12121f;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc">
+        <!-- Dimmed track -->
+        <div style="background:#060610;border-radius:4px;height:50px;display:flex;align-items:center;justify-content:center;color:#222;margin-bottom:8px;font-size:9px">— 暂停 —</div>
+        <!-- Inventory panel -->
+        <div style="background:#0d0d1a;border:1px solid #4af;border-radius:6px;padding:8px">
+          <!-- Rule slots -->
+          <div style="font-size:8px;color:#8af;margin-bottom:4px">■ 规则槽（点已装备词条可删除）</div>
+          <div style="display:flex;gap:4px;margin-bottom:8px">
+            <!-- Slot 1: equipped -->
+            <div style="flex:1;background:#1e2a3a;border:1px solid #4af;border-radius:4px;padding:4px;text-align:center">
+              <div style="font-size:7px;color:#666;margin-bottom:1px">槽位 1</div>
+              <div style="display:flex;gap:2px;justify-content:center">
+                <div style="background:#2a1e0a;border:1px solid #fa8;border-radius:3px;padding:2px 4px;font-size:8px;color:#fa8;cursor:pointer">受击(1) ✕</div>
+                <div style="background:#0a2a1a;border:1px solid #8fa;border-radius:3px;padding:2px 4px;font-size:8px;color:#8fa;cursor:pointer">治愈 ✕</div>
+              </div>
+            </div>
+            <!-- Slot 2: empty -->
+            <div style="flex:1;background:#111;border:1px dashed #333;border-radius:4px;padding:4px;text-align:center">
+              <div style="font-size:7px;color:#444;margin-bottom:1px">槽位 2</div>
+              <div style="display:flex;gap:2px;justify-content:center">
+                <div style="background:#111;border:1px dashed #2a2a2a;border-radius:3px;padding:2px 10px;font-size:7px;color:#333">触发器</div>
+                <div style="background:#111;border:1px dashed #2a2a2a;border-radius:3px;padding:2px 10px;font-size:7px;color:#333">效果</div>
+              </div>
+            </div>
+          </div>
+          <!-- Inventory grid -->
+          <div style="font-size:8px;color:#8af;margin-bottom:4px">■ 背包（3/12）— 点词条选中，再点规则槽装入</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:8px">
+            <!-- Selected component -->
+            <div style="background:#1e3a1e;border:2px solid #4f4;border-radius:3px;padding:4px;text-align:center;cursor:pointer">
+              <div style="font-size:7px;color:#666">TRIGGER</div>
+              <div style="font-size:9px;color:#fa8">击杀(1)</div>
+              <div style="font-size:6px;color:#4f4">已选中</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:4px;text-align:center;cursor:pointer">
+              <div style="font-size:7px;color:#666">EFFECT</div>
+              <div style="font-size:9px;color:#8fa">护盾</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:4px;text-align:center;cursor:pointer">
+              <div style="font-size:7px;color:#666">TRIGGER</div>
+              <div style="font-size:9px;color:#fa8">低血</div>
+            </div>
+            <div style="background:#0a0a12;border:1px solid #222;border-radius:3px;height:36px"></div>
+            <div style="background:#0a0a12;border:1px solid #222;border-radius:3px;height:36px"></div>
+            <div style="background:#0a0a12;border:1px solid #222;border-radius:3px;height:36px"></div>
+            <div style="background:#0a0a12;border:1px solid #222;border-radius:3px;height:36px"></div>
+            <div style="background:#0a0a12;border:1px solid #222;border-radius:3px;height:36px"></div>
+          </div>
+          <div style="text-align:right">
+            <div style="display:inline-block;background:#1a1a2a;border:1px solid #444;border-radius:3px;padding:3px 10px;font-size:9px;color:#aaa;cursor:pointer">关闭 [Tab] ✕</div>
+          </div>
+        </div>
+        <!-- HUD bar -->
+        <div style="background:#0d0d1a;border:1px solid #2a2a3a;border-radius:5px;padding:4px 10px;display:flex;align-items:center;gap:6px;margin-top:6px">
+          <div style="font-size:8px;color:#f66">HP 80/100</div>
+          <div style="color:#222">|</div>
+          <div style="font-size:8px;color:#aaa">圈 3 · Phase 1</div>
+          <div style="flex:1"></div>
+          <div style="font-size:8px;color:#4af">规则槽: 受击→治愈 / 空</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: Strip panel -->
+  <div class="card" data-choice="screen3" onclick="toggleSelect(this)" style="max-width:100%">
+    <div class="card-body" style="padding-bottom:4px">
+      <h3>③ 剥取面板 — 敌人死后自动弹出</h3>
+      <p>2列网格展示敌人组件，逐个取走；背包满时按钮变灰；可打开背包腾空间</p>
+    </div>
+    <div class="card-image" style="padding:0 12px 12px">
+      <div style="background:#12121f;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc">
+        <div style="background:#060610;border-radius:4px;height:30px;display:flex;align-items:center;justify-content:center;color:#222;margin-bottom:8px;font-size:9px">— 战斗结束 —</div>
+        <!-- Strip panel -->
+        <div style="background:#0d0d1a;border:1px solid #f84;border-radius:6px;padding:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="color:#f84;font-size:10px">汲取者 — 词条掉落</div>
+            <div style="font-size:8px;color:#777">背包 <span style="color:#4af">3</span>/12</div>
+          </div>
+          <!-- 2-col grid of components -->
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:8px">
+            <div style="background:#1e2a3a;border:1px solid #fa8;border-radius:5px;padding:7px;text-align:center">
+              <div style="font-size:7px;color:#666;margin-bottom:1px">TRIGGER</div>
+              <div style="font-size:11px;color:#fa8;margin-bottom:1px">受击(1)</div>
+              <div style="font-size:7px;color:#555;margin-bottom:5px">受伤时触发</div>
+              <div style="background:#1a3a1a;border:1px solid #4f4;border-radius:3px;padding:2px 0;font-size:8px;color:#4f4;cursor:pointer">取走</div>
+            </div>
+            <div style="background:#1e2a3a;border:1px solid #8fa;border-radius:5px;padding:7px;text-align:center">
+              <div style="font-size:7px;color:#666;margin-bottom:1px">EFFECT</div>
+              <div style="font-size:11px;color:#8fa;margin-bottom:1px">治愈</div>
+              <div style="font-size:7px;color:#555;margin-bottom:5px">回复 12 HP</div>
+              <div style="background:#1a3a1a;border:1px solid #4f4;border-radius:3px;padding:2px 0;font-size:8px;color:#4f4;cursor:pointer">取走</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #1a1a2a;padding-top:6px">
+            <div style="background:#1a1a2a;border:1px solid #555;border-radius:3px;padding:2px 8px;font-size:8px;color:#888;cursor:pointer">[B] 打开背包</div>
+            <div style="background:#1a3a1a;border:1px solid #4f4;border-radius:3px;padding:3px 10px;font-size:9px;color:#4f4;cursor:pointer">继续走 →</div>
+          </div>
+        </div>
+        <!-- HUD -->
+        <div style="background:#0d0d1a;border:1px solid #2a2a3a;border-radius:5px;padding:4px 10px;display:flex;align-items:center;gap:6px;margin-top:6px">
+          <div style="font-size:8px;color:#f66">HP 80/100</div>
+          <div style="color:#222">|</div>
+          <div style="font-size:8px;color:#aaa">圈 3 · Phase 1</div>
+          <div style="flex:1"></div>
+          <div style="font-size:8px;color:#4af">规则槽: 受击→治愈 / 空</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Strip panel + inventory open -->
+  <div class="card" data-choice="screen4" onclick="toggleSelect(this)" style="max-width:100%">
+    <div class="card-body" style="padding-bottom:4px">
+      <h3>④ 剥取面板 + 背包同时打开</h3>
+      <p>背包满时点"打开背包"叠加显示，删完词条后直接回去取走</p>
+    </div>
+    <div class="card-image" style="padding:0 12px 12px">
+      <div style="background:#12121f;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc">
+        <div style="background:#060610;border-radius:4px;height:20px;display:flex;align-items:center;justify-content:center;color:#222;margin-bottom:6px;font-size:8px">— 战斗结束 —</div>
+
+        <!-- Strip panel (compact, behind) -->
+        <div style="background:#0d0d1a;border:1px solid #f84;border-radius:6px;padding:6px;margin-bottom:4px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <div style="color:#f84;font-size:9px">汲取者词条掉落</div>
+            <div style="font-size:7px;color:#f66">背包 <span style="color:#f66">12</span>/12 已满</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px">
+            <div style="background:#111;border:1px solid #333;border-radius:4px;padding:5px;text-align:center;opacity:0.4">
+              <div style="font-size:9px;color:#555">受击(1)</div>
+              <div style="background:#111;border:1px solid #222;border-radius:2px;padding:1px 0;font-size:7px;color:#333;margin-top:4px">背包满</div>
+            </div>
+            <div style="background:#111;border:1px solid #333;border-radius:4px;padding:5px;text-align:center;opacity:0.4">
+              <div style="font-size:9px;color:#555">治愈</div>
+              <div style="background:#111;border:1px solid #222;border-radius:2px;padding:1px 0;font-size:7px;color:#333;margin-top:4px">背包满</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory panel overlaid on top -->
+        <div style="background:#0d0d1a;border:2px solid #4af;border-radius:6px;padding:7px">
+          <div style="font-size:8px;color:#8af;margin-bottom:4px">■ 背包（12/12）— 点词条可删除（免费）</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:6px">
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center;cursor:pointer">
+              <div style="font-size:6px;color:#555">TRIGGER</div><div style="font-size:8px;color:#fa8">击杀(1)</div>
+              <div style="font-size:6px;color:#f44;cursor:pointer">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center;cursor:pointer">
+              <div style="font-size:6px;color:#555">EFFECT</div><div style="font-size:8px;color:#8fa">护盾</div>
+              <div style="font-size:6px;color:#f44;cursor:pointer">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">TRIGGER</div><div style="font-size:8px;color:#fa8">低血</div>
+              <div style="font-size:6px;color:#f44;cursor:pointer">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">EFFECT</div><div style="font-size:8px;color:#8fa">加速</div>
+              <div style="font-size:6px;color:#f44;cursor:pointer">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">TRIGGER</div><div style="font-size:8px;color:#fa8">受击(2)</div>
+              <div style="font-size:6px;color:#f44">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">EFFECT</div><div style="font-size:8px;color:#8fa">反射</div>
+              <div style="font-size:6px;color:#f44">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">TRIGGER</div><div style="font-size:8px;color:#fa8">完成圈</div>
+              <div style="font-size:6px;color:#f44">删除</div>
+            </div>
+            <div style="background:#1e1e2a;border:1px solid #444;border-radius:3px;padding:3px;text-align:center">
+              <div style="font-size:6px;color:#555">EFFECT</div><div style="font-size:8px;color:#8fa">蓄能</div>
+              <div style="font-size:6px;color:#f44">删除</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="display:inline-block;background:#1a2a1a;border:1px solid #4af;border-radius:3px;padding:2px 8px;font-size:8px;color:#4af;cursor:pointer">关闭背包，回到剥取</div>
+          </div>
+        </div>
+
+        <!-- HUD -->
+        <div style="background:#0d0d1a;border:1px solid #2a2a3a;border-radius:5px;padding:3px 10px;display:flex;align-items:center;gap:6px;margin-top:5px">
+          <div style="font-size:7px;color:#f66">HP 80/100</div>
+          <div style="color:#222">|</div>
+          <div style="font-size:7px;color:#aaa">圈 3 · Phase 1</div>
+          <div style="flex:1"></div>
+          <div style="font-size:7px;color:#4af">规则槽: 受击→治愈 / 空</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

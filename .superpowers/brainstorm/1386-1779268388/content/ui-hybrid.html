@@ -1,0 +1,126 @@
+<h2>混合方案：同一面板，两个入口</h2>
+<p class="subtitle">左：走路时主动打开 / 右：敌人死后自动弹出</p>
+
+<div class="split">
+
+  <div class="mockup">
+    <div class="mockup-header">状态 A — 走路中（点背包按钮打开）</div>
+    <div class="mockup-body">
+      <div style="background:#1a1a2e;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc;position:relative">
+
+        <!-- Game track -->
+        <div style="background:#111;border-radius:4px;height:80px;display:flex;align-items:center;justify-content:center;color:#555;margin-bottom:8px;font-size:10px">
+          〇 游戏轨道（走路暂停）〇
+        </div>
+
+        <!-- Inventory panel overlay -->
+        <div style="background:#0d0d1a;border:1px solid #4af;border-radius:6px;padding:8px">
+          <!-- Rule slots -->
+          <div style="color:#8af;font-size:9px;margin-bottom:4px">■ 规则槽（2/2）</div>
+          <div style="display:flex;gap:4px;margin-bottom:8px">
+            <div style="background:#1e2a3a;border:1px solid #4af;border-radius:3px;padding:4px 8px;font-size:9px;color:#4af;flex:1;text-align:center">
+              受击(1) → 治愈<br/><span style="color:#555;font-size:8px">[点击删除]</span>
+            </div>
+            <div style="background:#1e2a3a;border:1px solid #555;border-radius:3px;padding:4px 8px;font-size:9px;color:#555;flex:1;text-align:center">
+              空槽<br/><span style="color:#333;font-size:8px">点词条装入</span>
+            </div>
+          </div>
+
+          <!-- Inventory grid -->
+          <div style="color:#8af;font-size:9px;margin-bottom:4px">■ 背包（3/12）</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:6px">
+            <div style="background:#1e2a3a;border:1px solid #fa8;border-radius:3px;height:26px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fa8">击杀</div>
+            <div style="background:#1e2a3a;border:1px solid #8fa;border-radius:3px;height:26px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#8fa">护盾</div>
+            <div style="background:#1e2a3a;border:1px solid #fa8;border-radius:3px;height:26px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fa8">受击</div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:26px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:26px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:26px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:26px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:26px"></div>
+          </div>
+
+          <div style="text-align:right">
+            <span style="background:#333;border-radius:3px;padding:2px 8px;font-size:9px;color:#aaa;cursor:pointer">关闭 ✕</span>
+          </div>
+        </div>
+
+        <!-- HUD bottom -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:9px;color:#777">
+          <span>HP 80/100 | 圈 3 | Phase 1</span>
+          <span style="background:#1e2a3a;border:1px solid #4af;border-radius:3px;padding:2px 6px;color:#4af">背包 [B]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">状态 B — 敌人死后（自动弹出）</div>
+    <div class="mockup-body">
+      <div style="background:#1a1a2e;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#ccc">
+
+        <!-- Game track dimmed -->
+        <div style="background:#0a0a0a;border-radius:4px;height:30px;display:flex;align-items:center;justify-content:center;color:#333;margin-bottom:8px;font-size:9px">
+          — 战斗暂停 —
+        </div>
+
+        <!-- Strip + inventory panel -->
+        <div style="background:#0d0d1a;border:1px solid #f84;border-radius:6px;padding:8px">
+
+          <!-- Enemy drops -->
+          <div style="color:#f84;font-size:9px;margin-bottom:4px">▼ 汲取者 掉落词条</div>
+          <div style="display:flex;gap:4px;margin-bottom:8px">
+            <div style="background:#2a1a0a;border:1px solid #f84;border-radius:3px;padding:3px 6px;font-size:8px;color:#f84;cursor:pointer">低血 → 加速 ＋</div>
+            <div style="background:#2a1a0a;border:1px solid #f84;border-radius:3px;padding:3px 6px;font-size:8px;color:#f84;cursor:pointer">完成圈 → 蓄能 ＋</div>
+          </div>
+
+          <!-- Divider -->
+          <div style="border-top:1px solid #333;margin-bottom:6px"></div>
+
+          <!-- Rule slots -->
+          <div style="color:#8af;font-size:9px;margin-bottom:4px">■ 规则槽</div>
+          <div style="display:flex;gap:4px;margin-bottom:8px">
+            <div style="background:#1e2a3a;border:1px solid #4af;border-radius:3px;padding:3px 6px;font-size:8px;color:#4af;flex:1;text-align:center">受击 → 治愈 ✕</div>
+            <div style="background:#1e2a3a;border:1px solid #555;border-radius:3px;padding:3px 6px;font-size:8px;color:#555;flex:1;text-align:center">空槽</div>
+          </div>
+
+          <!-- Inventory grid -->
+          <div style="color:#8af;font-size:9px;margin-bottom:4px">■ 背包（3/12）</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:6px">
+            <div style="background:#1e2a3a;border:1px solid #fa8;border-radius:3px;height:22px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fa8">击杀</div>
+            <div style="background:#1e2a3a;border:1px solid #8fa;border-radius:3px;height:22px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#8fa">护盾</div>
+            <div style="background:#1e2a3a;border:1px solid #fa8;border-radius:3px;height:22px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fa8">受击</div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:22px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:22px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:22px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:22px"></div>
+            <div style="background:#111;border:1px solid #333;border-radius:3px;height:22px"></div>
+          </div>
+
+          <div style="text-align:right">
+            <span style="background:#1a3a1a;border:1px solid #4f4;border-radius:3px;padding:2px 8px;font-size:9px;color:#4f4;cursor:pointer">完成，继续走 →</span>
+          </div>
+        </div>
+
+        <!-- HUD bottom -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:9px;color:#777">
+          <span>HP 80/100 | 圈 3 | Phase 1</span>
+          <span style="color:#333">背包 [B]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:16px;text-align:center">
+  <div class="options">
+    <div class="option" data-choice="yes" onclick="toggleSelect(this)">
+      <div class="letter">✓</div>
+      <div class="content"><h3>这个方向可以</h3><p>同一面板，两个入口</p></div>
+    </div>
+    <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+      <div class="letter">△</div>
+      <div class="content"><h3>需要调整</h3><p>在终端说说想改什么</p></div>
+    </div>
+  </div>
+</div>

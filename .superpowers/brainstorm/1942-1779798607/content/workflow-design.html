@@ -1,0 +1,119 @@
+<h2>AI 美术生产流程 — 完整设计</h2>
+<p class="subtitle">方案 A：风格圣经 + 资源清单 + 浏览器审核</p>
+
+<!-- Phase 0: Style Bible -->
+<div class="section">
+  <div class="label">第一步（只做一次）</div>
+  <h3>建立风格圣经</h3>
+  <div style="display:flex;gap:16px;align-items:flex-start;margin-top:8px">
+    <div style="flex:1;background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:12px">
+      <div style="color:#aaa;font-size:12px;margin-bottom:8px">流程</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="background:#0d47a1;color:white;padding:6px 10px;border-radius:4px;font-size:13px">① 你描述大方向（暗黑/像素/扁平…）</div>
+        <div style="text-align:center;color:#666;font-size:12px">↓</div>
+        <div style="background:#1b5e20;color:white;padding:6px 10px;border-radius:4px;font-size:13px">② Claude 生成 4 张风格测试图</div>
+        <div style="text-align:center;color:#666;font-size:12px">↓</div>
+        <div style="background:#4a148c;color:white;padding:6px 10px;border-radius:4px;font-size:13px">③ 你在浏览器选一张 / 给反馈迭代</div>
+        <div style="text-align:center;color:#666;font-size:12px">↓</div>
+        <div style="background:#b71c1c;color:white;padding:6px 10px;border-radius:4px;font-size:13px">④ 固化为 style-bible.md（永久基准）</div>
+      </div>
+    </div>
+    <div style="flex:1;background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:12px">
+      <div style="color:#aaa;font-size:12px;margin-bottom:8px">style-bible.md 内容示例</div>
+      <div style="font-family:monospace;font-size:11px;color:#7ec8e3;line-height:1.7">
+        <div style="color:#888"># 风格基准 prompt 前缀</div>
+        <div>dark fantasy roguelike icon,</div>
+        <div>flat vector style, 128x128,</div>
+        <div>muted jewel tones with glow,</div>
+        <div>transparent background,</div>
+        <div>no photorealistic details,</div>
+        <div>consistent line weight</div>
+        <br>
+        <div style="color:#888"># 禁止项</div>
+        <div>no gradients, no text,</div>
+        <div>no realistic textures</div>
+        <br>
+        <div style="color:#888"># 色板</div>
+        <div>primary: #2c1654 #4a2080</div>
+        <div>accent: #00bcd4 #f39c12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 1: Asset Manifest -->
+<div class="section">
+  <div class="label">第二步（持续维护）</div>
+  <h3>资源清单 asset-manifest.md</h3>
+  <div style="background:#1a1a2e;border:1px solid #333;border-radius:8px;padding:12px;margin-top:8px">
+    <div style="font-family:monospace;font-size:11px;color:#ccc;line-height:1.8">
+      <div style="color:#888">## 组件图标 · resources/icons/</div>
+      <div><span style="color:#4caf50">✓</span> heal.png &nbsp;&nbsp;&nbsp; 治愈 · 绿色水滴 · <span style="color:#666">已完成</span></div>
+      <div><span style="color:#f39c12">○</span> shield.png &nbsp; 护盾 · 蓝色盾牌 · <span style="color:#666">待生成</span></div>
+      <div><span style="color:#f39c12">○</span> reflect.png &nbsp;反射 · 镜面箭头</div>
+      <div style="color:#888;margin-top:8px">## 敌人 sprite · resources/sprites/enemies/</div>
+      <div><span style="color:#f39c12">○</span> drainer.png &nbsp;汲取者 · 瘦小暗影生物</div>
+      <div><span style="color:#f39c12">○</span> guardian.png &nbsp;守卫者 · 重甲方块型</div>
+      <div style="color:#888;margin-top:8px">## UI · resources/ui/</div>
+      <div><span style="color:#f39c12">○</span> panel_bg.png &nbsp; 面板背景</div>
+      <div><span style="color:#f39c12">○</span> btn_normal.png 按钮默认态</div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 2: Generation Loop -->
+<div class="section">
+  <div class="label">第三步（每次生产会话）</div>
+  <h3>单次资源生产循环</h3>
+  <div style="display:flex;gap:8px;align-items:stretch;margin-top:8px;flex-wrap:wrap">
+    <div style="background:#0d47a1;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
+      <div style="font-weight:bold;margin-bottom:4px">① 选取资源</div>
+      <div style="opacity:0.8">从清单选一个"待生成"资源</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555">→</div>
+    <div style="background:#1b5e20;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
+      <div style="font-weight:bold;margin-bottom:4px">② 构造 prompt</div>
+      <div style="opacity:0.8">风格圣经前缀 + 资源描述</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555">→</div>
+    <div style="background:#4a148c;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
+      <div style="font-weight:bold;margin-bottom:4px">③ 生成 4 张</div>
+      <div style="opacity:0.8">并行调 aiart API</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555">→</div>
+    <div style="background:#b71c1c;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
+      <div style="font-weight:bold;margin-bottom:4px">④ 浏览器选图</div>
+      <div style="opacity:0.8">你点选最满意的一张</div>
+    </div>
+    <div style="display:flex;align-items:center;color:#555">→</div>
+    <div style="background:#e65100;color:white;padding:10px 12px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
+      <div style="font-weight:bold;margin-bottom:4px">⑤ 自动保存</div>
+      <div style="opacity:0.8">存到正确路径，清单标 ✓</div>
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:10px;background:#1a1a2e;border-radius:6px;font-size:12px;color:#aaa">
+    <strong style="color:#f39c12">不满意？</strong> 你可以给文字反馈 → Claude 调整 prompt → 重新生成 4 张 → 再选。循环直到满意为止。
+  </div>
+</div>
+
+<!-- Folder Structure -->
+<div class="section">
+  <div class="label">文件结构</div>
+  <h3>资源目录规范</h3>
+  <div style="font-family:monospace;font-size:12px;color:#7ec8e3;background:#1a1a2e;padding:12px;border-radius:8px;line-height:1.8;margin-top:8px">
+    <div>resources/</div>
+    <div>&nbsp;&nbsp;├── icons/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 组件卡牌图标 128×128</span></div>
+    <div>&nbsp;&nbsp;├── sprites/</div>
+    <div>&nbsp;&nbsp;│&nbsp;&nbsp; ├── player/ &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 玩家动画帧</span></div>
+    <div>&nbsp;&nbsp;│&nbsp;&nbsp; └── enemies/ &nbsp;&nbsp;<span style="color:#888"># 各敌人 sprite</span></div>
+    <div>&nbsp;&nbsp;├── ui/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 面板/按钮/背景纹理</span></div>
+    <div>&nbsp;&nbsp;├── tiles/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 轨道 tile、祭坛</span></div>
+    <div>&nbsp;&nbsp;└── fonts/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888"># 已有</span></div>
+    <br>
+    <div>docs/art/</div>
+    <div>&nbsp;&nbsp;├── style-bible.md &nbsp;<span style="color:#888"># 风格圣经（prompt 基准）</span></div>
+    <div>&nbsp;&nbsp;└── asset-manifest.md <span style="color:#888"># 资源清单（进度追踪）</span></div>
+  </div>
+</div>
+
+<p style="margin-top:16px;color:#666;font-size:13px">在终端告诉我这个设计方向是否 OK，有没有想调整的地方。</p>
