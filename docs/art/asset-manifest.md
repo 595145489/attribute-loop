@@ -69,8 +69,9 @@
 
 - [x] player/reference.png     — static reference, neutral stance <!-- resourceId: 621329941727968661 -->
 - [x] player/walk/             — walking cycle along track
-- [ ] player/idle/             — idle loop
-- [ ] player/hit/              — taking damage reaction
+- [ ] player/idle/             — idle loop, standing still with gentle breathing
+- [ ] player/attack/           — combat strike, forward motion
+- [ ] player/hit/              — taking damage, recoiling backward
 - [ ] player/death/            — death animation
 
 ---

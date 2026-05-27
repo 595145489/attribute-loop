@@ -52,6 +52,7 @@ func check_tile_for_enemy(tile: Tile) -> void:
 		return
 	state = State.COMBAT
 	GameState.is_paused = true
+	_player.enter_combat()
 	_combat_tile = tile
 	_combat_system.start(tile.enemy)
 
@@ -84,6 +85,7 @@ func _on_combat_resolved() -> void:
 		_combat_tile.clear_enemy()
 		_combat_tile = null
 	state = State.WALKING
+	_player.exit_combat()
 	GameState.is_paused = false
 
 func _on_player_died() -> void:
