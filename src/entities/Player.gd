@@ -55,11 +55,14 @@ func _process(delta: float) -> void:
 		_sprite.play("idle")
 		return
 	_sprite.play("walk")
-	var prev_x := _path_follow.global_position.x
+	var prev_pos := _path_follow.global_position
 	_path_follow.progress += _walk_speed * delta
-	var dx := _path_follow.global_position.x - prev_x
-	if abs(dx) > 0.01:
-		_sprite.flip_h = dx > 0
+	var delta_pos := _path_follow.global_position - prev_pos
+	if delta_pos.length() > 0.01:
+		if abs(delta_pos.y) > abs(delta_pos.x):
+			_sprite.flip_h = delta_pos.y < 0  # 向上走 → 朝右
+		else:
+			_sprite.flip_h = delta_pos.x > 0  # 向右走 → 朝右
 	if _path_follow.progress < _prev_progress:
 		GameState.loops_completed += 1
 		EventBus.loop_completed.emit()
