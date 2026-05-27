@@ -19,7 +19,7 @@
 ### Effect Icons
 - [x] effect_heal.png          — 治愈 · water drop, soft green glow
 - [x] effect_overflow_heal.png — 溢出治愈 · water drop overflowing into shield
-- [ ] effect_shield.png        — 护盾 · geometric shield, blue glow
+- [x] effect_shield.png        — 护盾 · geometric shield, blue glow
 - [ ] effect_reflect.png       — 反射 · mirrored arrow, silver sheen
 - [ ] effect_lifesteal.png     — 吸血 · fangs or red tendril draining
 - [ ] effect_haste.png         — 加速 · lightning bolt, motion lines
