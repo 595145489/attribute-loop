@@ -17,7 +17,7 @@
 - [x] trigger_full_hp.png      — 满血 · full glowing heart, bright aura
 
 ### Effect Icons
-- [ ] effect_heal.png          — 治愈 · water drop, soft green glow
+- [x] effect_heal.png          — 治愈 · water drop, soft green glow
 - [ ] effect_overflow_heal.png — 溢出治愈 · water drop overflowing into shield
 - [ ] effect_shield.png        — 护盾 · geometric shield, blue glow
 - [ ] effect_reflect.png       — 反射 · mirrored arrow, silver sheen
