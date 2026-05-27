@@ -108,4 +108,5 @@
 
 ## Backgrounds · `resources/backgrounds/` · Path A · 1152×648
 
-- [ ] bg_main.png              — main game scene background, looping track environment
+- [x] bg_main.png              — main game scene background, looping track environment
+- [x] bg_ground.png           — ground base layer, indigo blue-grey twilight grass

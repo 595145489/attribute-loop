@@ -34,6 +34,7 @@ photorealistic, 3d render, pixel art, flat vector, dark fantasy, horror, charact
 > Pass as referenceImages with purpose: "source", weight: 0.3 in all generation calls.
 
 - `621299057020690739` — approved background style test (bg_main.png)
+- `621315087801573683` — approved ground base color tone (bg_ground.png)
 
 ---
 
