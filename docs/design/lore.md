@@ -99,6 +99,74 @@ Neither is wrong.
 
 ---
 
+## The Full Story
+
+Two people, who have never met, enter the same dream every night.
+
+The dream is a circular path lined with soft light — trees, grass, a small pavilion at the center with a lamp that never goes out. One person arrives in what feels like morning. The other arrives in the warmth of evening. They are always just missing each other.
+
+But they can see what the other left behind.
+
+---
+
+The first night, one of them finds a flower placed in the pavilion. White. Freshly picked. They assume it is part of the dream and think nothing of it.
+
+The second night, the flower is yellow.
+
+The third night, the stones beside the path have been rearranged into a shape that is too deliberate to be accidental. Something is paying attention here. Something — or someone.
+
+---
+
+By the tenth loop, they are leaving messages for each other. Rearranging stones in response. A question mark answered by an exclamation point. Two people, speaking in a language made entirely of things left behind.
+
+Then the words start appearing on the pavilion walls. Carved small, careful at first. *Who are you. Are you real. I keep coming back here.*
+
+And beside those words, in different handwriting: *I don't know. I think so. Me too.*
+
+---
+
+By the thirtieth loop, the pavilion walls are filling up. Their exchanges are longer now, less careful. They talk about small things — what the morning looks like where they live, whether they prefer tea or coffee, the sound of rain. They talk about big things too, slowly, the way people do when they have decided to trust someone they cannot see.
+
+One of them writes: *I've started looking forward to sleeping.*
+
+The other writes, the next night: *I know. Me too. Is that strange?*
+
+---
+
+But then the path begins to grow darker.
+
+The messages slow down. There are gaps — nights where nothing new has been added to the walls. One of them starts leaving shorter notes. Then shorter still. Then one night the pavilion lamp flickers for the first time.
+
+Something is wrong, and neither of them says it.
+
+---
+
+By Phase 9, the walls are almost full. Everything important has been written. The handwriting on both sides has changed from the first careful letters — looser now, more honest, more themselves. Two people who only know each other through wood and stone and words, and yet.
+
+---
+
+Phase 10. The lamp goes out.
+
+In the darkness, lit only by the soft glow of the path, there is one final message. The handwriting is rushed and uneven, not like their usual careful carving:
+
+*I may not come back.*
+
+The other person stands there for a long time.
+
+Then they pick up the tool they always use, and beside those words they write:
+
+*I will find you in the real world.*
+
+---
+
+The dream ends.
+
+They wake up somewhere — in a bed, in the early morning, with nothing to show for any of it except what they remember. The crooked handwriting. A tower visible from someone's window at night. The way the other person always placed stones with the flattest side facing up.
+
+They get up. They start looking.
+
+---
+
 ## What This Story Is Not
 
 - Not a tragedy. The tone is warm throughout, even when it aches.
