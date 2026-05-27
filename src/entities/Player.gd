@@ -33,7 +33,11 @@ func _process(delta: float) -> void:
 		_sprite.pause()
 		return
 	_sprite.play("walk")
+	var prev_x := _path_follow.global_position.x
 	_path_follow.progress += _walk_speed * delta
+	var dx := _path_follow.global_position.x - prev_x
+	if abs(dx) > 0.5:
+		_sprite.flip_h = dx < 0
 	if _path_follow.progress < _prev_progress:
 		GameState.loops_completed += 1
 		EventBus.loop_completed.emit()
