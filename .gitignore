@@ -5,5 +5,14 @@
 # Claude Code internal
 .claude/
 
+# Superpowers brainstorm sessions
+.superpowers/
+
+# Test artifacts
+tests/.test_mode
+tests/screenshots/last_run.png
+tests/screenshots/last_run.png.import
+tests/screenshots/last_run.log
+
 exports/
 scripts/godot_path.txt
