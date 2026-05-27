@@ -68,7 +68,7 @@
 ## Player · `resources/sprites/player/` · Path B · per-action PNG sequences
 
 - [x] player/reference.png     — static reference, neutral stance <!-- resourceId: 621329941727968661 -->
-- [ ] player/walk/             — walking cycle along track
+- [x] player/walk/             — walking cycle along track
 - [ ] player/idle/             — idle loop
 - [ ] player/hit/              — taking damage reaction
 - [ ] player/death/            — death animation
