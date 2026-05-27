@@ -9,7 +9,7 @@
 
 ### Trigger Icons
 - [x] trigger_hit.png          — 受击 · shield cracking, impact lines
-- [ ] trigger_kill.png         — 击杀 · skull or sword, decisive energy
+- [x] trigger_kill.png         — 击杀 · skull or sword, decisive energy
 - [ ] trigger_loop.png         — 完成一圈 · circular arrow, loop motif
 - [ ] trigger_pass.png         — 经过 · footstep or arrow crossing a line
 - [ ] trigger_rule_fire.png    — 规则触发 · chain link or spark cascade
