@@ -8,7 +8,7 @@
 ## Component Icons · `resources/icons/` · Path A · 128×128, transparent bg
 
 ### Trigger Icons
-- [ ] trigger_hit.png          — 受击 · shield cracking, impact lines
+- [x] trigger_hit.png          — 受击 · shield cracking, impact lines
 - [ ] trigger_kill.png         — 击杀 · skull or sword, decisive energy
 - [ ] trigger_loop.png         — 完成一圈 · circular arrow, loop motif
 - [ ] trigger_pass.png         — 经过 · footstep or arrow crossing a line

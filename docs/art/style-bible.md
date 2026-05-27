@@ -17,6 +17,14 @@
 
 ---
 
+## positive_prefix_icon
+
+> Use this prefix for component icons and UI elements instead of positive_prefix.
+
+soft hand-painted anime illustration, warm golden light, blue-grey tones, magical sparkles, Little Prince inspired art style, game ability icon, single centered symbol, dark background, clean readable silhouette, gentle glow, whimsical fantasy roguelike
+
+---
+
 ## negative_prompt
 
 photorealistic, 3d render, pixel art, flat vector, dark fantasy, horror, characters, people, text, watermark, busy composition, neon colors, sci-fi, sharp edges, oversaturated
