@@ -8,16 +8,13 @@ var _inventory_panel = null  # InventoryPanel — set via setup()
 @onready var _continue_btn: Button = $VBox/HBox/ContinueButton
 @onready var _bag_btn: Button = $VBox/HBox/BagButton
 
-const SLOT_TYPE_COLORS = {
-    0: Color(1.0, 0.6, 0.1, 1),
-    1: Color(0.2, 0.9, 0.3, 1),
-    2: Color(0.3, 0.6, 1.0, 1),
-}
-
 func _ready() -> void:
     hide()
     _continue_btn.pressed.connect(_on_continue)
     _bag_btn.pressed.connect(_on_open_bag)
+    var ui_theme = load("res://resources/ui_theme.tres")
+    if ui_theme:
+        theme = ui_theme
 
 func setup(inv_panel) -> void:
     _inventory_panel = inv_panel
@@ -36,13 +33,18 @@ func _build_grid(components: Array[ComponentData]) -> void:
 
 func _make_card(comp: ComponentData) -> PanelContainer:
     var card := PanelContainer.new()
-    var style := StyleBoxFlat.new()
-    style.border_color = SLOT_TYPE_COLORS.get(comp.slot_type, Color.WHITE)
-    style.border_width_left = 2
-    style.border_width_right = 2
-    style.border_width_top = 2
-    style.border_width_bottom = 2
-    card.add_theme_stylebox_override("panel", style)
+    var bg_path := "res://resources/ui/card_trigger_bg.png" \
+        if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY \
+        else "res://resources/ui/card_effect_bg.png"
+    var bg_tex = load(bg_path)
+    if bg_tex:
+        var style := StyleBoxTexture.new()
+        style.texture = bg_tex
+        style.content_margin_left = 6.0
+        style.content_margin_top = 6.0
+        style.content_margin_right = 6.0
+        style.content_margin_bottom = 6.0
+        card.add_theme_stylebox_override("panel", style)
     var vbox := VBoxContainer.new()
     card.add_child(vbox)
     var hbox := HBoxContainer.new()

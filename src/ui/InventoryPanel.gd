@@ -14,6 +14,9 @@ func _ready() -> void:
     _delete_btn.hide()
     _delete_btn.pressed.connect(_on_delete)
     _close_btn.pressed.connect(toggle)
+    var ui_theme = load("res://resources/ui_theme.tres")
+    if ui_theme:
+        theme = ui_theme
 
 func _input(event: InputEvent) -> void:
     if not visible:
