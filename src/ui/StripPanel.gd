@@ -55,19 +55,16 @@ func _make_card(comp: ComponentData) -> PanelContainer:
         icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
         icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
         hbox.add_child(icon_rect)
-    var text_vbox := VBoxContainer.new()
-    hbox.add_child(text_vbox)
-    var name_lbl := Label.new()
-    name_lbl.text = comp.display_name
-    text_vbox.add_child(name_lbl)
-    var val_lbl := Label.new()
+    var info_lbl := Label.new()
+    var val_str: String
     if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY:
-        val_lbl.text = "每 %.0f 次" % comp.trigger_value
+        val_str = " (T:%.0f)" % comp.trigger_value
     elif comp.slot_type == ComponentData.SlotType.EFFECT_ONLY:
-        val_lbl.text = "值: %.1f" % comp.effect_value
+        val_str = " (E:%.1f)" % comp.effect_value
     else:
-        val_lbl.text = "T:%.0f E:%.1f" % [comp.trigger_value, comp.effect_value]
-    text_vbox.add_child(val_lbl)
+        val_str = " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
+    info_lbl.text = comp.display_name + val_str
+    hbox.add_child(info_lbl)
     var take_btn := Button.new()
     take_btn.text = "取走"
     take_btn.disabled = not GameState.inventory_has_space()
