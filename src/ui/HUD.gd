@@ -91,11 +91,12 @@ func _apply_ui_skin() -> void:
 		hbox.add_theme_constant_override("separation", 3)
 		var icon_rect := TextureRect.new()
 		icon_rect.texture = gold_icon_tex
-		icon_rect.custom_minimum_size = Vector2(16, 16)
+		icon_rect.custom_minimum_size = Vector2(24, 24)
 		icon_rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		hbox.add_child(icon_rect)
+		gold_lbl.add_theme_color_override("font_color", Color.BLACK)
 		hbox.add_child(gold_lbl)
 		gold_pill.add_child(hbox)
 
@@ -107,6 +108,8 @@ func setup_altar(panel, tile) -> void:
 	_altar_tile = tile
 
 func _process(_delta: float) -> void:
+	if hp_label == null:
+		return
 	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
