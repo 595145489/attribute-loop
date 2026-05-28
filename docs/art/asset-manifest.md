@@ -88,7 +88,7 @@
 
 ### Panels
 - [x] panel_bg.png             — general panel background texture, dark semi-transparent
-- [ ] panel_combat_bg.png      — combat/enemy encounter overlay background
+- [x] panel_combat_bg.png      — combat/enemy encounter overlay background
 
 ### Buttons
 - [ ] btn_normal.png           — button default state
