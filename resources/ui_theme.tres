@@ -1,4 +1,4 @@
-[gd_resource type="Theme" format=3 uid="uid://b1gjqtsaaq6y"]
+[gd_resource type="Theme" format=3 uid="uid://caq3yemgttbxw"]
 
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="1_2q3j3"]
 [ext_resource type="Texture2D" uid="uid://dvhho51wmumrl" path="res://resources/ui/btn_hover.png" id="2_647oo"]
@@ -32,6 +32,10 @@ content_margin_right = 8.0
 content_margin_bottom = 4.0
 
 [resource]
+Button/colors/font_color = Color(0.15, 0.1, 0.05, 1)
+Button/colors/font_disabled_color = Color(0.4, 0.35, 0.25, 1)
+Button/colors/font_hover_color = Color(0.15, 0.1, 0.05, 1)
+Button/colors/font_pressed_color = Color(0.15, 0.1, 0.05, 1)
 Button/styles/disabled = SubResource("StyleBoxTexture_wxyj8")
 Button/styles/focus = SubResource("StyleBoxTexture_wxyj8")
 Button/styles/hover = SubResource("StyleBoxTexture_gon4j")
