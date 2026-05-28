@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://12onkloitfa8"
-valid=false
+uid="uid://cj7r762oq6a7m"
+path="res://.godot/imported/panel_bg.png-fdde88a38278762cdddbf10b29cd22ea.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://resources/ui/panel_bg.png"
+dest_files=["res://.godot/imported/panel_bg.png-fdde88a38278762cdddbf10b29cd22ea.ctex"]
 
 [params]
 

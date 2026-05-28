@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bympvv5c1sq52"
-valid=false
+uid="uid://dcv1wt2bf6ap1"
+path="res://.godot/imported/phase_badge_bg.png-52efabb3744983d176b46e6c42189c84.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://resources/ui/phase_badge_bg.png"
+dest_files=["res://.godot/imported/phase_badge_bg.png-52efabb3744983d176b46e6c42189c84.ctex"]
 
 [params]
 
