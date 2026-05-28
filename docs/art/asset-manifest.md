@@ -96,8 +96,8 @@
 - [x] btn_pressed.png          — button pressed state, slightly inset
 
 ### Component Cards
-- [ ] card_trigger_bg.png      — trigger component card background
-- [ ] card_effect_bg.png       — effect component card background
+- [x] card_trigger_bg.png      — trigger component card background
+- [x] card_effect_bg.png       — effect component card background
 
 ### HUD Elements
 - [ ] hp_bar_bg.png            — HP bar background track
