@@ -92,7 +92,9 @@ func _apply_ui_skin() -> void:
 		var icon_rect := TextureRect.new()
 		icon_rect.texture = gold_icon_tex
 		icon_rect.custom_minimum_size = Vector2(16, 16)
+		icon_rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		hbox.add_child(icon_rect)
 		hbox.add_child(gold_lbl)
 		gold_pill.add_child(hbox)
