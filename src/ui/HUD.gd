@@ -44,6 +44,58 @@ func _ready() -> void:
 	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
 	EventBus.rule_fired.connect(_on_rule_fired)
+	_apply_ui_skin()
+
+func _apply_ui_skin() -> void:
+	var ui_theme = load("res://resources/ui_theme.tres")
+	var panel_tex = load("res://resources/ui/panel_bg.png")
+	var badge_tex = load("res://resources/ui/phase_badge_bg.png")
+	var gold_icon_tex = load("res://resources/ui/gold_icon.png")
+
+	if panel_tex:
+		var s := StyleBoxTexture.new()
+		s.texture = panel_tex
+		s.content_margin_left = 8.0
+		s.content_margin_top = 4.0
+		s.content_margin_right = 8.0
+		s.content_margin_bottom = 4.0
+		for node in [
+			$BottomBar,
+			$BottomBar/HContent/HPPill,
+			$BottomBar/HContent/LoopPill,
+			$BottomBar/HContent/GoldPill,
+			$BottomBar/HContent/PressurePill,
+			$BottomBar/HContent/RulePanel0,
+			$BottomBar/HContent/RulePanel1,
+		]:
+			node.add_theme_stylebox_override("panel", s)
+
+	if badge_tex:
+		var bs := StyleBoxTexture.new()
+		bs.texture = badge_tex
+		bs.content_margin_left = 8.0
+		bs.content_margin_top = 2.0
+		bs.content_margin_right = 8.0
+		bs.content_margin_bottom = 2.0
+		$BottomBar/HContent/PhasePill.add_theme_stylebox_override("panel", bs)
+
+	if ui_theme:
+		$BottomBar.theme = ui_theme
+		bag_btn.remove_theme_stylebox_override("normal")
+
+	if gold_icon_tex:
+		var gold_pill := $BottomBar/HContent/GoldPill
+		var gold_lbl := gold_label
+		gold_pill.remove_child(gold_lbl)
+		var hbox := HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 3)
+		var icon_rect := TextureRect.new()
+		icon_rect.texture = gold_icon_tex
+		icon_rect.custom_minimum_size = Vector2(16, 16)
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		hbox.add_child(icon_rect)
+		hbox.add_child(gold_lbl)
+		gold_pill.add_child(hbox)
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
