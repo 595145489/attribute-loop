@@ -45,6 +45,14 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     card.add_theme_stylebox_override("panel", style)
     var vbox := VBoxContainer.new()
     card.add_child(vbox)
+    var icon_tex := ComponentIcons.get_icon(comp.id)
+    if icon_tex != null:
+        var icon_rect := TextureRect.new()
+        icon_rect.texture = icon_tex
+        icon_rect.custom_minimum_size = Vector2i(48, 48)
+        icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+        icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+        vbox.add_child(icon_rect)
     var name_lbl := Label.new()
     name_lbl.text = comp.display_name
     vbox.add_child(name_lbl)

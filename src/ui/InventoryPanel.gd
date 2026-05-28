@@ -46,11 +46,19 @@ func _build_rule_slots() -> void:
         var t_comp: ComponentData = slot["trigger"]
         var t_btn := Button.new()
         t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
+        if t_comp != null:
+            var t_tex := ComponentIcons.get_icon(t_comp.id)
+            if t_tex != null:
+                t_btn.icon = t_tex
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
         var e_btn := Button.new()
         e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
+        if e_comp != null:
+            var e_tex := ComponentIcons.get_icon(e_comp.id)
+            if e_tex != null:
+                e_btn.icon = e_tex
         e_btn.pressed.connect(_make_slot_handler(i, false, e_comp))
         hbox.add_child(e_btn)
 
@@ -81,6 +89,9 @@ func _build_inventory_grid() -> void:
             label += " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
         btn.custom_minimum_size = Vector2i(120, 40)
+        var icon_tex := ComponentIcons.get_icon(comp.id)
+        if icon_tex != null:
+            btn.icon = icon_tex
         var c = comp
         btn.pressed.connect(func(): _select(c))
         _inv_grid.add_child(btn)
