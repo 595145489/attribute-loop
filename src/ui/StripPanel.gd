@@ -19,10 +19,10 @@ func _ready() -> void:
     if panel_tex:
         var s := StyleBoxTexture.new()
         s.texture = panel_tex
-        s.content_margin_left = 40.0
-        s.content_margin_top = 40.0
-        s.content_margin_right = 40.0
-        s.content_margin_bottom = 40.0
+        s.content_margin_left = 70.0
+        s.content_margin_top = 70.0
+        s.content_margin_right = 70.0
+        s.content_margin_bottom = 70.0
         add_theme_stylebox_override("panel", s)
 
 func setup(inv_panel) -> void:
