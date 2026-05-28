@@ -23,7 +23,7 @@
 - [x] effect_reflect.png       — 反射 · mirrored arrow, silver sheen
 - [x] effect_lifesteal.png     — 吸血 · fangs or red tendril draining
 - [x] effect_haste.png         — 加速 · lightning bolt, motion lines
-- [ ] effect_slow.png          — 减速 · hourglass or frozen crystal
+- [x] effect_slow.png          — 减速 · hourglass or frozen crystal
 - [ ] effect_charge.png        — 蓄能 · battery or orb filling with energy
 - [ ] effect_empower.png       — 强化 · upward arrow wrapped in light
 - [ ] effect_chain.png         — 连锁 · chain links branching outward
