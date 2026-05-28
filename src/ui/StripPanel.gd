@@ -15,6 +15,15 @@ func _ready() -> void:
     var ui_theme = load("res://resources/ui_theme.tres")
     if ui_theme:
         theme = ui_theme
+    var panel_tex = load("res://resources/ui/panel_bg.png")
+    if panel_tex:
+        var s := StyleBoxTexture.new()
+        s.texture = panel_tex
+        s.content_margin_left = 12.0
+        s.content_margin_top = 12.0
+        s.content_margin_right = 12.0
+        s.content_margin_bottom = 12.0
+        add_theme_stylebox_override("panel", s)
 
 func setup(inv_panel) -> void:
     _inventory_panel = inv_panel

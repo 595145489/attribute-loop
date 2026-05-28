@@ -131,11 +131,21 @@ text = "祭坛"
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hp")
 
-[node name="HPLabel" type="Label" parent="BottomBar/HContent/HPPill" unique_id=410069382]
+[node name="HPVBox" type="VBoxContainer" parent="BottomBar/HContent/HPPill"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="HPLabel" type="Label" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=410069382]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.533, 0.533, 1)
 theme_override_font_sizes/font_size = 11
 text = "❤ 100 / 100"
+
+[node name="HPBar" type="ProgressBar" parent="BottomBar/HContent/HPPill/HPVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 6)
+size_flags_horizontal = 3
+show_percentage = false
 
 [node name="LoopPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=1632057987]
 layout_mode = 2

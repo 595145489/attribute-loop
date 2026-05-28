@@ -9,7 +9,8 @@ var _float_tween: Tween = null
 @onready var altar_btn: Button = $BottomBar/HContent/AltarButton
 @onready var log_btn: Button = $BottomBar/HContent/LogButton
 @onready var log_panel: LogPanel = $LogPanel
-@onready var hp_label: Label = $BottomBar/HContent/HPPill/HPLabel
+@onready var hp_label: Label = $BottomBar/HContent/HPPill/HPVBox/HPLabel
+@onready var hp_bar: ProgressBar = $BottomBar/HContent/HPPill/HPVBox/HPBar
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
 @onready var bag_btn: Button = $BottomBar/HContent/BagButton
@@ -83,6 +84,16 @@ func _apply_ui_skin() -> void:
 		$BottomBar.theme = ui_theme
 		bag_btn.remove_theme_stylebox_override("normal")
 
+	var hp_bg_tex = load("res://resources/ui/hp_bar_bg.png")
+	var hp_fill_tex = load("res://resources/ui/hp_bar_fill.png")
+	if hp_bg_tex and hp_fill_tex:
+		var hp_bg_style := StyleBoxTexture.new()
+		hp_bg_style.texture = hp_bg_tex
+		var hp_fill_style := StyleBoxTexture.new()
+		hp_fill_style.texture = hp_fill_tex
+		hp_bar.add_theme_stylebox_override("background", hp_bg_style)
+		hp_bar.add_theme_stylebox_override("fill", hp_fill_style)
+
 	if gold_icon_tex:
 		var gold_pill := $BottomBar/HContent/GoldPill
 		var gold_lbl := gold_label
@@ -111,6 +122,8 @@ func _process(_delta: float) -> void:
 	if hp_label == null:
 		return
 	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
+	hp_bar.max_value = GameState.hp_max
+	hp_bar.value = GameState.hp
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 	gold_label.text = "金: %d" % GameState.gold
