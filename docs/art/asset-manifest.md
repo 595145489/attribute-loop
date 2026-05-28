@@ -100,10 +100,10 @@
 - [x] card_effect_bg.png       — effect component card background
 
 ### HUD Elements
-- [ ] hp_bar_bg.png            — HP bar background track
-- [ ] hp_bar_fill.png          — HP bar fill (green → red based on HP %)
-- [ ] gold_icon.png            — gold coin icon, 32×32
-- [ ] phase_badge_bg.png       — phase indicator background
+- [x] hp_bar_bg.png            — HP bar background track
+- [x] hp_bar_fill.png          — HP bar fill (green → red based on HP %)
+- [x] gold_icon.png            — gold coin icon, 32×32
+- [x] phase_badge_bg.png       — phase indicator background
 
 ---
 
