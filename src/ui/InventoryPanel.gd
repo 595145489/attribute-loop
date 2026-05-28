@@ -50,6 +50,7 @@ func _build_rule_slots() -> void:
             var t_tex := ComponentIcons.get_icon(t_comp.id)
             if t_tex != null:
                 t_btn.icon = t_tex
+                t_btn.add_theme_constant_override("icon_max_width", 32)
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
@@ -59,6 +60,7 @@ func _build_rule_slots() -> void:
             var e_tex := ComponentIcons.get_icon(e_comp.id)
             if e_tex != null:
                 e_btn.icon = e_tex
+                e_btn.add_theme_constant_override("icon_max_width", 32)
         e_btn.pressed.connect(_make_slot_handler(i, false, e_comp))
         hbox.add_child(e_btn)
 
@@ -92,6 +94,7 @@ func _build_inventory_grid() -> void:
         var icon_tex := ComponentIcons.get_icon(comp.id)
         if icon_tex != null:
             btn.icon = icon_tex
+            btn.add_theme_constant_override("icon_max_width", 32)
         var c = comp
         btn.pressed.connect(func(): _select(c))
         _inv_grid.add_child(btn)
