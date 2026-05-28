@@ -45,17 +45,21 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     card.add_theme_stylebox_override("panel", style)
     var vbox := VBoxContainer.new()
     card.add_child(vbox)
+    var hbox := HBoxContainer.new()
+    vbox.add_child(hbox)
     var icon_tex := ComponentIcons.get_icon(comp.id)
     if icon_tex != null:
         var icon_rect := TextureRect.new()
         icon_rect.texture = icon_tex
-        icon_rect.custom_minimum_size = Vector2i(48, 48)
+        icon_rect.custom_minimum_size = Vector2i(32, 32)
         icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
         icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-        vbox.add_child(icon_rect)
+        hbox.add_child(icon_rect)
+    var text_vbox := VBoxContainer.new()
+    hbox.add_child(text_vbox)
     var name_lbl := Label.new()
     name_lbl.text = comp.display_name
-    vbox.add_child(name_lbl)
+    text_vbox.add_child(name_lbl)
     var val_lbl := Label.new()
     if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY:
         val_lbl.text = "每 %.0f 次" % comp.trigger_value
@@ -63,7 +67,7 @@ func _make_card(comp: ComponentData) -> PanelContainer:
         val_lbl.text = "值: %.1f" % comp.effect_value
     else:
         val_lbl.text = "T:%.0f E:%.1f" % [comp.trigger_value, comp.effect_value]
-    vbox.add_child(val_lbl)
+    text_vbox.add_child(val_lbl)
     var take_btn := Button.new()
     take_btn.text = "取走"
     take_btn.disabled = not GameState.inventory_has_space()
