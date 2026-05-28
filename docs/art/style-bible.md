@@ -31,6 +31,14 @@ photorealistic, 3d render, pixel art, flat vector, dark fantasy, horror, charact
 
 ---
 
+## positive_prefix_ui
+
+> Use this prefix for UI panels, buttons, cards, and HUD elements.
+
+soft hand-painted anime illustration, warm golden light, blue-grey tones, whimsical fantasy roguelike, aged parchment texture, warm yellowed paper, hand-drawn ink brush border, magical scroll, worn edges, golden warm tones, translucent paper, ethereal glow shining through, light diffusing softly, delicate luminous sheen
+
+---
+
 ## art_spec_ids
 
 (none)

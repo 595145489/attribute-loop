@@ -87,7 +87,7 @@
 ## UI · `resources/ui/` · Path A
 
 ### Panels
-- [ ] panel_bg.png             — general panel background texture, dark semi-transparent
+- [x] panel_bg.png             — general panel background texture, dark semi-transparent
 - [ ] panel_combat_bg.png      — combat/enemy encounter overlay background
 
 ### Buttons
