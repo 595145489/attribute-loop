@@ -91,9 +91,9 @@
 - [x] panel_combat_bg.png      — combat/enemy encounter overlay background
 
 ### Buttons
-- [ ] btn_normal.png           — button default state
-- [ ] btn_hover.png            — button hover state, slight glow
-- [ ] btn_pressed.png          — button pressed state, slightly inset
+- [x] btn_normal.png           — button default state
+- [x] btn_hover.png            — button hover state, slight glow
+- [x] btn_pressed.png          — button pressed state, slightly inset
 
 ### Component Cards
 - [ ] card_trigger_bg.png      — trigger component card background
