@@ -16,3 +16,4 @@ tests/screenshots/last_run.log
 
 exports/
 scripts/godot_path.txt
+.worktrees/
