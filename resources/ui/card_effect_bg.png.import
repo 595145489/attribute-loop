@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjjo62ocu12od"
-valid=false
+uid="uid://df3hifmq7m6ii"
+path="res://.godot/imported/card_effect_bg.png-2c2d57cd33ab8a9fb07ffbd759f301a9.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://resources/ui/card_effect_bg.png"
+dest_files=["res://.godot/imported/card_effect_bg.png-2c2d57cd33ab8a9fb07ffbd759f301a9.ctex"]
 
 [params]
 
