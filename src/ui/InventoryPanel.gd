@@ -10,7 +10,6 @@ var _selected: ComponentData = null
 @onready var _inv_label: Label = $VBox/InvLabel
 
 func _ready() -> void:
-    hide()
     _delete_btn.hide()
     _delete_btn.pressed.connect(_on_delete)
     _close_btn.pressed.connect(toggle)
@@ -46,7 +45,7 @@ func toggle() -> void:
 func _refresh() -> void:
     _build_rule_slots()
     _build_inventory_grid()
-    _inv_label.text = "背包 %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
+    _inv_label.text = "鑳屽寘 %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 
 func _build_rule_slots() -> void:
     for child in _rule_slot_container.get_children():
@@ -58,7 +57,7 @@ func _build_rule_slots() -> void:
         _rule_slot_container.add_child(hbox)
         var t_comp: ComponentData = slot["trigger"]
         var t_btn := Button.new()
-        t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
+        t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 绌篯"
         t_btn.custom_minimum_size = Vector2(200, 52)
         t_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         t_btn.clip_text = true
@@ -73,7 +72,7 @@ func _build_rule_slots() -> void:
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
         var e_btn := Button.new()
-        e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
+        e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 绌篯"
         e_btn.custom_minimum_size = Vector2(200, 52)
         e_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         e_btn.clip_text = true
@@ -129,7 +128,7 @@ func _build_inventory_grid() -> void:
 func _select(comp: ComponentData) -> void:
     _selected = comp
     var cost = GameState.get_deletion_cost()
-    _delete_btn.text = "删除 ¥%d" % cost
+    _delete_btn.text = "鍒犻櫎 楼%d" % cost
     _delete_btn.disabled = not GameState.can_afford_deletion()
     _delete_btn.show()
     _refresh()

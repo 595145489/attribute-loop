@@ -2,14 +2,13 @@ class_name StripPanel
 extends PanelContainer
 
 var _on_complete: Callable
-var _inventory_panel = null  # InventoryPanel — set via setup()
+var _inventory_panel = null  # InventoryPanel 鈥?set via setup()
 
 @onready var _grid: GridContainer = $VBox/ComponentScroll/ComponentGrid
 @onready var _continue_btn: Button = $VBox/HBox/ContinueButton
 @onready var _bag_btn: Button = $VBox/HBox/BagButton
 
 func _ready() -> void:
-    hide()
     _continue_btn.pressed.connect(_on_continue)
     _bag_btn.pressed.connect(_on_open_bag)
     var ui_theme = load("res://resources/ui_theme.tres")
@@ -71,14 +70,14 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     info_lbl.text = comp.display_name + val_str
     hbox.add_child(info_lbl)
     var take_btn := Button.new()
-    take_btn.text = "取走"
+    take_btn.text = "鍙栬蛋"
     take_btn.custom_minimum_size = Vector2(120, 40)
     take_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
     take_btn.disabled = not GameState.inventory_has_space()
     take_btn.pressed.connect(func():
         GameState.add_to_inventory(comp)
         take_btn.disabled = true
-        take_btn.text = "已取"
+        take_btn.text = "宸插彇"
         _refresh_take_buttons()
     )
     vbox.add_child(take_btn)
@@ -90,7 +89,7 @@ func _refresh_take_buttons() -> void:
         for child in card.get_children():
             if child is VBoxContainer:
                 for btn_node in child.get_children():
-                    if btn_node is Button and btn_node.text == "取走":
+                    if btn_node is Button and btn_node.text == "鍙栬蛋":
                         btn_node.disabled = not has_space
 
 func _on_continue() -> void:
