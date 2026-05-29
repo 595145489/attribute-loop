@@ -111,7 +111,7 @@ func _build_inventory_grid() -> void:
         else:
             label += " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
-        btn.custom_minimum_size = Vector2(120, 44)
+        btn.custom_minimum_size = Vector2(160, 44)
         btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         btn.clip_text = true
         btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
