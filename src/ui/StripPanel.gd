@@ -77,7 +77,7 @@ func _refresh_take_buttons() -> void:
         for child in card.get_children():
             if child is VBoxContainer:
                 for btn_node in child.get_children():
-                    if btn_node is Button and btn_node.text == "取走"
+                    if btn_node is Button and btn_node.text == "取走":
                         btn_node.disabled = not has_space
 
 func _on_continue() -> void:
