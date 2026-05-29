@@ -59,15 +59,19 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     var vbox := VBoxContainer.new()
     card.add_child(vbox)
     var hbox := HBoxContainer.new()
+    hbox.add_theme_constant_override("separation", 8)
     vbox.add_child(hbox)
+    var icon_container := Control.new()
+    icon_container.custom_minimum_size = Vector2(32, 32)
+    icon_container.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+    hbox.add_child(icon_container)
     var icon_tex := ComponentIcons.get_icon(comp.id)
     if icon_tex != null:
         var icon_rect := TextureRect.new()
         icon_rect.texture = icon_tex
-        icon_rect.custom_minimum_size = Vector2i(32, 32)
+        icon_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
         icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-        icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-        hbox.add_child(icon_rect)
+        icon_container.add_child(icon_rect)
     var info_lbl := Label.new()
     var val_str: String
     if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY:
