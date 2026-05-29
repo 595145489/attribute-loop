@@ -21,7 +21,7 @@ func _ready() -> void:
     if panel_tex:
         var s := StyleBoxTexture.new()
         s.texture = panel_tex
-        s.content_margin_left = 130.0
+        s.content_margin_left = 170.0
         s.content_margin_top = 130.0
         s.content_margin_right = 130.0
         s.content_margin_bottom = 130.0
