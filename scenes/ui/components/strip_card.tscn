@@ -18,6 +18,7 @@ theme_override_constants/separation = 8
 [node name="Icon" type="TextureRect" parent="VBox/InfoRow"]
 layout_mode = 2
 custom_minimum_size = Vector2(32, 32)
+size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("2_icon")
 stretch_mode = 2
@@ -25,8 +26,10 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="VBox/InfoRow"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "治愈 (T:3/E:1.5)"
+clip_text = true
 
 [node name="TakeButton" type="Button" parent="VBox"]
 layout_mode = 2

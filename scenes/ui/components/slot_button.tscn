@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://bxm1jby013inc" path="res://resources/icons/effect_heal.png" id="2_icon"]
 
 [node name="SlotButton" type="Button"]
 custom_minimum_size = Vector2(200, 52)
@@ -19,7 +20,9 @@ offset_right = -8.0
 [node name="Icon" type="TextureRect" parent="HBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(32, 32)
+size_flags_horizontal = 4
 size_flags_vertical = 4
+texture = ExtResource("2_icon")
 stretch_mode = 2
 expand_mode = 1
 
