@@ -45,7 +45,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 52)
 size_flags_horizontal = 3
 icon = ExtResource("3_icon")
-icon_alignment = 0
+theme_override_constants/icon_max_width = 32
 text = "受击 [3/5]"
 alignment = 0
 
@@ -54,7 +54,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 52)
 size_flags_horizontal = 3
 icon = ExtResource("3_icon")
-icon_alignment = 0
+theme_override_constants/icon_max_width = 32
 text = "治愈 [2.0]"
 alignment = 0
 
@@ -98,7 +98,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 52)
 size_flags_horizontal = 3
 icon = ExtResource("3_icon")
-icon_alignment = 0
+theme_override_constants/icon_max_width = 32
 text = "受击 (T:5)"
 alignment = 0
 
@@ -107,7 +107,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 52)
 size_flags_horizontal = 3
 icon = ExtResource("3_icon")
-icon_alignment = 0
+theme_override_constants/icon_max_width = 32
 text = "治愈 (E:2.0)"
 alignment = 0
 
@@ -116,7 +116,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 52)
 size_flags_horizontal = 3
 icon = ExtResource("3_icon")
-icon_alignment = 0
+theme_override_constants/icon_max_width = 32
 text = "反射 (T:3/E:0.5)"
 alignment = 0
 
