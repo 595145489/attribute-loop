@@ -10,27 +10,40 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -280.0
-offset_top = -240.0
+offset_top = -280.0
 offset_right = 280.0
-offset_bottom = 240.0
+offset_bottom = 280.0
+custom_minimum_size = Vector2(560, 560)
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
 text = "背包与规则槽"
 horizontal_alignment = 1
 
 [node name="RuleSlots" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
 
 [node name="InvLabel" type="Label" parent="VBox"]
+layout_mode = 2
 text = "背包 0/12"
 
-[node name="InventoryGrid" type="GridContainer" parent="VBox"]
+[node name="InvScroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 180)
+size_flags_vertical = 3
+
+[node name="InventoryGrid" type="GridContainer" parent="VBox/InvScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
 columns = 4
 
 [node name="DeleteButton" type="Button" parent="VBox"]
+layout_mode = 2
 text = "删除"
 
 [node name="CloseButton" type="Button" parent="VBox"]
+layout_mode = 2
 text = "关闭 [Tab]"
