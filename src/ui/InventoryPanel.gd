@@ -62,7 +62,7 @@ func _build_rule_slots() -> void:
         t_btn.custom_minimum_size = Vector2(160, 44)
         t_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         t_btn.clip_text = true
-        t_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
+        t_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
         if t_comp != null:
             var t_tex := ComponentIcons.get_icon(t_comp.id)
             if t_tex != null:
@@ -77,7 +77,7 @@ func _build_rule_slots() -> void:
         e_btn.custom_minimum_size = Vector2(160, 44)
         e_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         e_btn.clip_text = true
-        e_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
+        e_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
         if e_comp != null:
             var e_tex := ComponentIcons.get_icon(e_comp.id)
             if e_tex != null:
@@ -116,7 +116,7 @@ func _build_inventory_grid() -> void:
         btn.custom_minimum_size = Vector2(160, 44)
         btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         btn.clip_text = true
-        btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
+        btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
         var icon_tex := ComponentIcons.get_icon(comp.id)
         if icon_tex != null:
             btn.icon = icon_tex
