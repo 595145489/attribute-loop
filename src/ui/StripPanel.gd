@@ -2,7 +2,7 @@ class_name StripPanel
 extends PanelContainer
 
 var _on_complete: Callable
-var _inventory_panel = null  # InventoryPanel 鈥?set via setup()
+var _inventory_panel = null  # InventoryPanel 閳?set via setup()
 
 @onready var _grid: GridContainer = $VBox/ComponentScroll/ComponentGrid
 @onready var _continue_btn: Button = $VBox/HBox/ContinueButton
@@ -11,18 +11,6 @@ var _inventory_panel = null  # InventoryPanel 鈥?set via setup()
 func _ready() -> void:
     _continue_btn.pressed.connect(_on_continue)
     _bag_btn.pressed.connect(_on_open_bag)
-    var ui_theme = load("res://resources/ui_theme.tres")
-    if ui_theme:
-        theme = ui_theme
-    var panel_tex = load("res://resources/ui/panel_bg.png")
-    if panel_tex:
-        var s := StyleBoxTexture.new()
-        s.texture = panel_tex
-        s.content_margin_left = 140.0
-        s.content_margin_top = 100.0
-        s.content_margin_right = 100.0
-        s.content_margin_bottom = 100.0
-        add_theme_stylebox_override("panel", s)
 
 func setup(inv_panel) -> void:
     _inventory_panel = inv_panel
@@ -70,14 +58,14 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     info_lbl.text = comp.display_name + val_str
     hbox.add_child(info_lbl)
     var take_btn := Button.new()
-    take_btn.text = "鍙栬蛋"
+    take_btn.text = "閸欐牞铔?
     take_btn.custom_minimum_size = Vector2(120, 40)
     take_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
     take_btn.disabled = not GameState.inventory_has_space()
     take_btn.pressed.connect(func():
         GameState.add_to_inventory(comp)
         take_btn.disabled = true
-        take_btn.text = "宸插彇"
+        take_btn.text = "瀹告彃褰?
         _refresh_take_buttons()
     )
     vbox.add_child(take_btn)
@@ -89,7 +77,7 @@ func _refresh_take_buttons() -> void:
         for child in card.get_children():
             if child is VBoxContainer:
                 for btn_node in child.get_children():
-                    if btn_node is Button and btn_node.text == "鍙栬蛋":
+                    if btn_node is Button and btn_node.text == "閸欐牞铔?:
                         btn_node.disabled = not has_space
 
 func _on_continue() -> void:
