@@ -9,25 +9,42 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -200.0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_left = -432.0
+offset_top = -280.0
+offset_right = 432.0
+offset_bottom = 280.0
+custom_minimum_size = Vector2(864, 560)
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
 text = "拾取零件"
 horizontal_alignment = 1
 
-[node name="ComponentGrid" type="GridContainer" parent="VBox"]
+[node name="ComponentScroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 300)
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ComponentGrid" type="GridContainer" parent="VBox/ComponentScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 columns = 2
 
 [node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
 
 [node name="BagButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "[B] 打开背包"
 
 [node name="ContinueButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "继续 →"
