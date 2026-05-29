@@ -42,7 +42,7 @@ func _build_grid(components: Array[ComponentData]) -> void:
 
 func _make_card(comp: ComponentData) -> PanelContainer:
     var card := PanelContainer.new()
-    card.custom_minimum_size = Vector2(320, 120)
+    card.custom_minimum_size = Vector2(160, 150)
     card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     var bg_path := "res://resources/ui/card_trigger_bg.png" \
         if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY \

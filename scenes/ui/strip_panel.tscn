@@ -9,11 +9,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -432.0
+offset_left = -234.0
 offset_top = -280.0
-offset_right = 432.0
+offset_right = 234.0
 offset_bottom = 280.0
-custom_minimum_size = Vector2(864, 560)
+custom_minimum_size = Vector2(468, 560)
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
