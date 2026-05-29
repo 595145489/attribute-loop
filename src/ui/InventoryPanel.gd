@@ -5,8 +5,8 @@ var _selected: ComponentData = null
 
 @onready var _rule_slot_container: VBoxContainer = $VBox/RuleSlots
 @onready var _inv_grid: GridContainer = $VBox/InvScroll/InventoryGrid
-@onready var _delete_btn: Button = $VBox/DeleteButton
-@onready var _close_btn: Button = $VBox/CloseButton
+@onready var _delete_btn: Button = $VBox/BtnRow/DeleteButton
+@onready var _close_btn: Button = $VBox/BtnRow/CloseButton
 @onready var _inv_label: Label = $VBox/InvLabel
 
 func _ready() -> void:

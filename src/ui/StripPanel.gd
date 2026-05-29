@@ -80,6 +80,8 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     hbox.add_child(info_lbl)
     var take_btn := Button.new()
     take_btn.text = "取走"
+    take_btn.custom_minimum_size = Vector2(120, 40)
+    take_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
     take_btn.disabled = not GameState.inventory_has_space()
     take_btn.pressed.connect(func():
         GameState.add_to_inventory(comp)
