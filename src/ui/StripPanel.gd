@@ -42,20 +42,8 @@ func _build_grid(components: Array[ComponentData]) -> void:
 
 func _make_card(comp: ComponentData) -> PanelContainer:
     var card := PanelContainer.new()
-    card.custom_minimum_size = Vector2(160, 150)
+    card.custom_minimum_size = Vector2(200, 110)
     card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    var bg_path := "res://resources/ui/card_trigger_bg.png" \
-        if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY \
-        else "res://resources/ui/card_effect_bg.png"
-    var bg_tex = load(bg_path)
-    if bg_tex:
-        var style := StyleBoxTexture.new()
-        style.texture = bg_tex
-        style.content_margin_left = 6.0
-        style.content_margin_top = 6.0
-        style.content_margin_right = 6.0
-        style.content_margin_bottom = 6.0
-        card.add_theme_stylebox_override("panel", style)
     var vbox := VBoxContainer.new()
     card.add_child(vbox)
     var hbox := HBoxContainer.new()
