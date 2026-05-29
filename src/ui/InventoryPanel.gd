@@ -1,6 +1,9 @@
 class_name InventoryPanel
 extends PanelContainer
 
+const SLOT_BTN = preload("res://scenes/ui/components/slot_button.tscn")
+const INV_BTN = preload("res://scenes/ui/components/inv_item_button.tscn")
+
 var _selected: ComponentData = null
 
 @onready var _rule_slot_container: VBoxContainer = $VBox/RuleSlots
@@ -33,7 +36,7 @@ func toggle() -> void:
 func _refresh() -> void:
     _build_rule_slots()
     _build_inventory_grid()
-    _inv_label.text = "閼冲苯瀵?%d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
+    _inv_label.text = "背包 %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 
 func _build_rule_slots() -> void:
     for child in _rule_slot_container.get_children():
@@ -44,33 +47,21 @@ func _build_rule_slots() -> void:
         hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         _rule_slot_container.add_child(hbox)
         var t_comp: ComponentData = slot["trigger"]
-        var t_btn := Button.new()
-        t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 缁岀"
-        t_btn.custom_minimum_size = Vector2(200, 52)
-        t_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-        t_btn.clip_text = true
-        t_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+        var t_btn: Button = SLOT_BTN.instantiate()
+        t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
         if t_comp != null:
             var t_tex := ComponentIcons.get_icon(t_comp.id)
             if t_tex != null:
                 t_btn.icon = t_tex
-                t_btn.add_theme_constant_override("icon_max_width", 32)
-                t_btn.add_theme_constant_override("h_separation", 8)
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
-        var e_btn := Button.new()
-        e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 缁岀"
-        e_btn.custom_minimum_size = Vector2(200, 52)
-        e_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-        e_btn.clip_text = true
-        e_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+        var e_btn: Button = SLOT_BTN.instantiate()
+        e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
         if e_comp != null:
             var e_tex := ComponentIcons.get_icon(e_comp.id)
             if e_tex != null:
                 e_btn.icon = e_tex
-                e_btn.add_theme_constant_override("icon_max_width", 32)
-                e_btn.add_theme_constant_override("h_separation", 8)
         e_btn.pressed.connect(_make_slot_handler(i, false, e_comp))
         hbox.add_child(e_btn)
 
@@ -91,7 +82,7 @@ func _build_inventory_grid() -> void:
     for child in _inv_grid.get_children():
         child.queue_free()
     for comp in GameState.inventory:
-        var btn := Button.new()
+        var btn: Button = INV_BTN.instantiate()
         var label = comp.display_name
         if comp.slot_type == ComponentData.SlotType.TRIGGER_ONLY:
             label += " (T:%.0f)" % comp.trigger_value
@@ -100,15 +91,9 @@ func _build_inventory_grid() -> void:
         else:
             label += " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
-        btn.custom_minimum_size = Vector2(180, 52)
-        btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-        btn.clip_text = true
-        btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
         var icon_tex := ComponentIcons.get_icon(comp.id)
         if icon_tex != null:
             btn.icon = icon_tex
-            btn.add_theme_constant_override("icon_max_width", 32)
-            btn.add_theme_constant_override("h_separation", 8)
         var c = comp
         btn.pressed.connect(func(): _select(c))
         _inv_grid.add_child(btn)
@@ -116,7 +101,7 @@ func _build_inventory_grid() -> void:
 func _select(comp: ComponentData) -> void:
     _selected = comp
     var cost = GameState.get_deletion_cost()
-    _delete_btn.text = "閸掔娀娅?妤?d" % cost
+    _delete_btn.text = "删除 ¥%d" % cost
     _delete_btn.disabled = not GameState.can_afford_deletion()
     _delete_btn.show()
     _refresh()
@@ -137,4 +122,3 @@ func _on_delete() -> void:
     _selected = null
     _delete_btn.hide()
     _refresh()
-
