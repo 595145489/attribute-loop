@@ -1,4 +1,4 @@
-﻿class_name InventoryPanel
+class_name InventoryPanel
 extends PanelContainer
 
 var _selected: ComponentData = null
@@ -21,10 +21,10 @@ func _ready() -> void:
     if panel_tex:
         var s := StyleBoxTexture.new()
         s.texture = panel_tex
-        s.content_margin_left = 100.0
-        s.content_margin_top = 100.0
-        s.content_margin_right = 100.0
-        s.content_margin_bottom = 100.0
+        s.content_margin_left = 130.0
+        s.content_margin_top = 130.0
+        s.content_margin_right = 130.0
+        s.content_margin_bottom = 130.0
         add_theme_stylebox_override("panel", s)
 
 func _input(event: InputEvent) -> void:
