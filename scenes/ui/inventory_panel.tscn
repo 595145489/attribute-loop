@@ -34,6 +34,7 @@ text = "背包 0/12"
 layout_mode = 2
 custom_minimum_size = Vector2(0, 180)
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="InventoryGrid" type="GridContainer" parent="VBox/InvScroll"]
 layout_mode = 2

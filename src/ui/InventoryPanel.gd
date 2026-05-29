@@ -54,10 +54,15 @@ func _build_rule_slots() -> void:
     for i in GameState.rule_slots.size():
         var slot = GameState.rule_slots[i]
         var hbox := HBoxContainer.new()
+        hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         _rule_slot_container.add_child(hbox)
         var t_comp: ComponentData = slot["trigger"]
         var t_btn := Button.new()
         t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
+        t_btn.custom_minimum_size = Vector2(160, 44)
+        t_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        t_btn.clip_text = true
+        t_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
         if t_comp != null:
             var t_tex := ComponentIcons.get_icon(t_comp.id)
             if t_tex != null:
@@ -68,6 +73,10 @@ func _build_rule_slots() -> void:
         var e_comp: ComponentData = slot["effect"]
         var e_btn := Button.new()
         e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
+        e_btn.custom_minimum_size = Vector2(160, 44)
+        e_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        e_btn.clip_text = true
+        e_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
         if e_comp != null:
             var e_tex := ComponentIcons.get_icon(e_comp.id)
             if e_tex != null:
@@ -102,7 +111,10 @@ func _build_inventory_grid() -> void:
         else:
             label += " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
-        btn.custom_minimum_size = Vector2i(120, 40)
+        btn.custom_minimum_size = Vector2(120, 44)
+        btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        btn.clip_text = true
+        btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
         var icon_tex := ComponentIcons.get_icon(comp.id)
         if icon_tex != null:
             btn.icon = icon_tex
