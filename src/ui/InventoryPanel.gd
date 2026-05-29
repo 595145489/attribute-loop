@@ -59,7 +59,7 @@ func _build_rule_slots() -> void:
         var t_comp: ComponentData = slot["trigger"]
         var t_btn := Button.new()
         t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
-        t_btn.custom_minimum_size = Vector2(140, 36)
+        t_btn.custom_minimum_size = Vector2(160, 44)
         t_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         t_btn.clip_text = true
         t_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -74,7 +74,7 @@ func _build_rule_slots() -> void:
         var e_comp: ComponentData = slot["effect"]
         var e_btn := Button.new()
         e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
-        e_btn.custom_minimum_size = Vector2(140, 36)
+        e_btn.custom_minimum_size = Vector2(160, 44)
         e_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         e_btn.clip_text = true
         e_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
