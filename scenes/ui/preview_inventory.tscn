@@ -1,0 +1,117 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://cj7r762oq6a7m" path="res://resources/ui/panel_bg.png" id="2_panel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bg"]
+content_margin_left = 170.0
+content_margin_top = 130.0
+content_margin_right = 130.0
+content_margin_bottom = 130.0
+texture = ExtResource("2_panel")
+
+[node name="PreviewInventory" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -432.0
+offset_top = -300.0
+offset_right = 432.0
+offset_bottom = 300.0
+custom_minimum_size = Vector2(864, 600)
+theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("StyleBoxTexture_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "背包与规则槽"
+horizontal_alignment = 1
+
+[node name="RuleSlots" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="SlotRow0" type="HBoxContainer" parent="VBox/RuleSlots"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TriggerBtn0" type="Button" parent="VBox/RuleSlots/SlotRow0"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 52)
+size_flags_horizontal = 3
+text = "受击 [3/5]"
+
+[node name="EffectBtn0" type="Button" parent="VBox/RuleSlots/SlotRow0"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 52)
+size_flags_horizontal = 3
+text = "治愈 [2.0]"
+
+[node name="SlotRow1" type="HBoxContainer" parent="VBox/RuleSlots"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TriggerBtn1" type="Button" parent="VBox/RuleSlots/SlotRow1"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 52)
+size_flags_horizontal = 3
+text = "[T 空]"
+
+[node name="EffectBtn1" type="Button" parent="VBox/RuleSlots/SlotRow1"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 52)
+size_flags_horizontal = 3
+text = "[E 空]"
+
+[node name="InvLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "背包 3/12"
+
+[node name="InvScroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 180)
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" type="GridContainer" parent="VBox/InvScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="Item0" type="Button" parent="VBox/InvScroll/InventoryGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 52)
+size_flags_horizontal = 3
+text = "受击 (T:5)"
+
+[node name="Item1" type="Button" parent="VBox/InvScroll/InventoryGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 52)
+size_flags_horizontal = 3
+text = "治愈 (E:2.0)"
+
+[node name="Item2" type="Button" parent="VBox/InvScroll/InventoryGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 52)
+size_flags_horizontal = 3
+text = "反射 (T:3/E:0.5)"
+
+[node name="BtnRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="DeleteButton" type="Button" parent="VBox/BtnRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 40)
+text = "删除"
+
+[node name="CloseButton" type="Button" parent="VBox/BtnRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 40)
+text = "关闭 [Tab]"

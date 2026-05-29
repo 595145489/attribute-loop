@@ -1,0 +1,96 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://cj7r762oq6a7m" path="res://resources/ui/panel_bg.png" id="2_panel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bg"]
+content_margin_left = 140.0
+content_margin_top = 100.0
+content_margin_right = 100.0
+content_margin_bottom = 100.0
+texture = ExtResource("2_panel")
+
+[node name="PreviewStrip" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -234.0
+offset_top = -280.0
+offset_right = 234.0
+offset_bottom = 280.0
+custom_minimum_size = Vector2(468, 560)
+theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("StyleBoxTexture_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+text = "拾取零件"
+horizontal_alignment = 1
+
+[node name="ComponentScroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 300)
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ComponentGrid" type="GridContainer" parent="VBox/ComponentScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="Card0" type="PanelContainer" parent="VBox/ComponentScroll/ComponentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 110)
+size_flags_horizontal = 3
+
+[node name="VBox0" type="VBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card0"]
+layout_mode = 2
+
+[node name="Label0" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0"]
+layout_mode = 2
+text = "受击 (T:5)"
+
+[node name="TakeBtn0" type="Button" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+size_flags_horizontal = 3
+text = "取走"
+
+[node name="Card1" type="PanelContainer" parent="VBox/ComponentScroll/ComponentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 110)
+size_flags_horizontal = 3
+
+[node name="VBox1" type="VBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card1"]
+layout_mode = 2
+
+[node name="Label1" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1"]
+layout_mode = 2
+text = "治愈 (E:2.0)"
+
+[node name="TakeBtn1" type="Button" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+size_flags_horizontal = 3
+text = "取走"
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BagButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 40)
+text = "[B] 打开背包"
+
+[node name="ContinueButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 40)
+text = "继续 →"
