@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="1_theme"]
 [ext_resource type="Texture2D" uid="uid://cj7r762oq6a7m" path="res://resources/ui/panel_bg.png" id="2_panel"]
+[ext_resource type="Texture2D" uid="uid://bxm1jby013inc" path="res://resources/icons/effect_heal.png" id="3_icon"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bg"]
 content_margin_left = 140.0
@@ -53,14 +54,26 @@ size_flags_horizontal = 3
 [node name="VBox0" type="VBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card0"]
 layout_mode = 2
 
-[node name="Label0" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0"]
+[node name="InfoRow0" type="HBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon0" type="TextureRect" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0/InfoRow0"]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+size_flags_vertical = 4
+texture = ExtResource("3_icon")
+stretch_mode = 2
+expand_mode = 1
+
+[node name="Label0" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0/InfoRow0"]
 layout_mode = 2
 text = "受击 (T:5)"
 
 [node name="TakeBtn0" type="Button" parent="VBox/ComponentScroll/ComponentGrid/Card0/VBox0"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 40)
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 text = "取走"
 
 [node name="Card1" type="PanelContainer" parent="VBox/ComponentScroll/ComponentGrid"]
@@ -71,14 +84,26 @@ size_flags_horizontal = 3
 [node name="VBox1" type="VBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card1"]
 layout_mode = 2
 
-[node name="Label1" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1"]
+[node name="InfoRow1" type="HBoxContainer" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1"]
 layout_mode = 2
-text = "治愈 (E:2.0)"
+theme_override_constants/separation = 8
+
+[node name="Icon1" type="TextureRect" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1/InfoRow1"]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+size_flags_vertical = 4
+texture = ExtResource("3_icon")
+stretch_mode = 2
+expand_mode = 1
+
+[node name="Label1" type="Label" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1/InfoRow1"]
+layout_mode = 2
+text = "治愈 (T:3/E:1.5)"
 
 [node name="TakeBtn1" type="Button" parent="VBox/ComponentScroll/ComponentGrid/Card1/VBox1"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 40)
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 text = "取走"
 
 [node name="HBox" type="HBoxContainer" parent="VBox"]
