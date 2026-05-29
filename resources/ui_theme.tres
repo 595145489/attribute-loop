@@ -1,8 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://caq3yemgttbxw"]
 
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="1_2q3j3"]
-[ext_resource type="Texture2D" uid="uid://dvhho51wmumrl" path="res://resources/ui/btn_hover.png" id="2_647oo"]
-[ext_resource type="Texture2D" uid="uid://dxwv28af6rtpj" path="res://resources/ui/btn_pressed.png" id="3_4misp"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wxyj8"]
 content_margin_left = 10.0
@@ -16,14 +14,16 @@ content_margin_left = 10.0
 content_margin_top = 4.0
 content_margin_right = 10.0
 content_margin_bottom = 4.0
-texture = ExtResource("2_647oo")
+texture = ExtResource("1_2q3j3")
+modulate_color = Color(0.72, 0.62, 0.5, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8rpf4"]
 content_margin_left = 10.0
 content_margin_top = 4.0
 content_margin_right = 10.0
 content_margin_bottom = 4.0
-texture = ExtResource("3_4misp")
+texture = ExtResource("1_2q3j3")
+modulate_color = Color(0.52, 0.42, 0.32, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6klor"]
 content_margin_left = 8.0
