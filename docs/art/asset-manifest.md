@@ -89,6 +89,7 @@
 ### Panels
 - [x] panel_bg.png             — general panel background texture, dark semi-transparent
 - [x] panel_combat_bg.png      — combat/enemy encounter overlay background
+- [x] panel_strip_bg.png       — strip pickup panel background, open magic book style
 
 ### Buttons
 - [x] btn_normal.png           — button default state
@@ -98,6 +99,7 @@
 ### Component Cards
 - [x] card_trigger_bg.png      — trigger component card background
 - [x] card_effect_bg.png       — effect component card background
+- [x] card_strip_bg.png        — unified strip pickup card background, blue-grey card style
 
 ### HUD Elements
 - [x] hp_bar_bg.png            — HP bar background track
