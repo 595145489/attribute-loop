@@ -32,6 +32,9 @@ func _ready() -> void:
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
 
+const TRACK_CENTER := Vector2(576, 300)
+const TILE_INSET := 45.0
+
 func _build_tiles() -> Array:
 	var tiles: Array = []
 	var curve = track.curve
@@ -39,10 +42,11 @@ func _build_tiles() -> Array:
 	for i in 13:
 		var t = float(i) / 13.0
 		var pos = curve.sample_baked(t * length)
+		var inward := (TRACK_CENTER - pos).normalized()
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
 		tile.is_altar = (i == 0)
-		tile.position = pos
+		tile.position = pos + inward * TILE_INSET
 		tile.clicked.connect(_on_tile_clicked)
 		tiles_container.add_child(tile)
 		tiles.append(tile)
@@ -56,7 +60,7 @@ func _process(_delta: float) -> void:
 func _check_player_tile() -> void:
 	var player_pos = player.global_position
 	for tile in tiles_container.get_children():
-		if player_pos.distance_to(tile.global_position) < 30.0:
+		if player_pos.distance_to(tile.global_position) < 55.0:
 			if tile.has_enemy():
 				game_loop.check_tile_for_enemy(tile)
 				return
