@@ -9,7 +9,7 @@ var _last_gold: int = 0
 @onready var _close_btn: Button = $VBox/Header/CloseBtn
 
 func _ready() -> void:
-	position.x = 280.0
+	offset_left = 0.0
 	hide()
 	_close_btn.pressed.connect(toggle)
 	EventBus.player_hit.connect(_on_player_hit)
@@ -29,12 +29,12 @@ func _open() -> void:
 	_is_open = true
 	show()
 	var tw = create_tween()
-	tw.tween_property(self, "position:x", 0.0, 0.15)
+	tw.tween_property(self, "offset_left", -280.0, 0.15)
 
 func _close() -> void:
 	_is_open = false
 	var tw = create_tween()
-	tw.tween_property(self, "position:x", 280.0, 0.15)
+	tw.tween_property(self, "offset_left", 0.0, 0.15)
 	await tw.finished
 	hide()
 
