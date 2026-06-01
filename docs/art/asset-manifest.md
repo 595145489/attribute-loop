@@ -78,9 +78,8 @@
 
 ## Tiles · `resources/tiles/` · Path A
 
-- [ ] tile_empty.png           — empty tile slot on track, subtle border
-- [ ] tile_occupied.png        — tile with component(s), active glow
-- [ ] tile_altar.png           — altar tile, visually distinct landmark, ornate
+- [x] tile_empty.png           — empty tile slot on track, subtle border
+- [x] tile_occupied.png        — tile with component(s), active glow
 
 ---
 
