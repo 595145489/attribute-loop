@@ -33,19 +33,19 @@ func _ready() -> void:
 	EventBus.game_won.connect(_on_game_won)
 
 const TILE_POSITIONS: Array[Vector2] = [
-	Vector2(576, 125),  # 0  altar        top center
-	Vector2(739, 125),  # 1               top right
-	Vector2(903, 125),  # 2               top far right
-	Vector2(1011, 223), # 3               right upper
-	Vector2(1011, 377), # 4               right lower
-	Vector2(870, 475),  # 5               bottom far right
-	Vector2(674, 475),  # 6               bottom right
-	Vector2(478, 475),  # 7               bottom left
-	Vector2(282, 475),  # 8               bottom far left
-	Vector2(141, 377),  # 9               left lower
-	Vector2(141, 223),  # 10              left upper
-	Vector2(249, 125),  # 11              top far left
-	Vector2(413, 125),  # 12              top left
+	Vector2(576, 115),  # 0  altar        top center
+	Vector2(739, 115),  # 1               top right
+	Vector2(903, 115),  # 2               top far right
+	Vector2(1021, 223), # 3               right upper
+	Vector2(1021, 377), # 4               right lower
+	Vector2(870, 485),  # 5               bottom far right
+	Vector2(674, 485),  # 6               bottom right
+	Vector2(478, 485),  # 7               bottom left
+	Vector2(282, 485),  # 8               bottom far left
+	Vector2(131, 377),  # 9               left lower
+	Vector2(131, 223),  # 10              left upper
+	Vector2(249, 115),  # 11              top far left
+	Vector2(413, 115),  # 12              top left
 ]
 
 func _build_tiles() -> Array:
