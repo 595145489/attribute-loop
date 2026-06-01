@@ -3,12 +3,14 @@ extends PanelContainer
 
 var _is_open: bool = false
 var _last_gold: int = 0
+var _open_offset: float = -280.0
 
 @onready var _entries: VBoxContainer = $VBox/Scroll/Entries
 @onready var _scroll: ScrollContainer = $VBox/Scroll
 @onready var _close_btn: Button = $VBox/Header/CloseBtn
 
 func _ready() -> void:
+	_open_offset = offset_left
 	offset_left = 0.0
 	hide()
 	_close_btn.pressed.connect(toggle)
@@ -29,7 +31,7 @@ func _open() -> void:
 	_is_open = true
 	show()
 	var tw = create_tween()
-	tw.tween_property(self, "offset_left", -280.0, 0.15)
+	tw.tween_property(self, "offset_left", _open_offset, 0.15)
 
 func _close() -> void:
 	_is_open = false
