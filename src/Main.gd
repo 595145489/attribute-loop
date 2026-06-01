@@ -32,8 +32,22 @@ func _ready() -> void:
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
 
-const TRACK_CENTER := Vector2(576, 300)
 const TILE_INSET := 45.0
+const TRACK_LEFT   := 86.0
+const TRACK_RIGHT  := 1066.0
+const TRACK_TOP    := 70.0
+const TRACK_BOTTOM := 530.0
+
+func _get_inward_dir(pos: Vector2) -> Vector2:
+	var d_left   := pos.x - TRACK_LEFT
+	var d_right  := TRACK_RIGHT - pos.x
+	var d_top    := pos.y - TRACK_TOP
+	var d_bottom := TRACK_BOTTOM - pos.y
+	var min_d := minf(d_left, minf(d_right, minf(d_top, d_bottom)))
+	if min_d == d_top:    return Vector2(0,  1)
+	if min_d == d_bottom: return Vector2(0, -1)
+	if min_d == d_right:  return Vector2(-1, 0)
+	return Vector2(1, 0)
 
 func _build_tiles() -> Array:
 	var tiles: Array = []
@@ -42,7 +56,7 @@ func _build_tiles() -> Array:
 	for i in 13:
 		var t = float(i) / 13.0
 		var pos = curve.sample_baked(t * length)
-		var inward := (TRACK_CENTER - pos).normalized()
+		var inward := _get_inward_dir(pos)
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
 		tile.is_altar = (i == 0)
