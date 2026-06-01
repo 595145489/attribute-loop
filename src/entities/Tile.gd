@@ -4,7 +4,21 @@ extends Node2D
 signal clicked(tile: Tile)
 
 const TEX_EMPTY = preload("res://resources/tiles/tile_empty.png")
-const TEX_OCCUPIED = preload("res://resources/tiles/tile_occupied.png")
+const TEX_BUILDINGS: Array[Texture2D] = [
+	preload("res://resources/tiles/buildings/tile_0.png"),
+	preload("res://resources/tiles/buildings/tile_1.png"),
+	preload("res://resources/tiles/buildings/tile_2.png"),
+	preload("res://resources/tiles/buildings/tile_3.png"),
+	preload("res://resources/tiles/buildings/tile_4.png"),
+	preload("res://resources/tiles/buildings/tile_5.png"),
+	preload("res://resources/tiles/buildings/tile_6.png"),
+	preload("res://resources/tiles/buildings/tile_7.png"),
+	preload("res://resources/tiles/buildings/tile_8.png"),
+	preload("res://resources/tiles/buildings/tile_9.png"),
+	preload("res://resources/tiles/buildings/tile_10.png"),
+	preload("res://resources/tiles/buildings/tile_11.png"),
+	preload("res://resources/tiles/buildings/tile_12.png"),
+]
 
 var tile_index: int = 0
 var enemy: Enemy = null
@@ -31,7 +45,10 @@ func _process(_delta: float) -> void:
 
 func _refresh_visual() -> void:
 	var occupied := rule_slots.any(func(s): return s.get("trigger") != null or s.get("effect") != null)
-	visual.texture = TEX_OCCUPIED if occupied else TEX_EMPTY
+	if occupied and tile_index < TEX_BUILDINGS.size():
+		visual.texture = TEX_BUILDINGS[tile_index]
+	else:
+		visual.texture = TEX_EMPTY
 
 func _input(event: InputEvent) -> void:
 	if GameState.is_paused:
