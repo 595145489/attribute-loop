@@ -92,6 +92,7 @@
 - [x] panel_combat_bg.png      — combat/enemy encounter overlay background
 - [x] panel_strip_bg.png       — strip pickup panel background, open magic book style
 - [x] panel_log_bg.png         — combat log panel background, tall vertical parchment journal page, ornate ink border, decorative header zone, faint ruled lines in content area, warm golden candlelight glow
+- [x] panel_game_over_bg.png   — game over panel background, worn dramatic parchment, dark vignette at corners, cracked ornate border, dim candlelight glow, melancholic yet mystical
 
 ### Buttons
 - [x] btn_normal.png           — button default state
@@ -115,3 +116,4 @@
 
 - [x] bg_main.png              — main game scene background, looping track environment
 - [x] bg_ground.png           — ground base layer, indigo blue-grey twilight grass
+- [x] bg_game_over.png        — game over full-screen background, dramatic parchment atmosphere, wide 16:9
