@@ -36,14 +36,14 @@ const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),  # 0  altar        top center
 	Vector2(739, 115),  # 1               top right
 	Vector2(903, 115),  # 2               top far right
-	Vector2(1021, 300), # 3               right center
-	Vector2(926, 485),  # 4               bottom far right
-	Vector2(786, 485),  # 5               bottom right
-	Vector2(646, 485),  # 6               bottom center-right
-	Vector2(506, 485),  # 7               bottom center-left
-	Vector2(366, 485),  # 8               bottom left
-	Vector2(226, 485),  # 9               bottom far left
-	Vector2(131, 300),  # 10              left center
+	Vector2(1021, 223), # 3               right upper
+	Vector2(1021, 377), # 4               right lower
+	Vector2(870, 485),  # 5               bottom far right
+	Vector2(674, 485),  # 6               bottom right
+	Vector2(478, 485),  # 7               bottom left
+	Vector2(282, 485),  # 8               bottom far left
+	Vector2(131, 377),  # 9               left lower
+	Vector2(131, 223),  # 10              left upper
 	Vector2(249, 115),  # 11              top far left
 	Vector2(413, 115),  # 12              top left
 ]
