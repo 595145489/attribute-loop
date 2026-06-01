@@ -11,7 +11,7 @@ var _open_offset: float = -280.0
 
 func _ready() -> void:
 	_open_offset = offset_left
-	position.x = -_open_offset
+	offset_left = 0.0
 	hide()
 	_close_btn.pressed.connect(toggle)
 	EventBus.player_hit.connect(_on_player_hit)
@@ -32,13 +32,13 @@ func _open() -> void:
 	show()
 	var tw = create_tween()
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(self, "position:x", 0.0, 0.2)
+	tw.tween_property(self, "offset_left", _open_offset, 0.25)
 
 func _close() -> void:
 	_is_open = false
 	var tw = create_tween()
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(self, "position:x", -_open_offset, 0.2)
+	tw.tween_property(self, "offset_left", 0.0, 0.2)
 	await tw.finished
 	hide()
 
