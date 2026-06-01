@@ -3,11 +3,8 @@
 [ext_resource type="Script" uid="uid://cfeli8prlofrd" path="res://src/entities/Player.gd" id="1_ht6vl"]
 
 [node name="Player" type="Node2D" unique_id="488126183"]
+z_index = 1
 script = ExtResource("1_ht6vl")
 
-[node name="Visual" type="ColorRect" parent="." unique_id="352870720"]
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
-color = Color(0.95, 0.53, 0.24, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
