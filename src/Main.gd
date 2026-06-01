@@ -38,16 +38,21 @@ const TRACK_RIGHT  := 1066.0
 const TRACK_TOP    := 70.0
 const TRACK_BOTTOM := 530.0
 
-func _get_inward_dir(pos: Vector2) -> Vector2:
-	var d_left   := pos.x - TRACK_LEFT
-	var d_right  := TRACK_RIGHT - pos.x
-	var d_top    := pos.y - TRACK_TOP
-	var d_bottom := TRACK_BOTTOM - pos.y
-	var min_d := minf(d_left, minf(d_right, minf(d_top, d_bottom)))
-	if min_d == d_top:    return Vector2(0,  1)
-	if min_d == d_bottom: return Vector2(0, -1)
-	if min_d == d_right:  return Vector2(-1, 0)
-	return Vector2(1, 0)
+func _tile_inset_pos(curve_pos: Vector2) -> Vector2:
+	var d_left   := curve_pos.x - TRACK_LEFT
+	var d_right  := TRACK_RIGHT - curve_pos.x
+	var d_top    := curve_pos.y - TRACK_TOP
+	var d_bottom := TRACK_BOTTOM - curve_pos.y
+	if minf(d_left, d_right) <= minf(d_top, d_bottom):
+		if d_right <= d_left:
+			return Vector2(TRACK_RIGHT - TILE_INSET, curve_pos.y)
+		else:
+			return Vector2(TRACK_LEFT + TILE_INSET, curve_pos.y)
+	else:
+		if d_top <= d_bottom:
+			return Vector2(curve_pos.x, TRACK_TOP + TILE_INSET)
+		else:
+			return Vector2(curve_pos.x, TRACK_BOTTOM - TILE_INSET)
 
 func _build_tiles() -> Array:
 	var tiles: Array = []
@@ -56,11 +61,10 @@ func _build_tiles() -> Array:
 	for i in 13:
 		var t = float(i) / 13.0
 		var pos = curve.sample_baked(t * length)
-		var inward := _get_inward_dir(pos)
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
 		tile.is_altar = (i == 0)
-		tile.position = pos + inward * TILE_INSET
+		tile.position = _tile_inset_pos(pos)
 		tile.clicked.connect(_on_tile_clicked)
 		tiles_container.add_child(tile)
 		tiles.append(tile)
