@@ -32,39 +32,29 @@ func _ready() -> void:
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
 
-const TILE_INSET := 45.0
-const TRACK_LEFT   := 86.0
-const TRACK_RIGHT  := 1066.0
-const TRACK_TOP    := 70.0
-const TRACK_BOTTOM := 530.0
-
-func _tile_inset_pos(curve_pos: Vector2) -> Vector2:
-	var d_left   := curve_pos.x - TRACK_LEFT
-	var d_right  := TRACK_RIGHT - curve_pos.x
-	var d_top    := curve_pos.y - TRACK_TOP
-	var d_bottom := TRACK_BOTTOM - curve_pos.y
-	if minf(d_left, d_right) <= minf(d_top, d_bottom):
-		if d_right <= d_left:
-			return Vector2(TRACK_RIGHT - TILE_INSET, curve_pos.y)
-		else:
-			return Vector2(TRACK_LEFT + TILE_INSET, curve_pos.y)
-	else:
-		if d_top <= d_bottom:
-			return Vector2(curve_pos.x, TRACK_TOP + TILE_INSET)
-		else:
-			return Vector2(curve_pos.x, TRACK_BOTTOM - TILE_INSET)
+const TILE_POSITIONS: Array[Vector2] = [
+	Vector2(576, 115),  # 0  altar        top center
+	Vector2(739, 115),  # 1               top right
+	Vector2(903, 115),  # 2               top far right
+	Vector2(1021, 300), # 3               right center
+	Vector2(926, 485),  # 4               bottom far right
+	Vector2(786, 485),  # 5               bottom right
+	Vector2(646, 485),  # 6               bottom center-right
+	Vector2(506, 485),  # 7               bottom center-left
+	Vector2(366, 485),  # 8               bottom left
+	Vector2(226, 485),  # 9               bottom far left
+	Vector2(131, 300),  # 10              left center
+	Vector2(249, 115),  # 11              top far left
+	Vector2(413, 115),  # 12              top left
+]
 
 func _build_tiles() -> Array:
 	var tiles: Array = []
-	var curve = track.curve
-	var length = curve.get_baked_length()
-	for i in 13:
-		var t = float(i) / 13.0
-		var pos = curve.sample_baked(t * length)
+	for i in TILE_POSITIONS.size():
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
 		tile.is_altar = (i == 0)
-		tile.position = _tile_inset_pos(pos)
+		tile.position = TILE_POSITIONS[i]
 		tile.clicked.connect(_on_tile_clicked)
 		tiles_container.add_child(tile)
 		tiles.append(tile)
