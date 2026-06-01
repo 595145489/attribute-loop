@@ -10,7 +10,8 @@ size = Vector2(106, 104)
 script = ExtResource("1_qypnx")
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=352870719]
-scale = Vector2(0.06, 0.06)
+z_index = -1
+scale = Vector2(0.025, 0.025)
 texture = ExtResource("2_empty")
 
 [node name="Clickbox" type="Area2D" parent="." unique_id=300000001]
