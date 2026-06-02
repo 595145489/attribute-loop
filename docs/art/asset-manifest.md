@@ -40,9 +40,10 @@
 - [ ] drainer/death/           — death animation frames
 
 ### 守卫者 (Guardian) — heavy armored block-like form, effect-heavy
-- [ ] guardian/reference.png
+- [x] guardian/reference.png   <!-- resourceId: 622187322477175091 -->
 - [ ] guardian/walk/
-- [ ] guardian/attack/
+- [x] guardian/idle/            — idle loop (24 frames, 0-3s, 8fps)
+- [x] guardian/activate/        — activate animation (40 frames, full video, 8fps)
 - [ ] guardian/death/
 
 ### 急袭者 (Rusher) — origami dart creature, low HP, fast aggressive folds
