@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://8ixlkgbew2tg"]
 
+[ext_resource type="Shader" path="res://resources/shaders/building_fade.gdshader" id="3_shader"]
+
 [ext_resource type="Script" uid="uid://ctvtgr58qennn" path="res://src/entities/Tile.gd" id="1_qypnx"]
 [ext_resource type="Texture2D" uid="uid://cr6ptw4dps6gl" path="res://resources/tiles/tile_empty.png" id="2_empty"]
 
@@ -13,9 +15,13 @@ script = ExtResource("1_qypnx")
 scale = Vector2(0.034179684, 0.034179688)
 texture = ExtResource("2_empty")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_building"]
+shader = ExtResource("3_shader")
+
 [node name="Building" type="Sprite2D" parent="." unique_id=400000001]
 scale = Vector2(0.18, 0.18)
 visible = false
+material = SubResource("ShaderMaterial_building")
 
 [node name="Clickbox" type="Area2D" parent="." unique_id=300000001]
 
