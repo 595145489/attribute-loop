@@ -37,7 +37,7 @@ func spawn_enemies() -> void:
 	var indices = _pick_tile_indices(count, _tiles.size())
 
 	for idx in indices:
-		var enemy_id = "急袭者"  # DEBUG: force rusher for testing
+		var enemy_id = "汲取者"  # DEBUG: force drainer for testing (phase 1 unlocked)
 		var enemy: Enemy = _enemy_scene.instantiate()
 		_enemies_container.add_child(enemy)
 		enemy.init(enemy_id, stat_phase)
