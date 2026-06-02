@@ -33,9 +33,10 @@
 ## Enemy Sprites · `resources/sprites/enemies/` · Path B · per-action PNG sequences
 
 ### 汲取者 (Drainer) — small shadowy creature, thin limbs, trigger-heavy
-- [ ] drainer/reference.png    — static reference front-facing (locked look)
+- [x] drainer/reference.png    — static reference front-facing (locked look) <!-- resourceId: 622175813860621717 -->
 - [ ] drainer/walk/            — walking cycle frames
-- [ ] drainer/attack/          — attack animation frames
+- [x] drainer/idle/            — idle loop (16 frames, 1-3s, 8fps)
+- [x] drainer/activate/        — activate animation (40 frames, full video, 8fps)
 - [ ] drainer/death/           — death animation frames
 
 ### 守卫者 (Guardian) — heavy armored block-like form, effect-heavy
