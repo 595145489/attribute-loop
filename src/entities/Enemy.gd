@@ -53,7 +53,7 @@ func _load_animation() -> void:
 	var sf := SpriteFrames.new()
 	_load_anim(sf, base_path + "idle/", "idle", true)
 	_load_anim(sf, base_path + "activate/", "activate", false)
-	if sf.get_animation_names().size() == 0:
+	if not sf.has_animation("idle"):
 		_visual.show()
 		return
 	_anim_sprite.sprite_frames = sf
