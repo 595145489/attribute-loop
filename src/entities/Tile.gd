@@ -47,12 +47,12 @@ func _process(_delta: float) -> void:
 func _refresh_visual() -> void:
 	var occupied := rule_slots.any(func(s): return s.get("trigger") != null or s.get("effect") != null)
 	if occupied and tile_index < TEX_BUILDINGS.size():
-		visual.texture = TEX_EMPTY
 		building.texture = TEX_BUILDINGS[tile_index]
 		building.visible = true
+		visual.visible = false
 	else:
-		visual.texture = TEX_EMPTY
 		building.visible = false
+		visual.visible = true
 
 func _input(event: InputEvent) -> void:
 	if GameState.is_paused:
