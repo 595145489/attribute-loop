@@ -44,7 +44,7 @@ const SPRITE_FOLDERS: Dictionary = {
 }
 
 func _load_animation() -> void:
-	var folder := SPRITE_FOLDERS.get(enemy_id, enemy_id)
+	var folder: String = SPRITE_FOLDERS.get(enemy_id, enemy_id)
 	var idle_path := "res://resources/sprites/enemies/%s/idle/" % folder
 	var dir := DirAccess.open(idle_path)
 	if dir == null:
