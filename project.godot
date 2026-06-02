@@ -1,4 +1,4 @@
-﻿; Engine configuration file.
+; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
 ; since the parameters that go here are not all obvious.
 ;
@@ -32,8 +32,8 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut
 
 [gui]
 
-theme/custom_font="res://resources/fonts/simhei.ttf"
-theme/custom_font_size=16
+theme/default_font="res://resources/fonts/LXGWWenKaiLite-Regular.ttf"
+theme/default_font_size=16
 
 [physics]
 
@@ -44,4 +44,3 @@ theme/custom_font_size=16
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-
