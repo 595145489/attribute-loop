@@ -32,8 +32,7 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut
 
 [gui]
 
-theme/default_font="res://resources/fonts/LXGWWenKaiLite-Regular.ttf"
-theme/default_font_size=16
+theme/custom="res://resources/fonts/default_theme.tres"
 
 [physics]
 
