@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://8ixlkgbew2tg"]
 
-[ext_resource type="Shader" path="res://resources/shaders/building_fade.gdshader" id="3_shader"]
-
 [ext_resource type="Script" uid="uid://ctvtgr58qennn" path="res://src/entities/Tile.gd" id="1_qypnx"]
 [ext_resource type="Texture2D" uid="uid://cr6ptw4dps6gl" path="res://resources/tiles/tile_empty.png" id="2_empty"]
+[ext_resource type="Shader" path="res://resources/shaders/building_fade.gdshader" id="3_shader"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_click"]
 size = Vector2(62, 60)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_building"]
+shader = ExtResource("3_shader")
 
 [node name="Tile" type="Node2D" unique_id=145233933]
 script = ExtResource("1_qypnx")
@@ -14,9 +16,6 @@ script = ExtResource("1_qypnx")
 [node name="Visual" type="Sprite2D" parent="." unique_id=352870719]
 scale = Vector2(0.034179684, 0.034179688)
 texture = ExtResource("2_empty")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_building"]
-shader = ExtResource("3_shader")
 
 [node name="Building" type="Sprite2D" parent="." unique_id=400000001]
 scale = Vector2(0.18, 0.18)
