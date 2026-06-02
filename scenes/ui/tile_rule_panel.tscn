@@ -1,6 +1,43 @@
 [gd_scene format=3 uid="uid://d6kk8olumpwl"]
 
 [ext_resource type="Script" uid="uid://da3hkkhv7pvor" path="res://src/ui/TileRulePanel.gd" id="1_ynhln"]
+[ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://bxwhlygc61u1t" path="res://resources/ui/rule_panel_bg.png" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="4_btn_n"]
+[ext_resource type="Texture2D" uid="uid://dvhho51wmumrl" path="res://resources/ui/btn_hover.png" id="5_btn_h"]
+[ext_resource type="Texture2D" uid="uid://dxwv28af6rtpj" path="res://resources/ui/btn_pressed.png" id="6_btn_p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+content_margin_left = 100.0
+content_margin_top = 100.0
+content_margin_right = 100.0
+content_margin_bottom = 100.0
+texture = ExtResource("3_panel")
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_n"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("4_btn_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_h"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("5_btn_h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_p"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("6_btn_p")
 
 [node name="TileRulePanel" type="PanelContainer" unique_id=1901766401]
 visible = false
@@ -14,6 +51,8 @@ offset_left = -200.0
 offset_top = -160.0
 offset_right = 200.0
 offset_bottom = 160.0
+theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 script = ExtResource("1_ynhln")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=310248638]
@@ -40,4 +79,9 @@ columns = 3
 
 [node name="CloseButton" type="Button" parent="VBox" unique_id=337841513]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxTexture_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_btn_n")
 text = "关闭"
