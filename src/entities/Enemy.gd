@@ -84,7 +84,7 @@ func _load_animation() -> void:
 		_anim_sprite.play("idle")
 
 static func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool) -> void:
-	if not FileAccess.file_exists(path + "frame_0001.png"):
+	if not ResourceLoader.exists(path + "frame_0001.png"):
 		return
 	sf.add_animation(anim)
 	sf.set_animation_speed(anim, 8.0)
@@ -92,7 +92,7 @@ static func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool)
 	var i := 1
 	while true:
 		var file := path + "frame_%04d.png" % i
-		if not FileAccess.file_exists(file):
+		if not ResourceLoader.exists(file):
 			break
 		sf.add_frame(anim, load(file))
 		i += 1
