@@ -96,6 +96,7 @@
 - [x] panel_strip_bg.png       — strip pickup panel background, open magic book style
 - [x] panel_log_bg.png         — combat log panel background, tall vertical parchment journal page, ornate ink border, decorative header zone, faint ruled lines in content area, warm golden candlelight glow
 - [x] panel_game_over_bg.png   — game over panel background, worn dramatic parchment, dark vignette at corners, cracked ornate border, dim candlelight glow, melancholic yet mystical
+- [x] rule_panel_bg.png        — tile rule panel background, ornate parchment frame with decorative header/footer bands, clean minimal center field for UI overlay
 
 ### Buttons
 - [x] btn_normal.png           — button default state
