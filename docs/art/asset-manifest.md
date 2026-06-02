@@ -44,8 +44,8 @@
 - [ ] guardian/attack/
 - [ ] guardian/death/
 
-### 急袭者 (Rusher) — low HP, very fast movement, aggressive posture
-- [ ] rusher/reference.png
+### 急袭者 (Rusher) — origami dart creature, low HP, fast aggressive folds
+- [x] rusher/reference.png    <!-- resourceId: 622166535909204275 -->
 - [ ] rusher/walk/
 - [ ] rusher/attack/
 - [ ] rusher/death/
