@@ -14,7 +14,7 @@ scale = Vector2(0.034179684, 0.034179688)
 texture = ExtResource("2_empty")
 
 [node name="Building" type="Sprite2D" parent="." unique_id=400000001]
-scale = Vector2(0.086, 0.086)
+scale = Vector2(0.129, 0.129)
 visible = false
 
 [node name="Clickbox" type="Area2D" parent="." unique_id=300000001]
