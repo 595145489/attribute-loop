@@ -50,18 +50,18 @@ const TILE_POSITIONS: Array[Vector2] = [
 
 const GUARD_POSITIONS: Array[Vector2] = [
 	Vector2(576,  70),   # 0  altar        top center (no enemy)
-	Vector2(704,  70),   # 1               top right
-	Vector2(868,  70),   # 2               top far right
-	Vector2(1066, 188),  # 3               right upper
-	Vector2(1066, 342),  # 4               right lower
-	Vector2(905,  530),  # 5               bottom far right
-	Vector2(709,  530),  # 6               bottom right
-	Vector2(513,  530),  # 7               bottom left
-	Vector2(317,  530),  # 8               bottom far left
-	Vector2(86,   412),  # 9               left lower
-	Vector2(86,   258),  # 10              left upper
-	Vector2(214,  70),   # 11              top far left
-	Vector2(378,  70),   # 12              top left
+	Vector2(674,  70),   # 1               top right
+	Vector2(838,  70),   # 2               top far right
+	Vector2(1066, 158),  # 3               right upper
+	Vector2(1066, 312),  # 4               right lower
+	Vector2(935,  530),  # 5               bottom far right
+	Vector2(739,  530),  # 6               bottom right
+	Vector2(543,  530),  # 7               bottom left
+	Vector2(347,  530),  # 8               bottom far left
+	Vector2(86,   442),  # 9               left lower
+	Vector2(86,   288),  # 10              left upper
+	Vector2(184,  70),   # 11              top far left
+	Vector2(348,  70),   # 12              top left
 ]
 
 func _build_tiles() -> Array:
