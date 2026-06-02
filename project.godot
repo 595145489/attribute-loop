@@ -30,6 +30,11 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
 
+[gui]
+
+theme/default_font="res://resources/fonts/LXGWWenKaiLite-Regular.ttf"
+theme/default_font_size=16
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
