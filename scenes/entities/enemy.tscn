@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://csx3v85luxwmk"]
+[gd_scene format=3 uid="uid://csx3v85luxwmk"]
 
 [ext_resource type="Script" path="res://src/entities/Enemy.gd" id="1_w1qvq"]
 
@@ -11,6 +11,11 @@ offset_top = -12.0
 offset_right = 12.0
 offset_bottom = 12.0
 color = Color(0.8, 0.2, 0.2, 1)
+visible = false
+
+[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.055, 0.055)
+visible = false
 
 [node name="HPLabel" type="Label" parent="."]
 offset_left = -24.0
