@@ -29,6 +29,7 @@ var rule_slots: Array = []
 var altar_slots: Array = []
 
 @onready var visual: Sprite2D = $Visual
+@onready var building: Sprite2D = $Building
 
 func _ready() -> void:
 	if is_altar:
@@ -46,9 +47,12 @@ func _process(_delta: float) -> void:
 func _refresh_visual() -> void:
 	var occupied := rule_slots.any(func(s): return s.get("trigger") != null or s.get("effect") != null)
 	if occupied and tile_index < TEX_BUILDINGS.size():
-		visual.texture = TEX_BUILDINGS[tile_index]
+		visual.texture = TEX_EMPTY
+		building.texture = TEX_BUILDINGS[tile_index]
+		building.visible = true
 	else:
 		visual.texture = TEX_EMPTY
+		building.visible = false
 
 func _input(event: InputEvent) -> void:
 	if GameState.is_paused:
