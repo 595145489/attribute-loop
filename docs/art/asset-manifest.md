@@ -47,7 +47,7 @@
 ### 急袭者 (Rusher) — origami dart creature, low HP, fast aggressive folds
 - [x] rusher/reference.png    <!-- resourceId: 622166535909204275 -->
 - [ ] rusher/walk/
-- [ ] rusher/attack/
+- [x] rusher/activate/
 - [ ] rusher/death/
 
 ### 复制者 (Replicator) — medium form, spawns a weakened copy on death

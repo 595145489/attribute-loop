@@ -45,10 +45,20 @@ const SPRITE_FOLDERS: Dictionary = {
 
 func _load_animation() -> void:
 	var folder: String = SPRITE_FOLDERS.get(enemy_id, enemy_id)
-	var idle_path := "res://resources/sprites/enemies/%s/idle/" % folder
-	var dir := DirAccess.open(idle_path)
-	if dir == null:
+	var base_path := "res://resources/sprites/enemies/%s/" % folder
+	var sf := SpriteFrames.new()
+	_load_anim(sf, base_path + "idle/", "idle", true)
+	_load_anim(sf, base_path + "activate/", "activate", false)
+	if sf.get_animation_names().size() == 0:
 		_visual.show()
+		return
+	_anim_sprite.sprite_frames = sf
+	_anim_sprite.show()
+	_anim_sprite.play("idle")
+
+func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool) -> void:
+	var dir := DirAccess.open(path)
+	if dir == null:
 		return
 	var files: Array[String] = []
 	dir.list_dir_begin()
@@ -59,16 +69,11 @@ func _load_animation() -> void:
 		f = dir.get_next()
 	dir.list_dir_end()
 	if files.is_empty():
-		_visual.show()
 		return
 	files.sort()
-	var sf := SpriteFrames.new()
-	sf.add_animation("idle")
-	sf.set_animation_speed("idle", 8.0)
-	sf.set_animation_loop("idle", true)
+	sf.add_animation(anim)
+	sf.set_animation_speed(anim, 8.0)
+	sf.set_animation_loop(anim, loop)
 	for file in files:
-		var tex: Texture2D = load(idle_path + file)
-		sf.add_frame("idle", tex)
-	_anim_sprite.sprite_frames = sf
-	_anim_sprite.show()
-	_anim_sprite.play("idle")
+		var tex: Texture2D = load(path + file)
+		sf.add_frame(anim, tex)
