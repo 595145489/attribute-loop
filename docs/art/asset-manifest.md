@@ -61,9 +61,10 @@
 - [ ] replicator/spawn/        — spawning copy animation
 
 ### 先驱者 (Vanguard) — large, high HP, full component loadout
-- [ ] vanguard/reference.png
+- [x] vanguard/reference.png
 - [ ] vanguard/walk/
-- [ ] vanguard/attack/
+- [x] vanguard/idle/            — idle loop (24 frames, 0-3s, 8fps)
+- [x] vanguard/activate/        — activate animation (80 frames, full video, 8fps)
 - [ ] vanguard/death/
 
 ---
