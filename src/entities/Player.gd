@@ -9,24 +9,54 @@ var _path_length: float = 0.0
 var _prev_progress: float = 0.0
 var _in_combat: bool = false
 
+static var _frames_cache: SpriteFrames = null
+
 func _ready() -> void:
 	_load_animations()
 
-func _load_animations() -> void:
+static func preload_async(tree: SceneTree, on_progress: Callable = Callable()) -> void:
+	if _frames_cache != null:
+		if on_progress.is_valid():
+			on_progress.call(1.0, "玩家")
+		return
 	var frames := SpriteFrames.new()
+	_load_anim(frames, "res://resources/sprites/player/walk/", "walk", true)
+	_load_anim(frames, "res://resources/sprites/player/idle/", "idle", true)
+	_frames_cache = frames
+	await tree.process_frame
+	if on_progress.is_valid():
+		on_progress.call(1.0, "玩家")
 
-	frames.add_animation("walk")
-	frames.set_animation_speed("walk", 8.0)
-	frames.set_animation_loop("walk", true)
-	for i in range(1, 29):
-		frames.add_frame("walk", load("res://resources/sprites/player/walk/frame_%04d.png" % i))
+static func _load_anim(frames: SpriteFrames, path: String, anim: String, loop: bool) -> void:
+	var dir := DirAccess.open(path)
+	if dir == null:
+		return
+	var files: Array[String] = []
+	dir.list_dir_begin()
+	var f := dir.get_next()
+	while f != "":
+		if f.ends_with(".png"):
+			files.append(f)
+		f = dir.get_next()
+	dir.list_dir_end()
+	if files.is_empty():
+		return
+	files.sort()
+	frames.add_animation(anim)
+	frames.set_animation_speed(anim, 8.0)
+	frames.set_animation_loop(anim, loop)
+	for file in files:
+		frames.add_frame(anim, load(path + file))
 
-	frames.add_animation("idle")
-	frames.set_animation_speed("idle", 8.0)
-	frames.set_animation_loop("idle", true)
-	for i in range(1, 17):
-		frames.add_frame("idle", load("res://resources/sprites/player/idle/frame_%04d.png" % i))
-
+func _load_animations() -> void:
+	if _frames_cache != null:
+		_sprite.sprite_frames = _frames_cache
+		_sprite.play("walk")
+		return
+	var frames := SpriteFrames.new()
+	_load_anim(frames, "res://resources/sprites/player/walk/", "walk", true)
+	_load_anim(frames, "res://resources/sprites/player/idle/", "idle", true)
+	_frames_cache = frames
 	_sprite.sprite_frames = frames
 	_sprite.play("walk")
 
@@ -45,6 +75,8 @@ func exit_combat() -> void:
 	_sprite.play("walk")
 
 func _process(delta: float) -> void:
+	if _path_follow == null:
+		return
 	if GameState.is_paused:
 		if _in_combat:
 			_sprite.play("idle")
@@ -60,9 +92,9 @@ func _process(delta: float) -> void:
 	var delta_pos := _path_follow.global_position - prev_pos
 	if delta_pos.length() > 0.01:
 		if abs(delta_pos.y) > abs(delta_pos.x):
-			_sprite.flip_h = delta_pos.y < 0  # 向上走 → 朝右
+			_sprite.flip_h = delta_pos.y < 0
 		else:
-			_sprite.flip_h = delta_pos.x > 0  # 向右走 → 朝右
+			_sprite.flip_h = delta_pos.x > 0
 	if _path_follow.progress < _prev_progress:
 		GameState.loops_completed += 1
 		EventBus.loop_completed.emit()

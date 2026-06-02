@@ -18,8 +18,11 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 @onready var altar_panel = $UI/AltarPanel
 @onready var hud: HUD = $UI/HUD
 
+var _initialized: bool = false
+
 func _ready() -> void:
 	get_viewport().physics_object_picking = true
+	await Enemy.preload_all_async(get_tree())
 	var tiles = _build_tiles()
 	player.setup(player_follow, track)
 	game_loop.setup(tiles, enemies_container, player, combat_system)
@@ -31,37 +34,38 @@ func _ready() -> void:
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
+	_initialized = true
 
 const TILE_POSITIONS: Array[Vector2] = [
-	Vector2(576, 115),  # 0  altar        top center
-	Vector2(739, 115),  # 1               top right
-	Vector2(903, 115),  # 2               top far right
-	Vector2(1021, 223), # 3               right upper
-	Vector2(1021, 377), # 4               right lower
-	Vector2(870, 485),  # 5               bottom far right
-	Vector2(674, 485),  # 6               bottom right
-	Vector2(478, 485),  # 7               bottom left
-	Vector2(282, 485),  # 8               bottom far left
-	Vector2(131, 377),  # 9               left lower
-	Vector2(131, 223),  # 10              left upper
-	Vector2(249, 115),  # 11              top far left
-	Vector2(413, 115),  # 12              top left
+	Vector2(576, 115),
+	Vector2(739, 115),
+	Vector2(903, 115),
+	Vector2(1021, 223),
+	Vector2(1021, 377),
+	Vector2(870, 485),
+	Vector2(674, 485),
+	Vector2(478, 485),
+	Vector2(282, 485),
+	Vector2(131, 377),
+	Vector2(131, 223),
+	Vector2(249, 115),
+	Vector2(413, 115),
 ]
 
 const GUARD_POSITIONS: Array[Vector2] = [
-	Vector2(576,  70),   # 0  altar        top center (no enemy)
-	Vector2(674,  70),   # 1               top right
-	Vector2(838,  70),   # 2               top far right
-	Vector2(1066, 158),  # 3               right upper
-	Vector2(1066, 312),  # 4               right lower
-	Vector2(935,  530),  # 5               bottom far right
-	Vector2(739,  530),  # 6               bottom right
-	Vector2(543,  530),  # 7               bottom left
-	Vector2(347,  530),  # 8               bottom far left
-	Vector2(86,   442),  # 9               left lower
-	Vector2(86,   288),  # 10              left upper
-	Vector2(184,  70),   # 11              top far left
-	Vector2(348,  70),   # 12              top left
+	Vector2(576,  70),
+	Vector2(674,  70),
+	Vector2(838,  70),
+	Vector2(1066, 158),
+	Vector2(1066, 312),
+	Vector2(935,  530),
+	Vector2(739,  530),
+	Vector2(543,  530),
+	Vector2(347,  530),
+	Vector2(86,   442),
+	Vector2(86,   288),
+	Vector2(184,  70),
+	Vector2(348,  70),
 ]
 
 func _build_tiles() -> Array:
@@ -78,7 +82,7 @@ func _build_tiles() -> Array:
 	return tiles
 
 func _process(_delta: float) -> void:
-	if GameState.is_paused:
+	if not _initialized or GameState.is_paused:
 		return
 	_check_player_tile()
 

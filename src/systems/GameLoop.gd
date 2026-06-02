@@ -10,6 +10,7 @@ var _player: Player
 var _combat_system: CombatSystem
 var _enemy_scene: PackedScene = preload("res://scenes/entities/enemy.tscn")
 var _combat_tile: Tile = null
+var _debug_enemy_index: int = 0
 
 func setup(tiles: Array, enemies_container: Node, player: Player, combat: CombatSystem) -> void:
 	_tiles = tiles
@@ -36,8 +37,10 @@ func spawn_enemies() -> void:
 	var count = _roll_spawn_count(phase_data)
 	var indices = _pick_tile_indices(count, _tiles.size())
 
+	const DEBUG_ENEMIES = ["汲取者", "守卫者", "急袭者", "复制者", "先驱者"]
 	for idx in indices:
-		var enemy_id = "汲取者"  # DEBUG: force drainer for testing (phase 1 unlocked)
+		var enemy_id = DEBUG_ENEMIES[_debug_enemy_index % DEBUG_ENEMIES.size()]
+		_debug_enemy_index += 1
 		var enemy: Enemy = _enemy_scene.instantiate()
 		_enemies_container.add_child(enemy)
 		enemy.init(enemy_id, stat_phase)
@@ -53,7 +56,6 @@ func check_tile_for_enemy(tile: Tile) -> void:
 	state = State.COMBAT
 	GameState.is_paused = true
 	tile.enemy.play_activate()
-	await get_tree().create_timer(0.5).timeout
 	_player.enter_combat()
 	_combat_tile = tile
 	_combat_system.start(tile.enemy)

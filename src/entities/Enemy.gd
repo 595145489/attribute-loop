@@ -25,7 +25,7 @@ func init(id: String, stat_phase: int = -1) -> void:
 	_refresh_label()
 
 func play_activate() -> void:
-	if _anim_sprite.sprite_frames and _anim_sprite.sprite_frames.has_animation("activate"):
+	if _anim_sprite and _anim_sprite.sprite_frames and _anim_sprite.sprite_frames.has_animation("activate"):
 		_anim_sprite.play("activate")
 
 func take_damage(amount: int) -> void:
@@ -47,20 +47,35 @@ const SPRITE_FOLDERS: Dictionary = {
 	"先驱者": "vanguard",
 }
 
-func _load_animation() -> void:
-	var folder: String = SPRITE_FOLDERS.get(enemy_id, enemy_id)
-	var base_path := "res://resources/sprites/enemies/%s/" % folder
-	var sf := SpriteFrames.new()
-	_load_anim(sf, base_path + "idle/", "idle", true)
-	_load_anim(sf, base_path + "activate/", "activate", false)
-	if not sf.has_animation("idle"):
-		_visual.show()
-		return
-	_anim_sprite.sprite_frames = sf
-	_anim_sprite.show()
-	_anim_sprite.play("idle")
+static var _frames_cache: Dictionary = {}
 
-func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool) -> void:
+static func preload_all_async(tree: SceneTree, on_progress: Callable = Callable()) -> void:
+	var ids = SPRITE_FOLDERS.keys()
+	for i in ids.size():
+		var id = ids[i]
+		if not _frames_cache.has(id):
+			var folder: String = SPRITE_FOLDERS[id]
+			var base_path := "res://resources/sprites/enemies/%s/" % folder
+			var sf := SpriteFrames.new()
+			_load_anim(sf, base_path + "idle/", "idle", true)
+			_load_anim(sf, base_path + "activate/", "activate", false)
+			_frames_cache[id] = sf if sf.has_animation("idle") else null
+			await tree.process_frame
+		if on_progress.is_valid():
+			on_progress.call(float(i + 1) / ids.size(), id)
+
+func _load_animation() -> void:
+	var sf: SpriteFrames = _frames_cache.get(enemy_id, null)
+	if sf == null:
+		if _visual:
+			_visual.show()
+		return
+	if _anim_sprite:
+		_anim_sprite.sprite_frames = sf
+		_anim_sprite.show()
+		_anim_sprite.play("idle")
+
+static func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool) -> void:
 	var dir := DirAccess.open(path)
 	if dir == null:
 		return
