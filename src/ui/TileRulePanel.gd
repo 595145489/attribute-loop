@@ -30,7 +30,7 @@ func close() -> void:
 	GameState.unpause_for_panel()
 
 func _refresh() -> void:
-	_title.text = "地块 #%d — 经过 %d 次" % [_tile.tile_index, _tile.pass_count]
+	_title.text = "%s — 经过 %d 次" % [_tile.get_tile_name(), _tile.pass_count]
 	_build_slots()
 
 func _build_slots() -> void:

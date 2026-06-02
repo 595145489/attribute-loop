@@ -4,6 +4,16 @@ extends Node2D
 signal clicked(tile: Tile)
 
 const TEX_EMPTY = preload("res://resources/tiles/tile_empty.png")
+const TILE_NAMES: Array[String] = [
+	"祭坛", "瞭望塔", "铁匠铺", "魔法图书馆", "炼金实验室",
+	"兵营", "市集", "酒馆", "治愈圣坛", "法师塔",
+	"宝库", "神殿", "猎人小屋",
+]
+
+func get_tile_name() -> String:
+	if tile_index < TILE_NAMES.size():
+		return TILE_NAMES[tile_index]
+	return "地块%d" % tile_index
 const TEX_BUILDINGS: Array[Texture2D] = [
 	preload("res://resources/tiles/buildings/tile_0.png"),
 	preload("res://resources/tiles/buildings/tile_1.png"),
