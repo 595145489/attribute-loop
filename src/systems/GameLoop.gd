@@ -41,7 +41,7 @@ func spawn_enemies() -> void:
 		var enemy: Enemy = _enemy_scene.instantiate()
 		_enemies_container.add_child(enemy)
 		enemy.init(enemy_id, stat_phase)
-		enemy.position = _tiles[idx].position
+		enemy.position = _tiles[idx].guard_position
 		_tiles[idx].place_enemy(enemy)
 		_assign_components(enemy, stat_phase)
 

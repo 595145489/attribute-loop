@@ -31,6 +31,7 @@ const TEX_BUILDINGS: Array[Texture2D] = [
 ]
 
 var tile_index: int = 0
+var guard_position: Vector2 = Vector2.ZERO
 var enemy: Enemy = null
 var visited_this_loop: bool = false
 var pass_count: int = 0
