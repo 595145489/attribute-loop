@@ -52,6 +52,8 @@ func check_tile_for_enemy(tile: Tile) -> void:
 		return
 	state = State.COMBAT
 	GameState.is_paused = true
+	tile.enemy.play_activate()
+	await get_tree().create_timer(0.5).timeout
 	_player.enter_combat()
 	_combat_tile = tile
 	_combat_system.start(tile.enemy)

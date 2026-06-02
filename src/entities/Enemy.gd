@@ -24,6 +24,10 @@ func init(id: String, stat_phase: int = -1) -> void:
 	_load_animation()
 	_refresh_label()
 
+func play_activate() -> void:
+	if _anim_sprite.sprite_frames and _anim_sprite.sprite_frames.has_animation("activate"):
+		_anim_sprite.play("activate")
+
 func take_damage(amount: int) -> void:
 	hp = max(0, hp - amount)
 	_refresh_label()
