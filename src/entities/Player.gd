@@ -28,25 +28,18 @@ static func preload_async(tree: SceneTree, on_progress: Callable = Callable()) -
 		on_progress.call(1.0, "玩家")
 
 static func _load_anim(frames: SpriteFrames, path: String, anim: String, loop: bool) -> void:
-	var dir := DirAccess.open(path)
-	if dir == null:
+	if not FileAccess.file_exists(path + "frame_0001.png"):
 		return
-	var files: Array[String] = []
-	dir.list_dir_begin()
-	var f := dir.get_next()
-	while f != "":
-		if f.ends_with(".png"):
-			files.append(f)
-		f = dir.get_next()
-	dir.list_dir_end()
-	if files.is_empty():
-		return
-	files.sort()
 	frames.add_animation(anim)
 	frames.set_animation_speed(anim, 8.0)
 	frames.set_animation_loop(anim, loop)
-	for file in files:
-		frames.add_frame(anim, load(path + file))
+	var i := 1
+	while true:
+		var file := path + "frame_%04d.png" % i
+		if not FileAccess.file_exists(file):
+			break
+		frames.add_frame(anim, load(file))
+		i += 1
 
 func _load_animations() -> void:
 	if _frames_cache != null:

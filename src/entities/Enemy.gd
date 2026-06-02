@@ -84,23 +84,15 @@ func _load_animation() -> void:
 		_anim_sprite.play("idle")
 
 static func _load_anim(sf: SpriteFrames, path: String, anim: String, loop: bool) -> void:
-	var dir := DirAccess.open(path)
-	if dir == null:
+	if not FileAccess.file_exists(path + "frame_0001.png"):
 		return
-	var files: Array[String] = []
-	dir.list_dir_begin()
-	var f := dir.get_next()
-	while f != "":
-		if f.ends_with(".png"):
-			files.append(f)
-		f = dir.get_next()
-	dir.list_dir_end()
-	if files.is_empty():
-		return
-	files.sort()
 	sf.add_animation(anim)
 	sf.set_animation_speed(anim, 8.0)
 	sf.set_animation_loop(anim, loop)
-	for file in files:
-		var tex: Texture2D = load(path + file)
-		sf.add_frame(anim, tex)
+	var i := 1
+	while true:
+		var file := path + "frame_%04d.png" % i
+		if not FileAccess.file_exists(file):
+			break
+		sf.add_frame(anim, load(file))
+		i += 1
