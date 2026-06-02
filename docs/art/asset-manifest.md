@@ -53,9 +53,10 @@
 - [ ] rusher/death/
 
 ### 复制者 (Replicator) — medium form, spawns a weakened copy on death
-- [ ] replicator/reference.png
+- [x] replicator/reference.png
 - [ ] replicator/walk/
-- [ ] replicator/attack/
+- [x] replicator/idle/            — idle loop (24 frames, 0-3s, 8fps)
+- [x] replicator/activate/        — activate animation (80 frames, full video, 8fps)
 - [ ] replicator/death/
 - [ ] replicator/spawn/        — spawning copy animation
 
