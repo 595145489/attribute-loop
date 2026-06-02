@@ -35,8 +35,17 @@ func _refresh_label() -> void:
 	if _hp_label:
 		_hp_label.text = "%d/%d" % [hp, hp_max]
 
+const SPRITE_FOLDERS: Dictionary = {
+	"急袭者": "rusher",
+	"汲取者": "drainer",
+	"守卫者": "guardian",
+	"复制者": "replicator",
+	"先驱者": "vanguard",
+}
+
 func _load_animation() -> void:
-	var idle_path := "res://resources/sprites/enemies/%s/idle/" % enemy_id
+	var folder := SPRITE_FOLDERS.get(enemy_id, enemy_id)
+	var idle_path := "res://resources/sprites/enemies/%s/idle/" % folder
 	var dir := DirAccess.open(idle_path)
 	if dir == null:
 		_visual.show()
