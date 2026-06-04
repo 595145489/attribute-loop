@@ -228,9 +228,9 @@ class PhantomBuyer:
 			return int(spend_budget / pref_in_pool)
 		else:
 			if not preferred_types.has(service_type):
-				return randi_range(10, 20)
+				return min(randi_range(10, 20), gold)
 			if gold < PATIENT_THRESHOLD:
-				return randi_range(10, 20)
+				return min(randi_range(10, 20), gold)
 			return int(gold * DataTables.config.auction_phantom_b_allin_ratio)
 
 	func pay(amount: int) -> void:
