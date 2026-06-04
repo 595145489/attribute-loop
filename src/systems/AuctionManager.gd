@@ -60,7 +60,10 @@ func pop_overflow_service() -> int:
 func _on_loop_completed() -> void:
 	if not _first_loop_done:
 		_first_loop_done = true
+		current_services = generate_pool(_kills_this_loop, carried_over)
 		_kills_this_loop = []
+		last_results = []
+		EventBus.auction_settled.emit(last_results)
 		return
 	phantom_a.earn(GameState.current_phase)
 	phantom_b.earn(GameState.current_phase)
