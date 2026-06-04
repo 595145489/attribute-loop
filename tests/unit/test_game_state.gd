@@ -202,3 +202,22 @@ func test_verdict_loops_survived_zero_after_reset() -> void:
     GameState.verdict_loops_survived = 3
     GameState.reset()
     assert_eq(GameState.verdict_loops_survived, 0)
+
+func test_reset_clears_service_bar() -> void:
+    GameState.service_bar = [0, 1, 2]
+    GameState.deletion_free = true
+    GameState.enemy_pardon_type = "汲取者"
+    GameState.enemy_pardon_remaining = 3
+    GameState.reset()
+    assert_eq(GameState.service_bar.size(), 0)
+    assert_false(GameState.deletion_free)
+    assert_eq(GameState.enemy_pardon_type, "")
+    assert_eq(GameState.enemy_pardon_remaining, 0)
+
+func test_deletion_free_skips_cost_and_count() -> void:
+    GameState.gold = 100
+    GameState.deletion_free = true
+    GameState.pay_deletion_cost()
+    assert_eq(GameState.gold, 100)
+    assert_eq(GameState.deletion_count, 0)
+    assert_false(GameState.deletion_free)

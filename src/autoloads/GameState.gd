@@ -24,6 +24,12 @@ var loops_in_phase: int = 0
 var in_verdict_loop: bool = false
 var verdict_loops_survived: int = 0
 
+# Auction / service bar
+var service_bar: Array[int] = []
+var deletion_free: bool = false
+var enemy_pardon_type: String = ""
+var enemy_pardon_remaining: int = 0
+
 func _ready() -> void:
 	reset()
 
@@ -49,6 +55,10 @@ func reset() -> void:
 	loops_in_phase = 0
 	in_verdict_loop = false
 	verdict_loops_survived = 0
+	service_bar = []
+	deletion_free = false
+	enemy_pardon_type = ""
+	enemy_pardon_remaining = 0
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
 
@@ -110,6 +120,10 @@ func can_afford_deletion() -> bool:
 	return gold >= get_deletion_cost()
 
 func pay_deletion_cost() -> void:
+	if deletion_free:
+		deletion_free = false
+		EventBus.gold_changed.emit(gold)
+		return
 	gold -= get_deletion_cost()
 	deletion_count += 1
 	EventBus.gold_changed.emit(gold)

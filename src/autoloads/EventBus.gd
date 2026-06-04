@@ -11,3 +11,6 @@ signal gold_changed(new_amount: int)
 signal phase_changed(new_phase: int)
 signal verdict_loop_entered
 signal game_won
+signal auction_settled(results: Array)
+signal service_bar_changed
+signal enemy_pardoned(enemy_id: String)
