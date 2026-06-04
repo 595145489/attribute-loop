@@ -132,7 +132,7 @@ func _make_bid_card(svc: int) -> Control:
 	vbox.add_child(desc_lbl)
 
 	if _auction_manager != null:
-		var int_labels := ["无", "低", "中", "高"]
+		var int_labels: Array[String] = ["无", "低", "中", "高"]
 		var ia_lbl := Label.new()
 		ia_lbl.add_theme_font_size_override("font_size", 10)
 		ia_lbl.text = "影子甲: %s" % int_labels[_auction_manager.phantom_a.interest(svc)]

@@ -143,7 +143,7 @@ func _build_discard_content(options: Array[int], new_svc: int) -> void:
 	for i in options.size():
 		var svc := options[i]
 		var btn := Button.new()
-		var label := AuctionManager.SERVICE_NAMES.get(svc, "?")
+		var label: String = AuctionManager.SERVICE_NAMES.get(svc, "?")
 		if svc == new_svc:
 			label += " (新赢得)"
 		btn.text = label
