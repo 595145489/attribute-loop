@@ -100,5 +100,6 @@ script = ExtResource("15_am")
 [node name="AuctionPanel" parent="UI" instance=ExtResource("16_ap")]
 
 [node name="ServiceBar" parent="UI" instance=ExtResource("17_sb")]
+offset_top = 36.0
 
 [node name="ServiceActivatePopup" parent="UI" instance=ExtResource("18_sap")]

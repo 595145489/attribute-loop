@@ -157,6 +157,7 @@ static func generate_pool(kills: Array[String], carried: Array[int]) -> Array[in
 		if available.is_empty():
 			break
 		pool.append(available[randi() % available.size()])
+	pool.sort()
 	return pool.slice(0, 3)
 
 static func settle(services: Array[int],
