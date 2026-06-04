@@ -37,6 +37,7 @@ var phantom_b: PhantomBuyer
 
 var _kills_this_loop: Array[String] = []
 var _pending_overflow_service: int = -1
+var _first_loop_done: bool = false
 
 func _ready() -> void:
 	phantom_a = PhantomBuyer.new()
@@ -57,6 +58,10 @@ func pop_overflow_service() -> int:
 	return svc
 
 func _on_loop_completed() -> void:
+	if not _first_loop_done:
+		_first_loop_done = true
+		_kills_this_loop = []
+		return
 	phantom_a.earn(GameState.current_phase)
 	phantom_b.earn(GameState.current_phase)
 
