@@ -81,7 +81,7 @@ func _refresh_current() -> void:
 		current_container.add_child(lbl)
 		return
 	for svc in _auction_manager.current_services:
-		var is_carried := _auction_manager.carried_over.has(svc)
+		var is_carried: bool = _auction_manager.carried_over.has(svc)
 		var card = BidCardScene.instantiate()
 		current_container.add_child(card)
 		card.setup(svc, _auction_manager, is_carried, _refresh_footer)
