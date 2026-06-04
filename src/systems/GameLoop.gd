@@ -11,6 +11,10 @@ var _combat_system: CombatSystem
 var _enemy_scene: PackedScene = preload("res://scenes/entities/enemy.tscn")
 var _combat_tile: Tile = null
 var _debug_enemy_index: int = 0
+var _auction_manager = null
+
+func setup_auction(am) -> void:
+	_auction_manager = am
 
 func setup(tiles: Array, enemies_container: Node, player: Player, combat: CombatSystem) -> void:
 	_tiles = tiles
@@ -53,6 +57,16 @@ func check_tile_for_enemy(tile: Tile) -> void:
 		return
 	if not tile.has_enemy():
 		return
+	if GameState.enemy_pardon_remaining > 0 and GameState.enemy_pardon_type == tile.enemy.enemy_id:
+		GameState.enemy_pardon_remaining -= 1
+		if GameState.enemy_pardon_remaining == 0:
+			GameState.enemy_pardon_type = ""
+		EventBus.enemy_pardoned.emit(tile.enemy.enemy_id)
+		if _auction_manager != null:
+			_auction_manager.register_kill(tile.enemy.enemy_id)
+		tile.enemy.queue_free()
+		tile.clear_enemy()
+		return
 	state = State.COMBAT
 	GameState.is_paused = true
 	tile.enemy.play_activate()
@@ -85,6 +99,8 @@ func _on_combat_resolved() -> void:
 		return
 	if _combat_tile != null:
 		if _combat_tile.enemy != null:
+			if _auction_manager != null:
+				_auction_manager.register_kill(_combat_tile.enemy.enemy_id)
 			_combat_tile.enemy.queue_free()
 		_combat_tile.clear_enemy()
 		_combat_tile = null

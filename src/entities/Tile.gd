@@ -92,3 +92,24 @@ func resize_altar_for_phase(phase: int) -> void:
 	altar_slots.resize(req)
 	while altar_slots.size() < req:
 		altar_slots.append(null)
+
+func copy_rule_to(target: Tile) -> bool:
+	var source_slot: Dictionary = {}
+	for s in rule_slots:
+		if s["trigger"] != null or s["effect"] != null:
+			source_slot = s
+			break
+	if source_slot.is_empty():
+		return false
+	var dest_slot: Dictionary = {}
+	for s in target.rule_slots:
+		if s["trigger"] == null and s["effect"] == null:
+			dest_slot = s
+			break
+	if dest_slot.is_empty():
+		return false
+	if source_slot["trigger"] != null:
+		dest_slot["trigger"] = source_slot["trigger"].duplicate()
+	if source_slot["effect"] != null:
+		dest_slot["effect"] = source_slot["effect"].duplicate()
+	return true
