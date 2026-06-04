@@ -53,7 +53,7 @@ func _on_confirm() -> void:
 		return
 	if _current_service < 0:
 		return
-	var params := _collect_params(_current_service)
+	var params = _collect_params(_current_service)
 	if params == null:
 		return
 	if _current_bar_idx >= 0 and _current_bar_idx < GameState.service_bar.size():
