@@ -3,7 +3,7 @@ extends Node
 const SENTINEL := "res://tests/.test_mode"
 const SCREENSHOT_PATH := "res://tests/screenshots/last_run.png"
 const LOG_PATH := "res://tests/screenshots/last_run.log"
-const WAIT_SECONDS := 3.0
+const WAIT_SECONDS := 18.0
 
 func _ready() -> void:
 	if not FileAccess.file_exists(SENTINEL):
