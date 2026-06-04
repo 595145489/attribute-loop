@@ -165,7 +165,7 @@ func _collect_params(svc: int):
 		AuctionManager.ServiceType.COMP_REWRITE:
 			for c in content_container.get_children():
 				if c is Button and c.button_pressed and c.has_meta("comp_ref"):
-					return {"component": c.get_meta("comp_ref"), "new_effect_delta": 0.2}
+					return {"component": c.get_meta("comp_ref"), "new_effect_delta": DataTables.config.auction_comp_rewrite_delta}
 			return null
 
 		AuctionManager.ServiceType.COMP_MERGE:

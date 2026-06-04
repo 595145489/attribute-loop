@@ -14,3 +14,16 @@ extends Resource
 @export var verdict_enemy_phase: int = 10
 @export var verdict_spawn_phase: int = 11
 @export var combat_log_max_entries: int = 50
+
+# --- Auction (梦境残市) ---
+@export var auction_service_bar_cap: int = 5
+@export var auction_pool_size: int = 3
+@export var auction_enemy_pardon_count: int = 3
+@export var auction_comp_merge_ratio: float = 0.8
+@export var auction_comp_rewrite_delta: float = 0.2
+@export var auction_phantom_income_per_phase: Array[int] = [0, 40, 40, 70, 70, 110, 110, 150, 150, 200, 200]
+@export var auction_phantom_a_spend_ratio: float = 0.75
+@export var auction_phantom_a_token_bid: int = 15
+@export var auction_phantom_b_threshold: int = 200
+@export var auction_phantom_b_timeout_loops: int = 5
+@export var auction_phantom_b_allin_ratio: float = 0.85

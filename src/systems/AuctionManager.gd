@@ -120,14 +120,14 @@ func execute_service(service_type: int, params: Dictionary) -> void:
 			var a: ComponentData = params["comp_a"]
 			var b: ComponentData = params["comp_b"]
 			var merged: ComponentData = a.duplicate()
-			merged.effect_value = (a.effect_value + b.effect_value) * 0.8
-			merged.trigger_value = (a.trigger_value + b.trigger_value) * 0.8
+			merged.effect_value = (a.effect_value + b.effect_value) * DataTables.config.auction_comp_merge_ratio
+			merged.trigger_value = (a.trigger_value + b.trigger_value) * DataTables.config.auction_comp_merge_ratio
 			GameState.remove_from_inventory(a)
 			GameState.remove_from_inventory(b)
 			GameState.add_to_inventory(merged)
 		ServiceType.ENEMY_PARDON:
 			GameState.enemy_pardon_type = params["enemy_id"]
-			GameState.enemy_pardon_remaining = 3
+			GameState.enemy_pardon_remaining = DataTables.config.auction_enemy_pardon_count
 		ServiceType.DELETE_PARDON:
 			GameState.deletion_free = true
 		ServiceType.PRESSURE_DELAY:
@@ -143,7 +143,7 @@ static func generate_pool(kills: Array[String], carried: Array[int]) -> Array[in
 		ServiceType.ENEMY_PARDON, ServiceType.DELETE_PARDON, ServiceType.PRESSURE_DELAY
 	]
 	for _kill in kills:
-		if pool.size() >= 3:
+		if pool.size() >= DataTables.config.auction_pool_size:
 			break
 		var available: Array[int] = all_types.filter(func(t): return not pool.has(t))
 		if available.is_empty():
@@ -192,15 +192,17 @@ class PhantomBuyer:
 	var preferred_types: Array[int] = []
 	var patience_streak: int = 0
 
-	const PATIENT_THRESHOLD: int = 200
-	const PATIENT_TIMEOUT_LOOPS: int = 5
+	var PATIENT_THRESHOLD: int:
+		get: return DataTables.config.auction_phantom_b_threshold
+	var PATIENT_TIMEOUT_LOOPS: int:
+		get: return DataTables.config.auction_phantom_b_timeout_loops
 
 	func init(p: Personality, prefs: Array[int]) -> void:
 		personality = p
 		preferred_types = prefs
 
 	func earn(phase: int) -> void:
-		var income_table: Array[int] = [0, 40, 40, 70, 70, 110, 110, 150, 150, 200, 200]
+		var income_table: Array[int] = DataTables.config.auction_phantom_income_per_phase
 		gold += income_table[clampi(phase, 1, 10)]
 
 	func interest(service_type: int) -> int:
@@ -213,19 +215,19 @@ class PhantomBuyer:
 
 	func calculate_bid(service_type: int, pool: Array[int]) -> int:
 		if personality == Personality.AGGRESSIVE:
-			var spend_budget := int(gold * 0.75)
+			var spend_budget := int(gold * DataTables.config.auction_phantom_a_spend_ratio)
 			if not preferred_types.has(service_type):
-				return min(15, gold)
+				return min(DataTables.config.auction_phantom_a_token_bid, gold)
 			var pref_in_pool := pool.filter(func(t): return preferred_types.has(t)).size()
 			if pref_in_pool == 0:
-				return min(15, gold)
+				return min(DataTables.config.auction_phantom_a_token_bid, gold)
 			return int(spend_budget / pref_in_pool)
 		else:
 			if not preferred_types.has(service_type):
 				return randi_range(10, 20)
 			if gold < PATIENT_THRESHOLD:
 				return randi_range(10, 20)
-			return int(gold * 0.85)
+			return int(gold * DataTables.config.auction_phantom_b_allin_ratio)
 
 	func pay(amount: int) -> void:
 		gold = max(0, gold - amount)
