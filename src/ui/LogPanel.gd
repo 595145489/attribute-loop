@@ -12,7 +12,6 @@ var _open_offset: float = -280.0
 func _ready() -> void:
 	_open_offset = offset_left
 	offset_left = 0.0
-	hide()
 	_close_btn.pressed.connect(toggle)
 	EventBus.player_hit.connect(_on_player_hit)
 	EventBus.rule_fired.connect(_on_rule_fired)
@@ -39,8 +38,7 @@ func _close() -> void:
 	var tw = create_tween()
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "offset_left", 0.0, 0.2)
-	await tw.finished
-	hide()
+	tw.tween_callback(hide)
 
 func _add_entry(text: String, color: Color) -> void:
 	var label := Label.new()
