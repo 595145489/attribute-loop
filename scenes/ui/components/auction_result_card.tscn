@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://auction_result_c1"]
+
+[ext_resource type="Script" uid="uid://d1eseooxpm3wi" path="res://src/ui/AuctionResultCard.gd" id="1_arc"]
+
+[node name="AuctionResultCard" type="PanelContainer"]
+script = ExtResource("1_arc")
+custom_minimum_size = Vector2(140, 0)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "服务名称"
+horizontal_alignment = 1
+
+[node name="WinnerLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "— 结果"
+horizontal_alignment = 1
+
+[node name="BidsLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "你:0g  甲:0g  乙:0g"
+autowrap_mode = 3

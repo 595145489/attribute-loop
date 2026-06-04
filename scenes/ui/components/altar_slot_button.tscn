@@ -1,29 +1,27 @@
-[gd_scene format=3 uid="uid://d2nibkhlyno80"]
+[gd_scene format=3 uid="uid://bf2vtvbrkgtvs"]
 
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="1_btn"]
-[ext_resource type="Texture2D" uid="uid://bxm1jby013inc" path="res://resources/icons/effect_heal.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://resources/ui/icon_blank.png" id="2_blank"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
-content_margin_left = 18.0
-content_margin_top = 4.0
+content_margin_left = 90.0
+content_margin_top = 8.0
 content_margin_right = 10.0
-content_margin_bottom = 4.0
+content_margin_bottom = 8.0
 texture = ExtResource("1_btn")
 
-[node name="InvItemButton" type="Button" unique_id=1408814667]
-custom_minimum_size = Vector2(220, 52)
-offset_right = 211.0
-offset_bottom = 58.0
-size_flags_horizontal = 4
+[node name="AltarSlotButton" type="Button" unique_id=86034115]
+custom_minimum_size = Vector2(380, 64)
+size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
-theme_override_constants/h_separation = 8
-theme_override_constants/icon_max_width = 32
+theme_override_constants/h_separation = 6
+theme_override_constants/icon_max_width = 40
 theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_normal")
 theme_override_styles/hover = SubResource("StyleBoxTexture_normal")
 theme_override_styles/focus = SubResource("StyleBoxTexture_normal")
-text = "治愈 (T:3/E:1.5)"
-icon = ExtResource("2_icon")
+text = "[空 — 放入E组件]"
+icon = ExtResource("2_blank")
 alignment = 0
-clip_text = true
 text_overrun_behavior = 3
+clip_text = true

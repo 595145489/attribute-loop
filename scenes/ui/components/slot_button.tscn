@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://cblk4sdr7mp3t"]
 
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="1_btn"]
 [ext_resource type="Texture2D" uid="uid://bxm1jby013inc" path="res://resources/icons/effect_heal.png" id="2_icon"]
@@ -10,17 +10,21 @@ content_margin_right = 10.0
 content_margin_bottom = 4.0
 texture = ExtResource("1_btn")
 
-[node name="SlotButton" type="Button"]
+[node name="SlotButton" type="Button" unique_id=886274260]
 custom_minimum_size = Vector2(200, 52)
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_normal")
-theme_override_constants/h_separation = 8
-theme_override_constants/icon_max_width = 32
+offset_right = 200.0
+offset_bottom = 52.0
+size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
-icon = ExtResource("2_icon")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 11
+theme_override_constants/icon_max_width = 34
+theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_normal")
 text = "组件名称 [3/5]"
+icon = ExtResource("2_icon")
 alignment = 0
 clip_text = true
+text_overrun_behavior = 3
