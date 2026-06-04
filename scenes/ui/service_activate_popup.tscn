@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://crxq6jk2mvn8t"]
+
+[ext_resource type="Script" uid="uid://cbe3flmvnqnia" path="res://src/ui/ServiceActivatePopup.gd" id="1_sap"]
+
+[node name="ServiceActivatePopup" type="Control"]
+script = ExtResource("1_sap")
+visible = false
+custom_minimum_size = Vector2(400, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+text = "服务"
+
+[node name="Content" type="VBoxContainer" parent="Panel/VBox"]
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+
+[node name="Cancel" type="Button" parent="Panel/VBox/Buttons"]
+text = "取消"
+size_flags_horizontal = 3
+
+[node name="Confirm" type="Button" parent="Panel/VBox/Buttons"]
+text = "确认"
+size_flags_horizontal = 3

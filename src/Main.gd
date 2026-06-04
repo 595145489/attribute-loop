@@ -17,6 +17,10 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 @onready var tile_rule_panel = $UI/TileRulePanel
 @onready var altar_panel = $UI/AltarPanel
 @onready var hud: HUD = $UI/HUD
+@onready var auction_manager = $Systems/AuctionManager
+@onready var auction_panel = $UI/AuctionPanel
+@onready var service_bar = $UI/ServiceBar
+@onready var service_activate_popup = $UI/ServiceActivatePopup
 
 var _initialized: bool = false
 
@@ -31,6 +35,11 @@ func _ready() -> void:
 	hud.setup(inventory_panel)
 	hud.setup_altar(altar_panel, tiles[0])
 	rule_engine.set_tiles(tiles)
+	game_loop.setup_auction(auction_manager)
+	auction_panel.setup(auction_manager)
+	service_activate_popup.setup(auction_manager, tiles)
+	service_bar.setup(auction_manager, service_activate_popup)
+	hud.setup_auction(auction_panel, service_bar)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)

@@ -1,6 +1,8 @@
 class_name HUD
 extends CanvasLayer
 
+const SPEEDS: Array[float] = [0.0, 1.0, 2.0, 3.0]
+
 var _inventory_panel = null
 var _altar_panel = null
 var _altar_tile = null
@@ -10,33 +12,35 @@ var _float_tween: Tween = null
 @onready var log_btn: Button = $BottomBar/HContent/LogButton
 @onready var log_panel: LogPanel = $LogPanel
 @onready var hp_label: Label = $BottomBar/HContent/HPPill/HPVBox/HPLabel
-@onready var hp_bar: ProgressBar = $BottomBar/HContent/HPPill/HPVBox/HPBar
+@onready var hp_bar: ProgressBar = $BottomBar/HContent/HPPill/HPVBox/HPBarContainer/HPBar
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
 @onready var bag_btn: Button = $BottomBar/HContent/BagButton
-@onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldLabel
+@onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldHBox/GoldLabel
 @onready var pressure_label: Label = $BottomBar/HContent/PressurePill/PressureLabel
 @onready var float_label: Label = $FloatLabel
+@onready var _speed_btns: Array[Button] = [
+	$SpeedControl/Pause,
+	$SpeedControl/Speed1x,
+	$SpeedControl/Speed2x,
+	$SpeedControl/Speed3x,
+]
 
 @onready var _t_name: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TName0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TName1,
-]
-@onready var _t_bar: Array[ProgressBar] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TBar0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TBar1,
+	$BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0/TName0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1/TName1,
 ]
 @onready var _t_count: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/TRow0/TCount0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/TRow1/TCount1,
+	$BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0/TCount0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1/TCount1,
 ]
 @onready var _e_name: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/ERow0/EName0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/ERow1/EName1,
+	$BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0/EName0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EName1,
 ]
 @onready var _e_value: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/ERow0/EValue0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/ERow1/EValue1,
+	$BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0/EValue0,
+	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EValue1,
 ]
 
 func _ready() -> void:
@@ -45,71 +49,8 @@ func _ready() -> void:
 	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
 	EventBus.rule_fired.connect(_on_rule_fired)
-	_apply_ui_skin()
-
-func _apply_ui_skin() -> void:
-	var ui_theme = load("res://resources/ui_theme.tres")
-	var panel_tex = load("res://resources/ui/panel_bg.png")
-	var badge_tex = load("res://resources/ui/phase_badge_bg.png")
-	var gold_icon_tex = load("res://resources/ui/gold_icon.png")
-
-	if panel_tex:
-		var s := StyleBoxTexture.new()
-		s.texture = panel_tex
-		s.content_margin_left = 8.0
-		s.content_margin_top = 4.0
-		s.content_margin_right = 8.0
-		s.content_margin_bottom = 4.0
-		for node in [
-			$BottomBar,
-			$BottomBar/HContent/HPPill,
-			$BottomBar/HContent/LoopPill,
-			$BottomBar/HContent/GoldPill,
-			$BottomBar/HContent/PressurePill,
-			$BottomBar/HContent/RulePanel0,
-			$BottomBar/HContent/RulePanel1,
-		]:
-			node.add_theme_stylebox_override("panel", s)
-
-	if badge_tex:
-		var bs := StyleBoxTexture.new()
-		bs.texture = badge_tex
-		bs.content_margin_left = 8.0
-		bs.content_margin_top = 2.0
-		bs.content_margin_right = 8.0
-		bs.content_margin_bottom = 2.0
-		$BottomBar/HContent/PhasePill.add_theme_stylebox_override("panel", bs)
-
-	if ui_theme:
-		$BottomBar.theme = ui_theme
-		bag_btn.remove_theme_stylebox_override("normal")
-
-	var hp_bg_tex = load("res://resources/ui/hp_bar_bg.png")
-	var hp_fill_tex = load("res://resources/ui/hp_bar_fill.png")
-	if hp_bg_tex and hp_fill_tex:
-		var hp_bg_style := StyleBoxTexture.new()
-		hp_bg_style.texture = hp_bg_tex
-		var hp_fill_style := StyleBoxTexture.new()
-		hp_fill_style.texture = hp_fill_tex
-		hp_bar.add_theme_stylebox_override("background", hp_bg_style)
-		hp_bar.add_theme_stylebox_override("fill", hp_fill_style)
-
-	if gold_icon_tex:
-		var gold_pill := $BottomBar/HContent/GoldPill
-		var gold_lbl := gold_label
-		gold_pill.remove_child(gold_lbl)
-		var hbox := HBoxContainer.new()
-		hbox.add_theme_constant_override("separation", 3)
-		var icon_rect := TextureRect.new()
-		icon_rect.texture = gold_icon_tex
-		icon_rect.custom_minimum_size = Vector2(24, 24)
-		icon_rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		hbox.add_child(icon_rect)
-		gold_lbl.add_theme_color_override("font_color", Color.BLACK)
-		hbox.add_child(gold_lbl)
-		gold_pill.add_child(hbox)
+	for i in _speed_btns.size():
+		_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
@@ -126,7 +67,7 @@ func _process(_delta: float) -> void:
 	hp_bar.value = GameState.hp
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
-	gold_label.text = "金: %d" % GameState.gold
+	gold_label.text = "%d" % GameState.gold
 	if GameState.in_verdict_loop:
 		var cfg: GameConfig = DataTables.config
 		phase_label.text = "裁决圈"
@@ -144,15 +85,11 @@ func _update_rule_panel(i: int) -> void:
 	var e: ComponentData = slot.get("effect")
 	if t == null or e == null:
 		_t_name[i].text = "— 空槽 —"
-		_t_bar[i].max_value = 1
-		_t_bar[i].value = 0
 		_t_count[i].text = ""
 		_e_name[i].text = ""
 		_e_value[i].text = ""
 		return
 	_t_name[i].text = t.display_name
-	_t_bar[i].max_value = t.trigger_value
-	_t_bar[i].value = t.trigger_count
 	_t_count[i].text = "%d/%d" % [t.trigger_count, int(t.trigger_value)]
 	_e_name[i].text = e.display_name
 	match e.id:
@@ -175,6 +112,9 @@ func _on_altar_pressed() -> void:
 	else:
 		_altar_panel.open(_altar_tile)
 
+func _on_speed_pressed(index: int) -> void:
+	GameState.speed_multiplier = SPEEDS[index]
+
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	if effect_id == "治愈":
 		float_label.text = "+%.0f 治愈" % value
@@ -189,3 +129,22 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	_float_tween = create_tween()
 	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.0)
 	_float_tween.tween_callback(float_label.hide)
+
+var _auction_panel = null
+var _service_bar = null
+
+func setup_auction(ap, sb) -> void:
+	_auction_panel = ap
+	_service_bar = sb
+	if _auction_panel and has_node("BottomBar/HContent/AuctionBtn"):
+		$BottomBar/HContent/AuctionBtn.pressed.connect(_auction_panel.toggle)
+
+func get_phantom_a_gold() -> int:
+	if _auction_panel and _auction_panel._auction_manager:
+		return _auction_panel._auction_manager.phantom_a.gold
+	return 0
+
+func get_phantom_b_gold() -> int:
+	if _auction_panel and _auction_panel._auction_manager:
+		return _auction_panel._auction_manager.phantom_b.gold
+	return 0

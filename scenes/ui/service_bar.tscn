@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cp4m8nb3r5yot"]
+
+[ext_resource type="Script" uid="uid://cpalthb6l3pcc" path="res://src/ui/ServiceBar.gd" id="1_sb"]
+
+[node name="ServiceBar" type="HBoxContainer"]
+script = ExtResource("1_sb")
