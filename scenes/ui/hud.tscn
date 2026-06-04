@@ -1,111 +1,134 @@
 [gd_scene format=3 uid="uid://c6x1nyk4wvrgq"]
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
-[ext_resource type="PackedScene" uid="uid://log_panel_001" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
-[ext_resource type="Script" path="res://src/ui/SpeedControl.gd" id="3_speedcontrol"]
+[ext_resource type="PackedScene" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
+[ext_resource type="Texture2D" uid="uid://clql2jautp8yl" path="res://resources/ui/pill_bg.png" id="4_pill"]
+[ext_resource type="Texture2D" uid="uid://dcv1wt2bf6ap1" path="res://resources/ui/phase_badge_bg.png" id="5_phase"]
+[ext_resource type="Texture2D" uid="uid://qoifsw1obrb2" path="res://resources/ui/hp_bar_bg.png" id="6_hpbg"]
+[ext_resource type="Texture2D" uid="uid://betwg86i8vuip" path="res://resources/ui/gold_icon.png" id="8_gold"]
+[ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="9_theme"]
+[ext_resource type="Texture2D" uid="uid://bxwhlygc61u1t" path="res://resources/ui/rule_panel_bg.png" id="10_rule"]
+[ext_resource type="Texture2D" uid="uid://em33neewlp0n" path="res://resources/ui/gold_pill_bg.png" id="11_gold_pill"]
+[ext_resource type="Texture2D" uid="uid://ck2a1syv1shcu" path="res://resources/ui/pressure_pill_bg.png" id="12_pressure"]
+[ext_resource type="Texture2D" uid="uid://bsuchyd2fx4tr" path="res://resources/ui/loop_pill_bg.png" id="13_loop"]
+[ext_resource type="Texture2D" uid="uid://d3arel2q1m2sa" path="res://resources/ui/btn_speed_atlas.png" id="14_spd_atlas"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
-content_margin_left = 8.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottombar"]
+bg_color = Color(0.96, 0.91, 0.78, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.65, 0.35, 0.6)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hp"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+texture = ExtResource("4_pill")
+expand_margin_left = 5.0
+expand_margin_top = 16.0
+expand_margin_right = 5.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hptransparent"]
+content_margin_left = 12.0
 content_margin_top = 4.0
-content_margin_right = 8.0
+content_margin_right = 12.0
 content_margin_bottom = 4.0
-bg_color = Color(0.031, 0.031, 0.094, 0.94)
-border_width_top = 1
-border_color = Color(0.2, 0.2, 0.4, 1)
+bg_color = Color(0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpfill"]
+bg_color = Color(0.75, 0.15, 0.15, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_loop"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+texture = ExtResource("13_loop")
+expand_margin_left = 10.0
+expand_margin_top = 6.0
+expand_margin_right = 10.0
+expand_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_phase"]
 content_margin_left = 8.0
 content_margin_top = 2.0
 content_margin_right = 8.0
 content_margin_bottom = 2.0
-bg_color = Color(0.165, 0.039, 0.039, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.663, 0.2, 0.2, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+texture = ExtResource("5_phase")
+expand_margin_left = 17.0
+expand_margin_top = 8.0
+expand_margin_right = 17.0
+expand_margin_bottom = 8.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loop"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rule0"]
 content_margin_left = 8.0
 content_margin_top = 2.0
 content_margin_right = 8.0
 content_margin_bottom = 2.0
-bg_color = Color(0.102, 0.102, 0.165, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.267, 0.267, 0.4, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+texture = ExtResource("10_rule")
+expand_margin_left = 10.0
+expand_margin_top = 9.0
+expand_margin_right = 10.0
+expand_margin_bottom = 9.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phase"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rule1"]
 content_margin_left = 8.0
 content_margin_top = 2.0
 content_margin_right = 8.0
 content_margin_bottom = 2.0
-bg_color = Color(0.039, 0.125, 0.063, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.278, 0.455, 0.278, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+texture = ExtResource("10_rule")
+expand_margin_left = 10.0
+expand_margin_top = 9.0
+expand_margin_right = 10.0
+expand_margin_bottom = 9.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rule"]
-content_margin_left = 8.0
-content_margin_top = 3.0
-content_margin_right = 8.0
-content_margin_bottom = 3.0
-bg_color = Color(0.039, 0.039, 0.133, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.267, 0.267, 0.467, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbar_bg"]
-bg_color = Color(0.102, 0.102, 0.212, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbar_fill"]
-bg_color = Color(0.267, 0.267, 1, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bag"]
-content_margin_left = 10.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gold"]
+content_margin_left = 6.0
 content_margin_top = 2.0
-content_margin_right = 10.0
+content_margin_right = 6.0
 content_margin_bottom = 2.0
-bg_color = Color(0.102, 0.165, 0.314, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.333, 0.333, 0.667, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+texture = ExtResource("11_gold_pill")
+expand_margin_left = 15.0
+expand_margin_top = 5.0
+expand_margin_right = 15.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressure"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+texture = ExtResource("12_pressure")
+expand_margin_left = 7.0
+expand_margin_top = 12.0
+expand_margin_right = 7.0
+expand_margin_bottom = 12.0
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_speed"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pause"]
+atlas = ExtResource("14_spd_atlas")
+region = Rect2(150, 330, 680, 680)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1x"]
+atlas = ExtResource("14_spd_atlas")
+region = Rect2(850, 332, 680, 680)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x"]
+atlas = ExtResource("14_spd_atlas")
+region = Rect2(1550, 332, 680, 680)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3x"]
+atlas = ExtResource("14_spd_atlas")
+region = Rect2(2250, 332, 680, 680)
 
 [node name="HUD" type="CanvasLayer" unique_id=690159846]
 script = ExtResource("1_hud")
@@ -117,7 +140,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -48.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+theme = ExtResource("9_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bottombar")
 
 [node name="HContent" type="HBoxContainer" parent="BottomBar" unique_id=2110467670]
 layout_mode = 2
@@ -129,100 +153,130 @@ text = "祭坛"
 
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hp")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hp")
 
-[node name="HPVBox" type="VBoxContainer" parent="BottomBar/HContent/HPPill"]
+[node name="HPVBox" type="VBoxContainer" parent="BottomBar/HContent/HPPill" unique_id=1813492612]
 layout_mode = 2
 theme_override_constants/separation = 1
 
 [node name="HPLabel" type="Label" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=410069382]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
 theme_override_colors/font_color = Color(1, 0.533, 0.533, 1)
 theme_override_font_sizes/font_size = 11
-text = "❤ 100 / 100"
+text = "100 / 100"
+horizontal_alignment = 1
 
-[node name="HPBar" type="ProgressBar" parent="BottomBar/HContent/HPPill/HPVBox"]
-layout_mode = 2
+[node name="HPBarContainer" type="Control" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=861021783]
 custom_minimum_size = Vector2(80, 6)
+layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="HPBar" type="ProgressBar" parent="BottomBar/HContent/HPPill/HPVBox/HPBarContainer" unique_id=197631942]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 9.5
+offset_right = -10.0
+offset_bottom = -8.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.785)
+theme_override_styles/background = SubResource("StyleBoxFlat_hptransparent")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hpfill")
+value = 50.0
 show_percentage = false
 
+[node name="HPBarFrame" type="TextureRect" parent="BottomBar/HContent/HPPill/HPVBox/HPBarContainer" unique_id=154362788]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_hpbg")
+expand_mode = 1
+
 [node name="LoopPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=1632057987]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_loop")
+theme_override_styles/panel = SubResource("StyleBoxTexture_loop")
 
 [node name="LoopLabel" type="Label" parent="BottomBar/HContent/LoopPill" unique_id=1789651945]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.6, 0.733, 1)
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
 theme_override_font_sizes/font_size = 11
 text = "圈 × 0"
+horizontal_alignment = 1
 
 [node name="PhasePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=741997355]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_phase")
+theme_override_styles/panel = SubResource("StyleBoxTexture_phase")
 
 [node name="PhaseLabel" type="Label" parent="BottomBar/HContent/PhasePill" unique_id=1433079038]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.533, 0.867, 0.533, 1)
+theme_override_colors/font_color = Color(0.85, 0.75, 1, 1)
 theme_override_font_sizes/font_size = 11
 text = "阶段 1 · 觉醒"
 
 [node name="RulePanel0" type="PanelContainer" parent="BottomBar/HContent" unique_id=441249657]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_rule")
+theme_override_styles/panel = SubResource("StyleBoxTexture_rule0")
 
-[node name="RuleVBox0" type="VBoxContainer" parent="BottomBar/HContent/RulePanel0" unique_id=1685380380]
+[node name="RuleVBox0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0" unique_id=1685380380]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 0
 
-[node name="TRow0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0" unique_id=654732234]
+[node name="TGroup0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0" unique_id=248985970]
 layout_mode = 2
-theme_override_constants/separation = 4
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="TTag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0" unique_id=122149329]
+[node name="TTag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0" unique_id=122149329]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "T:"
 
-[node name="TName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0" unique_id=1925832882]
+[node name="TName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0" unique_id=1925832882]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.6, 1)
 theme_override_font_sizes/font_size = 10
 text = "—"
 
-[node name="TBar0" type="ProgressBar" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0" unique_id=517268242]
-custom_minimum_size = Vector2(40, 6)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/background = SubResource("StyleBoxFlat_tbar_bg")
-theme_override_styles/fill = SubResource("StyleBoxFlat_tbar_fill")
-show_percentage = false
-
-[node name="TCount0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TRow0" unique_id=892789796]
+[node name="TCount0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0" unique_id=892789796]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.6, 1)
 theme_override_font_sizes/font_size = 10
 text = "0/0"
 
-[node name="ERow0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0" unique_id=1552910590]
+[node name="EGroup0" type="HBoxContainer" parent="BottomBar/HContent/RulePanel0/RuleVBox0" unique_id=1448302219]
 layout_mode = 2
-theme_override_constants/separation = 4
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="ETag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0" unique_id=1112755326]
+[node name="ETag0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0" unique_id=1112755326]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "E:"
 
-[node name="EName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0" unique_id=2087070838]
+[node name="EName0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0" unique_id=2087070838]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.533, 0.667, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "—"
 
-[node name="EValue0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/ERow0" unique_id=1007424118]
+[node name="EValue0" type="Label" parent="BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0" unique_id=1007424118]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.533, 0.667, 1, 1)
 theme_override_font_sizes/font_size = 10
@@ -230,89 +284,116 @@ theme_override_font_sizes/font_size = 10
 [node name="RulePanel1" type="PanelContainer" parent="BottomBar/HContent" unique_id=1532368804]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_rule")
+theme_override_styles/panel = SubResource("StyleBoxTexture_rule1")
 
-[node name="RuleVBox1" type="VBoxContainer" parent="BottomBar/HContent/RulePanel1" unique_id=514220896]
+[node name="RuleVBox1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1" unique_id=514220896]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 0
 
-[node name="TRow1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1" unique_id=2080044931]
+[node name="TGroup1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1" unique_id=673449812]
 layout_mode = 2
-theme_override_constants/separation = 4
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="TTag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1" unique_id=1322855634]
+[node name="TTag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1" unique_id=1322855634]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "T:"
 
-[node name="TName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1" unique_id=1980601554]
+[node name="TName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1" unique_id=1980601554]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.6, 1)
 theme_override_font_sizes/font_size = 10
 text = "—"
 
-[node name="TBar1" type="ProgressBar" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1" unique_id=448532310]
-custom_minimum_size = Vector2(40, 6)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/background = SubResource("StyleBoxFlat_tbar_bg")
-theme_override_styles/fill = SubResource("StyleBoxFlat_tbar_fill")
-show_percentage = false
-
-[node name="TCount1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TRow1" unique_id=744435950]
+[node name="TCount1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1" unique_id=744435950]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.6, 1)
 theme_override_font_sizes/font_size = 10
 text = "0/0"
 
-[node name="ERow1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1" unique_id=1017154454]
+[node name="EGroup1" type="HBoxContainer" parent="BottomBar/HContent/RulePanel1/RuleVBox1" unique_id=1819664456]
 layout_mode = 2
-theme_override_constants/separation = 4
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="ETag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1" unique_id=479313750]
+[node name="ETag1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1" unique_id=479313750]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "E:"
 
-[node name="EName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1" unique_id=1522682376]
+[node name="EName1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1" unique_id=1522682376]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.533, 0.667, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "—"
 
-[node name="EValue1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/ERow1" unique_id=1390153469]
+[node name="EValue1" type="Label" parent="BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1" unique_id=1390153469]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.533, 0.667, 1, 1)
 theme_override_font_sizes/font_size = 10
 
 [node name="BagButton" type="Button" parent="BottomBar/HContent" unique_id=459070565]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 11
-theme_override_styles/normal = SubResource("StyleBoxFlat_bag")
 text = "背包 [B] 0/12"
 
 [node name="GoldPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=98663593]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gold")
 
-[node name="GoldLabel" type="Label" parent="BottomBar/HContent/GoldPill" unique_id=764494320]
+[node name="GoldHBox" type="HBoxContainer" parent="BottomBar/HContent/GoldPill" unique_id=1458771299]
 layout_mode = 2
-text = "金: 0"
+theme_override_constants/separation = 3
+
+[node name="GoldIcon" type="TextureRect" parent="BottomBar/HContent/GoldPill/GoldHBox" unique_id=1526212795]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldLabel" type="Label" parent="BottomBar/HContent/GoldPill/GoldHBox" unique_id=764494320]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "0"
 
 [node name="PressurePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=312987654]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pressure")
 
 [node name="PressureLabel" type="Label" parent="BottomBar/HContent/PressurePill" unique_id=312987655]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.65, 0.2, 1)
+theme_override_font_sizes/font_size = 11
 text = "压力: 0/10圈"
 
 [node name="LogButton" type="Button" parent="BottomBar/HContent" unique_id=999000001]
 layout_mode = 2
 text = "日志"
 
-[node name="LogPanel" parent="." instance=ExtResource("2_logpanel")]
+
+[node name="AuctionBtn" type="Button" parent="BottomBar/HContent" unique_id=777000001]
+layout_mode = 2
+text = "残市"
+
+[node name="PhantomAPill" type="Label" parent="BottomBar/HContent" unique_id=777000002]
+layout_mode = 2
+text = "甲 0g"
+
+[node name="PhantomBPill" type="Label" parent="BottomBar/HContent" unique_id=777000003]
+layout_mode = 2
+text = "乙 0g"
+[node name="LogPanel" parent="." unique_id=1209956492 instance=ExtResource("2_logpanel")]
+visible = false
+anchors_preset = 11
 
 [node name="FloatLabel" type="Label" parent="." unique_id=249889570]
 offset_left = 400.0
@@ -321,7 +402,41 @@ offset_right = 700.0
 offset_bottom = 300.0
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
+
 [node name="SpeedControl" type="HBoxContainer" parent="." unique_id=888000001]
-script = ExtResource("3_speedcontrol")
 offset_right = 160.0
 offset_bottom = 36.0
+alignment = 1
+
+[node name="Pause" type="Button" parent="SpeedControl" unique_id=2064208288]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_speed")
+icon = SubResource("AtlasTexture_pause")
+expand_icon = true
+
+[node name="Speed1x" type="Button" parent="SpeedControl" unique_id=72857448]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_speed")
+icon = SubResource("AtlasTexture_1x")
+expand_icon = true
+
+[node name="Speed2x" type="Button" parent="SpeedControl" unique_id=1344527246]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_speed")
+icon = SubResource("AtlasTexture_2x")
+expand_icon = true
+
+[node name="Speed3x" type="Button" parent="SpeedControl" unique_id=671250290]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_speed")
+icon = SubResource("AtlasTexture_3x")
+expand_icon = true

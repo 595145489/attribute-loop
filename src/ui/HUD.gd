@@ -19,6 +19,9 @@ var _float_tween: Tween = null
 @onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldHBox/GoldLabel
 @onready var pressure_label: Label = $BottomBar/HContent/PressurePill/PressureLabel
 @onready var float_label: Label = $FloatLabel
+@onready var auction_btn: Button = $BottomBar/HContent/AuctionBtn
+@onready var phantom_a_label: Label = $BottomBar/HContent/PhantomAPill
+@onready var phantom_b_label: Label = $BottomBar/HContent/PhantomBPill
 @onready var _speed_btns: Array[Button] = [
 	$SpeedControl/Pause,
 	$SpeedControl/Speed1x,
@@ -76,6 +79,11 @@ func _process(_delta: float) -> void:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
+	if _auction_panel != null and _auction_panel._auction_manager != null:
+		var am = _auction_panel._auction_manager
+		phantom_a_label.text = "甲 %dg" % am.phantom_a.gold
+		var pb_gold = am.phantom_b.gold
+		phantom_b_label.text = "乙 %dg%s" % [pb_gold, " ⚠" if pb_gold >= 180 else ""]
 	for i in GameState.rule_slots.size():
 		_update_rule_panel(i)
 
@@ -136,8 +144,8 @@ var _service_bar = null
 func setup_auction(ap, sb) -> void:
 	_auction_panel = ap
 	_service_bar = sb
-	if _auction_panel and has_node("BottomBar/HContent/AuctionBtn"):
-		$BottomBar/HContent/AuctionBtn.pressed.connect(_auction_panel.toggle)
+	if _auction_panel:
+		auction_btn.pressed.connect(_auction_panel.toggle)
 
 func get_phantom_a_gold() -> int:
 	if _auction_panel and _auction_panel._auction_manager:
