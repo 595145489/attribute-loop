@@ -77,7 +77,8 @@ func _process(_delta: float) -> void:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
-		_update_rule_panel(i)
+		for i in GameState.rule_slots.size():
+			_update_rule_panel(i)
 
 func _update_rule_panel(i: int) -> void:
 	var slot = GameState.rule_slots[i]
@@ -138,4 +139,3 @@ func setup_auction(ap, sb) -> void:
 	_service_bar = sb
 	if _auction_panel:
 		auction_btn.pressed.connect(_auction_panel.toggle)
-
