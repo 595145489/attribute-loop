@@ -11,11 +11,11 @@ const INTEREST_LABELS: Array[String] = ["无", "低", "中", "高"]
 @onready var carried_badge: Label = $VBox/CarriedBadge
 
 var service_type: int = -1
-var _on_value_changed_cb: Callable
+var _on_bid_changed_cb: Callable
 
-func setup(svc: int, am, is_carried: bool, on_value_changed: Callable) -> void:
+func setup(svc: int, am, is_carried: bool, initial_bid: int, on_bid_changed: Callable) -> void:
 	service_type = svc
-	_on_value_changed_cb = on_value_changed
+	_on_bid_changed_cb = on_bid_changed
 
 	name_label.text = AuctionManager.SERVICE_NAMES.get(svc, "?")
 	desc_label.text = AuctionManager.SERVICE_DESCRIPTIONS.get(svc, "")
@@ -31,13 +31,13 @@ func setup(svc: int, am, is_carried: bool, on_value_changed: Callable) -> void:
 		interest_b_label.text = "影子乙: —"
 
 	bid_input.max_value = GameState.gold
-	bid_input.value = 0
-	bid_input.value_changed.connect(_on_bid_changed)
+	bid_input.value = initial_bid
+	bid_input.value_changed.connect(_on_value_changed)
 
 func get_bid() -> int:
 	return int(bid_input.value)
 
-func _on_bid_changed(_v: float) -> void:
+func _on_value_changed(v: float) -> void:
 	bid_input.max_value = GameState.gold
-	if _on_value_changed_cb.is_valid():
-		_on_value_changed_cb.call()
+	if _on_bid_changed_cb.is_valid():
+		_on_bid_changed_cb.call(service_type, int(v))

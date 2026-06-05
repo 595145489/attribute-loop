@@ -19,7 +19,7 @@ func setup(am) -> void:
 	_auction_manager = am
 	EventBus.auction_settled.connect(_on_settled)
 	EventBus.gold_changed.connect(_refresh_footer)
-	lock_btn.pressed.connect(_on_lock_pressed)
+	lock_btn.pressed.connect(close)
 	hide()
 
 func toggle() -> void:
@@ -47,16 +47,15 @@ func _on_settled(_results: Array) -> void:
 func _refresh_footer(_gold: int = -1) -> void:
 	gold_label.text = "金币: %d" % GameState.gold
 	var alloc := 0
-	for card in _bid_cards:
-		alloc += card.get_bid()
+	if _auction_manager != null:
+		for svc in _auction_manager.player_bids:
+			alloc += _auction_manager.player_bids[svc]
 	allocated_label.text = "已分配: %dg" % alloc
 
-func _on_lock_pressed() -> void:
-	if _auction_manager == null:
-		return
-	for card in _bid_cards:
-		_auction_manager.set_player_bid(card.service_type, card.get_bid())
-	close()
+func _on_card_bid_changed(svc: int, amount: int) -> void:
+	if _auction_manager != null:
+		_auction_manager.set_player_bid(svc, amount)
+	_refresh_footer()
 
 func _refresh_last_results() -> void:
 	for c in last_results_container.get_children():
@@ -82,7 +81,8 @@ func _refresh_current() -> void:
 		return
 	for svc in _auction_manager.current_services:
 		var is_carried: bool = _auction_manager.carried_over.has(svc)
+		var saved_bid: int = _auction_manager.player_bids.get(svc, 0)
 		var card = BidCardScene.instantiate()
 		current_container.add_child(card)
-		card.setup(svc, _auction_manager, is_carried, _refresh_footer)
+		card.setup(svc, _auction_manager, is_carried, saved_bid, _on_card_bid_changed)
 		_bid_cards.append(card)
