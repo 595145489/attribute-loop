@@ -29,15 +29,23 @@ func setup(result: Dictionary) -> void:
 			winner_label.text = "— 无人竞价"
 			winner_label.add_theme_color_override("font_color", Color(0.4, 0.35, 0.25))
 
-	# Build sorted bid list (high → low)
-	var entries: Array = [
-		{"name": "你", "amount": pb, "mark": "✓" if w == "player" else ("↩" if pb > 0 else "—")},
-		{"name": "甲", "amount": ab, "mark": "✓" if w == "phantom_a" else ("↩" if ab > 0 else "—")},
-		{"name": "乙", "amount": bb, "mark": "✓" if w == "phantom_b" else ("↩" if bb > 0 else "—")},
-	]
-	entries.sort_custom(func(a, b): return a["amount"] > b["amount"])
+	var player_mark := "✓" if w == "player" else ("↩" if pb > 0 else "—")
+	var a_mark := "✓" if w == "phantom_a" else ("↩" if ab > 0 else "—")
+	var b_mark := "✓" if w == "phantom_b" else ("↩" if bb > 0 else "—")
 
-	var lines: Array = []
-	for e in entries:
-		lines.append("%s: %dg %s" % [e["name"], e["amount"], e["mark"]])
-	bids_label.text = "\n".join(lines)
+	# Sort 3 entries by amount descending (manual bubble)
+	var names := ["你", "甲", "乙"]
+	var amounts := [pb, ab, bb]
+	var marks := [player_mark, a_mark, b_mark]
+	for pass_n in 2:
+		for j in 2:
+			if amounts[j] < amounts[j + 1]:
+				var tmp_n := names[j]; names[j] = names[j + 1]; names[j + 1] = tmp_n
+				var tmp_a := amounts[j]; amounts[j] = amounts[j + 1]; amounts[j + 1] = tmp_a
+				var tmp_m := marks[j]; marks[j] = marks[j + 1]; marks[j + 1] = tmp_m
+
+	bids_label.text = "%s: %dg %s\n%s: %dg %s\n%s: %dg %s" % [
+		names[0], amounts[0], marks[0],
+		names[1], amounts[1], marks[1],
+		names[2], amounts[2], marks[2],
+	]
