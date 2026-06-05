@@ -1,11 +1,20 @@
 [gd_scene format=3 uid="uid://auction_bid_card1"]
 
 [ext_resource type="Script" uid="uid://xfb83s7gch7p" path="res://src/ui/AuctionBidCard.gd" id="1_abc"]
+[ext_resource type="Texture2D" path="res://resources/ui/card_auction_bid_bg.png" id="2_bg"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bid"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("2_bg")
 
 [node name="AuctionBidCard" type="PanelContainer"]
 script = ExtResource("1_abc")
 custom_minimum_size = Vector2(140, 120)
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_bid")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
