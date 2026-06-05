@@ -17,16 +17,16 @@ func setup(result: Dictionary) -> void:
 	match result["winner"]:
 		"player":
 			winner_label.text = "✓ 你赢了  %dg" % pb
-			winner_label.add_theme_color_override("font_color", Color(0.4, 0.9, 0.4))
+			winner_label.add_theme_color_override("font_color", Color(0.1, 0.4, 0.1))
 		"phantom_a":
 			winner_label.text = "✗ 影子甲赢"
-			winner_label.add_theme_color_override("font_color", Color(0.9, 0.4, 0.4))
+			winner_label.add_theme_color_override("font_color", Color(0.5, 0.08, 0.08))
 		"phantom_b":
 			winner_label.text = "✗ 影子乙赢"
-			winner_label.add_theme_color_override("font_color", Color(0.9, 0.4, 0.4))
+			winner_label.add_theme_color_override("font_color", Color(0.5, 0.08, 0.08))
 		"none":
 			winner_label.text = "— 无人竞价"
-			winner_label.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+			winner_label.add_theme_color_override("font_color", Color(0.4, 0.35, 0.25))
 
 	var w: String = result["winner"]
 	bids_label.text = "你:%dg%s  甲:%dg%s  乙:%dg%s" % [
