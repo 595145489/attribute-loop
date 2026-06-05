@@ -30,6 +30,7 @@ const SERVICE_DESCRIPTIONS: Dictionary = {
 var current_services: Array[int] = []
 var carried_over: Array[int] = []
 var player_bids: Dictionary = {}
+var player_bids_locked: Dictionary = {}
 var last_results: Array = []
 
 var phantom_a: PhantomBuyer
@@ -83,13 +84,16 @@ func _on_loop_completed() -> void:
 	for r in last_results:
 		match r["winner"]:
 			"player":
-				GameState.gold = max(0, GameState.gold - r["bids"]["player"])
+				# Gold already deducted when bid was placed
 				_award_service_to_player(r["service_type"])
 			"phantom_a":
 				phantom_a.pay(r["bids"]["phantom_a"])
+				GameState.gold += r["bids"]["player"]
 			"phantom_b":
 				phantom_b.pay(r["bids"]["phantom_b"])
+				GameState.gold += r["bids"]["player"]
 			"none":
+				GameState.gold += r["bids"]["player"]
 				carried_over.append(r["service_type"])
 
 	var b_priority_seen := current_services.has(phantom_b.preferred_types[0])
@@ -98,6 +102,7 @@ func _on_loop_completed() -> void:
 		phantom_b.patience_streak = 0
 
 	player_bids = {}
+	player_bids_locked = {}
 	EventBus.auction_settled.emit(last_results)
 	phantom_a.earn(GameState.current_phase)
 	phantom_b.earn(GameState.current_phase)

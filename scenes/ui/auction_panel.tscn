@@ -37,6 +37,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "梦境残市"
 
+[node name="CloseBtn" type="Button" parent="VBox/TitleBar"]
+layout_mode = 2
+text = "✕"
+
 [node name="LastSection" type="VBoxContainer" parent="VBox" unique_id=850389369]
 layout_mode = 2
 size_flags_vertical = 3
@@ -68,12 +72,3 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 text = "金币: 0"
-
-[node name="AllocatedLabel" type="Label" parent="VBox/Footer" unique_id=1548682477]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "已分配: 0g"
-
-[node name="LockBtn" type="Button" parent="VBox/Footer" unique_id=1591775115]
-layout_mode = 2
-text = "锁定出价"

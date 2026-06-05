@@ -45,9 +45,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "影子乙: 无"
 
-[node name="BidInput" type="SpinBox" parent="VBox"]
+[node name="BidRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="BidInput" type="SpinBox" parent="VBox/BidRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 0.0
 max_value = 9999.0
 step = 1.0
+
+[node name="BidBtn" type="Button" parent="VBox/BidRow"]
+layout_mode = 2
+text = "出价"

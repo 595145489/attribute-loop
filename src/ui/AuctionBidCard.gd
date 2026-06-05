@@ -7,15 +7,16 @@ const INTEREST_LABELS: Array[String] = ["无", "低", "中", "高"]
 @onready var desc_label: Label = $VBox/DescLabel
 @onready var interest_a_label: Label = $VBox/InterestRow/InterestA
 @onready var interest_b_label: Label = $VBox/InterestRow/InterestB
-@onready var bid_input: SpinBox = $VBox/BidInput
+@onready var bid_input: SpinBox = $VBox/BidRow/BidInput
+@onready var bid_btn: Button = $VBox/BidRow/BidBtn
 @onready var carried_badge: Label = $VBox/CarriedBadge
 
 var service_type: int = -1
-var _on_bid_changed_cb: Callable
+var _auction_manager = null
 
-func setup(svc: int, am, is_carried: bool, initial_bid: int, on_bid_changed: Callable) -> void:
+func setup(svc: int, am, is_carried: bool, initial_bid: int, _unused: Callable) -> void:
 	service_type = svc
-	_on_bid_changed_cb = on_bid_changed
+	_auction_manager = am
 
 	name_label.text = AuctionManager.SERVICE_NAMES.get(svc, "?")
 	desc_label.text = AuctionManager.SERVICE_DESCRIPTIONS.get(svc, "")
@@ -32,12 +33,32 @@ func setup(svc: int, am, is_carried: bool, initial_bid: int, on_bid_changed: Cal
 
 	bid_input.max_value = GameState.gold
 	bid_input.value = initial_bid
-	bid_input.value_changed.connect(_on_value_changed)
+	bid_btn.pressed.connect(_on_bid_pressed)
+
+	# If already locked (initial_bid > 0 and was pre-paid), restore locked state
+	if _auction_manager != null and _auction_manager.player_bids_locked.get(svc, false):
+		_set_locked(initial_bid)
 
 func get_bid() -> int:
 	return int(bid_input.value)
 
-func _on_value_changed(v: float) -> void:
-	bid_input.max_value = GameState.gold
-	if _on_bid_changed_cb.is_valid():
-		_on_bid_changed_cb.call(service_type, int(v))
+func _on_bid_pressed() -> void:
+	var amount := int(bid_input.value)
+	if amount <= 0:
+		return
+	if amount > GameState.gold:
+		return
+	# Deduct gold immediately
+	GameState.gold -= amount
+	EventBus.gold_changed.emit(GameState.gold)
+	# Store bid in manager
+	if _auction_manager != null:
+		_auction_manager.set_player_bid(service_type, amount)
+		_auction_manager.player_bids_locked[service_type] = true
+	_set_locked(amount)
+
+func _set_locked(amount: int) -> void:
+	bid_input.editable = false
+	bid_input.value = amount
+	bid_btn.disabled = true
+	bid_btn.text = "已出价 %dg" % amount

@@ -9,9 +9,7 @@ var _auction_manager = null
 @onready var last_results_container: HBoxContainer = $VBox/LastSection/HBox
 @onready var current_container: HBoxContainer = $VBox/CurrentSection/HBox
 @onready var gold_label: Label = $VBox/Footer/GoldLabel
-@onready var allocated_label: Label = $VBox/Footer/AllocatedLabel
-@onready var lock_btn: Button = $VBox/Footer/LockBtn
-@onready var title_label: Label = $VBox/TitleBar/TitleLabel
+@onready var close_btn: Button = $VBox/TitleBar/CloseBtn
 
 var _bid_cards: Array = []
 
@@ -19,7 +17,7 @@ func setup(am) -> void:
 	_auction_manager = am
 	EventBus.auction_settled.connect(_on_settled)
 	EventBus.gold_changed.connect(_refresh_footer)
-	lock_btn.pressed.connect(close)
+	close_btn.pressed.connect(close)
 	hide()
 
 func toggle() -> void:
@@ -46,16 +44,6 @@ func _on_settled(_results: Array) -> void:
 
 func _refresh_footer(_gold: int = -1) -> void:
 	gold_label.text = "金币: %d" % GameState.gold
-	var alloc := 0
-	if _auction_manager != null:
-		for svc in _auction_manager.player_bids:
-			alloc += _auction_manager.player_bids[svc]
-	allocated_label.text = "已分配: %dg" % alloc
-
-func _on_card_bid_changed(svc: int, amount: int) -> void:
-	if _auction_manager != null:
-		_auction_manager.set_player_bid(svc, amount)
-	_refresh_footer()
 
 func _refresh_last_results() -> void:
 	for c in last_results_container.get_children():
@@ -84,5 +72,5 @@ func _refresh_current() -> void:
 		var saved_bid: int = _auction_manager.player_bids.get(svc, 0)
 		var card = BidCardScene.instantiate()
 		current_container.add_child(card)
-		card.setup(svc, _auction_manager, is_carried, saved_bid, _on_card_bid_changed)
+		card.setup(svc, _auction_manager, is_carried, saved_bid, Callable())
 		_bid_cards.append(card)
