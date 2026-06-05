@@ -1,73 +1,71 @@
-[gd_scene format=3 uid="uid://auction_bid_card1"]
+[gd_scene format=3 uid="uid://by8myvfrkfny7"]
 
 [ext_resource type="Script" uid="uid://xfb83s7gch7p" path="res://src/ui/AuctionBidCard.gd" id="1_abc"]
-[ext_resource type="Texture2D" path="res://resources/ui/card_auction_bid_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://ciw2s52t2fewp" path="res://resources/ui/card_auction_bid_bg.png" id="2_bg"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bid"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
+content_margin_left = 28.0
+content_margin_top = 15.0
+content_margin_right = 28.0
+content_margin_bottom = 15.0
 texture = ExtResource("2_bg")
 
-[node name="AuctionBidCard" type="PanelContainer"]
-script = ExtResource("1_abc")
+[node name="AuctionBidCard" type="PanelContainer" unique_id=103816534]
 custom_minimum_size = Vector2(140, 120)
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_bid")
+script = ExtResource("1_abc")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1544405056]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="VBox"]
+[node name="NameLabel" type="Label" parent="VBox" unique_id=927416925]
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.15, 0.1, 0.05, 1)
+theme_override_font_sizes/font_size = 13
 text = "服务名称"
 horizontal_alignment = 1
 
-[node name="CarriedBadge" type="Label" parent="VBox"]
+[node name="CarriedBadge" type="Label" parent="VBox" unique_id=347527729]
+visible = false
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.45, 0.35, 0.2, 1)
+theme_override_font_sizes/font_size = 10
 text = "↩ 上圈保留"
 horizontal_alignment = 1
-visible = false
 
-[node name="DescLabel" type="Label" parent="VBox"]
-layout_mode = 2
+[node name="DescLabel" type="Label" parent="VBox" unique_id=650819408]
 custom_minimum_size = Vector2(0, 28)
-theme_override_font_sizes/font_size = 10
+layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.22, 0.12, 1)
+theme_override_font_sizes/font_size = 10
 text = "描述"
 autowrap_mode = 3
 max_lines_visible = 2
 
-[node name="InterestRow" type="VBoxContainer" parent="VBox"]
+[node name="InterestRow" type="VBoxContainer" parent="VBox" unique_id=1800792574]
 layout_mode = 2
 
-[node name="InterestA" type="Label" parent="VBox/InterestRow"]
+[node name="InterestA" type="Label" parent="VBox/InterestRow" unique_id=1525640198]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.5, 0.15, 0.1, 1)
+theme_override_font_sizes/font_size = 10
 text = "影子甲: 无"
 
-[node name="InterestB" type="Label" parent="VBox/InterestRow"]
+[node name="InterestB" type="Label" parent="VBox/InterestRow" unique_id=1906042829]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.1, 0.2, 0.5, 1)
+theme_override_font_sizes/font_size = 10
 text = "影子乙: 无"
 
-[node name="BidRow" type="HBoxContainer" parent="VBox"]
+[node name="BidRow" type="HBoxContainer" parent="VBox" unique_id=1929616806]
 layout_mode = 2
 
-[node name="BidInput" type="SpinBox" parent="VBox/BidRow"]
+[node name="BidInput" type="SpinBox" parent="VBox/BidRow" unique_id=690102477]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 9999.0
-step = 1.0
 
-[node name="BidBtn" type="Button" parent="VBox/BidRow"]
+[node name="BidBtn" type="Button" parent="VBox/BidRow" unique_id=1007292483]
 layout_mode = 2
 text = "出价"
