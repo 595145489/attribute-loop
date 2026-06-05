@@ -69,16 +69,18 @@ func _on_loop_completed() -> void:
 		phantom_b.earn(GameState.current_phase)
 		return
 
+	# Save services player bet on, then generate next loop's services
+	var services_to_settle: Array[int] = current_services.duplicate()
 	current_services = generate_pool(_kills_this_loop, carried_over)
 	_kills_this_loop = []
 
 	var bid_a: Dictionary = {}
 	var bid_b: Dictionary = {}
-	for svc in current_services:
-		bid_a[svc] = phantom_a.calculate_bid(svc, current_services)
-		bid_b[svc] = phantom_b.calculate_bid(svc, current_services)
+	for svc in services_to_settle:
+		bid_a[svc] = phantom_a.calculate_bid(svc, services_to_settle)
+		bid_b[svc] = phantom_b.calculate_bid(svc, services_to_settle)
 
-	last_results = settle(current_services, player_bids, bid_a, bid_b)
+	last_results = settle(services_to_settle, player_bids, bid_a, bid_b)
 
 	carried_over = []
 	for r in last_results:
