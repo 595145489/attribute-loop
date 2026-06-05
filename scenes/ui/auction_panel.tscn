@@ -5,35 +5,35 @@
 
 [node name="AuctionPanel" type="Control" unique_id=795452522]
 clip_contents = true
-custom_minimum_size = Vector2(760, 400)
+custom_minimum_size = Vector2(920, 500)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -380.0
-offset_top = -200.0
-offset_right = 380.0
-offset_bottom = 200.0
+offset_left = -460.0
+offset_top = -250.0
+offset_right = 460.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ap")
 
 [node name="BG" type="TextureRect" parent="." unique_id=1937275860]
 layout_mode = 0
-offset_right = 760.0
-offset_bottom = 405.0
+offset_right = 920.0
+offset_bottom = 505.0
 mouse_filter = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1473369832]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 20.0
-offset_right = -32.0
-offset_bottom = -20.0
+offset_left = 48.0
+offset_top = 30.0
+offset_right = -48.0
+offset_bottom = -30.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme_override_constants/separation = 6
