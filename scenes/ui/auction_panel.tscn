@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bui67km5rawj"]
 
+[ext_resource type="Texture2D" path="res://resources/ui/panel_auction_bg.png" id="2_bg"]
+
 [ext_resource type="Script" uid="uid://dcrqakmx5aqnx" path="res://src/ui/AuctionPanel.gd" id="1_ap"]
 
 [node name="AuctionPanel" type="Control" unique_id=795452522]
@@ -16,13 +18,15 @@ offset_right = 380.0
 offset_bottom = 200.0
 script = ExtResource("1_ap")
 
-[node name="BG" type="ColorRect" parent="."]
+[node name="BG" type="TextureRect" parent="."]
 layout_mode = 0
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.08, 0.08, 0.15, 0.95)
 mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1473369832]
 layout_mode = 0

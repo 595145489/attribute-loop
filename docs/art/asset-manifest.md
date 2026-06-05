@@ -121,3 +121,7 @@
 - [x] bg_main.png              — main game scene background, looping track environment
 - [x] bg_ground.png           — ground base layer, indigo blue-grey twilight grass
 - [x] bg_game_over.png        — game over full-screen background, dramatic parchment atmosphere, wide 16:9
+
+
+### Auction Panel (梦境残市)
+- [x] panel_auction_bg.png      — auction panel background, dark indigo with ornate gold ink border frame, misty center
