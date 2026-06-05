@@ -34,15 +34,15 @@ func setup(result: Dictionary) -> void:
 	var b_mark := "✓" if w == "phantom_b" else ("↩" if bb > 0 else "—")
 
 	# Sort 3 entries by amount descending (manual bubble)
-	var names := ["你", "甲", "乙"]
-	var amounts := [pb, ab, bb]
-	var marks := [player_mark, a_mark, b_mark]
+	var names: Array[String] = ["你", "甲", "乙"]
+	var amounts: Array[int] = [pb, ab, bb]
+	var marks: Array[String] = [player_mark, a_mark, b_mark]
 	for pass_n in 2:
 		for j in 2:
 			if amounts[j] < amounts[j + 1]:
-				var tmp_n := names[j]; names[j] = names[j + 1]; names[j + 1] = tmp_n
-				var tmp_a := amounts[j]; amounts[j] = amounts[j + 1]; amounts[j + 1] = tmp_a
-				var tmp_m := marks[j]; marks[j] = marks[j + 1]; marks[j + 1] = tmp_m
+				var tmp_n: String = names[j]; names[j] = names[j + 1]; names[j + 1] = tmp_n
+				var tmp_a: int = amounts[j]; amounts[j] = amounts[j + 1]; amounts[j + 1] = tmp_a
+				var tmp_m: String = marks[j]; marks[j] = marks[j + 1]; marks[j + 1] = tmp_m
 
 	bids_label.text = "%s: %dg %s\n%s: %dg %s\n%s: %dg %s" % [
 		names[0], amounts[0], marks[0],
