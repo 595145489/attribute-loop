@@ -86,3 +86,11 @@ alignment = 1
 [node name="GoldLabel" type="Label" parent="VBox/Footer" unique_id=105879773]
 layout_mode = 2
 text = "金币: 0"
+
+[node name="PhantomALabel" type="Label" parent="VBox/Footer"]
+layout_mode = 2
+text = "影子甲: 0g"
+
+[node name="PhantomBLabel" type="Label" parent="VBox/Footer"]
+layout_mode = 2
+text = "影子乙: 0g"

@@ -384,14 +384,6 @@ text = "日志"
 layout_mode = 2
 text = "残市"
 
-[node name="PhantomAPill" type="Label" parent="BottomBar/HContent" unique_id=777000002]
-layout_mode = 2
-text = "甲 0g"
-
-[node name="PhantomBPill" type="Label" parent="BottomBar/HContent" unique_id=777000003]
-layout_mode = 2
-text = "乙 0g"
-[node name="LogPanel" parent="." unique_id=1209956492 instance=ExtResource("2_logpanel")]
 visible = false
 anchors_preset = 11
 
