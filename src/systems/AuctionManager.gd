@@ -64,9 +64,9 @@ func _on_loop_completed() -> void:
 		_kills_this_loop = []
 		last_results = []
 		EventBus.auction_settled.emit(last_results)
+		phantom_a.earn(GameState.current_phase)
+		phantom_b.earn(GameState.current_phase)
 		return
-	phantom_a.earn(GameState.current_phase)
-	phantom_b.earn(GameState.current_phase)
 
 	current_services = generate_pool(_kills_this_loop, carried_over)
 	_kills_this_loop = []
@@ -99,6 +99,8 @@ func _on_loop_completed() -> void:
 
 	player_bids = {}
 	EventBus.auction_settled.emit(last_results)
+	phantom_a.earn(GameState.current_phase)
+	phantom_b.earn(GameState.current_phase)
 	EventBus.gold_changed.emit(GameState.gold)
 
 func _award_service_to_player(service_type: int) -> void:
