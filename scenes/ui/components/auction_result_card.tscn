@@ -4,7 +4,8 @@
 
 [node name="AuctionResultCard" type="PanelContainer"]
 script = ExtResource("1_arc")
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(140, 80)
+size_flags_horizontal = 3
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -26,3 +27,4 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "你:0g  甲:0g  乙:0g"
 autowrap_mode = 3
+max_lines_visible = 1

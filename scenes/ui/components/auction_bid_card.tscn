@@ -4,7 +4,8 @@
 
 [node name="AuctionBidCard" type="PanelContainer"]
 script = ExtResource("1_abc")
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(140, 120)
+size_flags_horizontal = 3
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -25,9 +26,11 @@ visible = false
 
 [node name="DescLabel" type="Label" parent="VBox"]
 layout_mode = 2
+custom_minimum_size = Vector2(0, 28)
 theme_override_font_sizes/font_size = 10
 text = "描述"
 autowrap_mode = 3
+max_lines_visible = 2
 
 [node name="InterestRow" type="VBoxContainer" parent="VBox"]
 layout_mode = 2
@@ -44,6 +47,7 @@ text = "影子乙: 无"
 
 [node name="BidInput" type="SpinBox" parent="VBox"]
 layout_mode = 2
+size_flags_horizontal = 3
 min_value = 0.0
 max_value = 9999.0
 step = 1.0
