@@ -80,8 +80,3 @@ max_value = 9999.0
 layout_mode = 2
 size_flags_horizontal = 3
 text = "出价"
-
-[node name="AllInBtn" type="Button" parent="VBox/BidRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "全押"
