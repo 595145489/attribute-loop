@@ -13,14 +13,17 @@ texture = ExtResource("2_bg")
 [node name="AuctionBidCard" type="PanelContainer" unique_id=103816534]
 custom_minimum_size = Vector2(140, 120)
 size_flags_horizontal = 0
+clip_contents = true
 theme_override_styles/panel = SubResource("StyleBoxTexture_bid")
 script = ExtResource("1_abc")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1544405056]
 layout_mode = 2
+alignment = 1
 
 [node name="NameLabel" type="Label" parent="VBox" unique_id=927416925]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.15, 0.1, 0.05, 1)
 theme_override_font_sizes/font_size = 13
 text = "服务名称"
@@ -29,6 +32,7 @@ horizontal_alignment = 1
 [node name="CarriedBadge" type="Label" parent="VBox" unique_id=347527729]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.45, 0.35, 0.2, 1)
 theme_override_font_sizes/font_size = 10
 text = "↩ 上圈保留"
@@ -37,35 +41,46 @@ horizontal_alignment = 1
 [node name="DescLabel" type="Label" parent="VBox" unique_id=650819408]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.3, 0.22, 0.12, 1)
 theme_override_font_sizes/font_size = 10
 text = "描述"
 autowrap_mode = 3
 max_lines_visible = 2
+horizontal_alignment = 1
 
 [node name="InterestRow" type="VBoxContainer" parent="VBox" unique_id=1800792574]
 layout_mode = 2
 
 [node name="InterestA" type="Label" parent="VBox/InterestRow" unique_id=1525640198]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.5, 0.15, 0.1, 1)
 theme_override_font_sizes/font_size = 10
 text = "影子甲: 无"
+horizontal_alignment = 1
 
 [node name="InterestB" type="Label" parent="VBox/InterestRow" unique_id=1906042829]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.1, 0.2, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "影子乙: 无"
+horizontal_alignment = 1
 
 [node name="BidRow" type="HBoxContainer" parent="VBox" unique_id=1929616806]
 layout_mode = 2
+alignment = 1
 
 [node name="BidInput" type="SpinBox" parent="VBox/BidRow" unique_id=690102477]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(60, 0)
+size_flags_horizontal = 0
 max_value = 9999.0
 
 [node name="BidBtn" type="Button" parent="VBox/BidRow" unique_id=1007292483]
 layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+size_flags_horizontal = 0
 text = "出价"
+clip_text = true
