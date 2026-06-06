@@ -9,6 +9,7 @@ const INTEREST_LABELS: Array[String] = ["无", "低", "中", "高"]
 @onready var interest_b_label: Label = $VBox/InterestRow/InterestB
 @onready var bid_input: SpinBox = $VBox/BidRow/BidInput
 @onready var bid_btn: Button = $VBox/BidRow/BidBtn
+@onready var all_in_btn: Button = $VBox/BidRow/AllInBtn
 @onready var carried_badge: Label = $VBox/CarriedBadge
 
 var service_type: int = -1
@@ -34,6 +35,7 @@ func setup(svc: int, am, is_carried: bool, initial_bid: int, _unused: Callable) 
 	bid_input.max_value = GameState.gold
 	bid_input.value = initial_bid
 	bid_btn.pressed.connect(_on_bid_pressed)
+	all_in_btn.pressed.connect(_on_all_in_pressed)
 
 	# If already locked (initial_bid > 0 and was pre-paid), restore locked state
 	if _auction_manager != null and _auction_manager.player_bids_locked.get(svc, false):
@@ -61,4 +63,9 @@ func _set_locked(amount: int) -> void:
 	bid_input.editable = false
 	bid_input.value = amount
 	bid_btn.disabled = true
+	all_in_btn.disabled = true
 	bid_btn.text = "已出价 %dg" % amount
+
+func _on_all_in_pressed() -> void:
+	bid_input.value = GameState.gold
+	_on_bid_pressed()
