@@ -3,12 +3,12 @@ extends Node
 const SENTINEL := "res://tests/.test_mode"
 const SCREENSHOT_PATH := "res://tests/screenshots/last_run.png"
 const LOG_PATH := "res://tests/screenshots/last_run.log"
-const WAIT_SECONDS := 30.0
+const WAIT_SECONDS := 25.0
 
 func _ready() -> void:
 	if not FileAccess.file_exists(SENTINEL):
 		return
-	await get_tree().create_timer(WAIT_SECONDS).timeout
+	await get_tree().create_timer(WAIT_SECONDS, true, false, true).timeout
 	_capture_and_quit()
 
 func _capture_and_quit() -> void:

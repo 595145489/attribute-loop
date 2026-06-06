@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://biuqfw2obivot" path="res://src/systems/AuctionManager.gd" id="15_am"]
 [ext_resource type="PackedScene" uid="uid://bui67km5rawj" path="res://scenes/ui/auction_panel.tscn" id="16_ap"]
 [ext_resource type="PackedScene" uid="uid://cp4m8nb3r5yot" path="res://scenes/ui/service_bar.tscn" id="17_sb"]
-[ext_resource type="PackedScene" uid="uid://crxq6jk2mvn8t" path="res://scenes/ui/service_activate_popup.tscn" id="18_sap"]
+[ext_resource type="PackedScene" uid="uid://cygyugu7brhl8" path="res://scenes/ui/service_activate_popup.tscn" id="18_sap"]
 
 [sub_resource type="Gradient" id="Gradient_track"]
 offsets = PackedFloat32Array(0, 0.12, 0.28, 0.42, 0.5, 0.58, 0.72, 0.88, 1)
