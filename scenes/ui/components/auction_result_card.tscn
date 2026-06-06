@@ -39,3 +39,4 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.3, 0.22, 0.12, 1)
 text = "你:0g\n甲:0g\n乙:0g"
+horizontal_alignment = 1
