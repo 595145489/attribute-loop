@@ -11,7 +11,7 @@ content_margin_bottom = 15.0
 texture = ExtResource("2_bg")
 
 [node name="AuctionBidCard" type="PanelContainer" unique_id=103816534]
-custom_minimum_size = Vector2(140, 120)
+custom_minimum_size = Vector2(240, 120)
 size_flags_horizontal = 0
 clip_contents = true
 theme_override_styles/panel = SubResource("StyleBoxTexture_bid")

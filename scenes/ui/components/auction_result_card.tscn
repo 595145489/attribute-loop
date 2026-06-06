@@ -12,7 +12,7 @@ texture = ExtResource("2_bg")
 
 [node name="AuctionResultCard" type="PanelContainer"]
 script = ExtResource("1_arc")
-custom_minimum_size = Vector2(220, 130)
+custom_minimum_size = Vector2(240, 130)
 size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_result")
 
