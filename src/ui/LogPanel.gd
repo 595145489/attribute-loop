@@ -30,12 +30,14 @@ func _open() -> void:
 	_is_open = true
 	show()
 	var tw = create_tween()
+	tw.set_process_mode(Tween.TWEEN_PROCESS_REAL)
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "offset_left", _open_offset, 0.25)
 
 func _close() -> void:
 	_is_open = false
 	var tw = create_tween()
+	tw.set_process_mode(Tween.TWEEN_PROCESS_REAL)
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "offset_left", 0.0, 0.2)
 	tw.tween_callback(hide)
