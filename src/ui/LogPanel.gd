@@ -29,19 +29,23 @@ func toggle() -> void:
 func _open() -> void:
 	_is_open = true
 	show()
+	if Engine.time_scale == 0.0:
+		offset_left = _open_offset
+		return
 	var tw = create_tween()
-	tw.set_process_mode(Tween.TWEEN_PROCESS_REAL)
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "offset_left", _open_offset, 0.25)
 
 func _close() -> void:
 	_is_open = false
+	if Engine.time_scale == 0.0:
+		offset_left = 0.0
+		hide()
+		return
 	var tw = create_tween()
-	tw.set_process_mode(Tween.TWEEN_PROCESS_REAL)
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "offset_left", 0.0, 0.2)
 	tw.tween_callback(hide)
-
 func _add_entry(text: String, color: Color) -> void:
 	var label := Label.new()
 	label.text = text
