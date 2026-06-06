@@ -17,21 +17,21 @@ func setup(result: Dictionary) -> void:
 
 	match w:
 		"player":
-			winner_label.text = "✓ 你赢了"
+			winner_label.text = "√ 你赢了"
 			winner_label.add_theme_color_override("font_color", Color(0.1, 0.4, 0.1))
 		"phantom_a":
-			winner_label.text = "✗ 影子甲赢"
+			winner_label.text = "x 影子甲赢"
 			winner_label.add_theme_color_override("font_color", Color(0.5, 0.08, 0.08))
 		"phantom_b":
-			winner_label.text = "✗ 影子乙赢"
+			winner_label.text = "x 影子乙赢"
 			winner_label.add_theme_color_override("font_color", Color(0.5, 0.08, 0.08))
 		"none":
 			winner_label.text = "— 无人竞价"
 			winner_label.add_theme_color_override("font_color", Color(0.4, 0.35, 0.25))
 
-	var player_mark := "✓" if w == "player" else ("↩" if pb > 0 else "—")
-	var a_mark := "✓" if w == "phantom_a" else ("↩" if ab > 0 else "—")
-	var b_mark := "✓" if w == "phantom_b" else ("↩" if bb > 0 else "—")
+	var player_mark := "√" if w == "player" else ("←" if pb > 0 else "-")
+	var a_mark := "√" if w == "phantom_a" else ("←" if ab > 0 else "-")
+	var b_mark := "√" if w == "phantom_b" else ("←" if bb > 0 else "-")
 
 	# Sort 3 entries by amount descending (manual bubble)
 	var names: Array[String] = ["你", "甲", "乙"]

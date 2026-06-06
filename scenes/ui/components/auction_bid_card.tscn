@@ -36,7 +36,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.45, 0.35, 0.2, 1)
 theme_override_font_sizes/font_size = 10
-text = "↩ 上圈保留"
+text = "<< 上圈保留"
 horizontal_alignment = 1
 
 [node name="DescLabel" type="Label" parent="VBox" unique_id=650819408]
