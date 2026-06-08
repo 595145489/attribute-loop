@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://gameover_scene_v1"]
+[gd_scene format=3 uid="uid://blc26s0t7s05b"]
 
-[ext_resource type="Script" path="res://src/ui/GameOver.gd" id="1_gameover"]
+[ext_resource type="Script" uid="uid://dap2krl48cp8o" path="res://src/ui/GameOver.gd" id="1_gameover"]
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://resources/backgrounds/bg_game_over.png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://cfoo2enb5fn0w" path="res://resources/backgrounds/bg_game_over.png" id="3_bg"]
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="4_btn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn"]
@@ -12,48 +12,70 @@ content_margin_right = 10.0
 content_margin_bottom = 4.0
 texture = ExtResource("4_btn")
 
-[node name="GameOver" type="CanvasLayer"]
+[node name="GameOver" type="CanvasLayer" unique_id=798332465]
 layer = 10
 script = ExtResource("1_gameover")
 
-[node name="BgRect" type="TextureRect" parent="."]
+[node name="BgRect" type="TextureRect" parent="." unique_id=571837462]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource("3_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=439421217]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 0.3)
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="." unique_id=1257453345]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBox" type="VBoxContainer" parent="Center"]
+[node name="VBox" type="VBoxContainer" parent="Center" unique_id=1576009140]
 custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
 theme = ExtResource("2_theme")
 theme_override_constants/separation = 12
 
-[node name="PhaseLabel" type="Label" parent="Center/VBox"]
+[node name="PhaseLabel" type="Label" parent="Center/VBox" unique_id=1904839398]
 layout_mode = 2
 text = "到达阶段: 0"
 
-[node name="LoopsLabel" type="Label" parent="Center/VBox"]
+[node name="LoopsLabel" type="Label" parent="Center/VBox" unique_id=362924902]
 layout_mode = 2
 text = "圈数: 0"
 
-[node name="KillsLabel" type="Label" parent="Center/VBox"]
+[node name="KillsLabel" type="Label" parent="Center/VBox" unique_id=2012366750]
 layout_mode = 2
 text = "击杀数: 0"
 
-[node name="VerdictLoopsLabel" type="Label" parent="Center/VBox"]
+[node name="VerdictLoopsLabel" type="Label" parent="Center/VBox" unique_id=819599580]
 layout_mode = 2
 text = "裁决圈完成: 0 / 0"
 
-[node name="RestartButton" type="Button" parent="Center/VBox"]
+[node name="RestartButton" type="Button" parent="Center/VBox" unique_id=1842126073]
 layout_mode = 2
-text = "重新开始"
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
+text = "重新开始"
+
+[node name="NarrativeText" type="RichTextLabel" parent="Center/VBox" unique_id=444919619]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+fit_content = true
+
+[node name="Divider" type="HSeparator" parent="Center/VBox" unique_id=1347400853]
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=329779619]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
