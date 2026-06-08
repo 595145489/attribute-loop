@@ -1,7 +1,8 @@
-extends Node2D
+﻿extends Node2D
 
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
+const PHASE_TRANSITION_SCENE = preload("res://scenes/ui/phase_transition.tscn")
 
 @onready var track: Path2D = $Track
 @onready var player_follow: PathFollow2D = $Track/PlayerFollow
@@ -23,6 +24,7 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 @onready var service_activate_popup = $UI/ServiceActivatePopup
 
 var _initialized: bool = false
+var _phase_transition: PhaseTransition
 
 func _ready() -> void:
 	get_viewport().physics_object_picking = true
@@ -44,6 +46,8 @@ func _ready() -> void:
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
 	_initialized = true
+	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
+	add_child(_phase_transition)
 
 const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),
@@ -137,6 +141,8 @@ func _on_game_won() -> void:
 	add_child(go)
 
 func _on_phase_changed(new_phase: int) -> void:
+	_phase_transition.show_for_phase(new_phase)
 	for tile in tiles_container.get_children():
 		if tile.is_altar:
 			tile.resize_altar_for_phase(new_phase)
+
