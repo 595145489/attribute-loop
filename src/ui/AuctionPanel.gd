@@ -10,8 +10,6 @@ var _auction_manager = null
 @onready var current_container: HBoxContainer = $VBox/CurrentSection/HBox
 @onready var gold_label: Label = $VBox/Footer/GoldLabel
 @onready var close_btn: Button = $VBox/TitleBar/CloseBtn
-@onready var help_btn: Button = $VBox/TitleBar/HelpBtn
-@onready var help_popup = $HelpPopup
 @onready var phantom_a_label: Label = $VBox/Footer/PhantomALabel
 @onready var phantom_b_label: Label = $VBox/Footer/PhantomBLabel
 
@@ -22,7 +20,6 @@ func setup(am) -> void:
 	EventBus.auction_settled.connect(_on_settled)
 	EventBus.gold_changed.connect(_refresh_footer)
 	close_btn.pressed.connect(close)
-	help_btn.pressed.connect(help_popup.open)
 	hide()
 
 func toggle() -> void:

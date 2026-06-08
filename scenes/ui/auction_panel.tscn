@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dcrqakmx5aqnx" path="res://src/ui/AuctionPanel.gd" id="1_ap"]
 [ext_resource type="Texture2D" uid="uid://dx7t7yjfptyfm" path="res://resources/ui/panel_auction_bg.png" id="2_bg"]
-[ext_resource type="PackedScene" path="res://scenes/ui/auction_help_popup.tscn" id="3_help"]
 
 [node name="AuctionPanel" type="Control" unique_id=795452522]
 clip_contents = true
@@ -47,10 +46,6 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "梦境残市"
-
-[node name="HelpBtn" type="Button" parent="VBox/TitleBar"]
-layout_mode = 2
-text = "?"
 
 [node name="CloseBtn" type="Button" parent="VBox/TitleBar" unique_id=471245930]
 layout_mode = 2
@@ -99,5 +94,3 @@ text = "影子甲: 0g"
 [node name="PhantomBLabel" type="Label" parent="VBox/Footer" unique_id=1820084052]
 layout_mode = 2
 text = "影子乙: 0g"
-
-[node name="HelpPopup" parent="." instance=ExtResource("3_help")]
