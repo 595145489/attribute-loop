@@ -85,11 +85,24 @@ func _on_loop_completed() -> void:
 				EventBus.game_won.emit()
 				return
 		else:
-			GameState.loops_in_phase += 1
-			var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-			if GameState.loops_in_phase >= phase_data.world_pressure_window:
-				if not _altar_is_full(_tiles[0]):
-					GameState.force_phase_advance()
+			if GameState.pending_phase_advance:
+				GameState.pending_phase_advance = false
+				var config_ref: GameConfig = DataTables.config
+				if GameState.current_phase == config_ref.verdict_trigger_phase:
+					GameState.in_verdict_loop = true
+					GameState.verdict_loops_survived = 0
+					GameState.loops_in_phase = 0
+					EventBus.verdict_loop_entered.emit()
+				else:
+					GameState.current_phase += 1
+					GameState.loops_in_phase = 0
+					EventBus.phase_changed.emit(GameState.current_phase)
+			else:
+				GameState.loops_in_phase += 1
+				var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+				if GameState.loops_in_phase >= phase_data.world_pressure_window:
+					if not _altar_is_full(_tiles[0]):
+						GameState.force_phase_advance()
 		for tile in _tiles:
 			tile.visited_this_loop = false
 		spawn_enemies()

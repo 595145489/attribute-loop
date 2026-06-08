@@ -22,6 +22,7 @@ var deletion_count: int = 0
 var altar_bonuses: Dictionary = {}
 var loops_in_phase: int = 0
 var in_verdict_loop: bool = false
+var pending_phase_advance: bool = false
 var verdict_loops_survived: int = 0
 
 # Auction / service bar
@@ -54,6 +55,7 @@ func reset() -> void:
 	altar_bonuses = {}
 	loops_in_phase = 0
 	in_verdict_loop = false
+	pending_phase_advance = false
 	verdict_loops_survived = 0
 	service_bar = []
 	deletion_free = false
