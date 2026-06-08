@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://boyaa4kd21kqg"]
+
+[node name="phase_transition" type="CanvasLayer" unique_id=177748439]
+process_mode = 3
+layer = 10
+
+[node name="Container" type="Control" parent="." unique_id=487507092]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Container" unique_id=736759192]
+layout_mode = 0
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="Container" unique_id=589403264]
+layout_mode = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Content" type="VBoxContainer" parent="Container" unique_id=1715066854]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PhaseLabel" type="Label" parent="Container/Content" unique_id=26435807]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[node name="StoryText" type="RichTextLabel" parent="Container/Content" unique_id=884506139]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+fit_content = true
+
+[node name="ContinueHint" type="Label" parent="Container" unique_id=821324726]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "点击继续"
+horizontal_alignment = 1
