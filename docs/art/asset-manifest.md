@@ -122,6 +122,14 @@
 - [x] bg_ground.png           — ground base layer, indigo blue-grey twilight grass
 - [x] bg_game_over.png        — game over full-screen background, dramatic parchment atmosphere, wide 16:9
 
+### Narrative Backgrounds (叙事背景)
+- [x] bg_phase_1_2.png        — dawn mist, loop path leading to small wooden pavilion, lamp lit, single white flower on step, stones recently rearranged nearby, someone was just here but isn't, empty quiet expectant, soft blue-grey mist, pale gold light
+- [x] bg_phase_3_4.png        — morning light angled low, same path and pavilion, stones on ground clearly spelling question mark and exclamation point side by side, a few carved words just beginning to show on pavilion wooden wall, warm golden morning light
+- [x] bg_phase_5_6.png        — dusk, two sets of footprints on path going opposite directions never overlapping, pavilion lamp casting wide warm intimate circle of light, amber rose tones
+- [x] bg_phase_7_8.png        — night falling, pavilion walls dense with tiny writing nearly full, path darker, one wall side has fewer recent marks, deep indigo sky
+- [x] bg_phase_9_10.png       — deep night, pavilion walls completely covered no blank space, pavilion lamp is out, only moonlight, the original flower on step dried
+- [x] bg_game_over_win.png    — moonlit night, loop path, far distance two figures just met backs to camera facing pavilion, warm ambient light, close but not sentimental
+- [x] bg_game_over_lose.png   — empty pavilion lamp still burning, walls covered in writing, no one present, the light is on as if still waiting
 
 ### Auction Panel (梦境残市)
 - [x] panel_auction_bg.png      — auction panel background, dark indigo with ornate gold ink border frame, misty center
