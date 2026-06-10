@@ -14,5 +14,6 @@ func test_cache_returns_same_object() -> void:
 	assert_same(tex1, tex2, "Expected cached texture to be the same object")
 
 func test_all_implemented_components_have_icons() -> void:
-	for id in ["受击", "击杀", "完成圈数", "经过", "治愈", "反射"]:
+	for id in ["受击", "击杀", "完成圈数", "经过", "治愈", "反射",
+			"低血", "满血", "规则触发", "护盾", "减速", "吸血"]:
 		assert_not_null(ComponentIcons.get_icon(id), "Missing icon for '%s'" % id)

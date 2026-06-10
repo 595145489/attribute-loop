@@ -44,6 +44,8 @@ var _float_tween: Tween = null
 	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EValue1,
 ]
 
+var shield_label: Label = null
+
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
 	log_btn.pressed.connect(log_panel.toggle)
@@ -52,6 +54,12 @@ func _ready() -> void:
 	EventBus.rule_fired.connect(_on_rule_fired)
 	for i in _speed_btns.size():
 		_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
+	var vbox := hp_label.get_parent()
+	shield_label = Label.new()
+	shield_label.name = "ShieldLabel"
+	shield_label.add_theme_color_override("font_color", Color(0.5, 0.7, 1.0))
+	vbox.add_child(shield_label)
+	shield_label.hide()
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
@@ -63,9 +71,15 @@ func setup_altar(panel, tile) -> void:
 func _process(_delta: float) -> void:
 	if hp_label == null:
 		return
-	hp_label.text = "❤ %d / %d" % [GameState.hp, GameState.hp_max]
+	hp_label.text = " %d / %d" % [GameState.hp, GameState.hp_max]
 	hp_bar.max_value = GameState.hp_max
 	hp_bar.value = GameState.hp
+	if shield_label != null:
+		if GameState.shield > 0:
+			shield_label.text = "护盾: %d" % GameState.shield
+			shield_label.show()
+		else:
+			shield_label.hide()
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 	gold_label.text = "%d" % GameState.gold
@@ -98,6 +112,12 @@ func _update_rule_panel(i: int) -> void:
 			_e_value[i].text = "+%d" % int(e.effect_value)
 		"反射":
 			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
+		"护盾":
+			_e_value[i].text = "+%d" % int(e.effect_value)
+		"减速":
+			_e_value[i].text = "×%d层" % int(e.effect_value)
+		"吸血":
+			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
 		_:
 			_e_value[i].text = ""
 
@@ -117,12 +137,19 @@ func _on_speed_pressed(index: int) -> void:
 	GameState.speed_multiplier = SPEEDS[index]
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
-	if effect_id == "治愈":
-		float_label.text = "+%.0f 治愈" % value
-	elif effect_id == "反射":
-		float_label.text = "反射 %.0f%%" % (value * 100)
-	else:
-		float_label.text = effect_id
+	match effect_id:
+		"治愈":
+			float_label.text = "+%.0f 治愈" % value
+		"反射":
+			float_label.text = "反射 %.0f%%" % (value * 100)
+		"护盾":
+			float_label.text = "+%.0f 护盾" % value
+		"减速":
+			float_label.text = "减速 ×%.0f层" % value
+		"吸血":
+			float_label.text = "吸血 %.0f%%" % (value * 100)
+		_:
+			float_label.text = effect_id
 	float_label.show()
 	float_label.modulate = Color.WHITE
 	if _float_tween:
