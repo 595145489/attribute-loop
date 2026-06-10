@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://dx3r8c9f2jqp5"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_new02"]
+
+[resource]
+script = ExtResource("1_new02")
+id = "满血"
+display_name = "满血"
+description = "满血时每N秒触发"
+trigger_formula = "fires_every"

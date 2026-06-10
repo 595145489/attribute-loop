@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3 uid="uid://bfyr3e6k9tzw2"]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_new04"]
+
+[resource]
+script = ExtResource("1_new04")
+id = "护盾"
+display_name = "护盾"
+description = "触发时获得吸伤护盾"
+slot_type = 1
+effect_formula = "shield"
+growth_rate = 0.2
+altar_ratio = 0.1
