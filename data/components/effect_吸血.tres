@@ -6,7 +6,7 @@
 script = ExtResource("1_new06")
 id = "吸血"
 display_name = "吸血"
-description = "触发时获得吸血比率，攻击后回血"
+description = "提升吸血比率，每次攻击后按比例回复生命值"
 slot_type = 1
 effect_formula = "lifesteal"
 growth_rate = 0.1

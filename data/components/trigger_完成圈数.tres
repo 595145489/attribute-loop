@@ -6,5 +6,5 @@
 script = ExtResource("1_loeq8")
 id = "完成圈数"
 display_name = "完成圈数"
-description = "每完成N圈触发"
+description = "每完成 N 圈后触发"
 trigger_formula = "fires_every"

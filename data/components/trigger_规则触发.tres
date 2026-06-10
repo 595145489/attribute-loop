@@ -6,5 +6,5 @@
 script = ExtResource("1_new03")
 id = "规则触发"
 display_name = "规则触发"
-description = "每N次规则触发后触发"
+description = "其他规则累计触发 N 次后触发"
 trigger_formula = "fires_every"

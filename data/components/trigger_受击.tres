@@ -6,5 +6,5 @@
 script = ExtResource("1_omdo7")
 id = "受击"
 display_name = "受击"
-description = "每被攻击N次触发"
+description = "每受到 N 次攻击后触发"
 trigger_formula = "fires_every"

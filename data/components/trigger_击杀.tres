@@ -6,5 +6,5 @@
 script = ExtResource("1_ub6xk")
 id = "击杀"
 display_name = "击杀"
-description = "每击杀N个敌人触发"
+description = "每击杀 N 个敌人后触发"
 trigger_formula = "fires_every"

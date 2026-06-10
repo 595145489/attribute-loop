@@ -6,7 +6,7 @@
 script = ExtResource("1_erohq")
 id = "反射"
 display_name = "反射"
-description = "触发时反弹伤害"
+description = "将下一次受到的伤害按比例反弹给攻击者"
 slot_type = 2
 trigger_formula = "fires_every"
 effect_formula = "reflect"

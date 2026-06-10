@@ -50,12 +50,14 @@ func _build_rule_slots() -> void:
         var t_btn: Button = SLOT_BTN.instantiate()
         t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
         t_btn.icon = ComponentIcons.get_icon(t_comp.id) if t_comp != null else ComponentIcons.get_placeholder()
+        if t_comp: t_btn.tooltip_text = t_comp.description
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
         var e_comp: ComponentData = slot["effect"]
         var e_btn: Button = SLOT_BTN.instantiate()
         e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
         e_btn.icon = ComponentIcons.get_icon(e_comp.id) if e_comp != null else ComponentIcons.get_placeholder()
+        if e_comp: e_btn.tooltip_text = e_comp.description
         e_btn.pressed.connect(_make_slot_handler(i, false, e_comp))
         hbox.add_child(e_btn)
 
@@ -86,6 +88,7 @@ func _build_inventory_grid() -> void:
             label += " (T%.0f/E%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
         btn.icon = ComponentIcons.get_icon(comp.id) if ComponentIcons.get_icon(comp.id) != null else ComponentIcons.get_placeholder()
+        btn.tooltip_text = comp.description
         var c = comp
         btn.pressed.connect(func(): _select(c))
         _inv_grid.add_child(btn)

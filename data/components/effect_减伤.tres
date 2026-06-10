@@ -6,7 +6,7 @@
 script = ExtResource("1_new05")
 id = "减伤"
 display_name = "减伤"
-description = "触发时叠加减伤层，每层减少敌人10%伤害"
+description = "叠加减伤层，每层使敌人伤害减少 10%，层数上限随阶段提升"
 slot_type = 1
 effect_formula = "slow"
 growth_rate = 0.0

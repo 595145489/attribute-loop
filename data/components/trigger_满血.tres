@@ -6,5 +6,5 @@
 script = ExtResource("1_new02")
 id = "满血"
 display_name = "满血"
-description = "满血时每N秒触发"
+description = "生命值满时，每持续 N 秒触发一次"
 trigger_formula = "fires_every"

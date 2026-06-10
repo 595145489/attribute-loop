@@ -6,5 +6,5 @@
 script = ExtResource("1_76ie5")
 id = "经过"
 display_name = "经过"
-description = "每经过N个地块触发"
+description = "每经过 N 格后触发"
 trigger_formula = "fires_every"

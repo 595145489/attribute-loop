@@ -6,7 +6,7 @@
 script = ExtResource("1_new04")
 id = "护盾"
 display_name = "护盾"
-description = "触发时获得吸伤护盾"
+description = "获得护盾值，受伤时优先消耗护盾"
 slot_type = 1
 effect_formula = "shield"
 growth_rate = 0.2

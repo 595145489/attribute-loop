@@ -6,7 +6,7 @@
 script = ExtResource("1_76pj6")
 id = "治愈"
 display_name = "治愈"
-description = "触发时恢复生命值"
+description = "恢复一定量生命值，随圈数累积成长"
 slot_type = 2
 trigger_formula = "fires_every"
 effect_formula = "heal"
