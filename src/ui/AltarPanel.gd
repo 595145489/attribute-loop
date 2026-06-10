@@ -3,14 +3,14 @@ extends PanelContainer
 
 var _tile: Tile = null
 
-@onready var _title: Label = $VBox/Title
-@onready var _progress: Label = $VBox/Progress
-@onready var _slots_container: VBoxContainer = $VBox/AltarSlots
-@onready var _bonuses_label: Label = $VBox/BonusesLabel
-@onready var _activate_btn: Button = $VBox/ActivateButton
-@onready var _inv_picker: VBoxContainer = $VBox/InvPicker
-@onready var _inv_grid: GridContainer = $VBox/InvPicker/InvGrid
-@onready var _close_btn: Button = $VBox/CloseButton
+@onready var _title: Label = $MarginContainer/VBox/Title
+@onready var _progress: Label = $MarginContainer/VBox/Progress
+@onready var _slots_container: VBoxContainer = $MarginContainer/VBox/AltarSlots
+@onready var _bonuses_label: Label = $MarginContainer/VBox/BonusesLabel
+@onready var _activate_btn: Button = $MarginContainer/VBox/ButtonRow/ActivateButton
+@onready var _inv_picker: VBoxContainer = $MarginContainer/VBox/InvPicker
+@onready var _inv_grid: GridContainer = $MarginContainer/VBox/InvPicker/InvScroll/InvGrid
+@onready var _close_btn: Button = $MarginContainer/VBox/ButtonRow/CloseButton
 
 var _selecting_slot_idx: int = -1
 
