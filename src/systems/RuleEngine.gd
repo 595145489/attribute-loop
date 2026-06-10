@@ -2,6 +2,9 @@ class_name RuleEngine
 extends Node
 
 var _tiles: Array = []
+var _state_timer: float = 0.0
+var _firing_rule_trigger: bool = false
+const _STATE_INTERVAL: float = 1.0
 
 func _ready() -> void:
 	EventBus.player_hit.connect(_on_player_hit)
@@ -13,12 +16,28 @@ func _ready() -> void:
 func set_tiles(tiles: Array) -> void:
 	_tiles = tiles
 
+func _process(delta: float) -> void:
+	_state_timer += delta
+	if _state_timer >= _STATE_INTERVAL:
+		_state_timer = 0.0
+		_check_state_triggers()
+
+func _check_state_triggers() -> void:
+	if float(GameState.hp) / float(GameState.hp_max) < 0.3:
+		_evaluate_player_triggers(["低血"])
+	if GameState.hp >= GameState.hp_max:
+		_evaluate_player_triggers(["满血"])
+
 func _on_player_hit(_damage: int) -> void:
 	_evaluate_player_triggers(["受击"])
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, _value: float) -> void:
 	if effect_id == "治愈":
 		_evaluate_player_triggers(["治愈"])
+	if not _firing_rule_trigger:
+		_firing_rule_trigger = true
+		_evaluate_player_triggers(["规则触发"])
+		_firing_rule_trigger = false
 
 func _on_enemy_killed(_enemy: Enemy) -> void:
 	_evaluate_player_triggers(["击杀"])
@@ -74,3 +93,12 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 		"反射":
 			GameState.pending_reflect_ratio = final_value
 			EventBus.rule_fired.emit(slot_idx, "反射", final_value)
+		"护盾":
+			GameState.shield += int(final_value)
+			EventBus.rule_fired.emit(slot_idx, "护盾", final_value)
+		"减速":
+			GameState.slow_stacks += int(final_value)
+			EventBus.rule_fired.emit(slot_idx, "减速", final_value)
+		"吸血":
+			GameState.lifesteal_ratio += final_value
+			EventBus.rule_fired.emit(slot_idx, "吸血", final_value)

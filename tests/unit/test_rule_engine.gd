@@ -209,3 +209,96 @@ func test_max_scale_caps_tile_effect() -> void:
 	tile.pass_count = 100
 	EventBus.tile_passed.emit(1)
 	assert_eq(GameState.hp, 20, "should be capped at base * max_scale = 10 * 2 = 20")
+
+func test_low_hp_trigger_counts_when_hp_below_threshold() -> void:
+	_make_rule("低血", 3.0, "治愈", 10.0)
+	GameState.hp = int(GameState.hp_max * 0.29)
+	var t = GameState.rule_slots[0]["trigger"]
+	engine._check_state_triggers()
+	assert_eq(t.trigger_count, 1)
+
+func test_low_hp_trigger_does_not_count_at_normal_hp() -> void:
+	_make_rule("低血", 3.0, "治愈", 10.0)
+	GameState.hp = int(GameState.hp_max * 0.5)
+	var t = GameState.rule_slots[0]["trigger"]
+	engine._check_state_triggers()
+	assert_eq(t.trigger_count, 0)
+
+func test_low_hp_trigger_fires_after_n_checks() -> void:
+	_make_rule("低血", 2.0, "治愈", 20.0)
+	GameState.hp_max = 9999
+	GameState.hp = 50
+	engine._check_state_triggers()
+	engine._check_state_triggers()
+	assert_eq(GameState.hp, 70)
+
+func test_full_hp_trigger_counts_when_at_max() -> void:
+	_make_rule("满血", 2.0, "治愈", 10.0)
+	GameState.hp = GameState.hp_max
+	var t = GameState.rule_slots[0]["trigger"]
+	engine._check_state_triggers()
+	assert_eq(t.trigger_count, 1)
+
+func test_full_hp_trigger_does_not_count_below_max() -> void:
+	_make_rule("满血", 2.0, "治愈", 10.0)
+	GameState.hp = GameState.hp_max - 1
+	var t = GameState.rule_slots[0]["trigger"]
+	engine._check_state_triggers()
+	assert_eq(t.trigger_count, 0)
+
+func test_rule_fire_trigger_counts_on_rule_fire() -> void:
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	_make_rule_slot1("规则触发", 2.0, "反射", 0.3)
+	var t = GameState.rule_slots[1]["trigger"]
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(t.trigger_count, 1, "should count 1 after one rule fire")
+	assert_almost_eq(GameState.pending_reflect_ratio, 0.0, 0.001, "should not fire yet")
+
+func test_rule_fire_trigger_fires_at_threshold() -> void:
+	_make_rule("受击", 1.0, "治愈", 10.0)
+	_make_rule_slot1("规则触发", 2.0, "反射", 0.3)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	EventBus.player_hit.emit(5)
+	assert_almost_eq(GameState.pending_reflect_ratio, 0.3, 0.001, "should fire after 2 rule fires")
+
+func test_rule_fire_trigger_no_infinite_loop() -> void:
+	_make_rule("规则触发", 1.0, "治愈", 10.0)
+	_make_rule_slot1("受击", 1.0, "反射", 0.1)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.hp, 60, "heal fired once, no infinite loop")
+
+func test_shield_effect_adds_to_gamestate_shield() -> void:
+	_make_rule("受击", 1.0, "护盾", 50.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.shield, 50)
+
+func test_shield_effect_accumulates() -> void:
+	_make_rule("受击", 1.0, "护盾", 30.0)
+	EventBus.player_hit.emit(5)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.shield, 60)
+
+func test_slow_effect_adds_slow_stacks() -> void:
+	_make_rule("受击", 1.0, "减速", 2.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.slow_stacks, 2)
+
+func test_slow_effect_accumulates() -> void:
+	_make_rule("受击", 1.0, "减速", 1.0)
+	EventBus.player_hit.emit(5)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.slow_stacks, 2)
+
+func test_lifesteal_effect_adds_to_lifesteal_ratio() -> void:
+	_make_rule("受击", 1.0, "吸血", 0.1)
+	EventBus.player_hit.emit(5)
+	assert_almost_eq(GameState.lifesteal_ratio, 0.1, 0.001)
+
+func test_rule_fired_signal_emitted_for_shield() -> void:
+	watch_signals(EventBus)
+	_make_rule("受击", 1.0, "护盾", 30.0)
+	EventBus.player_hit.emit(5)
+	assert_signal_emitted(EventBus, "rule_fired")
