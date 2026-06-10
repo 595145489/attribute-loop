@@ -15,6 +15,9 @@ var speed_multiplier: float = 1.0:
 var _panel_pause_count: int = 0
 
 var pending_reflect_ratio: float = 0.0
+var shield: int = 0
+var slow_stacks: int = 0
+var lifesteal_ratio: float = 0.0
 var inventory: Array[ComponentData] = []
 var rule_slots: Array = []
 var gold: int = 0
@@ -35,9 +38,14 @@ func _ready() -> void:
 	reset()
 
 func take_damage(amount: int) -> void:
-	hp = max(0, hp - amount)
-	if hp == 0:
-		EventBus.player_died.emit()
+	if shield > 0:
+		var absorbed := mini(shield, amount)
+		shield -= absorbed
+		amount -= absorbed
+	if amount > 0:
+		hp = max(0, hp - amount)
+		if hp == 0:
+			EventBus.player_died.emit()
 
 func reset() -> void:
 	hp = hp_max
@@ -48,6 +56,9 @@ func reset() -> void:
 	_panel_pause_count = 0
 	speed_multiplier = 1.0
 	pending_reflect_ratio = 0.0
+	shield = 0
+	slow_stacks = 0
+	lifesteal_ratio = 0.0
 	inventory = []
 	rule_slots = []
 	gold = 0

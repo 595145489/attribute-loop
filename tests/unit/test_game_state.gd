@@ -1,4 +1,4 @@
-extends GutTest
+﻿extends GutTest
 
 func before_each() -> void:
     GameState.reset()
@@ -221,3 +221,32 @@ func test_deletion_free_skips_cost_and_count() -> void:
     assert_eq(GameState.gold, 100)
     assert_eq(GameState.deletion_count, 0)
     assert_false(GameState.deletion_free)
+
+func test_shield_absorbs_damage_before_hp() -> void:
+    GameState.shield = 30
+    var hp_before = GameState.hp
+    GameState.take_damage(20)
+    assert_eq(GameState.shield, 10)
+    assert_eq(GameState.hp, hp_before)
+
+func test_shield_depletes_then_overflow_hits_hp() -> void:
+    GameState.shield = 10
+    var hp_before = GameState.hp
+    GameState.take_damage(20)
+    assert_eq(GameState.shield, 0)
+    assert_eq(GameState.hp, hp_before - 10)
+
+func test_shield_resets_to_zero_on_reset() -> void:
+    GameState.shield = 50
+    GameState.reset()
+    assert_eq(GameState.shield, 0)
+
+func test_slow_stacks_resets_to_zero_on_reset() -> void:
+    GameState.slow_stacks = 5
+    GameState.reset()
+    assert_eq(GameState.slow_stacks, 0)
+
+func test_lifesteal_ratio_resets_to_zero_on_reset() -> void:
+    GameState.lifesteal_ratio = 0.5
+    GameState.reset()
+    assert_almost_eq(GameState.lifesteal_ratio, 0.0, 0.001)
