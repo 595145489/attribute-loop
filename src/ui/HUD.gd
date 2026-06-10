@@ -44,8 +44,6 @@ var _float_tween: Tween = null
 	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EValue1,
 ]
 
-var shield_label: Label = null
-
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
 	log_btn.pressed.connect(log_panel.toggle)
@@ -54,12 +52,6 @@ func _ready() -> void:
 	EventBus.rule_fired.connect(_on_rule_fired)
 	for i in _speed_btns.size():
 		_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
-	var vbox := hp_label.get_parent()
-	shield_label = Label.new()
-	shield_label.name = "ShieldLabel"
-	shield_label.add_theme_color_override("font_color", Color(0.5, 0.7, 1.0))
-	vbox.add_child(shield_label)
-	shield_label.hide()
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
@@ -71,15 +63,12 @@ func setup_altar(panel, tile) -> void:
 func _process(_delta: float) -> void:
 	if hp_label == null:
 		return
-	hp_label.text = " %d / %d" % [GameState.hp, GameState.hp_max]
+	if GameState.shield > 0:
+		hp_label.text = " %d / %d  (+%d)" % [GameState.hp, GameState.hp_max, GameState.shield]
+	else:
+		hp_label.text = " %d / %d" % [GameState.hp, GameState.hp_max]
 	hp_bar.max_value = GameState.hp_max
 	hp_bar.value = GameState.hp
-	if shield_label != null:
-		if GameState.shield > 0:
-			shield_label.text = "护盾: %d" % GameState.shield
-			shield_label.show()
-		else:
-			shield_label.hide()
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 	gold_label.text = "%d" % GameState.gold
