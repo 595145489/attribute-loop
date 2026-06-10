@@ -16,6 +16,6 @@ component_ranges = {
 "治愈": {"trigger": Vector2(2, 2), "effect": Vector2(10, 18)},
 "反射": {"trigger": Vector2(2, 2), "effect": Vector2(0.3, 0.45)},
 "护盾": {"effect": Vector2(35, 60)},
-"减速": {"effect": Vector2(2, 3)},
+"减伤": {"effect": Vector2(2, 3)},
 "吸血": {"effect": Vector2(0.08, 0.15)}
 }

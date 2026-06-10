@@ -25,13 +25,6 @@ content_margin_right = 10.0
 content_margin_bottom = 4.0
 texture = ExtResource("4_btn_n")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_h"]
-content_margin_left = 16.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-texture = ExtResource("5_btn_h")
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_p"]
 content_margin_left = 16.0
 content_margin_top = 4.0
@@ -39,8 +32,14 @@ content_margin_right = 10.0
 content_margin_bottom = 4.0
 texture = ExtResource("6_btn_p")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_h"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("5_btn_h")
+
 [node name="TileRulePanel" type="PanelContainer" unique_id=1901766401]
-visible = false
 custom_minimum_size = Vector2(400, 320)
 anchors_preset = 8
 anchor_left = 0.5
@@ -50,7 +49,9 @@ anchor_bottom = 0.5
 offset_left = -200.0
 offset_top = -160.0
 offset_right = 200.0
-offset_bottom = 160.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_theme")
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 script = ExtResource("1_ynhln")
@@ -81,7 +82,7 @@ columns = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn_n")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_h")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_btn_h")
 theme_override_styles/focus = SubResource("StyleBoxTexture_btn_n")
 text = "关闭"

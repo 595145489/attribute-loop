@@ -12,7 +12,7 @@ const _ICON_MAP: Dictionary = {
 	"满血":    "res://resources/icons/trigger_full_hp.png",
 	"规则触发": "res://resources/icons/trigger_rule_fire.png",
 	"护盾":    "res://resources/icons/effect_shield.png",
-	"减速":    "res://resources/icons/effect_slow.png",
+	"减伤":    "res://resources/icons/effect_slow.png",
 	"吸血":    "res://resources/icons/effect_lifesteal.png",
 }
 

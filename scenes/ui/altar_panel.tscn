@@ -1,16 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkpxrfdqerp75"]
+[gd_scene format=3 uid="uid://bkpxrfdqerp75"]
 
-[ext_resource type="Script" path="res://src/ui/AltarPanel.gd" id="1_altar"]
+[ext_resource type="Script" uid="uid://cs0wwhqookp1c" path="res://src/ui/AltarPanel.gd" id="1_altar"]
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://resources/ui/altar_panel_bg.png" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://dp8dflm4g2msf" path="res://resources/ui/altar_panel_bg.png" id="3_panel"]
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="4_btn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
-content_margin_left = 170.0
+content_margin_left = 133.0
 content_margin_top = 130.0
 content_margin_right = 130.0
 content_margin_bottom = 130.0
 texture = ExtResource("3_panel")
+expand_margin_left = 41.0
+expand_margin_top = 41.0
+expand_margin_right = 41.0
+expand_margin_bottom = 41.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn"]
 content_margin_left = 16.0
@@ -19,8 +23,7 @@ content_margin_right = 10.0
 content_margin_bottom = 4.0
 texture = ExtResource("4_btn")
 
-[node name="AltarPanel" type="PanelContainer"]
-script = ExtResource("1_altar")
+[node name="AltarPanel" type="PanelContainer" unique_id=1679498344]
 visible = false
 custom_minimum_size = Vector2(500, 480)
 anchors_preset = 8
@@ -32,78 +35,81 @@ offset_left = -250.0
 offset_top = -240.0
 offset_right = 250.0
 offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_theme")
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+script = ExtResource("1_altar")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1956707206]
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBox" type="VBoxContainer" parent="MarginContainer" unique_id=1853181686]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="MarginContainer/VBox"]
+[node name="Title" type="Label" parent="MarginContainer/VBox" unique_id=1444478740]
 layout_mode = 2
 text = "祭坛"
 horizontal_alignment = 1
 
-[node name="Progress" type="Label" parent="MarginContainer/VBox"]
+[node name="Progress" type="Label" parent="MarginContainer/VBox" unique_id=669379885]
 layout_mode = 2
 text = "进度 0 / 0"
 horizontal_alignment = 1
 
-[node name="HSep1" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep1" type="HSeparator" parent="MarginContainer/VBox" unique_id=1215894240]
 layout_mode = 2
 
-[node name="AltarSlots" type="VBoxContainer" parent="MarginContainer/VBox"]
+[node name="AltarSlots" type="VBoxContainer" parent="MarginContainer/VBox" unique_id=156609688]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="InvPicker" type="VBoxContainer" parent="MarginContainer/VBox"]
+[node name="InvPicker" type="VBoxContainer" parent="MarginContainer/VBox" unique_id=1515024279]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="PickerLabel" type="Label" parent="MarginContainer/VBox/InvPicker"]
+[node name="PickerLabel" type="Label" parent="MarginContainer/VBox/InvPicker" unique_id=924915398]
 layout_mode = 2
 text = "选择要放入的组件："
 
-[node name="InvScroll" type="ScrollContainer" parent="MarginContainer/VBox/InvPicker"]
-layout_mode = 2
+[node name="InvScroll" type="ScrollContainer" parent="MarginContainer/VBox/InvPicker" unique_id=376145197]
 custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="InvGrid" type="GridContainer" parent="MarginContainer/VBox/InvPicker/InvScroll"]
+[node name="InvGrid" type="GridContainer" parent="MarginContainer/VBox/InvPicker/InvScroll" unique_id=1367987507]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
-[node name="HSep2" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep2" type="HSeparator" parent="MarginContainer/VBox" unique_id=591216598]
 layout_mode = 2
 
-[node name="BonusesLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="BonusesLabel" type="Label" parent="MarginContainer/VBox" unique_id=601798155]
 layout_mode = 2
 text = "当前祭坛加成：无"
 autowrap_mode = 3
 
-[node name="HSep3" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep3" type="HSeparator" parent="MarginContainer/VBox" unique_id=805967472]
 layout_mode = 2
 
-[node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBox"]
+[node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBox" unique_id=1300439994]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 16
+alignment = 1
 
-[node name="ActivateButton" type="Button" parent="MarginContainer/VBox/ButtonRow"]
-layout_mode = 2
+[node name="ActivateButton" type="Button" parent="MarginContainer/VBox/ButtonRow" unique_id=1070783755]
 custom_minimum_size = Vector2(200, 52)
+layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
@@ -112,9 +118,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
 theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
 text = "激活祭坛"
 
-[node name="CloseButton" type="Button" parent="MarginContainer/VBox/ButtonRow"]
-layout_mode = 2
+[node name="CloseButton" type="Button" parent="MarginContainer/VBox/ButtonRow" unique_id=674745931]
 custom_minimum_size = Vector2(120, 52)
+layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn")

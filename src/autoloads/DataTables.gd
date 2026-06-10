@@ -39,7 +39,7 @@ func _load_components() -> void:
 		"res://data/components/trigger_满血.tres",
 		"res://data/components/trigger_规则触发.tres",
 		"res://data/components/effect_护盾.tres",
-		"res://data/components/effect_减速.tres",
+		"res://data/components/effect_减伤.tres",
 		"res://data/components/effect_吸血.tres",
 	]
 	for path in paths:

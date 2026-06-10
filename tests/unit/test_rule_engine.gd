@@ -282,12 +282,12 @@ func test_shield_effect_accumulates() -> void:
 	assert_eq(GameState.shield, 60)
 
 func test_slow_effect_adds_slow_stacks() -> void:
-	_make_rule("受击", 1.0, "减速", 2.0)
+	_make_rule("受击", 1.0, "减伤", 2.0)
 	EventBus.player_hit.emit(5)
 	assert_eq(GameState.slow_stacks, 2)
 
 func test_slow_effect_accumulates() -> void:
-	_make_rule("受击", 1.0, "减速", 1.0)
+	_make_rule("受击", 1.0, "减伤", 1.0)
 	EventBus.player_hit.emit(5)
 	EventBus.player_hit.emit(5)
 	assert_eq(GameState.slow_stacks, 2)

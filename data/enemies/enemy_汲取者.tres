@@ -25,7 +25,7 @@ trigger_weights = {
 effect_weights = {
 "治愈": 60,
 "护盾": 20,
-"减速": 10,
+"减伤": 10,
 "吸血": 10
 }
 phase_drop_presets = {

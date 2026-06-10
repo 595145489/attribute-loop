@@ -96,9 +96,9 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 		"护盾":
 			GameState.shield += int(final_value)
 			EventBus.rule_fired.emit(slot_idx, "护盾", final_value)
-		"减速":
+		"减伤":
 			GameState.slow_stacks += int(final_value)
-			EventBus.rule_fired.emit(slot_idx, "减速", final_value)
+			EventBus.rule_fired.emit(slot_idx, "减伤", final_value)
 		"吸血":
 			GameState.lifesteal_ratio += final_value
 			EventBus.rule_fired.emit(slot_idx, "吸血", final_value)

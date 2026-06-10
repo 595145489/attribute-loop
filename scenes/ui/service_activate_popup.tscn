@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://crxq6jk2mvn8t"]
+[gd_scene format=3 uid="uid://cygyugu7brhl8"]
 
 [ext_resource type="Script" uid="uid://cbe3flmvnqnia" path="res://src/ui/ServiceActivatePopup.gd" id="1_sap"]
 
-[node name="ServiceActivatePopup" type="Control"]
-script = ExtResource("1_sap")
+[node name="ServiceActivatePopup" type="Control" unique_id=887464138]
 visible = false
 custom_minimum_size = Vector2(400, 300)
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -15,26 +15,33 @@ offset_left = -200.0
 offset_top = -150.0
 offset_right = 200.0
 offset_bottom = 150.0
+script = ExtResource("1_sap")
 
-[node name="Panel" type="PanelContainer" parent="."]
-anchors_preset = 15
+[node name="Panel" type="PanelContainer" parent="." unique_id=687000633]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=1020537604]
+layout_mode = 2
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="Title" type="Label" parent="Panel/VBox" unique_id=1546811188]
+layout_mode = 2
 text = "服务"
 
-[node name="Content" type="VBoxContainer" parent="Panel/VBox"]
+[node name="Content" type="VBoxContainer" parent="Panel/VBox" unique_id=1930880431]
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox" unique_id=648156061]
+layout_mode = 2
 
-[node name="Cancel" type="Button" parent="Panel/VBox/Buttons"]
+[node name="Cancel" type="Button" parent="Panel/VBox/Buttons" unique_id=1627122885]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "取消"
-size_flags_horizontal = 3
 
-[node name="Confirm" type="Button" parent="Panel/VBox/Buttons"]
-text = "确认"
+[node name="Confirm" type="Button" parent="Panel/VBox/Buttons" unique_id=527269228]
+layout_mode = 2
 size_flags_horizontal = 3
+text = "确认"
