@@ -1,4 +1,4 @@
-﻿extends Node2D
+extends Node2D
 
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
@@ -99,6 +99,26 @@ func _process(_delta: float) -> void:
 		return
 	_check_player_tile()
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F1:
+			_debug_give_new_components()
+
+func _debug_give_new_components() -> void:
+	for id in ["低血", "满血", "规则触发", "护盾", "减速", "吸血"]:
+		var base: ComponentData = DataTables.get_component(id)
+		var comp: ComponentData = base.duplicate()
+		comp.trigger_count = 0
+		if comp.slot_type in [ComponentData.SlotType.TRIGGER_ONLY, ComponentData.SlotType.BOTH]:
+			comp.trigger_value = 2.0
+		if comp.slot_type in [ComponentData.SlotType.EFFECT_ONLY, ComponentData.SlotType.BOTH]:
+			match id:
+				"护盾": comp.effect_value = 50.0
+				"减速": comp.effect_value = 2.0
+				"吸血": comp.effect_value = 0.1
+		if GameState.inventory_has_space():
+			GameState.add_to_inventory(comp)
+
 func _check_player_tile() -> void:
 	var player_pos = player.global_position
 	for tile in tiles_container.get_children():
@@ -145,4 +165,3 @@ func _on_phase_changed(new_phase: int) -> void:
 	for tile in tiles_container.get_children():
 		if tile.is_altar:
 			tile.resize_altar_for_phase(new_phase)
-
