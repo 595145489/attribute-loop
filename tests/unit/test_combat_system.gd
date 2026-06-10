@@ -75,13 +75,24 @@ func test_slow_stacks_reduce_enemy_damage() -> void:
     var expected_dmg = int(enemy.dmg * (1.0 - 0.3))
     assert_eq(GameState.hp, hp_before - expected_dmg)
 
-func test_slow_stacks_capped_at_80_percent_reduction() -> void:
+func test_slow_stacks_capped_by_phase() -> void:
     GameState.slow_stacks = 10
+    GameState.current_phase = 1
     var enemy = Enemy.new()
     enemy.init("汲取者")
     var hp_before = GameState.hp
     combat._apply_enemy_attack(enemy)
-    var expected_dmg = int(enemy.dmg * 0.2)
+    var expected_dmg = int(enemy.dmg * (1.0 - 2 * 0.1))
+    assert_eq(GameState.hp, hp_before - expected_dmg)
+
+func test_slow_stacks_cap_scales_with_phase() -> void:
+    GameState.slow_stacks = 10
+    GameState.current_phase = 7
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    var hp_before = GameState.hp
+    combat._apply_enemy_attack(enemy)
+    var expected_dmg = int(enemy.dmg * (1.0 - 8 * 0.1))
     assert_eq(GameState.hp, hp_before - expected_dmg)
 
 func test_lifesteal_heals_after_player_attack() -> void:

@@ -49,7 +49,9 @@ func _apply_player_attack(enemy: Enemy) -> void:
 func _apply_enemy_attack(enemy: Enemy) -> void:
     var dmg := enemy.dmg
     if GameState.slow_stacks > 0:
-        var reduction := minf(GameState.slow_stacks * 0.1, 0.8)
+        var stack_cap := mini(GameState.current_phase + 1, 8)
+        var capped := mini(GameState.slow_stacks, stack_cap)
+        var reduction := capped * 0.1
         dmg = int(dmg * (1.0 - reduction))
     GameState.take_damage(dmg)
     EventBus.player_hit.emit(dmg)

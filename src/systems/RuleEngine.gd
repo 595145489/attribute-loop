@@ -44,6 +44,8 @@ func _on_enemy_killed(_enemy: Enemy) -> void:
 
 func _on_loop_completed() -> void:
 	_evaluate_player_triggers(["完成圈数"])
+	var decay := ceili(float(GameState.current_phase) / 2.0)
+	GameState.slow_stacks = max(0, GameState.slow_stacks - decay)
 
 func _on_tile_passed(tile_idx: int) -> void:
 	_evaluate_player_triggers(["经过"])

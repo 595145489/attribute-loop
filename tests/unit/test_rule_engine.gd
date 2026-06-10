@@ -302,3 +302,15 @@ func test_rule_fired_signal_emitted_for_shield() -> void:
 	_make_rule("受击", 1.0, "护盾", 30.0)
 	EventBus.player_hit.emit(5)
 	assert_signal_emitted(EventBus, "rule_fired")
+
+func test_slow_stacks_decay_on_loop_completed() -> void:
+	GameState.slow_stacks = 5
+	GameState.current_phase = 2
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.slow_stacks, 4)
+
+func test_slow_stacks_decay_does_not_go_below_zero() -> void:
+	GameState.slow_stacks = 1
+	GameState.current_phase = 4
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.slow_stacks, 0)
