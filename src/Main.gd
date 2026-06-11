@@ -52,7 +52,7 @@ func _ready() -> void:
 	add_child(_phase_transition)
 	_phase_transition.show_for_phase(1)
 	_enemy_inspect = ENEMY_INSPECT_SCENE.instantiate()
-	add_child(_enemy_inspect)
+	$UI.add_child(_enemy_inspect)
 
 const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),

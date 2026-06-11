@@ -24,7 +24,7 @@ func _build() -> void:
 	var vbox: VBoxContainer = $VBox
 	for child in vbox.get_children():
 		if child.name != "CloseButton":
-			child.queue_free()
+			child.free()
 
 	var name_lbl := Label.new()
 	name_lbl.text = _enemy.enemy_id
