@@ -36,6 +36,16 @@ var enemy_pardon_remaining: int = 0
 
 func _ready() -> void:
 	reset()
+	_setup_tooltip_style()
+
+func _setup_tooltip_style() -> void:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.07, 0.12, 0.96)
+	style.set_border_width_all(1)
+	style.border_color = Color(0.5, 0.45, 0.65, 0.9)
+	style.set_content_margin_all(8)
+	style.set_corner_radius_all(4)
+	ThemeDB.get_default_theme().set_stylebox("panel", "TooltipPanel", style)
 
 func take_damage(amount: int) -> void:
 	if shield > 0:
