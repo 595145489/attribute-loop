@@ -45,9 +45,12 @@ func _setup_tooltip_style() -> void:
 	style.border_color = Color(0.5, 0.45, 0.65, 0.9)
 	style.set_content_margin_all(8)
 	style.set_corner_radius_all(4)
-	var theme := ThemeDB.get_default_theme()
-	theme.set_stylebox("panel", "TooltipPanel", style)
-	theme.set_color("font_color", "TooltipLabel", Color(0.92, 0.90, 0.95, 1.0))
+	var light := Color(0.92, 0.90, 0.95, 1.0)
+	ThemeDB.get_default_theme().set_stylebox("panel", "TooltipPanel", style)
+	ThemeDB.get_default_theme().set_color("font_color", "TooltipLabel", light)
+	var project_theme: Theme = load("res://resources/ui_theme.tres")
+	project_theme.set_stylebox("panel", "TooltipPanel", style)
+	project_theme.set_color("font_color", "TooltipLabel", light)
 
 func take_damage(amount: int) -> void:
 	if shield > 0:
