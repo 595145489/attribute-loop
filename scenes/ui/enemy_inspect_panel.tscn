@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://src/ui/EnemyInspectPanel.gd" id="1"]
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="2"]
+[ext_resource type="Texture2D" path="res://resources/ui/panel_enemy_inspect_bg.png" id="3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1"]
+texture = ExtResource("3")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
 
 [node name="EnemyInspectPanel" type="PanelContainer"]
 script = ExtResource("1")
@@ -19,6 +27,7 @@ offset_right = 150.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_1")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
