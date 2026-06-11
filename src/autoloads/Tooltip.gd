@@ -84,12 +84,10 @@ static func _trigger_line(comp: ComponentData) -> String:
 
 static func _effect_line(comp: ComponentData) -> String:
 	var e := comp.effect_value
-	var grow := comp.growth_rate > 0.0
-	var suffix := "（随圈成长）" if grow else ""
 	match comp.id:
-		"治愈":    return "恢复 %.0f 点生命值%s" % [e, suffix]
-		"反射":    return "反弹 %.0f%% 伤害给攻击者%s" % [e * 100.0, suffix]
-		"护盾":    return "获得 %.0f 点护盾%s" % [e, suffix]
+		"治愈":    return "恢复 %.0f 点生命值" % e
+		"反射":    return "反弹 %.0f%% 伤害给攻击者" % (e * 100.0)
+		"护盾":    return "获得 %.0f 点护盾" % e
 		"减伤":    return "叠加 %.0f 层减伤，敌方伤害 -%d%%" % [e, int(e) * 10]
-		"吸血":    return "获得 %.0f%% 吸血率%s" % [e * 100.0, suffix]
-	return "效果值 %.1f%s" % [e, suffix]
+		"吸血":    return "获得 %.0f%% 吸血率" % (e * 100.0)
+	return "效果值 %.1f" % e
