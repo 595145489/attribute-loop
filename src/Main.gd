@@ -3,6 +3,7 @@ extends Node2D
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 const PHASE_TRANSITION_SCENE = preload("res://scenes/ui/phase_transition.tscn")
+const ENEMY_INSPECT_SCENE = preload("res://scenes/ui/enemy_inspect_panel.tscn")
 
 @onready var track: Path2D = $Track
 @onready var player_follow: PathFollow2D = $Track/PlayerFollow
@@ -25,6 +26,7 @@ const PHASE_TRANSITION_SCENE = preload("res://scenes/ui/phase_transition.tscn")
 
 var _initialized: bool = false
 var _phase_transition: PhaseTransition
+var _enemy_inspect: EnemyInspectPanel
 
 func _ready() -> void:
 	get_viewport().physics_object_picking = true
@@ -49,6 +51,8 @@ func _ready() -> void:
 	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
 	add_child(_phase_transition)
 	_phase_transition.show_for_phase(1)
+	_enemy_inspect = ENEMY_INSPECT_SCENE.instantiate()
+	add_child(_enemy_inspect)
 
 const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),
@@ -117,6 +121,8 @@ func _check_player_tile() -> void:
 func _on_tile_clicked(tile: Tile) -> void:
 	if tile.is_altar:
 		altar_panel.open(tile)
+	elif tile.has_enemy():
+		_enemy_inspect.open(tile.enemy)
 	else:
 		tile_rule_panel.open(tile)
 
