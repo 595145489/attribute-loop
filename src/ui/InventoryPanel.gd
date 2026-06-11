@@ -50,7 +50,7 @@ func _build_rule_slots() -> void:
         var t_btn: Button = SLOT_BTN.instantiate()
         t_btn.text = (t_comp.display_name + " [%d/%.0f]" % [t_comp.trigger_count, t_comp.trigger_value]) if t_comp else "[T 空]"
         t_btn.icon = ComponentIcons.get_icon(t_comp.id) if t_comp != null else ComponentIcons.get_placeholder()
-        if t_comp: t_btn.mouse_entered.connect(func(): Tooltip.show_tip(t_comp.description))
+        if t_comp: t_btn.mouse_entered.connect(func(): Tooltip.show_tip(Tooltip.build_trigger_tip(t_comp)))
         t_btn.mouse_exited.connect(Tooltip.hide_tip)
         t_btn.pressed.connect(_make_slot_handler(i, true, t_comp))
         hbox.add_child(t_btn)
@@ -58,7 +58,7 @@ func _build_rule_slots() -> void:
         var e_btn: Button = SLOT_BTN.instantiate()
         e_btn.text = (e_comp.display_name + " [%.1f]" % e_comp.effect_value) if e_comp else "[E 空]"
         e_btn.icon = ComponentIcons.get_icon(e_comp.id) if e_comp != null else ComponentIcons.get_placeholder()
-        if e_comp: e_btn.mouse_entered.connect(func(): Tooltip.show_tip(e_comp.description))
+        if e_comp: e_btn.mouse_entered.connect(func(): Tooltip.show_tip(Tooltip.build_effect_tip(e_comp)))
         e_btn.mouse_exited.connect(Tooltip.hide_tip)
         e_btn.pressed.connect(_make_slot_handler(i, false, e_comp))
         hbox.add_child(e_btn)
@@ -90,7 +90,7 @@ func _build_inventory_grid() -> void:
             label += " (T%.0f/E%.1f)" % [comp.trigger_value, comp.effect_value]
         btn.text = label
         btn.icon = ComponentIcons.get_icon(comp.id) if ComponentIcons.get_icon(comp.id) != null else ComponentIcons.get_placeholder()
-        btn.mouse_entered.connect(func(): Tooltip.show_tip(comp.description))
+        btn.mouse_entered.connect(func(): Tooltip.show_tip(Tooltip.build_tip(comp)))
         btn.mouse_exited.connect(Tooltip.hide_tip)
         var c = comp
         btn.pressed.connect(func(): _select(c))

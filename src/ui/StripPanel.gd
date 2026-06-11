@@ -39,7 +39,7 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     else:
         val_str = " (T:%.0f/E:%.1f)" % [comp.trigger_value, comp.effect_value]
     card.get_node("VBox/InfoRow/Label").text = comp.display_name + val_str
-    card.mouse_entered.connect(func(): Tooltip.show_tip(comp.description))
+    card.mouse_entered.connect(func(): Tooltip.show_tip(Tooltip.build_tip(comp)))
     card.mouse_exited.connect(Tooltip.hide_tip)
     var icon_tex := ComponentIcons.get_icon(comp.id)
     if icon_tex != null:
