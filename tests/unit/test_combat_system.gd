@@ -67,12 +67,12 @@ func test_reflect_damage_applied_when_pending_ratio_set() -> void:
     assert_eq(GameState.pending_reflect_ratio, 0.0)
 
 func test_slow_stacks_reduce_enemy_damage() -> void:
-    GameState.slow_stacks = 3
+    GameState.slow_stacks = 2
     var enemy = Enemy.new()
     enemy.init("汲取者")
     var hp_before = GameState.hp
     combat._apply_enemy_attack(enemy)
-    var expected_dmg = int(enemy.dmg * (1.0 - 0.3))
+    var expected_dmg = int(enemy.dmg * (1.0 - 0.2))
     assert_eq(GameState.hp, hp_before - expected_dmg)
 
 func test_slow_stacks_capped_by_phase() -> void:
@@ -119,3 +119,10 @@ func test_no_lifesteal_when_ratio_zero() -> void:
     enemy.init("汲取者")
     combat._apply_player_attack(enemy)
     assert_eq(GameState.hp, 100)
+
+func test_lifesteal_ratio_resets_after_combat() -> void:
+    GameState.lifesteal_ratio = 0.4
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    combat._finish_combat(enemy)
+    assert_almost_eq(GameState.lifesteal_ratio, 0.0, 0.001)

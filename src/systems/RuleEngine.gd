@@ -46,6 +46,7 @@ func _on_loop_completed() -> void:
 	_evaluate_player_triggers(["完成圈数"])
 	var decay := ceili(float(GameState.current_phase) / 2.0)
 	GameState.slow_stacks = max(0, GameState.slow_stacks - decay)
+	GameState.shield = int(GameState.shield * 0.65)
 
 func _on_tile_passed(tile_idx: int) -> void:
 	_evaluate_player_triggers(["经过"])
@@ -96,7 +97,7 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 			GameState.pending_reflect_ratio = final_value
 			EventBus.rule_fired.emit(slot_idx, "反射", final_value)
 		"护盾":
-			GameState.shield += int(final_value)
+			GameState.shield = mini(GameState.shield + int(final_value), GameState.hp_max)
 			EventBus.rule_fired.emit(slot_idx, "护盾", final_value)
 		"减伤":
 			GameState.slow_stacks += int(final_value)

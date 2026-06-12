@@ -314,3 +314,14 @@ func test_slow_stacks_decay_does_not_go_below_zero() -> void:
 	GameState.current_phase = 4
 	EventBus.loop_completed.emit()
 	assert_eq(GameState.slow_stacks, 0)
+
+func test_shield_capped_at_hp_max() -> void:
+	GameState.shield = GameState.hp_max - 10
+	_make_rule("受击", 1.0, "护盾", 100.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.shield, GameState.hp_max)
+
+func test_shield_decays_65_percent_on_loop_completed() -> void:
+	GameState.shield = 200
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.shield, int(200 * 0.65))

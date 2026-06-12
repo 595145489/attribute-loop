@@ -146,5 +146,6 @@ func _finish_combat(enemy: Enemy = null) -> void:
     if resolved == null:
         return
     stop()
+    GameState.lifesteal_ratio = 0.0
     GameState.enemies_killed += 1
     EventBus.enemy_killed.emit(resolved)
