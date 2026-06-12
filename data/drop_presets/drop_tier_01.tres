@@ -13,9 +13,9 @@ component_ranges = {
 "低血": {"trigger": Vector2(2, 3)},
 "满血": {"trigger": Vector2(2, 3)},
 "规则触发": {"trigger": Vector2(3, 5)},
-"治愈": {"trigger": Vector2(2, 3), "effect": Vector2(5, 10)},
-"反射": {"trigger": Vector2(2, 3), "effect": Vector2(0.2, 0.3)},
-"护盾": {"effect": Vector2(20, 40)},
-"减伤": {"effect": Vector2(1, 2)},
-"吸血": {"effect": Vector2(0.05, 0.1)}
+"治愈": {"trigger": Vector2(2, 3), "effect": Vector2(15, 25)},
+"反射": {"trigger": Vector2(2, 3), "effect": Vector2(0.3, 0.45)},
+"护盾": {"effect": Vector2(40, 70)},
+"减伤": {"effect": Vector2(2, 3)},
+"吸血": {"effect": Vector2(0.1, 0.2)}
 }
