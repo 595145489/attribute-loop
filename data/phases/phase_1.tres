@@ -6,6 +6,7 @@
 script = ExtResource("1_dfe55")
 phase_name = "觉醒"
 altar_requirement = 2
+world_pressure_window = 3
 spawn_weights = {
 "守卫者": 50,
 "汲取者": 50
