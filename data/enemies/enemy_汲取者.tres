@@ -8,11 +8,11 @@
 script = ExtResource("1_0u2md")
 id = "汲取者"
 hp_base = 40
-dmg_base = 2
-gold_min = 5
-gold_max = 15
+dmg_base = 5
+gold_min = 12
+gold_max = 28
 gold_scale = 0.3
-attack_interval = 1.2
+attack_interval = 1.0
 trigger_weights = {
 "击杀": 30,
 "受击": 40,
