@@ -9,5 +9,6 @@ hp_base = 50
 dmg_base = 4
 gold_min = 20
 gold_max = 50
+gold_scale = 0.3
 unlock_phase = 7
 attack_interval = 0.9

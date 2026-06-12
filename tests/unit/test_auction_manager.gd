@@ -54,11 +54,11 @@ func test_settle_bids_preserved_in_result() -> void:
 
 # --- PhantomBuyer ---
 
-func test_phantom_aggressive_earns_40g_phase1() -> void:
+func test_phantom_aggressive_earns_70g_phase1() -> void:
 	var p := AuctionManager.PhantomBuyer.new()
 	p.init(AuctionManager.PhantomBuyer.Personality.AGGRESSIVE, [0, 1])
 	p.earn(1)
-	assert_eq(p.gold, 40)
+	assert_eq(p.gold, 70)
 
 func test_phantom_aggressive_earns_110g_phase5() -> void:
 	var p := AuctionManager.PhantomBuyer.new()
