@@ -1,4 +1,4 @@
-class_name TutorialOverlay
+﻿class_name TutorialOverlay
 extends CanvasLayer
 
 const DARK_COLOR := Color(0.0, 0.0, 0.0, 0.72)
@@ -108,7 +108,8 @@ func _hide_dark_panels() -> void:
 
 func _center_text_box() -> void:
 	var vp := get_viewport().get_visible_rect().size
-	_text_box.position = Vector2(vp.x / 2.0 - 160.0, vp.y / 2.0 - 40.0)
+	_text_box.reset_size()
+	_text_box.position = Vector2(vp.x / 2.0 - _text_box.size.x / 2.0, vp.y / 2.0 - 40.0)
 
 func _position_text_box(hl: Rect2) -> void:
 	var vp := get_viewport().get_visible_rect().size
@@ -116,7 +117,8 @@ func _position_text_box(hl: Rect2) -> void:
 	var y_below := hl.end.y + 12.0
 	var y_above := hl.position.y - box_h - 12.0
 	var y := y_below if y_below + box_h < vp.y else y_above
-	var x := clampf(hl.position.x, 8.0, vp.x - 320.0 - 8.0)
+	_text_box.reset_size()
+	var x := clampf(hl.position.x, 8.0, vp.x - _text_box.size.x - 8.0)
 	_text_box.position = Vector2(x, y)
 
 func _input(event: InputEvent) -> void:

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gycr1575051c"]
 
-[ext_resource type="Script" path="res://src/tutorial/TutorialOverlay.gd" id="1_okbap"]
+[ext_resource type="Script" uid="uid://cnf0x261h6lot" path="res://src/tutorial/TutorialOverlay.gd" id="1_okbap"]
 
 [node name="TutorialOverlay" type="CanvasLayer" unique_id=549234134]
 layer = 20
@@ -8,26 +8,44 @@ visible = false
 script = ExtResource("1_okbap")
 
 [node name="TopDark" type="ColorRect" parent="." unique_id=211485740]
+mouse_filter = 2
 
 [node name="BottomDark" type="ColorRect" parent="." unique_id=986286978]
+mouse_filter = 2
 
 [node name="LeftDark" type="ColorRect" parent="." unique_id=214021467]
+mouse_filter = 2
 
 [node name="RightDark" type="ColorRect" parent="." unique_id=2023276726]
+mouse_filter = 2
 
 [node name="HighlightBorder" type="Panel" parent="." unique_id=1635129160]
+mouse_filter = 2
 
 [node name="TextBox" type="PanelContainer" parent="." unique_id=221780892]
+custom_minimum_size = Vector2(320, 0)
+offset_right = 1.0
+offset_bottom = 44.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="VBox" type="VBoxContainer" parent="TextBox" unique_id=1749164545]
 layout_mode = 2
 
 [node name="InstructionLabel" type="Label" parent="TextBox/VBox" unique_id=2037709810]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 autowrap_mode = 3
 
 [node name="StepLabel" type="Label" parent="TextBox/VBox" unique_id=1776102701]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="ConfirmButton" type="Button" parent="." unique_id=272935951]
+custom_minimum_size = Vector2(160, 40)
+offset_right = 72.0
+offset_bottom = 28.0
+size_flags_horizontal = 4
 text = "开始冒险"

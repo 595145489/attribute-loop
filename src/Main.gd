@@ -53,7 +53,8 @@ func _ready() -> void:
 	_initialized = true
 	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
 	add_child(_phase_transition)
-	_phase_transition.show_for_phase(1)
+	if not GameState.is_tutorial:
+		_phase_transition.show_for_phase(1)
 	_enemy_inspect = ENEMY_INSPECT_SCENE.instantiate()
 	$UI.add_child(_enemy_inspect)
 	if GameState.is_tutorial:
