@@ -1,4 +1,4 @@
-class_name GameLoop
+﻿class_name GameLoop
 extends Node
 
 enum State { WALKING, COMBAT, GAME_OVER }
@@ -27,6 +27,8 @@ func setup(tiles: Array, enemies_container: Node, player: Player, combat: Combat
 	spawn_enemies()
 
 func spawn_enemies() -> void:
+	if GameState.is_tutorial:
+		return
 	for child in _enemies_container.get_children():
 		child.queue_free()
 	for tile in _tiles:
@@ -119,6 +121,9 @@ func _on_combat_resolved() -> void:
 	GameState.is_paused = false
 
 func _on_player_died() -> void:
+	if GameState.is_tutorial:
+		GameState.hp = GameState.hp_max
+		return
 	state = State.GAME_OVER
 	_combat_system.stop()
 	GameState.is_paused = true

@@ -27,32 +27,38 @@ const ENEMY_INSPECT_SCENE = preload("res://scenes/ui/enemy_inspect_panel.tscn")
 var _initialized: bool = false
 var _phase_transition: PhaseTransition
 var _enemy_inspect: EnemyInspectPanel
+var _tiles: Array = []
 
 func _ready() -> void:
 	get_viewport().physics_object_picking = true
 	await Enemy.preload_all_async(get_tree())
-	var tiles = _build_tiles()
+	_tiles = _build_tiles()
 	player.setup(player_follow, track)
-	game_loop.setup(tiles, enemies_container, player, combat_system)
+	game_loop.setup(_tiles, enemies_container, player, combat_system)
 	strip_manager.setup(strip_panel)
 	strip_panel.setup(inventory_panel)
 	hud.setup(inventory_panel)
-	hud.setup_altar(altar_panel, tiles[0])
-	rule_engine.set_tiles(tiles)
+	hud.setup_altar(altar_panel, _tiles[0])
+	rule_engine.set_tiles(_tiles)
 	game_loop.setup_auction(auction_manager)
 	auction_panel.setup(auction_manager)
-	service_activate_popup.setup(auction_manager, tiles)
+	service_activate_popup.setup(auction_manager, _tiles)
 	service_bar.setup(auction_manager, service_activate_popup)
 	hud.setup_auction(auction_panel, service_bar)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
+	EventBus.tutorial_spawn_enemies.connect(_spawn_tutorial_enemies)
+	EventBus.tutorial_setup_altar.connect(_setup_tutorial_altar)
 	_initialized = true
 	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
 	add_child(_phase_transition)
 	_phase_transition.show_for_phase(1)
 	_enemy_inspect = ENEMY_INSPECT_SCENE.instantiate()
 	$UI.add_child(_enemy_inspect)
+	if GameState.is_tutorial:
+		var overlay: TutorialOverlay = $TutorialOverlay
+		TutorialManager.start(overlay)
 
 const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),
@@ -153,3 +159,23 @@ func _on_phase_changed(new_phase: int) -> void:
 	for tile in tiles_container.get_children():
 		if tile.is_altar:
 			tile.resize_altar_for_phase(new_phase)
+
+func _spawn_tutorial_enemies() -> void:
+	for child in enemies_container.get_children():
+		child.queue_free()
+	for tile in _tiles:
+		tile.clear_enemy()
+	var enemy_scene: PackedScene = load("res://scenes/entities/enemy.tscn")
+	for idx in [3, 6, 9]:
+		if idx >= _tiles.size():
+			continue
+		var enemy: Enemy = enemy_scene.instantiate()
+		enemies_container.add_child(enemy)
+		enemy.init("ember_wisp", 1)
+		enemy.position = _tiles[idx].guard_position
+		_tiles[idx].place_enemy(enemy)
+
+func _setup_tutorial_altar() -> void:
+	var altar: Tile = _tiles[0]
+	altar.altar_slots.resize(1)
+	altar.altar_slots[0] = null
