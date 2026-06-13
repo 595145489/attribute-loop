@@ -22,3 +22,29 @@ func test_eventbus_has_new_signals():
 	assert_true(EventBus.has_signal("component_deleted"))
 	assert_true(EventBus.has_signal("tile_rule_set"))
 	assert_true(EventBus.has_signal("altar_component_added"))
+
+func test_step_count_is_nine():
+	var steps = TutorialSteps.get_steps()
+	assert_eq(steps.size(), 9)
+
+func test_each_step_has_required_keys():
+	var required = ["id", "text", "highlight_node", "complete_signal", "block_outside_input"]
+	for step in TutorialSteps.get_steps():
+		for key in required:
+			assert_true(step.has(key), "Step '%s' missing key '%s'" % [step.get("id", "?"), key])
+
+func test_step_ids_are_unique():
+	var ids := {}
+	for step in TutorialSteps.get_steps():
+		var id: String = step["id"]
+		assert_false(ids.has(id), "Duplicate step id: %s" % id)
+		ids[id] = true
+
+func test_observe_steps_have_no_input_block():
+	for step in TutorialSteps.get_steps():
+		if step["highlight_node"] == "":
+			assert_false(step["block_outside_input"],
+				"Step '%s' has empty highlight_node but block_outside_input=true" % step["id"])
+
+func test_rule_equipped_signal_exists():
+	assert_true(EventBus.has_signal("rule_equipped"))
