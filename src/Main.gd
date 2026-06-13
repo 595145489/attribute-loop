@@ -173,6 +173,7 @@ func _spawn_tutorial_enemies() -> void:
 		var enemy: Enemy = enemy_scene.instantiate()
 		enemies_container.add_child(enemy)
 		enemy.init("汲取者", 1)
+		game_loop._assign_components(enemy, 1)
 		enemy.position = _tiles[idx].guard_position
 		_tiles[idx].place_enemy(enemy)
 
