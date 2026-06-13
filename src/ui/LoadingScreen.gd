@@ -1,4 +1,4 @@
-﻿extends Control
+extends Control
 
 @onready var _progress: ProgressBar = $Center/VBox/Progress
 @onready var _status: Label = $Center/VBox/Status
@@ -18,7 +18,8 @@ func _ready() -> void:
 func _start_loading() -> void:
 	await Player.preload_async(get_tree(), _on_progress)
 	await Enemy.preload_all_async(get_tree(), _on_progress)
-	_status.text = "准备就绪"
+	_progress.hide()
+	_status.hide()
 	_start_button.visible = true
 	_tutorial_button.visible = true
 	_start_button.grab_focus()
