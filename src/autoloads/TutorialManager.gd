@@ -34,7 +34,7 @@ func _setup_scenario() -> void:
 	call_deferred("_deferred_scenario_setup")
 
 func _deferred_scenario_setup() -> void:
-	EventBus.tutorial_spawn_enemies.emit()
+	# Only altar setup at start — enemies spawn when combat step begins (loop 2)
 	EventBus.tutorial_setup_altar.emit()
 
 func _enter_step(index: int) -> void:
@@ -50,6 +50,10 @@ func _enter_step(index: int) -> void:
 		return
 
 	_overlay.show_step(step, index, _steps.size())
+
+	# Spawn enemies at the start of the combat step (loop 2 onward)
+	if step["id"] == "combat":
+		EventBus.tutorial_spawn_enemies.emit()
 
 	var sig_name: String = step["complete_signal"]
 	if sig_name == "":
