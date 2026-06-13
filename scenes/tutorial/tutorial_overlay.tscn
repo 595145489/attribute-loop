@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://gycr1575051c"]
+
+[ext_resource type="Script" path="res://src/tutorial/TutorialOverlay.gd" id="1_okbap"]
+
+[node name="TutorialOverlay" type="CanvasLayer" unique_id=549234134]
+layer = 20
+visible = false
+script = ExtResource("1_okbap")
+
+[node name="TopDark" type="ColorRect" parent="." unique_id=211485740]
+
+[node name="BottomDark" type="ColorRect" parent="." unique_id=986286978]
+
+[node name="LeftDark" type="ColorRect" parent="." unique_id=214021467]
+
+[node name="RightDark" type="ColorRect" parent="." unique_id=2023276726]
+
+[node name="HighlightBorder" type="Panel" parent="." unique_id=1635129160]
+
+[node name="TextBox" type="PanelContainer" parent="." unique_id=221780892]
+
+[node name="VBox" type="VBoxContainer" parent="TextBox" unique_id=1749164545]
+layout_mode = 2
+
+[node name="InstructionLabel" type="Label" parent="TextBox/VBox" unique_id=2037709810]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="StepLabel" type="Label" parent="TextBox/VBox" unique_id=1776102701]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="." unique_id=272935951]
+text = "开始冒险"
