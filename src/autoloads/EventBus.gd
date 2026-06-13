@@ -20,3 +20,6 @@ signal rule_equipped
 signal component_deleted(component: ComponentData)
 signal tile_rule_set
 signal altar_component_added
+
+signal tutorial_spawn_enemies
+signal tutorial_setup_altar
