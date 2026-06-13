@@ -1,4 +1,4 @@
-extends Node2D
+﻿extends Node2D
 
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
@@ -172,7 +172,7 @@ func _spawn_tutorial_enemies() -> void:
 			continue
 		var enemy: Enemy = enemy_scene.instantiate()
 		enemies_container.add_child(enemy)
-		enemy.init("ember_wisp", 1)
+		enemy.init("汲取者", 1)
 		enemy.position = _tiles[idx].guard_position
 		_tiles[idx].place_enemy(enemy)
 
