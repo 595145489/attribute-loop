@@ -22,6 +22,7 @@ EventBus="*res://src/autoloads/EventBus.gd"
 GameState="*res://src/autoloads/GameState.gd"
 DataTables="*res://src/autoloads/DataTables.gd"
 Tooltip="*res://src/autoloads/Tooltip.gd"
+TutorialManager="*res://src/autoloads/TutorialManager.gd"
 
 [display]
 

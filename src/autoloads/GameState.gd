@@ -21,6 +21,7 @@ var lifesteal_ratio: float = 0.0
 var inventory: Array[ComponentData] = []
 var rule_slots: Array = []
 var gold: int = 0
+var is_tutorial: bool = false
 var deletion_count: int = 0
 var altar_bonuses: Dictionary = {}
 var loops_in_phase: int = 0
@@ -98,6 +99,7 @@ func remove_from_inventory(c: ComponentData) -> void:
 
 func delete_component(c: ComponentData) -> void:
 	inventory.erase(c)
+	EventBus.component_deleted.emit(c)
 
 func equip(c: ComponentData, slot_idx: int, as_trigger: bool) -> void:
 	for s in rule_slots:

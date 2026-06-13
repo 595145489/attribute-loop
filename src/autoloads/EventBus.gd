@@ -14,3 +14,9 @@ signal game_won
 signal auction_settled(results: Array)
 signal service_bar_changed
 signal enemy_pardoned(enemy_id: String)
+
+signal component_stripped(component: ComponentData)
+signal rule_equipped
+signal component_deleted(component: ComponentData)
+signal tile_rule_set
+signal altar_component_added
