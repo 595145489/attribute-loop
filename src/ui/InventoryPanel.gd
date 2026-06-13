@@ -70,6 +70,7 @@ func _make_slot_handler(slot_idx: int, is_trigger: bool, existing: ComponentData
                              (not is_trigger and _selected.slot_type == ComponentData.SlotType.TRIGGER_ONLY)
             if not wrong_type:
                 GameState.equip(_selected, slot_idx, is_trigger)
+                EventBus.rule_equipped.emit()
                 _selected = null
                 _delete_btn.hide()
                 _refresh()

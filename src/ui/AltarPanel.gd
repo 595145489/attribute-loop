@@ -40,7 +40,7 @@ func _refresh() -> void:
 		if slot != null:
 			filled += 1
 
-	_title.text = "祭坛 — Phase %d · %s" % [GameState.current_phase, DataTables.get_phase(GameState.current_phase).phase_name]
+	_title.text = "祭坛 �?Phase %d · %s" % [GameState.current_phase, DataTables.get_phase(GameState.current_phase).phase_name]
 	_progress.text = "进度 %d / %d" % [filled, req]
 	_activate_btn.disabled = filled < req
 	_build_altar_slots()
@@ -58,9 +58,9 @@ func _build_altar_slots() -> void:
 		var slot_btn := Button.new()
 		if comp != null:
 			var preview_bonus: float = comp.effect_value * comp.altar_ratio
-			slot_btn.text = "%s → +%.2f %s" % [comp.display_name, preview_bonus, comp.id]
+			slot_btn.text = "%s �?+%.2f %s" % [comp.display_name, preview_bonus, comp.id]
 		else:
-			slot_btn.text = "[空 — 放入E组件]"
+			slot_btn.text = "[�?�?放入E组件]"
 		var idx = i
 		slot_btn.pressed.connect(func(): _on_altar_slot_clicked(idx))
 		hbox.add_child(slot_btn)
@@ -73,7 +73,7 @@ func _build_bonuses_label() -> void:
 	var parts := []
 	for k in GameState.altar_bonuses:
 		parts.append("%s +%.2f" % [k, GameState.altar_bonuses[k]])
-	_bonuses_label.text = "当前祭坛加成：" + " / ".join(parts)
+	_bonuses_label.text = "当前祭坛加成�? + " / ".join(parts)
 
 func _on_altar_slot_clicked(slot_idx: int) -> void:
 	if _tile.altar_slots[slot_idx] != null:
@@ -100,6 +100,7 @@ func _on_inv_pick(comp: ComponentData) -> void:
 		return
 	_tile.altar_slots[_selecting_slot_idx] = comp
 	GameState.remove_from_inventory(comp)
+	EventBus.altar_component_added.emit()
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
 	_refresh()

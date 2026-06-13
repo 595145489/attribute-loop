@@ -30,7 +30,7 @@ func close() -> void:
 	GameState.unpause_for_panel()
 
 func _refresh() -> void:
-	_title.text = "%s — 经过 %d 次" % [_tile.get_tile_name(), _tile.pass_count]
+	_title.text = "%s �?经过 %d �? % [_tile.get_tile_name(), _tile.pass_count]
 	_build_slots()
 
 func _build_slots() -> void:
@@ -46,7 +46,7 @@ func _build_slots() -> void:
 		_slots_container.add_child(hbox)
 
 		var t_btn := Button.new()
-		t_btn.text = ("每%d次 → %s" % [int(t.trigger_value), t.display_name]) if t else "[T 空 — 放入经过]"
+		t_btn.text = ("�?d�?�?%s" % [int(t.trigger_value), t.display_name]) if t else "[T �?�?放入经过]"
 		var idx = i
 		t_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, true))
 		hbox.add_child(t_btn)
@@ -87,7 +87,7 @@ func _show_inv_picker(trigger_only: bool) -> void:
 			continue
 		var btn := Button.new()
 		if trigger_only:
-			btn.text = "%s  每%.0f次" % [comp.display_name, comp.trigger_value]
+			btn.text = "%s  �?.0f�? % [comp.display_name, comp.trigger_value]
 		else:
 			btn.text = "%s  +%.1f" % [comp.display_name, comp.effect_value]
 		var c = comp
@@ -105,6 +105,7 @@ func _on_inv_pick(comp: ComponentData) -> void:
 		GameState.add_to_inventory(displaced)
 	slot[key] = comp
 	GameState.remove_from_inventory(comp)
+	EventBus.tile_rule_set.emit()
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
 	_refresh()

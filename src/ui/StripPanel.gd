@@ -48,6 +48,7 @@ func _make_card(comp: ComponentData) -> PanelContainer:
     take_btn.disabled = not GameState.inventory_has_space()
     take_btn.pressed.connect(func():
         GameState.add_to_inventory(comp)
+        EventBus.component_stripped.emit(comp)
         take_btn.disabled = true
         take_btn.text = "已取"
         _refresh_take_buttons()
