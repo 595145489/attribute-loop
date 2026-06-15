@@ -12,6 +12,17 @@ const _TOOLTIPS: Dictionary = {
 	"OffenseGroup/Lifesteal":   "每次造成伤害时按比例回复生命",
 }
 
+const _VALUE_COLORS: Dictionary = {
+	"SurvivalGroup/HP":         Color(0.6, 0.18, 0.12, 1),
+	"SurvivalGroup/Shield":     Color(0.2, 0.38, 0.6, 1),
+	"SurvivalGroup/SlowStacks": Color(0.45, 0.2, 0.55, 1),
+	"SurvivalGroup/Reflect":    Color(0.1, 0.45, 0.42, 1),
+	"OffenseGroup/Dmg":         Color(0.65, 0.38, 0.08, 1),
+	"OffenseGroup/Interval":    Color(0.45, 0.45, 0.45, 1),
+	"OffenseGroup/Amplify":     Color(0.6, 0.5, 0.05, 1),
+	"OffenseGroup/Lifesteal":   Color(0.65, 0.1, 0.22, 1),
+}
+
 func _ready() -> void:
 	hide()
 	$Margin/VBox/CloseButton.pressed.connect(toggle)
@@ -46,9 +57,9 @@ func _set_row(path: String, value: String) -> void:
 	var val_label: Label = $Margin/VBox.get_node(path + "/Value")
 	val_label.text = value
 	if value == "—":
-		val_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		val_label.add_theme_color_override("font_color", Color(0.55, 0.45, 0.32, 0.45))
 	else:
-		val_label.remove_theme_color_override("font_color")
+		val_label.add_theme_color_override("font_color", _VALUE_COLORS[path])
 
 static func _int_or_dash(v: int) -> String:
 	return "—" if v == 0 else "%d" % v
