@@ -12,6 +12,7 @@ var shield: int = 0
 var slow_stacks: int = 0
 var lifesteal_ratio: float = 0.0
 var pending_reflect_ratio: float = 0.0
+var burn_stacks: int = 0
 var _rule_fire_count: int = 0
 var _firing_rule_trigger: bool = false
 

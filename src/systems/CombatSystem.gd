@@ -28,6 +28,7 @@ func start(enemy: Enemy) -> void:
     enemy.slow_stacks = 0
     enemy.lifesteal_ratio = 0.0
     enemy.pending_reflect_ratio = 0.0
+    enemy.burn_stacks = 0
     enemy._rule_fire_count = 0
     enemy._firing_rule_trigger = false
     for comp in enemy.components:
