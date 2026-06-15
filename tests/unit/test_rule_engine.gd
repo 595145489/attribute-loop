@@ -377,3 +377,38 @@ func test_amplify_not_amplified_by_existing_stacks() -> void:
 	_make_rule("受击", 1.0, "强化", 1.0)
 	EventBus.player_hit.emit(5)
 	assert_eq(GameState.amplify_stacks, 4, "stacks should add 1, not be multiplied")
+
+func test_dmg_boost_adds_stacks() -> void:
+	_make_rule("受击", 1.0, "增伤", 2.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.dmg_boost_stacks, 2)
+
+func test_dmg_boost_accumulates() -> void:
+	_make_rule("受击", 1.0, "增伤", 2.0)
+	EventBus.player_hit.emit(5)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.dmg_boost_stacks, 4)
+
+func test_charge_adds_stacks() -> void:
+	_make_rule("受击", 1.0, "蓄能", 1.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.charge_stacks, 1)
+
+func test_charge_accumulates_from_two_rules() -> void:
+	_make_rule("受击", 1.0, "蓄能", 1.0)
+	_make_rule_slot1("完成圈数", 1.0, "蓄能", 1.0)
+	EventBus.player_hit.emit(5)
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.charge_stacks, 2)
+
+func test_scorch_emits_rule_fired() -> void:
+	watch_signals(EventBus)
+	_make_rule("受击", 1.0, "灼烧", 3.0)
+	EventBus.player_hit.emit(5)
+	assert_signal_emitted(EventBus, "rule_fired")
+
+func test_erode_emits_rule_fired() -> void:
+	watch_signals(EventBus)
+	_make_rule("受击", 1.0, "侵蚀", 20.0)
+	EventBus.player_hit.emit(5)
+	assert_signal_emitted(EventBus, "rule_fired")

@@ -112,3 +112,13 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 		"强化":
 			GameState.amplify_stacks = min(GameState.amplify_stacks + 1, GameState.amplify_max_stacks)
 			EventBus.rule_fired.emit(slot_idx, "强化", float(GameState.amplify_stacks))
+		"增伤":
+			GameState.dmg_boost_stacks += int(final_value)
+			EventBus.rule_fired.emit(slot_idx, "增伤", final_value)
+		"蓄能":
+			GameState.charge_stacks += int(final_value)
+			EventBus.rule_fired.emit(slot_idx, "蓄能", final_value)
+		"灼烧":
+			EventBus.rule_fired.emit(slot_idx, "灼烧", final_value)
+		"侵蚀":
+			EventBus.rule_fired.emit(slot_idx, "侵蚀", final_value)
