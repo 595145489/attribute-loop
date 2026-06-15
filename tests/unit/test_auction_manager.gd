@@ -219,3 +219,42 @@ func test_execute_slot_service_increases_service_bar_max() -> void:
 	var before := GameState.service_bar_max
 	am.execute_service(AuctionManager.ServiceType.SLOT_SERVICE, {})
 	assert_eq(GameState.service_bar_max, before + 1)
+
+func test_pool_excludes_slot_rule_when_maxed() -> void:
+	while GameState.rule_slots.size() < DataTables.config.rule_slot_count_max:
+		GameState.rule_slots.append({"trigger": null, "effect": null})
+	var pool = AuctionManager.generate_pool([], [])
+	assert_false(pool.has(AuctionManager.ServiceType.SLOT_RULE))
+
+func test_pool_includes_slot_rule_when_not_maxed() -> void:
+	assert_eq(GameState.rule_slots.size(), 2)
+	var found := false
+	for i in 200:
+		var pool = AuctionManager.generate_pool([], [])
+		if pool.has(AuctionManager.ServiceType.SLOT_RULE):
+			found = true
+			break
+	assert_true(found)
+
+func test_pool_excludes_slot_service_when_maxed() -> void:
+	var cap: int = DataTables.config.auction_service_bar_cap
+	var max_extra: int = DataTables.config.auction_service_bar_max_purchases
+	GameState.service_bar_max = cap + max_extra
+	var pool = AuctionManager.generate_pool([], [])
+	assert_false(pool.has(AuctionManager.ServiceType.SLOT_SERVICE))
+
+func test_pool_includes_slot_service_when_not_maxed() -> void:
+	GameState.service_bar_max = DataTables.config.auction_service_bar_cap
+	var found := false
+	for i in 200:
+		var pool = AuctionManager.generate_pool([], [])
+		if pool.has(AuctionManager.ServiceType.SLOT_SERVICE):
+			found = true
+			break
+	assert_true(found)
+
+func test_phantom_a_prefers_stat_dmg() -> void:
+	var p := AuctionManager.PhantomBuyer.new()
+	p.init(AuctionManager.PhantomBuyer.Personality.AGGRESSIVE,
+		[AuctionManager.ServiceType.STAT_DMG, AuctionManager.ServiceType.STAT_HP])
+	assert_eq(p.interest(AuctionManager.ServiceType.STAT_DMG), 3)

@@ -183,6 +183,17 @@ static func generate_pool(kills: Array[String], carried: Array[int]) -> Array[in
 		ServiceType.STAT_DMG, ServiceType.STAT_HP, ServiceType.STAT_SPEED, ServiceType.STAT_AMPLIFY,
 		ServiceType.SLOT_RULE, ServiceType.SLOT_SERVICE,
 	]
+	var rule_max: int = DataTables.config.rule_slot_count_max
+	var bar_max: int = DataTables.config.auction_service_bar_cap + DataTables.config.auction_service_bar_max_purchases
+	var cur_rule_slots: int = GameState.rule_slots.size()
+	var cur_bar_max: int = GameState.service_bar_max
+	all_types = all_types.filter(func(t: int) -> bool:
+		if t == ServiceType.SLOT_RULE:
+			return cur_rule_slots < rule_max
+		if t == ServiceType.SLOT_SERVICE:
+			return cur_bar_max < bar_max
+		return true
+	)
 	for _kill in kills:
 		if pool.size() >= DataTables.config.auction_pool_size:
 			break
