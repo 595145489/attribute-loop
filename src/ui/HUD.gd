@@ -16,6 +16,8 @@ var _float_tween: Tween = null
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
 @onready var bag_btn: Button = $BottomBar/HContent/BagButton
+@onready var char_btn: Button = $BottomBar/HContent/CharButton
+@onready var _char_panel: CharacterPanel = $CharacterPanel
 @onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldHBox/GoldLabel
 @onready var pressure_label: Label = $BottomBar/HContent/PressurePill/PressureLabel
 @onready var float_label: Label = $FloatLabel
@@ -46,6 +48,7 @@ var _float_tween: Tween = null
 
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
+	char_btn.pressed.connect(_on_char_pressed)
 	log_btn.pressed.connect(log_panel.toggle)
 	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
@@ -118,6 +121,19 @@ func _update_rule_panel(i: int) -> void:
 			_e_value[i].text = "×%d/%d" % [GameState.amplify_stacks, GameState.amplify_max_stacks]
 		_:
 			_e_value[i].text = ""
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_C:
+			_on_char_pressed()
+			get_viewport().set_input_as_handled()
+
+func _on_char_pressed() -> void:
+	if _char_panel == null:
+		return
+	if _inventory_panel != null and _inventory_panel.visible:
+		_inventory_panel.toggle()
+	_char_panel.toggle()
 
 func _on_bag_pressed() -> void:
 	if _inventory_panel != null:

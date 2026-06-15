@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/character_panel.tscn" id="3_charpanel"]
 [ext_resource type="Texture2D" uid="uid://clql2jautp8yl" path="res://resources/ui/pill_bg.png" id="4_pill"]
 [ext_resource type="Texture2D" uid="uid://dcv1wt2bf6ap1" path="res://resources/ui/phase_badge_bg.png" id="5_phase"]
 [ext_resource type="Texture2D" uid="uid://qoifsw1obrb2" path="res://resources/ui/hp_bar_bg.png" id="6_hpbg"]
@@ -342,6 +343,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "背包 [B] 0/12"
 
+[node name="CharButton" type="Button" parent="BottomBar/HContent" unique_id=123456789]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "角色 [C]"
+
 [node name="GoldPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=98663593]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -395,6 +401,9 @@ offset_right = 700.0
 offset_bottom = 300.0
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
+
+[node name="CharacterPanel" parent="." instance=ExtResource("3_charpanel")]
+visible = false
 
 [node name="SpeedControl" type="HBoxContainer" parent="." unique_id=888000001]
 offset_right = 160.0
