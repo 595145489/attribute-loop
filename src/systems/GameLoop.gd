@@ -100,7 +100,8 @@ func _on_loop_completed() -> void:
 				EventBus.game_won.emit()
 				return
 		else:
-			if GameState.pending_phase_advance:
+			if GameState.pending_phase_advance and not GameState.boss_circle_pending:
+				# Boss circle already ran — now advance phase
 				GameState.pending_phase_advance = false
 				var config_ref: GameConfig = DataTables.config
 				if GameState.current_phase == config_ref.verdict_trigger_phase:
@@ -112,13 +113,22 @@ func _on_loop_completed() -> void:
 					GameState.current_phase += 1
 					GameState.loops_in_phase = 0
 					EventBus.phase_changed.emit(GameState.current_phase)
-			else:
+			elif not GameState.pending_phase_advance:
 				GameState.loops_in_phase += 1
 				var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 				if GameState.loops_in_phase >= phase_data.world_pressure_window:
-					GameState.boss_circle_pending = true
 					if not _altar_is_full(_tiles[0]):
-						GameState.force_phase_advance()
+						var cfg_vt: GameConfig = DataTables.config
+						if GameState.current_phase >= cfg_vt.verdict_trigger_phase:
+							# Verdict: skip boss circle
+							GameState.in_verdict_loop = true
+							GameState.verdict_loops_survived = 0
+							GameState.loops_in_phase = 0
+							EventBus.verdict_loop_entered.emit()
+						else:
+							# Normal advance: boss circle first, then phase advance
+							GameState.boss_circle_pending = true
+							GameState.pending_phase_advance = true
 		for tile in _tiles:
 			tile.visited_this_loop = false
 		spawn_enemies()
