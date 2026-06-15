@@ -89,6 +89,10 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 	var bonus: float = GameState.altar_bonuses.get(effect.id, 0.0)
 	var final_value: float = actual + bonus
 
+	if effect.id != "强化" and GameState.amplify_stacks > 0:
+		final_value *= 1.0 + GameState.amplify_stacks * 0.5
+		GameState.amplify_stacks = 0
+
 	match effect.id:
 		"治愈":
 			GameState.hp = min(GameState.hp + int(final_value), GameState.hp_max)
@@ -105,3 +109,6 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 		"吸血":
 			GameState.lifesteal_ratio += final_value
 			EventBus.rule_fired.emit(slot_idx, "吸血", final_value)
+		"强化":
+			GameState.amplify_stacks = min(GameState.amplify_stacks + 1, GameState.amplify_max_stacks)
+			EventBus.rule_fired.emit(slot_idx, "强化", float(GameState.amplify_stacks))

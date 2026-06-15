@@ -28,6 +28,7 @@ func _start_loading() -> void:
 		_on_start_pressed()
 
 func _on_start_pressed() -> void:
+	GameState.reset()
 	GameState.is_tutorial = false
 	_start_button.disabled = true
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
@@ -38,5 +39,6 @@ func _on_progress(_ratio: float, label: String) -> void:
 	_status.text = "正在加载: %s" % label
 
 func _on_tutorial_pressed() -> void:
+	GameState.reset()
 	GameState.is_tutorial = true
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

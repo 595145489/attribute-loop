@@ -34,10 +34,14 @@ func open() -> void:
 	_refresh_footer()
 	GameState.pause_for_panel()
 	show()
+	if GameState.is_tutorial:
+		EventBus.auction_panel_opened.emit()
 
 func close() -> void:
 	GameState.unpause_for_panel()
 	hide()
+	if GameState.is_tutorial:
+		EventBus.auction_panel_closed.emit()
 
 func _on_settled(_results: Array) -> void:
 	if visible:

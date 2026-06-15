@@ -1,4 +1,4 @@
-class_name InventoryPanel
+﻿class_name InventoryPanel
 extends PanelContainer
 
 const SLOT_BTN = preload("res://scenes/ui/components/slot_button.tscn")
@@ -28,10 +28,12 @@ func toggle() -> void:
     if visible:
         hide()
         GameState.unpause_for_panel()
+        EventBus.inventory_closed.emit()
     else:
         show()
         GameState.pause_for_panel()
         _refresh()
+        EventBus.inventory_opened.emit()
 
 func _refresh() -> void:
     _build_rule_slots()
@@ -99,6 +101,8 @@ func _build_inventory_grid() -> void:
 
 func _select(comp: ComponentData) -> void:
     _selected = comp
+    if GameState.is_tutorial and comp != null:
+        EventBus.tutorial_component_selected.emit(comp)
     var cost = GameState.get_deletion_cost()
     _delete_btn.text = "删除 ¥%d" % cost
     _delete_btn.disabled = not GameState.can_afford_deletion()

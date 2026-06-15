@@ -7,7 +7,7 @@ script = ExtResource("1_fe2go")
 phase_id = 2
 phase_name = "萌动"
 altar_requirement = 3
-world_pressure_window = 4
+world_pressure_window = 1
 spawn_weights = {
 "守卫者": 45,
 "汲取者": 45

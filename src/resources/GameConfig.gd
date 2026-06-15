@@ -14,6 +14,7 @@ extends Resource
 @export var verdict_enemy_phase: int = 10
 @export var verdict_spawn_phase: int = 11
 @export var combat_log_max_entries: int = 50
+@export var amplify_max_stacks_base: int = 1
 
 # --- Auction (梦境残市) ---
 @export var auction_service_bar_cap: int = 5

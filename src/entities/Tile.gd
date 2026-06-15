@@ -66,7 +66,7 @@ func _refresh_visual() -> void:
 		visual.visible = true
 
 func _input(event: InputEvent) -> void:
-	if GameState.is_paused:
+	if Engine.time_scale == 0.0 and not has_enemy():
 		return
 	if not (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		return

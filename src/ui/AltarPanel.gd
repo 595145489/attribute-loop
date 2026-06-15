@@ -26,11 +26,15 @@ func open(tile: Tile) -> void:
 	GameState.pause_for_panel()
 	show()
 	_refresh()
+	if GameState.is_tutorial:
+		EventBus.altar_panel_opened.emit()
 
 func close() -> void:
 	hide()
 	_tile = null
 	GameState.unpause_for_panel()
+	if GameState.is_tutorial:
+		EventBus.altar_panel_closed.emit()
 
 func _refresh() -> void:
 	var req := _tile.altar_slots.size()
@@ -78,6 +82,8 @@ func _on_altar_slot_clicked(slot_idx: int) -> void:
 		return
 	_selecting_slot_idx = slot_idx
 	_show_inv_picker()
+	if GameState.is_tutorial:
+		EventBus.altar_slot_selected.emit()
 
 func _show_inv_picker() -> void:
 	for child in _inv_grid.get_children():
@@ -112,4 +118,6 @@ func _on_activate() -> void:
 		GameState.altar_bonuses[comp.id] = GameState.altar_bonuses.get(comp.id, 0.0) as float + bonus
 	_tile.altar_slots.fill(null)
 	GameState.pending_phase_advance = true
+	if GameState.is_tutorial:
+		EventBus.altar_activated.emit()
 	close()

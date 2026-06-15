@@ -65,6 +65,7 @@ func _refresh_take_buttons() -> void:
 func _on_continue() -> void:
     hide()
     GameState.unpause_for_panel()
+    EventBus.strip_panel_closed.emit()
     if _on_complete.is_valid():
         _on_complete.call()
 

@@ -1,27 +1,27 @@
 [gd_scene format=3 uid="uid://csx3v85luxwmk"]
 
-[ext_resource type="Script" path="res://src/entities/Enemy.gd" id="1_w1qvq"]
+[ext_resource type="Script" uid="uid://cio6wekqvfm3t" path="res://src/entities/Enemy.gd" id="1_w1qvq"]
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="Node2D" unique_id=721508363]
 script = ExtResource("1_w1qvq")
 
-[node name="Visual" type="ColorRect" parent="."]
+[node name="Visual" type="ColorRect" parent="." unique_id=1803552092]
+visible = false
 offset_left = -12.0
 offset_top = -12.0
 offset_right = 12.0
 offset_bottom = 12.0
 color = Color(0.8, 0.2, 0.2, 1)
-visible = false
 
-[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
+[node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1920170813]
+visible = false
 scale = Vector2(0.055, 0.055)
-visible = false
 
-[node name="HPLabel" type="Label" parent="."]
+[node name="HPLabel" type="Label" parent="." unique_id=999464365]
 offset_left = -24.0
 offset_top = -28.0
 offset_right = 24.0
 offset_bottom = -14.0
 theme_override_font_sizes/font_size = 10
-horizontal_alignment = 1
 text = "?"
+horizontal_alignment = 1

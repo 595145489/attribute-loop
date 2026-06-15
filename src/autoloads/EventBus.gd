@@ -23,3 +23,23 @@ signal altar_component_added
 
 signal tutorial_spawn_enemies
 signal tutorial_setup_altar
+signal tutorial_component_selected(comp: ComponentData)
+signal speed_changed
+signal enemy_inspected
+signal inventory_opened
+signal tile_slot_selected(is_trigger: bool)
+signal tile_rule_panel_opened
+
+signal inventory_closed
+signal strip_panel_closed
+signal tile_rule_panel_closed
+signal auction_panel_opened
+signal auction_bid_placed
+signal auction_panel_closed
+signal tutorial_setup_auction
+signal tutorial_info_confirmed
+signal altar_panel_opened
+signal altar_panel_closed
+signal altar_slot_selected
+signal tutorial_setup_altar_gift
+signal altar_activated

@@ -325,3 +325,55 @@ func test_shield_decays_65_percent_on_loop_completed() -> void:
 	GameState.shield = 200
 	EventBus.loop_completed.emit()
 	assert_eq(GameState.shield, int(200 * 0.65))
+
+func test_amplify_adds_one_stack() -> void:
+	_make_rule("受击", 1.0, "强化", 1.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.amplify_stacks, 1)
+
+func test_amplify_capped_at_max_stacks() -> void:
+	_make_rule("受击", 1.0, "强化", 1.0)
+	for i in 5:
+		EventBus.player_hit.emit(5)
+	assert_eq(GameState.amplify_stacks, GameState.amplify_max_stacks,
+		"should not exceed amplify_max_stacks")
+
+func test_amplify_stacks_accumulate_when_max_raised() -> void:
+	GameState.amplify_max_stacks = 5
+	_make_rule("受击", 1.0, "强化", 1.0)
+	for i in 3:
+		EventBus.player_hit.emit(5)
+	assert_eq(GameState.amplify_stacks, 3)
+
+func test_amplify_multiplies_next_effect() -> void:
+	_make_rule("受击", 1.0, "强化", 1.0)
+	_make_rule_slot1("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.amplify_stacks, 1)
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 65, "heal 10 * 1.5x (1 stack) = 15")
+
+func test_amplify_resets_stacks_after_use() -> void:
+	GameState.amplify_stacks = 1
+	_make_rule("完成圈数", 1.0, "治愈", 10.0)
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.amplify_stacks, 0)
+
+func test_amplify_three_stacks_triples_bonus() -> void:
+	GameState.amplify_max_stacks = 5
+	_make_rule("受击", 1.0, "强化", 1.0)
+	_make_rule_slot1("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 0
+	GameState.hp_max = 9999
+	for i in 3:
+		EventBus.player_hit.emit(5)
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 25, "heal 10 * (1 + 3*0.5) = 10 * 2.5 = 25")
+
+func test_amplify_not_amplified_by_existing_stacks() -> void:
+	GameState.amplify_max_stacks = 5
+	GameState.amplify_stacks = 3
+	_make_rule("受击", 1.0, "强化", 1.0)
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.amplify_stacks, 4, "stacks should add 1, not be multiplied")

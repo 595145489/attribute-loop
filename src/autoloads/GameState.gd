@@ -19,6 +19,7 @@ var shield: int = 0
 var slow_stacks: int = 0
 var lifesteal_ratio: float = 0.0
 var amplify_stacks: int = 0
+var amplify_max_stacks: int = 1
 var inventory: Array[ComponentData] = []
 var rule_slots: Array = []
 var gold: int = 0
@@ -63,6 +64,8 @@ func reset() -> void:
 	shield = 0
 	slow_stacks = 0
 	lifesteal_ratio = 0.0
+	amplify_stacks = 0
+	amplify_max_stacks = DataTables.config.amplify_max_stacks_base if DataTables.config != null else 1
 	inventory = []
 	rule_slots = []
 	gold = 0

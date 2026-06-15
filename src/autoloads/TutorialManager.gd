@@ -34,7 +34,6 @@ func _setup_scenario() -> void:
 	call_deferred("_deferred_scenario_setup")
 
 func _deferred_scenario_setup() -> void:
-	# Only altar setup at start — enemies spawn when combat step begins (loop 2)
 	EventBus.tutorial_setup_altar.emit()
 
 func _enter_step(index: int) -> void:
@@ -51,18 +50,37 @@ func _enter_step(index: int) -> void:
 
 	_overlay.show_step(step, index, _steps.size())
 
-	# Spawn enemies at the start of the combat step (loop 2 onward)
-	if step["id"] == "combat":
+	if step.get("pause_on_enter", false):
+		GameState.pause_for_panel()
+
+	if step["id"] == "enemy_inspect":
 		EventBus.tutorial_spawn_enemies.emit()
+	if step["id"] == "auction_intro":
+		EventBus.tutorial_setup_auction.emit()
+	if step["id"] == "altar_gift":
+		EventBus.tutorial_setup_altar_gift.emit()
 
 	var sig_name: String = step["complete_signal"]
 	if sig_name == "":
 		return
 
-	_completion_callable = func(_a = null, _b = null, _c = null): _advance()
-	EventBus.connect(sig_name, _completion_callable, CONNECT_ONE_SHOT)
+	var needed: int = step.get("complete_count", 1)
+	if needed <= 1:
+		_completion_callable = func(_a = null, _b = null, _c = null): _advance()
+		EventBus.connect(sig_name, _completion_callable, CONNECT_ONE_SHOT)
+	else:
+		var count := [0]
+		_completion_callable = func(_a = null, _b = null, _c = null):
+			count[0] += 1
+			if count[0] >= needed:
+				EventBus.disconnect(sig_name, _completion_callable)
+				_advance()
+		EventBus.connect(sig_name, _completion_callable)
 
 func _advance() -> void:
+	var prev: Dictionary = _steps[current_step]
+	if prev.get("pause_on_enter", false):
+		GameState.unpause_for_panel()
 	_enter_step(current_step + 1)
 
 func _on_confirm_pressed() -> void:

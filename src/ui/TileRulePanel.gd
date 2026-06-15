@@ -23,11 +23,14 @@ func open(tile: Tile) -> void:
 	GameState.pause_for_panel()
 	show()
 	_refresh()
+	EventBus.tile_rule_panel_opened.emit()
 
 func close() -> void:
 	hide()
 	_tile = null
 	GameState.unpause_for_panel()
+	if GameState.is_tutorial:
+		EventBus.tile_rule_panel_closed.emit()
 
 func _refresh() -> void:
 	_title.text = "%s — 经过 %d 次" % [_tile.get_tile_name(), _tile.pass_count]
@@ -71,6 +74,8 @@ func _build_slots() -> void:
 func _on_sub_slot_clicked(slot_idx: int, is_trigger: bool) -> void:
 	_selecting_slot_idx = slot_idx
 	_selecting_trigger = is_trigger
+	if GameState.is_tutorial:
+		EventBus.tile_slot_selected.emit(is_trigger)
 	_show_inv_picker(is_trigger)
 
 func _show_inv_picker(trigger_only: bool) -> void:

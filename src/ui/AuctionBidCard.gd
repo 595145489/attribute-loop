@@ -42,11 +42,22 @@ func setup(svc: int, am, is_carried: bool, initial_bid: int, _unused: Callable) 
 func get_bid() -> int:
 	return int(bid_input.value)
 
+var _showing_hint: bool = false
+
 func _on_bid_pressed() -> void:
 	var amount := int(bid_input.value)
 	if amount <= 0:
 		return
 	if amount > GameState.gold:
+		return
+	if GameState.is_tutorial and amount < 46:
+		if not _showing_hint:
+			_showing_hint = true
+			var orig := bid_btn.text
+			bid_btn.text = "需 > 45g 才能胜出"
+			await get_tree().create_timer(1.5).timeout
+			bid_btn.text = orig
+			_showing_hint = false
 		return
 	# Deduct gold immediately
 	GameState.gold -= amount
@@ -56,6 +67,8 @@ func _on_bid_pressed() -> void:
 		_auction_manager.set_player_bid(service_type, amount)
 		_auction_manager.player_bids_locked[service_type] = true
 	_set_locked(amount)
+	if GameState.is_tutorial:
+		EventBus.auction_bid_placed.emit()
 
 func _set_locked(amount: int) -> void:
 	bid_input.editable = false

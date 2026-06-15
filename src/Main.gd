@@ -50,6 +50,8 @@ func _ready() -> void:
 	EventBus.game_won.connect(_on_game_won)
 	EventBus.tutorial_spawn_enemies.connect(_spawn_tutorial_enemies)
 	EventBus.tutorial_setup_altar.connect(_setup_tutorial_altar)
+	EventBus.tutorial_setup_auction.connect(_setup_tutorial_auction)
+	EventBus.tutorial_setup_altar_gift.connect(_setup_tutorial_altar_gift)
 	_initialized = true
 	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
 	add_child(_phase_transition)
@@ -98,6 +100,7 @@ func _build_tiles() -> Array:
 	for i in TILE_POSITIONS.size():
 		var tile: Tile = TILE_SCENE.instantiate()
 		tile.tile_index = i
+		tile.name = "tile_%d" % i
 		tile.is_altar = (i == 0)
 		tile.position = TILE_POSITIONS[i]
 		tile.guard_position = GUARD_POSITIONS[i]
@@ -167,13 +170,17 @@ func _spawn_tutorial_enemies() -> void:
 	for tile in _tiles:
 		tile.clear_enemy()
 	var enemy_scene: PackedScene = load("res://scenes/entities/enemy.tscn")
-	for idx in [3, 6, 9]:
+	var preset: DropPreset = DataTables.get_drop_preset(1)
+	for idx in [3]:
 		if idx >= _tiles.size():
 			continue
 		var enemy: Enemy = enemy_scene.instantiate()
 		enemies_container.add_child(enemy)
 		enemy.init("汲取者", 1)
-		game_loop._assign_components(enemy, 1)
+		enemy.components.append(GameLoop._create_component("经过", preset))
+		enemy.components.append(GameLoop._create_component("治愈", preset))
+		enemy.components.append(GameLoop._create_component("经过", preset))
+		enemy.components.append(GameLoop._create_component("治愈", preset))
 		enemy.position = _tiles[idx].guard_position
 		_tiles[idx].place_enemy(enemy)
 
@@ -181,3 +188,12 @@ func _setup_tutorial_altar() -> void:
 	var altar: Tile = _tiles[0]
 	altar.altar_slots.resize(1)
 	altar.altar_slots[0] = null
+
+func _setup_tutorial_altar_gift() -> void:
+	var preset: DropPreset = DataTables.get_drop_preset(1)
+	for i in 2:
+		GameState.add_to_inventory(GameLoop._create_component("治愈", preset))
+
+func _setup_tutorial_auction() -> void:
+	auction_manager.phantom_a.gold = 45
+	auction_manager.phantom_b.gold = 45
