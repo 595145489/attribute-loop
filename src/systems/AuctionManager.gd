@@ -157,6 +157,20 @@ func execute_service(service_type: int, params: Dictionary) -> void:
 			GameState.deletion_free = true
 		ServiceType.PRESSURE_DELAY:
 			GameState.loops_in_phase = max(0, GameState.loops_in_phase - 1)
+		ServiceType.STAT_DMG:
+			GameState.dmg_bonus += DataTables.config.auction_dmg_per_purchase
+		ServiceType.STAT_HP:
+			var delta := DataTables.config.auction_hp_per_purchase
+			GameState.hp_max += delta
+			GameState.hp = mini(GameState.hp + delta, GameState.hp_max)
+		ServiceType.STAT_SPEED:
+			GameState.attack_interval_bonus += DataTables.config.auction_speed_delta
+		ServiceType.STAT_AMPLIFY:
+			GameState.amplify_max_stacks += DataTables.config.auction_amplify_per_purchase
+		ServiceType.SLOT_RULE:
+			GameState.rule_slots.append({"trigger": null, "effect": null})
+		ServiceType.SLOT_SERVICE:
+			GameState.service_bar_max += 1
 	EventBus.service_bar_changed.emit()
 
 ## Pure functions

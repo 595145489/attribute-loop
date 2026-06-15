@@ -163,3 +163,59 @@ func test_new_service_types_have_names() -> void:
 func test_pool_never_contains_rule_copy_int() -> void:
 	var pool = AuctionManager.generate_pool(["汲取者", "守卫者", "急袭者"], [])
 	assert_false(pool.has(0))
+
+func test_execute_stat_dmg_increases_dmg_bonus() -> void:
+	var am := AuctionManager.new()
+	GameState.dmg_bonus = 0
+	am.execute_service(AuctionManager.ServiceType.STAT_DMG, {})
+	assert_eq(GameState.dmg_bonus, DataTables.config.auction_dmg_per_purchase)
+
+func test_execute_stat_dmg_accumulates() -> void:
+	var am := AuctionManager.new()
+	GameState.dmg_bonus = 0
+	am.execute_service(AuctionManager.ServiceType.STAT_DMG, {})
+	am.execute_service(AuctionManager.ServiceType.STAT_DMG, {})
+	assert_eq(GameState.dmg_bonus, DataTables.config.auction_dmg_per_purchase * 2)
+
+func test_execute_stat_hp_increases_hp_max() -> void:
+	var am := AuctionManager.new()
+	var hp_before := GameState.hp_max
+	am.execute_service(AuctionManager.ServiceType.STAT_HP, {})
+	assert_eq(GameState.hp_max, hp_before + DataTables.config.auction_hp_per_purchase)
+
+func test_execute_stat_hp_heals_by_delta() -> void:
+	var am := AuctionManager.new()
+	GameState.hp = GameState.hp_max
+	am.execute_service(AuctionManager.ServiceType.STAT_HP, {})
+	assert_eq(GameState.hp, GameState.hp_max)
+
+func test_execute_stat_speed_increases_interval_bonus() -> void:
+	var am := AuctionManager.new()
+	GameState.attack_interval_bonus = 0.0
+	am.execute_service(AuctionManager.ServiceType.STAT_SPEED, {})
+	assert_almost_eq(GameState.attack_interval_bonus, DataTables.config.auction_speed_delta, 0.001)
+
+func test_execute_stat_amplify_increases_max_stacks() -> void:
+	var am := AuctionManager.new()
+	var before := GameState.amplify_max_stacks
+	am.execute_service(AuctionManager.ServiceType.STAT_AMPLIFY, {})
+	assert_eq(GameState.amplify_max_stacks, before + DataTables.config.auction_amplify_per_purchase)
+
+func test_execute_slot_rule_adds_rule_slot() -> void:
+	var am := AuctionManager.new()
+	var before := GameState.rule_slots.size()
+	am.execute_service(AuctionManager.ServiceType.SLOT_RULE, {})
+	assert_eq(GameState.rule_slots.size(), before + 1)
+
+func test_execute_slot_rule_new_slot_is_empty() -> void:
+	var am := AuctionManager.new()
+	am.execute_service(AuctionManager.ServiceType.SLOT_RULE, {})
+	var last = GameState.rule_slots[-1]
+	assert_null(last["trigger"])
+	assert_null(last["effect"])
+
+func test_execute_slot_service_increases_service_bar_max() -> void:
+	var am := AuctionManager.new()
+	var before := GameState.service_bar_max
+	am.execute_service(AuctionManager.ServiceType.SLOT_SERVICE, {})
+	assert_eq(GameState.service_bar_max, before + 1)
