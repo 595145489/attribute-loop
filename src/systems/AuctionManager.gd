@@ -1,30 +1,45 @@
 extends Node
 
 enum ServiceType {
-	RULE_COPY      = 0,
 	COMP_REWRITE   = 1,
 	COMP_MERGE     = 2,
 	ENEMY_PARDON   = 3,
 	DELETE_PARDON  = 4,
 	PRESSURE_DELAY = 5,
+	STAT_DMG       = 6,
+	STAT_HP        = 7,
+	STAT_SPEED     = 8,
+	STAT_AMPLIFY   = 9,
+	SLOT_RULE      = 10,
+	SLOT_SERVICE   = 11,
 }
 
 const SERVICE_NAMES: Dictionary = {
-	ServiceType.RULE_COPY:      "规则复制",
 	ServiceType.COMP_REWRITE:   "词条改写",
 	ServiceType.COMP_MERGE:     "词条融合",
 	ServiceType.ENEMY_PARDON:   "敌人赦免",
 	ServiceType.DELETE_PARDON:  "删除特赦",
 	ServiceType.PRESSURE_DELAY: "压力延缓",
+	ServiceType.STAT_DMG:       "战意磨砺",
+	ServiceType.STAT_HP:        "筋骨强化",
+	ServiceType.STAT_SPEED:     "迅捷折纸",
+	ServiceType.STAT_AMPLIFY:   "强化潜能",
+	ServiceType.SLOT_RULE:      "装备槽扩容",
+	ServiceType.SLOT_SERVICE:   "服务栏扩容",
 }
 
 const SERVICE_DESCRIPTIONS: Dictionary = {
-	ServiceType.RULE_COPY:      "将某条地块规则复制到另一格（pass_count从0开始）",
 	ServiceType.COMP_REWRITE:   "修改某个词条的N值(1-3)或基础数值(最多+50%)",
 	ServiceType.COMP_MERGE:     "将两个同类词条合并为一个（结果 = 总和×0.8）",
 	ServiceType.ENEMY_PARDON:   "下3只指定类型敌人不战斗，自动掉落组件",
 	ServiceType.DELETE_PARDON:  "下次删除词条0费用且不计入全局计数",
 	ServiceType.PRESSURE_DELAY: "世界压力计时 -1 圈",
+	ServiceType.STAT_DMG:       "永久 基础攻击 +1",
+	ServiceType.STAT_HP:        "永久 最大HP +15，立即回复等量血量",
+	ServiceType.STAT_SPEED:     "永久 攻击间隔 -0.05s（最低0.2s）",
+	ServiceType.STAT_AMPLIFY:   "永久 强化层上限 +1",
+	ServiceType.SLOT_RULE:      "永久 装备规则槽 +1",
+	ServiceType.SLOT_SERVICE:   "永久 服务栏容量 +1",
 }
 
 var current_services: Array[int] = []
@@ -42,7 +57,7 @@ var _first_loop_done: bool = false
 
 func _ready() -> void:
 	phantom_a = PhantomBuyer.new()
-	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.RULE_COPY, ServiceType.COMP_MERGE])
+	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.STAT_DMG, ServiceType.STAT_HP])
 	phantom_b = PhantomBuyer.new()
 	phantom_b.init(PhantomBuyer.Personality.PATIENT, [ServiceType.COMP_REWRITE])
 	EventBus.loop_completed.connect(_on_loop_completed)
@@ -120,8 +135,6 @@ func _award_service_to_player(service_type: int) -> void:
 
 func execute_service(service_type: int, params: Dictionary) -> void:
 	match service_type:
-		ServiceType.RULE_COPY:
-			params["source_tile"].copy_rule_to(params["target_tile"])
 		ServiceType.COMP_REWRITE:
 			var c: ComponentData = params["component"]
 			if params.has("new_trigger_n"):
@@ -151,8 +164,10 @@ func execute_service(service_type: int, params: Dictionary) -> void:
 static func generate_pool(kills: Array[String], carried: Array[int]) -> Array[int]:
 	var pool: Array[int] = carried.duplicate()
 	var all_types: Array[int] = [
-		ServiceType.RULE_COPY, ServiceType.COMP_REWRITE, ServiceType.COMP_MERGE,
-		ServiceType.ENEMY_PARDON, ServiceType.DELETE_PARDON, ServiceType.PRESSURE_DELAY
+		ServiceType.COMP_REWRITE, ServiceType.COMP_MERGE,
+		ServiceType.ENEMY_PARDON, ServiceType.DELETE_PARDON, ServiceType.PRESSURE_DELAY,
+		ServiceType.STAT_DMG, ServiceType.STAT_HP, ServiceType.STAT_SPEED, ServiceType.STAT_AMPLIFY,
+		ServiceType.SLOT_RULE, ServiceType.SLOT_SERVICE,
 	]
 	for _kill in kills:
 		if pool.size() >= DataTables.config.auction_pool_size:

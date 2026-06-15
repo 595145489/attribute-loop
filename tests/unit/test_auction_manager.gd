@@ -47,8 +47,8 @@ func test_settle_none_when_all_zero() -> void:
 	assert_eq(results[0]["winner"], "none")
 
 func test_settle_bids_preserved_in_result() -> void:
-	var services: Array[int] = [AuctionManager.ServiceType.RULE_COPY]
-	var results = AuctionManager.settle(services, {AuctionManager.ServiceType.RULE_COPY: 80}, {AuctionManager.ServiceType.RULE_COPY: 120}, {})
+	var services: Array[int] = [AuctionManager.ServiceType.COMP_REWRITE]
+	var results = AuctionManager.settle(services, {AuctionManager.ServiceType.COMP_REWRITE: 80}, {AuctionManager.ServiceType.COMP_REWRITE: 120}, {})
 	assert_eq(results[0]["bids"]["player"], 80)
 	assert_eq(results[0]["bids"]["phantom_a"], 120)
 
@@ -151,3 +151,15 @@ func test_execute_comp_merge_combines_values() -> void:
 	am.execute_service(AuctionManager.ServiceType.COMP_MERGE, {"comp_a": a, "comp_b": b})
 	assert_eq(GameState.inventory.size(), 1)
 	assert_eq(GameState.inventory[0].effect_value, 16.0)
+
+func test_new_service_types_have_names() -> void:
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.STAT_DMG))
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.STAT_HP))
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.STAT_SPEED))
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.STAT_AMPLIFY))
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.SLOT_RULE))
+	assert_true(AuctionManager.SERVICE_NAMES.has(AuctionManager.ServiceType.SLOT_SERVICE))
+
+func test_pool_never_contains_rule_copy_int() -> void:
+	var pool = AuctionManager.generate_pool(["汲取者", "守卫者", "急袭者"], [])
+	assert_false(pool.has(0))
