@@ -258,3 +258,8 @@ func test_hp_starts_at_250_after_reset() -> void:
     GameState.hp = 1
     GameState.reset()
     assert_eq(GameState.hp, 250)
+
+func test_boss_circle_pending_false_after_reset() -> void:
+    GameState.boss_circle_pending = true
+    GameState.reset()
+    assert_false(GameState.boss_circle_pending)

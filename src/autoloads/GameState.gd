@@ -1,7 +1,7 @@
 extends Node
 
 var hp: int
-var hp_max: int = 250
+var hp_max: int = 1000
 var loops_completed: int = 0
 var enemies_killed: int = 0
 var current_phase: int = 1
@@ -18,6 +18,7 @@ var pending_reflect_ratio: float = 0.0
 var shield: int = 0
 var slow_stacks: int = 0
 var lifesteal_ratio: float = 0.0
+var amplify_stacks: int = 0
 var inventory: Array[ComponentData] = []
 var rule_slots: Array = []
 var gold: int = 0
@@ -28,6 +29,7 @@ var loops_in_phase: int = 0
 var in_verdict_loop: bool = false
 var pending_phase_advance: bool = false
 var verdict_loops_survived: int = 0
+var boss_circle_pending: bool = false
 
 # Auction / service bar
 var service_bar: Array[int] = []
@@ -70,6 +72,7 @@ func reset() -> void:
 	in_verdict_loop = false
 	pending_phase_advance = false
 	verdict_loops_survived = 0
+	boss_circle_pending = false
 	service_bar = []
 	deletion_free = false
 	enemy_pardon_type = ""
