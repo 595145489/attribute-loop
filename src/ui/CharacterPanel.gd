@@ -10,6 +10,8 @@ const _TOOLTIPS: Dictionary = {
 	"OffenseGroup/Interval":    "两次攻击之间的间隔（秒），越低越快",
 	"OffenseGroup/Amplify":     "每层提升你对敌人造成的伤害",
 	"OffenseGroup/Lifesteal":   "每次造成伤害时按比例回复生命",
+	"OffenseGroup/DmgBoost": "每层提升攻击伤害 10%，每圈结束衰减 1 层",
+	"OffenseGroup/Charge":   "蓄积层数，下次攻击时全部释放为额外伤害（括号内为预期伤害）",
 }
 
 const _VALUE_COLORS: Dictionary = {
@@ -21,6 +23,8 @@ const _VALUE_COLORS: Dictionary = {
 	"OffenseGroup/Interval":    Color(0.45, 0.45, 0.45, 1),
 	"OffenseGroup/Amplify":     Color(0.6, 0.5, 0.05, 1),
 	"OffenseGroup/Lifesteal":   Color(0.65, 0.1, 0.22, 1),
+	"OffenseGroup/DmgBoost": Color(0.72, 0.25, 0.08, 1),
+	"OffenseGroup/Charge":   Color(0.55, 0.45, 0.05, 1),
 }
 
 func _ready() -> void:
@@ -52,6 +56,10 @@ func _refresh() -> void:
 	_set_row("OffenseGroup/Interval",    "%.1f 秒" % maxf(0.1, pd.attack_interval - GameState.attack_interval_bonus))
 	_set_row("OffenseGroup/Amplify",     _stacks_or_dash(GameState.amplify_stacks))
 	_set_row("OffenseGroup/Lifesteal",   _pct_or_dash(GameState.lifesteal_ratio))
+	_set_row("OffenseGroup/DmgBoost", _stacks_or_dash(GameState.dmg_boost_stacks))
+	var charge_potential := GameState.charge_stacks * DataTables.player.dmg_base
+	_set_row("OffenseGroup/Charge",
+		"—" if GameState.charge_stacks == 0 else "%d层 (%d)" % [GameState.charge_stacks, charge_potential])
 
 func _set_row(path: String, value: String) -> void:
 	var val_label: Label = $Margin/VBox.get_node(path + "/Value")
