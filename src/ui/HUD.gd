@@ -50,6 +50,7 @@ func _ready() -> void:
 	altar_btn.pressed.connect(_on_altar_pressed)
 	float_label.hide()
 	EventBus.rule_fired.connect(_on_rule_fired)
+	EventBus.combat_enrage.connect(_on_combat_enrage)
 	for i in _speed_btns.size():
 		_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
 
@@ -160,6 +161,16 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 
 var _auction_panel = null
 var _service_bar = null
+
+func _on_combat_enrage(stacks: int) -> void:
+	float_label.text = "激怒 ×%d" % stacks
+	float_label.show()
+	float_label.modulate = Color(1.0, 0.3, 0.1)
+	if _float_tween:
+		_float_tween.kill()
+	_float_tween = create_tween()
+	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.2)
+	_float_tween.tween_callback(float_label.hide)
 
 func setup_auction(ap, sb) -> void:
 	_auction_panel = ap

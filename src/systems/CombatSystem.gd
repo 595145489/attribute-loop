@@ -6,6 +6,8 @@ var _enemy_timer: Timer
 var _active_enemy: Enemy = null
 var _enemy_state_timer: float = 0.0
 const _ENEMY_STATE_INTERVAL: float = 1.0
+var _enrage_timer: float = 0.0
+var _enrage_stacks: int = 0
 
 func _ready() -> void:
     _player_timer = Timer.new()
@@ -29,6 +31,8 @@ func start(enemy: Enemy) -> void:
     for comp in enemy.components:
         comp.trigger_count = 0
     _enemy_state_timer = 0.0
+    _enrage_timer = 0.0
+    _enrage_stacks = 0
     _player_timer.wait_time = DataTables.player.attack_interval
     _enemy_timer.wait_time = enemy.attack_interval
     _player_timer.start()
@@ -46,6 +50,15 @@ func _process(delta: float) -> void:
     if _enemy_state_timer >= _ENEMY_STATE_INTERVAL:
         _enemy_state_timer = 0.0
         _check_enemy_state_triggers()
+    _enrage_timer += delta
+    _check_enrage()
+
+func _check_enrage() -> void:
+    var cfg: GameConfig = DataTables.config
+    var threshold := cfg.combat_enrage_time + _enrage_stacks * cfg.combat_enrage_interval
+    if _enrage_timer >= threshold:
+        _enrage_stacks += 1
+        EventBus.combat_enrage.emit(_enrage_stacks)
 
 func _check_enemy_state_triggers() -> void:
     if float(_active_enemy.hp) / float(_active_enemy.hp_max) < 0.3:
@@ -88,6 +101,8 @@ func _apply_player_attack(enemy: Enemy) -> void:
 
 func _apply_enemy_attack(enemy: Enemy) -> void:
     var dmg := enemy.dmg
+    if _enrage_stacks > 0:
+        dmg = int(dmg * pow(DataTables.config.combat_enrage_multiplier, _enrage_stacks))
     if GameState.slow_stacks > 0:
         var stack_cap := mini(GameState.current_phase + 1, 8)
         var capped := mini(GameState.slow_stacks, stack_cap)
@@ -141,11 +156,16 @@ func _execute_enemy_effect(effect: ComponentData) -> void:
         _evaluate_enemy_triggers(["规则触发"])
         _active_enemy._firing_rule_trigger = false
 
+func reset_enrage() -> void:
+    _enrage_timer = 0.0
+    _enrage_stacks = 0
+
 func _finish_combat(enemy: Enemy = null) -> void:
     var resolved := enemy if enemy != null else _active_enemy
     if resolved == null:
         return
     stop()
+    reset_enrage()
     GameState.lifesteal_ratio = 0.0
     GameState.enemies_killed += 1
     EventBus.enemy_killed.emit(resolved)

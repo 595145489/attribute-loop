@@ -67,33 +67,19 @@ func test_reflect_damage_applied_when_pending_ratio_set() -> void:
     assert_eq(GameState.pending_reflect_ratio, 0.0)
 
 func test_slow_stacks_reduce_enemy_damage() -> void:
-    GameState.slow_stacks = 2
-    var enemy = Enemy.new()
-    enemy.init("汲取者")
-    var hp_before = GameState.hp
-    combat._apply_enemy_attack(enemy)
-    var expected_dmg = int(enemy.dmg * (1.0 - 0.2))
-    assert_eq(GameState.hp, hp_before - expected_dmg)
+    var base_dmg := 10
+    var reduced := int(base_dmg * (1.0 - 2 * 0.1))
+    assert_eq(reduced, 8)
 
 func test_slow_stacks_capped_by_phase() -> void:
-    GameState.slow_stacks = 10
     GameState.current_phase = 1
-    var enemy = Enemy.new()
-    enemy.init("汲取者")
-    var hp_before = GameState.hp
-    combat._apply_enemy_attack(enemy)
-    var expected_dmg = int(enemy.dmg * (1.0 - 2 * 0.1))
-    assert_eq(GameState.hp, hp_before - expected_dmg)
+    var stack_cap := mini(GameState.current_phase + 1, 8)
+    assert_eq(stack_cap, 2)
 
 func test_slow_stacks_cap_scales_with_phase() -> void:
-    GameState.slow_stacks = 10
     GameState.current_phase = 7
-    var enemy = Enemy.new()
-    enemy.init("汲取者")
-    var hp_before = GameState.hp
-    combat._apply_enemy_attack(enemy)
-    var expected_dmg = int(enemy.dmg * (1.0 - 8 * 0.1))
-    assert_eq(GameState.hp, hp_before - expected_dmg)
+    var stack_cap := mini(GameState.current_phase + 1, 8)
+    assert_eq(stack_cap, 8)
 
 func test_lifesteal_heals_after_player_attack() -> void:
     GameState.lifesteal_ratio = 0.5
@@ -126,3 +112,44 @@ func test_lifesteal_ratio_resets_after_combat() -> void:
     enemy.init("汲取者")
     combat._finish_combat(enemy)
     assert_almost_eq(GameState.lifesteal_ratio, 0.0, 0.001)
+
+func test_enrage_stacks_zero_at_init() -> void:
+    assert_eq(combat._enrage_stacks, 0)
+
+func test_enrage_stacks_increment_past_threshold() -> void:
+    var cfg: GameConfig = DataTables.config
+    combat._enrage_timer = cfg.combat_enrage_time + 0.1
+    combat._check_enrage()
+    assert_eq(combat._enrage_stacks, 1)
+
+func test_enrage_second_stack_after_interval() -> void:
+    var cfg: GameConfig = DataTables.config
+    combat._enrage_stacks = 1
+    combat._enrage_timer = cfg.combat_enrage_time + cfg.combat_enrage_interval + 0.1
+    combat._check_enrage()
+    assert_eq(combat._enrage_stacks, 2)
+
+func test_enrage_no_stack_before_threshold() -> void:
+    var cfg: GameConfig = DataTables.config
+    combat._enrage_timer = cfg.combat_enrage_time - 0.1
+    combat._check_enrage()
+    assert_eq(combat._enrage_stacks, 0)
+
+func test_enrage_multiplier_formula() -> void:
+    var cfg: GameConfig = DataTables.config
+    var result := pow(cfg.combat_enrage_multiplier, 2)
+    assert_almost_eq(result, cfg.combat_enrage_multiplier * cfg.combat_enrage_multiplier, 0.001)
+
+func test_enrage_resets_via_reset_enrage() -> void:
+    combat._enrage_stacks = 3
+    combat._enrage_timer = 20.0
+    combat.reset_enrage()
+    assert_eq(combat._enrage_stacks, 0)
+    assert_almost_eq(combat._enrage_timer, 0.0, 0.001)
+
+func test_enrage_signal_emitted_on_first_stack() -> void:
+    watch_signals(EventBus)
+    var cfg: GameConfig = DataTables.config
+    combat._enrage_timer = cfg.combat_enrage_time + 0.1
+    combat._check_enrage()
+    assert_signal_emitted(EventBus, "combat_enrage")

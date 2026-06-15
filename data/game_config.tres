@@ -6,9 +6,12 @@
 script = ExtResource("1_pwh6o")
 deletion_cost_sequence = Array[int]([20, 50, 100])
 deletion_cost_multiplier = 2.0
-verdict_trigger_phase = 10
+verdict_trigger_phase = 2
 verdict_survive_loops = 5
 verdict_enemy_phase = 10
 verdict_spawn_phase = 11
 combat_log_max_entries = 50
 amplify_max_stacks_base = 1
+combat_enrage_time = 8.0
+combat_enrage_multiplier = 1.5
+combat_enrage_interval = 3.0

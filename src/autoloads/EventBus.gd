@@ -2,6 +2,7 @@ extends Node
 
 signal enemy_killed(enemy: Enemy)
 signal combat_resolved
+signal combat_enrage(stacks: int)
 signal loop_completed
 signal player_died
 signal player_hit(damage: int)
