@@ -113,6 +113,8 @@ func _update_rule_panel(i: int) -> void:
 			_e_value[i].text = "×%d层" % int(e.effect_value)
 		"吸血":
 			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
+		"强化":
+			_e_value[i].text = "×%d/%d" % [GameState.amplify_stacks, GameState.amplify_max_stacks]
 		_:
 			_e_value[i].text = ""
 
@@ -144,6 +146,8 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 			float_label.text = "减伤 ×%.0f层" % value
 		"吸血":
 			float_label.text = "吸血 %.0f%%" % (value * 100)
+		"强化":
+			float_label.text = "强化 ×%d层" % GameState.amplify_stacks
 		_:
 			float_label.text = effect_id
 	float_label.show()

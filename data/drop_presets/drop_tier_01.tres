@@ -17,5 +17,6 @@ component_ranges = {
 "反射": {"trigger": Vector2(2, 3), "effect": Vector2(0.3, 0.45)},
 "护盾": {"effect": Vector2(40, 70)},
 "减伤": {"effect": Vector2(2, 3)},
-"吸血": {"effect": Vector2(0.1, 0.2)}
+"吸血": {"effect": Vector2(0.1, 0.2)},
+"强化": {"effect": Vector2(1, 1)}
 }
