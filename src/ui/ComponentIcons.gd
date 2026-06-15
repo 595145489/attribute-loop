@@ -14,7 +14,7 @@ const _ICON_MAP: Dictionary = {
 	"护盾":    "res://resources/icons/effect_shield.png",
 	"减伤":    "res://resources/icons/effect_slow.png",
 	"吸血":    "res://resources/icons/effect_lifesteal.png",
-	"强化":    "res://resources/icons/effect_haste.png",
+	"强化":    "res://resources/icons/effect_empower.png",
 }
 
 static var _cache: Dictionary = {}

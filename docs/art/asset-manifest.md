@@ -25,7 +25,7 @@
 - [x] effect_haste.png         — 加速 · lightning bolt, motion lines
 - [x] effect_slow.png          — 减速 · hourglass or frozen crystal
 - [ ] effect_charge.png        — 蓄能 · battery or orb filling with energy
-- [ ] effect_empower.png       — 强化 · upward arrow wrapped in light
+- [x] effect_empower.png       — 强化 · upward arrow wrapped in light
 - [ ] effect_chain.png         — 连锁 · chain links branching outward
 
 ---
