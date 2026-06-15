@@ -130,12 +130,6 @@ func _build_content(svc: int) -> void:
 				btn.set_meta("comp_ref", comp)
 				content_container.add_child(btn)
 
-		AuctionManager.ServiceType.RULE_COPY:
-			var lbl := Label.new()
-			lbl.text = "（关闭此面板后，点击来源地块，再点目标地块完成复制）"
-			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
-			content_container.add_child(lbl)
-
 func _build_discard_content(options: Array[int], new_svc: int) -> void:
 	for c in content_container.get_children():
 		c.queue_free()
@@ -178,11 +172,5 @@ func _collect_params(svc: int):
 			if selected[0].slot_type != selected[1].slot_type:
 				return null
 			return {"comp_a": selected[0], "comp_b": selected[1]}
-
-		AuctionManager.ServiceType.RULE_COPY:
-			# Handled externally via tile click; close popup first
-			GameState.unpause_for_panel()
-			hide()
-			return null
 
 	return {}

@@ -126,7 +126,7 @@ func _on_loop_completed() -> void:
 	EventBus.gold_changed.emit(GameState.gold)
 
 func _award_service_to_player(service_type: int) -> void:
-	if GameState.service_bar.size() < 5:
+	if GameState.service_bar.size() < GameState.service_bar_max:
 		GameState.service_bar.append(service_type)
 		EventBus.service_bar_changed.emit()
 	else:

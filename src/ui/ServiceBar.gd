@@ -3,7 +3,7 @@ extends HBoxContainer
 const AuctionManager = preload("res://src/systems/AuctionManager.gd")
 
 var MAX_SLOTS: int:
-	get: return DataTables.config.auction_service_bar_cap
+	get: return GameState.service_bar_max
 
 var _auction_manager = null
 var _activate_popup = null
