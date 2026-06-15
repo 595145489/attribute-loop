@@ -170,3 +170,34 @@ func test_combat_start_uses_attack_interval_bonus() -> void:
     var expected := maxf(DataTables.player.attack_interval - 0.2, 0.2)
     assert_almost_eq(combat._player_timer.wait_time, expected, 0.001)
     combat.stop()
+
+func test_dmg_boost_increases_player_damage() -> void:
+    GameState.dmg_boost_stacks = 2
+    var pd: PlayerData = DataTables.player
+    var expected := int((pd.dmg_base + GameState.dmg_bonus) * (1.0 + 2 * 0.1))
+    assert_eq(combat._calc_player_dmg(), expected)
+
+func test_charge_release_deals_bonus_damage() -> void:
+    GameState.charge_stacks = 3
+    var pd: PlayerData = DataTables.player
+    var expected_bonus := 3 * pd.dmg_base
+    assert_eq(combat._calc_charge_bonus(), expected_bonus)
+
+func test_charge_resets_after_release() -> void:
+    GameState.charge_stacks = 2
+    combat._release_charge_if_any()
+    assert_eq(GameState.charge_stacks, 0)
+
+func test_dmg_boost_decays_on_loop_completed() -> void:
+    var re := RuleEngine.new()
+    add_child_autofree(re)
+    GameState.dmg_boost_stacks = 3
+    EventBus.loop_completed.emit()
+    assert_eq(GameState.dmg_boost_stacks, 2)
+
+func test_dmg_boost_not_below_zero_on_decay() -> void:
+    var re := RuleEngine.new()
+    add_child_autofree(re)
+    GameState.dmg_boost_stacks = 0
+    EventBus.loop_completed.emit()
+    assert_eq(GameState.dmg_boost_stacks, 0)

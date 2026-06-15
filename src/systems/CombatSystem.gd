@@ -8,6 +8,7 @@ var _enemy_state_timer: float = 0.0
 const _ENEMY_STATE_INTERVAL: float = 1.0
 var _enrage_timer: float = 0.0
 var _enrage_stacks: int = 0
+var _burn_timer: float = 0.0
 
 func _ready() -> void:
     _player_timer = Timer.new()
@@ -24,6 +25,8 @@ func start(enemy: Enemy) -> void:
     _active_enemy = enemy
     _enrage_timer = 0.0
     _enrage_stacks = 0
+    if not EventBus.rule_fired.is_connected(_on_rule_fired):
+        EventBus.rule_fired.connect(_on_rule_fired)
     enemy.shield = 0
     enemy.slow_stacks = 0
     enemy.lifesteal_ratio = 0.0
@@ -36,6 +39,7 @@ func start(enemy: Enemy) -> void:
     _enemy_state_timer = 0.0
     _enrage_timer = 0.0
     _enrage_stacks = 0
+    _burn_timer = 0.0
     _player_timer.wait_time = maxf(DataTables.player.attack_interval - GameState.attack_interval_bonus, 0.2)
     _enemy_timer.wait_time = enemy.attack_interval
     _player_timer.start()
@@ -45,6 +49,8 @@ func stop() -> void:
     _player_timer.stop()
     _enemy_timer.stop()
     _active_enemy = null
+    if EventBus.rule_fired.is_connected(_on_rule_fired):
+        EventBus.rule_fired.disconnect(_on_rule_fired)
 
 func _process(delta: float) -> void:
     if _active_enemy == null:
@@ -55,6 +61,16 @@ func _process(delta: float) -> void:
         _check_enemy_state_triggers()
     _enrage_timer += delta
     _check_enrage()
+    if _active_enemy != null and _active_enemy.burn_stacks > 0:
+        _burn_timer += delta
+        var cfg: GameConfig = DataTables.config
+        if _burn_timer >= cfg.combat_burn_interval:
+            _burn_timer = 0.0
+            var burn_dmg := _active_enemy.burn_stacks * cfg.combat_burn_dmg_per_stack
+            _active_enemy.take_damage(burn_dmg)
+            if _active_enemy.is_dead():
+                _finish_combat(_active_enemy)
+                return
 
 func _check_enrage() -> void:
     var cfg: GameConfig = DataTables.config
@@ -80,7 +96,9 @@ func _on_enemy_attack() -> void:
     _apply_enemy_attack(_active_enemy)
 
 func _apply_player_attack(enemy: Enemy) -> void:
-    var dmg := DataTables.player.dmg_base + GameState.dmg_bonus
+    var dmg := _calc_player_dmg()
+    var charge_bonus := _calc_charge_bonus()
+    GameState.charge_stacks = 0
     if enemy.slow_stacks > 0:
         var stack_cap := mini(GameState.current_phase + 1, 8)
         var capped := mini(enemy.slow_stacks, stack_cap)
@@ -91,11 +109,14 @@ func _apply_player_attack(enemy: Enemy) -> void:
         dmg -= absorbed
     if dmg > 0:
         enemy.take_damage(dmg)
+    if charge_bonus > 0:
+        enemy.take_damage(charge_bonus)
+        EventBus.rule_fired.emit(-1, "蓄能释放", float(charge_bonus))
     if GameState.lifesteal_ratio > 0.0:
-        var heal := int(DataTables.player.dmg_base * GameState.lifesteal_ratio)
+        var heal := int(dmg * GameState.lifesteal_ratio)
         GameState.hp = min(GameState.hp + heal, GameState.hp_max)
     if enemy.pending_reflect_ratio > 0.0:
-        var reflected := int(DataTables.player.dmg_base * enemy.pending_reflect_ratio)
+        var reflected := int(dmg * enemy.pending_reflect_ratio)
         GameState.take_damage(reflected)
         enemy.pending_reflect_ratio = 0.0
     if enemy.is_dead():
@@ -161,6 +182,40 @@ func _execute_enemy_effect(effect: ComponentData) -> void:
         _active_enemy._firing_rule_trigger = true
         _evaluate_enemy_triggers(["规则触发"])
         _active_enemy._firing_rule_trigger = false
+
+func _calc_player_dmg() -> int:
+    var pd: PlayerData = DataTables.player
+    var dmg := pd.dmg_base + GameState.dmg_bonus
+    if GameState.dmg_boost_stacks > 0:
+        dmg = int(dmg * (1.0 + GameState.dmg_boost_stacks * 0.1))
+    return dmg
+
+func _calc_charge_bonus() -> int:
+    if GameState.charge_stacks <= 0:
+        return 0
+    return GameState.charge_stacks * DataTables.player.dmg_base
+
+func _release_charge_if_any() -> void:
+    if GameState.charge_stacks <= 0:
+        return
+    var bonus := _calc_charge_bonus()
+    GameState.charge_stacks = 0
+    if _active_enemy != null and bonus > 0:
+        _active_enemy.take_damage(bonus)
+        EventBus.rule_fired.emit(-1, "蓄能释放", float(bonus))
+
+func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
+    if _active_enemy == null:
+        return
+    match effect_id:
+        "灼烧":
+            _active_enemy.burn_stacks += int(value)
+        "侵蚀":
+            _active_enemy.hp_max = max(1, _active_enemy.hp_max - int(value))
+            _active_enemy.hp = min(_active_enemy.hp, _active_enemy.hp_max)
+            _active_enemy._refresh_label()
+            if _active_enemy.is_dead():
+                _finish_combat(_active_enemy)
 
 func reset_enrage() -> void:
     _enrage_timer = 0.0

@@ -18,6 +18,8 @@ extends Resource
 @export var combat_enrage_time: float = 8.0
 @export var combat_enrage_multiplier: float = 1.5
 @export var combat_enrage_interval: float = 3.0
+@export var combat_burn_dmg_per_stack: int = 5
+@export var combat_burn_interval: float = 1.0
 
 # --- Auction (梦境残市) ---
 @export var auction_service_bar_cap: int = 5

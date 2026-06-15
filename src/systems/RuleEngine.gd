@@ -47,6 +47,7 @@ func _on_loop_completed() -> void:
 	var decay := ceili(float(GameState.current_phase) / 2.0)
 	GameState.slow_stacks = max(0, GameState.slow_stacks - decay)
 	GameState.shield = int(GameState.shield * 0.65)
+	GameState.dmg_boost_stacks = max(0, GameState.dmg_boost_stacks - 1)
 
 func _on_tile_passed(tile_idx: int) -> void:
 	_evaluate_player_triggers(["经过"])

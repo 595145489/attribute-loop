@@ -15,3 +15,5 @@ amplify_max_stacks_base = 1
 combat_enrage_time = 8.0
 combat_enrage_multiplier = 1.5
 combat_enrage_interval = 3.0
+combat_burn_dmg_per_stack = 5
+combat_burn_interval = 1.0
