@@ -251,13 +251,13 @@ func test_lifesteal_ratio_resets_to_zero_on_reset() -> void:
     GameState.reset()
     assert_almost_eq(GameState.lifesteal_ratio, 0.0, 0.001)
 
-func test_hp_max_is_250() -> void:
-    assert_eq(GameState.hp_max, 250)
+func test_hp_max_matches_player_data() -> void:
+    assert_eq(GameState.hp_max, DataTables.player.hp_base)
 
-func test_hp_starts_at_250_after_reset() -> void:
+func test_hp_starts_at_hp_max_after_reset() -> void:
     GameState.hp = 1
     GameState.reset()
-    assert_eq(GameState.hp, 250)
+    assert_eq(GameState.hp, DataTables.player.hp_base)
 
 func test_boss_circle_pending_false_after_reset() -> void:
     GameState.boss_circle_pending = true

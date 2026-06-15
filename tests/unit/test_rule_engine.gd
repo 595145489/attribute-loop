@@ -60,7 +60,7 @@ func test_heal_resets_trigger_count() -> void:
 
 func test_heal_capped_at_hp_max() -> void:
 	_make_rule("受击", 1.0, "治愈", 999.0)
-	GameState.hp = 90
+	GameState.hp = GameState.hp_max - 50
 	EventBus.player_hit.emit(5)
 	assert_eq(GameState.hp, GameState.hp_max)
 

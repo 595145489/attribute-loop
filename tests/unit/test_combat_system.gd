@@ -26,7 +26,7 @@ func test_player_damage_uses_player_dmg_base() -> void:
     enemy.init("汲取者")
     var hp_before = enemy.hp
     combat._apply_player_attack(enemy)
-    assert_eq(enemy.hp, hp_before - DataTables.player.dmg_base)
+    assert_eq(enemy.hp, maxi(0, hp_before - DataTables.player.dmg_base))
 
 func test_enemy_damage_uses_phase_scaled_dmg() -> void:
     var enemy = Enemy.new()
@@ -160,7 +160,7 @@ func test_player_attack_applies_dmg_bonus() -> void:
     enemy.init("汲取者")
     var hp_before = enemy.hp
     combat._apply_player_attack(enemy)
-    assert_eq(enemy.hp, hp_before - (DataTables.player.dmg_base + 3))
+    assert_eq(enemy.hp, maxi(0, hp_before - (DataTables.player.dmg_base + 3)))
 
 func test_combat_start_uses_attack_interval_bonus() -> void:
     GameState.attack_interval_bonus = 0.2
