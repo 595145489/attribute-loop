@@ -263,3 +263,18 @@ func test_boss_circle_pending_false_after_reset() -> void:
     GameState.boss_circle_pending = true
     GameState.reset()
     assert_false(GameState.boss_circle_pending)
+
+func test_dmg_bonus_zero_after_reset() -> void:
+    GameState.dmg_bonus = 5
+    GameState.reset()
+    assert_eq(GameState.dmg_bonus, 0)
+
+func test_attack_interval_bonus_zero_after_reset() -> void:
+    GameState.attack_interval_bonus = 0.3
+    GameState.reset()
+    assert_almost_eq(GameState.attack_interval_bonus, 0.0, 0.001)
+
+func test_service_bar_max_restored_after_reset() -> void:
+    GameState.service_bar_max = 99
+    GameState.reset()
+    assert_eq(GameState.service_bar_max, DataTables.config.auction_service_bar_cap)

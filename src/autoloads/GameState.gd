@@ -1,7 +1,7 @@
 extends Node
 
 var hp: int
-var hp_max: int = 10000
+var hp_max: int = 250
 var loops_completed: int = 0
 var enemies_killed: int = 0
 var current_phase: int = 1
@@ -36,6 +36,9 @@ var in_boss_circle: bool = false
 # Auction / service bar
 var service_bar: Array[int] = []
 var deletion_free: bool = false
+var dmg_bonus: int = 0
+var attack_interval_bonus: float = 0.0
+var service_bar_max: int = 5
 var enemy_pardon_type: String = ""
 var enemy_pardon_remaining: int = 0
 
@@ -54,7 +57,6 @@ func take_damage(amount: int) -> void:
 			EventBus.player_died.emit()
 
 func reset() -> void:
-	hp = hp_max
 	loops_completed = 0
 	enemies_killed = 0
 	current_phase = 1
@@ -67,6 +69,12 @@ func reset() -> void:
 	lifesteal_ratio = 0.0
 	amplify_stacks = 0
 	amplify_max_stacks = DataTables.config.amplify_max_stacks_base if DataTables.config != null else 1
+	if DataTables.player != null:
+		hp_max = DataTables.player.hp_base
+	hp = hp_max
+	dmg_bonus = 0
+	attack_interval_bonus = 0.0
+	service_bar_max = DataTables.config.auction_service_bar_cap if DataTables.config != null else 5
 	inventory = []
 	rule_slots = []
 	gold = 0
