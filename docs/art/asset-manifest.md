@@ -98,6 +98,7 @@
 - [x] panel_game_over_bg.png   — game over panel background, worn dramatic parchment, dark vignette at corners, cracked ornate border, dim candlelight glow, melancholic yet mystical
 - [x] rule_panel_bg.png        — tile rule panel background, ornate parchment frame with decorative header/footer bands, clean minimal center field for UI overlay
 - [x] panel_enemy_inspect_bg.png — enemy inspect panel background, ornate ink border frame with plain clean center area, dark vignette corners
+- [x] panel_character_bg.png   — character attribute panel background, warm parchment with ornate ink border, clean transparent center for stat text overlay
 
 ### Buttons
 - [x] btn_normal.png           — button default state
