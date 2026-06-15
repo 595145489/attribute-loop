@@ -107,3 +107,44 @@ func test_pick_enemy_id_phase11_includes_all_five_types() -> void:
     assert_true(found.has("急袭者"), "急袭者 should appear in 裁决圈 spawns")
     assert_true(found.has("复制者"), "复制者 should appear in 裁决圈 spawns")
     assert_true(found.has("先驱者"), "先驱者 should appear in 裁决圈 spawns")
+
+func test_apply_boss_modifiers_scales_hp() -> void:
+    var enemy := Enemy.new()
+    enemy.hp_max = 100
+    enemy.hp = 100
+    enemy.dmg = 20
+    var phase_data := PhaseData.new()
+    phase_data.boss_hp_multiplier = 3.0
+    phase_data.boss_damage_multiplier = 2.0
+    phase_data.boss_scale = 1.5
+    GameLoop._apply_boss_modifiers(enemy, phase_data)
+    assert_eq(enemy.hp_max, 300)
+    assert_eq(enemy.hp, 300)
+    enemy.free()
+
+func test_apply_boss_modifiers_scales_dmg() -> void:
+    var enemy := Enemy.new()
+    enemy.hp_max = 100
+    enemy.hp = 100
+    enemy.dmg = 20
+    var phase_data := PhaseData.new()
+    phase_data.boss_hp_multiplier = 2.0
+    phase_data.boss_damage_multiplier = 2.0
+    phase_data.boss_scale = 1.0
+    GameLoop._apply_boss_modifiers(enemy, phase_data)
+    assert_eq(enemy.dmg, 40)
+    enemy.free()
+
+func test_apply_boss_modifiers_sets_scale() -> void:
+    var enemy := Enemy.new()
+    enemy.hp_max = 100
+    enemy.hp = 100
+    enemy.dmg = 10
+    var phase_data := PhaseData.new()
+    phase_data.boss_hp_multiplier = 1.0
+    phase_data.boss_damage_multiplier = 1.0
+    phase_data.boss_scale = 2.0
+    GameLoop._apply_boss_modifiers(enemy, phase_data)
+    assert_almost_eq(enemy.scale.x, 2.0, 0.001)
+    assert_almost_eq(enemy.scale.y, 2.0, 0.001)
+    enemy.free()

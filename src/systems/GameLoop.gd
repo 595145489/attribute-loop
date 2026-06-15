@@ -188,6 +188,12 @@ static func _create_component(id: String, preset: DropPreset) -> ComponentData:
 
 ## Pure functions used by tests
 
+static func _apply_boss_modifiers(enemy: Enemy, phase_data: PhaseData) -> void:
+	enemy.hp_max = int(enemy.hp_max * phase_data.boss_hp_multiplier)
+	enemy.hp = enemy.hp_max
+	enemy.dmg = int(enemy.dmg * phase_data.boss_damage_multiplier)
+	enemy.scale = Vector2.ONE * phase_data.boss_scale
+
 static func _roll_spawn_count(phase: PhaseData) -> int:
 	return randi_range(phase.spawn_count_min, phase.spawn_count_max)
 
