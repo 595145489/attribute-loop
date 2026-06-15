@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ComponentData" format=3]
+
+[ext_resource type="Script" uid="uid://7v3b3h3e3hi4" path="res://src/resources/ComponentData.gd" id="1_new10"]
+
+[resource]
+script = ExtResource("1_new10")
+id = "增伤"
+display_name = "增伤"
+description = "叠加增伤层，每层使攻击伤害提升 10%，每圈结束衰减 1 层"
+slot_type = 1
+effect_formula = "dmg_boost"
+growth_rate = 0.0
+altar_ratio = 0.05

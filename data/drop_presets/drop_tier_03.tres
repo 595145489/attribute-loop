@@ -18,5 +18,9 @@ component_ranges = {
 "护盾": {"effect": Vector2(55, 80)},
 "减伤": {"effect": Vector2(2, 4)},
 "吸血": {"effect": Vector2(0.12, 0.22)},
-"强化": {"effect": Vector2(1, 1)}
+"强化": {"effect": Vector2(1, 1)},
+"增伤": {"effect": Vector2(2, 4)},
+"蓄能": {"effect": Vector2(1, 2)},
+"灼烧": {"effect": Vector2(3, 5)},
+"侵蚀": {"effect": Vector2(25, 45)}
 }
