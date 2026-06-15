@@ -31,6 +31,7 @@ var in_verdict_loop: bool = false
 var pending_phase_advance: bool = false
 var verdict_loops_survived: int = 0
 var boss_circle_pending: bool = false
+var in_boss_circle: bool = false
 
 # Auction / service bar
 var service_bar: Array[int] = []
@@ -76,6 +77,7 @@ func reset() -> void:
 	pending_phase_advance = false
 	verdict_loops_survived = 0
 	boss_circle_pending = false
+	in_boss_circle = false
 	service_bar = []
 	deletion_free = false
 	enemy_pardon_type = ""

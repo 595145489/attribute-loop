@@ -37,6 +37,7 @@ func spawn_enemies() -> void:
 
 	if GameState.boss_circle_pending:
 		GameState.boss_circle_pending = false
+		GameState.in_boss_circle = true
 		var b_phase := DataTables.config.verdict_spawn_phase if GameState.in_verdict_loop else GameState.current_phase
 		var b_phase_data: PhaseData = DataTables.get_phase(b_phase)
 		var last_idx := _tiles.size() - 1
@@ -50,6 +51,7 @@ func spawn_enemies() -> void:
 		_apply_boss_modifiers(b_enemy, b_phase_data)
 		return
 
+	GameState.in_boss_circle = false
 	var config: GameConfig = DataTables.config
 	var spawn_phase := config.verdict_spawn_phase if GameState.in_verdict_loop else GameState.current_phase
 	var stat_phase := config.verdict_enemy_phase if GameState.in_verdict_loop else GameState.current_phase

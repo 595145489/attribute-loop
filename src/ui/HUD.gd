@@ -76,7 +76,7 @@ func _process(_delta: float) -> void:
 		var cfg: GameConfig = DataTables.config
 		phase_label.text = "裁决圈"
 		pressure_label.text = "进度: %d/%d圈" % [GameState.verdict_loops_survived, cfg.verdict_survive_loops]
-	elif GameState.boss_circle_pending:
+	elif GameState.in_boss_circle:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s  ⚠ Boss圈" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
