@@ -14,3 +14,6 @@ extends Resource
 @export var component_count_bonus: int = 0
 ## Keys: component id (String), Values: weight multiplier (float)
 @export var component_weight_modifiers: Dictionary = {}
+@export var boss_hp_multiplier: float = 2.0
+@export var boss_damage_multiplier: float = 2.0
+@export var boss_scale: float = 1.6
