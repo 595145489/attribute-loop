@@ -23,6 +23,7 @@ func setup(tiles: Array, enemies_container: Node, player: Player, combat: Combat
 	EventBus.loop_completed.connect(_on_loop_completed)
 	EventBus.combat_resolved.connect(_on_combat_resolved)
 	EventBus.player_died.connect(_on_player_died)
+	EventBus.altar_activated.connect(_on_altar_activated)
 	EventBus.verdict_loop_entered.connect(spawn_enemies)
 	spawn_enemies()
 
@@ -33,6 +34,21 @@ func spawn_enemies() -> void:
 		child.queue_free()
 	for tile in _tiles:
 		tile.clear_enemy()
+
+	if GameState.boss_circle_pending:
+		GameState.boss_circle_pending = false
+		var b_phase := DataTables.config.verdict_spawn_phase if GameState.in_verdict_loop else GameState.current_phase
+		var b_phase_data: PhaseData = DataTables.get_phase(b_phase)
+		var last_idx := _tiles.size() - 1
+		var b_enemy_id := _pick_enemy_id(b_phase_data, b_phase)
+		var b_enemy: Enemy = _enemy_scene.instantiate()
+		_enemies_container.add_child(b_enemy)
+		b_enemy.init(b_enemy_id, b_phase)
+		b_enemy.position = _tiles[last_idx].guard_position
+		_tiles[last_idx].place_enemy(b_enemy)
+		_assign_components(b_enemy, b_phase)
+		_apply_boss_modifiers(b_enemy, b_phase_data)
+		return
 
 	var config: GameConfig = DataTables.config
 	var spawn_phase := config.verdict_spawn_phase if GameState.in_verdict_loop else GameState.current_phase
@@ -100,6 +116,7 @@ func _on_loop_completed() -> void:
 				GameState.loops_in_phase += 1
 				var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 				if GameState.loops_in_phase >= phase_data.world_pressure_window:
+					GameState.boss_circle_pending = true
 					if not _altar_is_full(_tiles[0]):
 						GameState.force_phase_advance()
 		for tile in _tiles:
@@ -127,6 +144,9 @@ func _on_player_died() -> void:
 	state = State.GAME_OVER
 	_combat_system.stop()
 	GameState.is_paused = true
+
+func _on_altar_activated() -> void:
+	GameState.boss_circle_pending = true
 
 func _assign_components(enemy: Enemy, stat_phase: int = -1) -> void:
 	var enemy_data: EnemyData = DataTables.get_enemy(enemy.enemy_id)
