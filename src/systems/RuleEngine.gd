@@ -34,6 +34,8 @@ func _on_player_hit(_damage: int) -> void:
 func _on_rule_fired(_slot_idx: int, effect_id: String, _value: float) -> void:
 	if effect_id == "治愈":
 		_evaluate_player_triggers(["治愈"])
+	if effect_id in ["强化", "增伤", "蓄能", "蓄能释放", "灼烧", "侵蚀"]:
+		return
 	if not _firing_rule_trigger:
 		_firing_rule_trigger = true
 		_evaluate_player_triggers(["规则触发"])
