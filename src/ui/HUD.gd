@@ -76,6 +76,12 @@ func _process(_delta: float) -> void:
 		var cfg: GameConfig = DataTables.config
 		phase_label.text = "裁决圈"
 		pressure_label.text = "进度: %d/%d圈" % [GameState.verdict_loops_survived, cfg.verdict_survive_loops]
+	elif GameState.boss_circle_pending:
+		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
+		phase_label.text = "阶段%d · %s  ⚠ Boss圈" % [GameState.current_phase, phase_data.phase_name]
+		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
+		for i in GameState.rule_slots.size():
+			_update_rule_panel(i)
 	else:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
@@ -124,6 +130,7 @@ func _on_altar_pressed() -> void:
 
 func _on_speed_pressed(index: int) -> void:
 	GameState.speed_multiplier = SPEEDS[index]
+	EventBus.speed_changed.emit()
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	match effect_id:
