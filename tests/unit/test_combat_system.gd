@@ -153,3 +153,20 @@ func test_enrage_signal_emitted_on_first_stack() -> void:
     combat._enrage_timer = cfg.combat_enrage_time + 0.1
     combat._check_enrage()
     assert_signal_emitted(EventBus, "combat_enrage")
+
+func test_player_attack_applies_dmg_bonus() -> void:
+    GameState.dmg_bonus = 3
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    var hp_before = enemy.hp
+    combat._apply_player_attack(enemy)
+    assert_eq(enemy.hp, hp_before - (DataTables.player.dmg_base + 3))
+
+func test_combat_start_uses_attack_interval_bonus() -> void:
+    GameState.attack_interval_bonus = 0.2
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    combat.start(enemy)
+    var expected := maxf(DataTables.player.attack_interval - 0.2, 0.2)
+    assert_almost_eq(combat._player_timer.wait_time, expected, 0.001)
+    combat.stop()

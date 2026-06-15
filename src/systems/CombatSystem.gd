@@ -35,7 +35,7 @@ func start(enemy: Enemy) -> void:
     _enemy_state_timer = 0.0
     _enrage_timer = 0.0
     _enrage_stacks = 0
-    _player_timer.wait_time = DataTables.player.attack_interval
+    _player_timer.wait_time = maxf(DataTables.player.attack_interval - GameState.attack_interval_bonus, 0.2)
     _enemy_timer.wait_time = enemy.attack_interval
     _player_timer.start()
     _enemy_timer.start()
@@ -79,7 +79,7 @@ func _on_enemy_attack() -> void:
     _apply_enemy_attack(_active_enemy)
 
 func _apply_player_attack(enemy: Enemy) -> void:
-    var dmg := DataTables.player.dmg_base
+    var dmg := DataTables.player.dmg_base + GameState.dmg_bonus
     if enemy.slow_stacks > 0:
         var stack_cap := mini(GameState.current_phase + 1, 8)
         var capped := mini(enemy.slow_stacks, stack_cap)
