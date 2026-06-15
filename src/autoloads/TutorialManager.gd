@@ -28,6 +28,7 @@ func stop() -> void:
 	if _overlay != null:
 		_overlay.hide_overlay()
 	GameState.is_tutorial = false
+	GameState.tutorial_tile_clickable = false
 
 func _setup_scenario() -> void:
 	GameState.gold = 150
@@ -52,6 +53,8 @@ func _enter_step(index: int) -> void:
 
 	if step.get("pause_on_enter", false):
 		GameState.pause_for_panel()
+
+	GameState.tutorial_tile_clickable = (step["id"] == "tile_rule")
 
 	if step["id"] == "enemy_inspect":
 		EventBus.tutorial_spawn_enemies.emit()

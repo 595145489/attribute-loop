@@ -26,6 +26,7 @@ var inventory: Array[ComponentData] = []
 var rule_slots: Array = []
 var gold: int = 0
 var is_tutorial: bool = false
+var tutorial_tile_clickable: bool = false
 var deletion_count: int = 0
 var altar_bonuses: Dictionary = {}
 var loops_in_phase: int = 0
@@ -94,6 +95,7 @@ func reset() -> void:
 	deletion_free = false
 	enemy_pardon_type = ""
 	enemy_pardon_remaining = 0
+	tutorial_tile_clickable = false
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
 
