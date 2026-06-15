@@ -2,6 +2,7 @@
 
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
+const GAME_WIN_SCENE = preload("res://scenes/ui/game_win.tscn")
 const PHASE_TRANSITION_SCENE = preload("res://scenes/ui/phase_transition.tscn")
 const ENEMY_INSPECT_SCENE = preload("res://scenes/ui/enemy_inspect_panel.tscn")
 
@@ -149,14 +150,10 @@ func reset_tiles() -> void:
 			tile.altar_slots.fill(null)
 
 func _on_player_died() -> void:
-	var go = GAME_OVER_SCENE.instantiate()
-	go.outcome = "lose"
-	add_child(go)
+	add_child(GAME_OVER_SCENE.instantiate())
 
 func _on_game_won() -> void:
-	var go = GAME_OVER_SCENE.instantiate()
-	go.outcome = "win"
-	add_child(go)
+	add_child(GAME_WIN_SCENE.instantiate())
 
 func _on_phase_changed(new_phase: int) -> void:
 	_phase_transition.show_for_phase(new_phase)

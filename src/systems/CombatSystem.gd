@@ -22,6 +22,8 @@ func _ready() -> void:
 
 func start(enemy: Enemy) -> void:
     _active_enemy = enemy
+    _enrage_timer = 0.0
+    _enrage_stacks = 0
     enemy.shield = 0
     enemy.slow_stacks = 0
     enemy.lifesteal_ratio = 0.0
@@ -95,6 +97,9 @@ func _apply_player_attack(enemy: Enemy) -> void:
         var reflected := int(DataTables.player.dmg_base * enemy.pending_reflect_ratio)
         GameState.take_damage(reflected)
         enemy.pending_reflect_ratio = 0.0
+    if enemy.is_dead():
+        _finish_combat(enemy)
+        return
     _evaluate_enemy_triggers(["受击"])
     if enemy.is_dead():
         _finish_combat(enemy)

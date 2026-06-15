@@ -28,7 +28,7 @@ stretch_mode = 6
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.3)
+color = Color(0, 0, 0, 0.35)
 
 [node name="Center" type="CenterContainer" parent="." unique_id=1257453345]
 anchors_preset = 15
@@ -36,10 +36,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBox" type="VBoxContainer" parent="Center" unique_id=1576009140]
-custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
+size_flags_vertical = 8
+custom_minimum_size = Vector2(280, 0)
 theme = ExtResource("2_theme")
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="PhaseLabel" type="Label" parent="Center/VBox" unique_id=1904839398]
 layout_mode = 2
@@ -57,25 +58,10 @@ text = "击杀数: 0"
 layout_mode = 2
 text = "裁决圈完成: 0 / 0"
 
+[node name="Divider" type="HSeparator" parent="Center/VBox" unique_id=1347400853]
+layout_mode = 2
+
 [node name="RestartButton" type="Button" parent="Center/VBox" unique_id=1842126073]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
 text = "重新开始"
-
-[node name="NarrativeText" type="RichTextLabel" parent="Center/VBox" unique_id=444919619]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-fit_content = true
-
-[node name="Divider" type="HSeparator" parent="Center/VBox" unique_id=1347400853]
-layout_mode = 2
-
-[node name="Background" type="TextureRect" parent="." unique_id=329779619]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 1
-stretch_mode = 6

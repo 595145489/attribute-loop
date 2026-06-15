@@ -1,7 +1,7 @@
 extends Node
 
 var hp: int
-var hp_max: int = 1000
+var hp_max: int = 10000
 var loops_completed: int = 0
 var enemies_killed: int = 0
 var current_phase: int = 1
