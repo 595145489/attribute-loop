@@ -278,3 +278,19 @@ func test_service_bar_max_restored_after_reset() -> void:
     GameState.service_bar_max = 99
     GameState.reset()
     assert_eq(GameState.service_bar_max, DataTables.config.auction_service_bar_cap)
+
+func test_dmg_boost_stacks_starts_zero() -> void:
+    assert_eq(GameState.dmg_boost_stacks, 0)
+
+func test_charge_stacks_starts_zero() -> void:
+    assert_eq(GameState.charge_stacks, 0)
+
+func test_dmg_boost_resets_on_reset() -> void:
+    GameState.dmg_boost_stacks = 5
+    GameState.reset()
+    assert_eq(GameState.dmg_boost_stacks, 0)
+
+func test_charge_resets_on_reset() -> void:
+    GameState.charge_stacks = 3
+    GameState.reset()
+    assert_eq(GameState.charge_stacks, 0)
