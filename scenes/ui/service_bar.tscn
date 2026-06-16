@@ -3,4 +3,12 @@
 [ext_resource type="Script" uid="uid://cpalthb6l3pcc" path="res://src/ui/ServiceBar.gd" id="1_sb"]
 
 [node name="ServiceBar" type="VBoxContainer"]
+theme_override_constants/separation = 3
 script = ExtResource("1_sb")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56, 0.5, 0.72, 1)
+theme_override_font_sizes/font_size = 10
+text = "当前道具"
+horizontal_alignment = 1
