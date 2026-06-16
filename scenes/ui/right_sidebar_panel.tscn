@@ -77,7 +77,7 @@ offset_bottom = -16.0
 
 [node name="TopFrame" type="PanelContainer" parent="VBox"]
 layout_mode = 2
-size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 260)
 theme_override_styles/panel = SubResource("StyleBoxFlat_top")
 
 [node name="RuleSlotsPanel" parent="VBox/TopFrame" instance=ExtResource("2_rsp")]
@@ -90,7 +90,7 @@ theme_override_colors/separator_color = Color(0.588, 0.451, 0.196, 0.3)
 
 [node name="BotFrame" type="PanelContainer" parent="VBox"]
 layout_mode = 2
-size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 260)
 theme_override_styles/panel = SubResource("StyleBoxFlat_bot")
 
 [node name="ServiceBar" parent="VBox/BotFrame" instance=ExtResource("3_rsp")]
