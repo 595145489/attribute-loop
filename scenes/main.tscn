@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cygyugu7brhl8" path="res://scenes/ui/service_activate_popup.tscn" id="18_sap"]
 [ext_resource type="PackedScene" uid="uid://dxrsp1a2b3c4d5" path="res://scenes/ui/right_sidebar_panel.tscn" id="19_rsp"]
 [ext_resource type="Script" uid="uid://cnf0x261h6lot" path="res://src/tutorial/TutorialOverlay.gd" id="19_gqmmt"]
+[ext_resource type="Script" path="res://src/AppShell.gd" id="20_shell"]
 
 [sub_resource type="Gradient" id="Gradient_track"]
 offsets = PackedFloat32Array(0, 0.12, 0.28, 0.42, 0.5, 0.58, 0.72, 0.88, 1)
@@ -36,6 +37,7 @@ _data = {
 point_count = 6
 
 [node name="AppShell" type="Node"]
+script = ExtResource("20_shell")
 
 [node name="GameRow" type="HBoxContainer" parent="."]
 anchor_right = 1.0
