@@ -28,9 +28,9 @@ content_margin_top = 5.0
 content_margin_right = 6.0
 content_margin_bottom = 2.0
 texture = ExtResource("4_pill")
-expand_margin_left = 5.0
+expand_margin_left = 40.0
 expand_margin_top = 16.0
-expand_margin_right = 5.0
+expand_margin_right = 40.0
 expand_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hptransparent"]
@@ -133,6 +133,7 @@ theme_override_font_sizes/font_size = 13
 text = "祭坛 [A]"
 
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_hp")
 
