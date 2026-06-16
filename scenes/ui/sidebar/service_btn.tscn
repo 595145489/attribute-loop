@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dsbtn1a2b3c4d5"]
+
+[ext_resource type="Texture2D" uid="uid://b88k74vsghbv2y" path="res://resources/ui/service_btn_card.png" id="1_card"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
+texture = ExtResource("1_card")
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+
+[node name="ServiceBtn" type="Button"]
+custom_minimum_size = Vector2(0, 28)
+theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_normal")
+theme_override_colors/font_color = Color(0.95, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 11
