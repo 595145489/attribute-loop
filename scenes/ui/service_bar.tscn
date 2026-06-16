@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://cpalthb6l3pcc" path="res://src/ui/ServiceBar.gd" id="1_sb"]
 
-[node name="ServiceBar" type="HBoxContainer"]
+[node name="ServiceBar" type="VBoxContainer"]
 script = ExtResource("1_sb")
