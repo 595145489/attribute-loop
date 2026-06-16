@@ -1,5 +1,5 @@
 class_name RightSidebarPanel
-extends PanelContainer
+extends Control
 
 @onready var service_bar = $VBox/ServiceBar
 
