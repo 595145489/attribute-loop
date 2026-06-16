@@ -60,6 +60,10 @@ render_target_update_mode = 4
 [node name="Main" type="Node2D" parent="GameRow/SubViewportContainer/GameViewport" unique_id=1791836967]
 script = ExtResource("1_main")
 
+[node name="GameCamera" type="Camera2D" parent="GameRow/SubViewportContainer/GameViewport/Main"]
+position = Vector2(576, 324)
+zoom = Vector2(0.8, 0.8)
+
 [node name="Background" type="Sprite2D" parent="GameRow/SubViewportContainer/GameViewport/Main" unique_id=1100000001]
 position = Vector2(585.99994, 320)
 scale = Vector2(1.140625, 0.844)
