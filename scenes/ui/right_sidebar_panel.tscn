@@ -3,15 +3,9 @@
 [ext_resource type="Script" uid="uid://g6ag25ctcq7l" path="res://src/ui/RightSidebarPanel.gd" id="1_rsp"]
 [ext_resource type="PackedScene" uid="uid://urf1lkq8h276" path="res://scenes/ui/rule_slots_panel.tscn" id="2_rsp"]
 [ext_resource type="PackedScene" uid="uid://cp4m8nb3r5yot" path="res://scenes/ui/service_bar.tscn" id="3_rsp"]
+[ext_resource type="Texture2D" path="res://resources/ui/sidebar_border.png" id="4_border"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(0.071, 0.063, 0.055, 0.95)
-border_width_left = 1
-border_color = Color(0.588, 0.451, 0.196, 0.5)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sidebar"]
 
 [node name="RightSidebarPanel" type="PanelContainer"]
 anchors_preset = -1
@@ -21,12 +15,33 @@ anchor_bottom = 1.0
 offset_left = -175.0
 offset_bottom = -48.0
 grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_sidebar")
 script = ExtResource("1_rsp")
 
+[node name="BgTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_border")
+expand_mode = 1
+stretch_mode = 2
+
 [node name="VBox" type="VBoxContainer" parent="."]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 8
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
 
 [node name="RuleSlotsPanel" parent="VBox" instance=ExtResource("2_rsp")]
 layout_mode = 2
