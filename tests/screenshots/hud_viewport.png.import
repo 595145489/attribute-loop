@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s0mxcwsgnjql"
-path="res://.godot/imported/bg_game_over_lose.png-41b169774adb35d42c414c7533254dfd.ctex"
+uid="uid://8dy8cl4xbg7t"
+path="res://.godot/imported/hud_viewport.png-66c869d889b7899a12b6badd51b69316.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/backgrounds/bg_game_over_lose.png"
-dest_files=["res://.godot/imported/bg_game_over_lose.png-41b169774adb35d42c414c7533254dfd.ctex"]
+source_file="res://tests/screenshots/hud_viewport.png"
+dest_files=["res://.godot/imported/hud_viewport.png-66c869d889b7899a12b6badd51b69316.ctex"]
 
 [params]
 
