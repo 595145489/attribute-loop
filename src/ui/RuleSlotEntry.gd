@@ -14,7 +14,9 @@ func refresh(slot: Dictionary) -> void:
 		_t_count.text = ""
 		_e_name.text = ""
 		_e_value.text = ""
+		modulate = Color(1, 1, 1, 0.4)
 		return
+	modulate = Color(1, 1, 1, 1)
 	_t_name.text = t.display_name
 	_t_count.text = "%d/%d" % [t.trigger_count, int(t.trigger_value)]
 	_e_name.text = e.display_name
