@@ -1,4 +1,4 @@
-﻿extends Node2D
+extends Node2D
 
 const TILE_SCENE = preload("res://scenes/entities/tile.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
@@ -15,37 +15,50 @@ const ENEMY_INSPECT_SCENE = preload("res://scenes/ui/enemy_inspect_panel.tscn")
 @onready var game_loop: GameLoop = $Systems/GameLoop
 @onready var strip_manager: StripManager = $Systems/StripManager
 @onready var rule_engine: RuleEngine = $Systems/RuleEngine
-@onready var strip_panel: StripPanel = $UI/StripPanel
-@onready var inventory_panel: InventoryPanel = $UI/InventoryPanel
-@onready var tile_rule_panel = $UI/TileRulePanel
-@onready var altar_panel = $UI/AltarPanel
-@onready var hud: HUD = $UI/HUD
 @onready var auction_manager = $Systems/AuctionManager
-@onready var auction_panel = $UI/AuctionPanel
-@onready var right_sidebar: RightSidebarPanel = $UI/RightSidebarPanel
-@onready var service_activate_popup = $UI/ServiceActivatePopup
+
+var _strip_panel = null
+var _inventory_panel = null
+var _tile_rule_panel = null
+var _altar_panel = null
+var _hud: HUD = null
+var _auction_panel = null
+var _right_sidebar: RightSidebarPanel = null
+var _service_activate_popup = null
+var _ui_node: Node = null
 
 var _initialized: bool = false
-var _phase_transition: PhaseTransition
-var _enemy_inspect: EnemyInspectPanel
+var _phase_transition = null
+var _enemy_inspect = null
 var _tiles: Array = []
 
-func _ready() -> void:
+func setup_ui(ui_refs: Dictionary) -> void:
+	_strip_panel = ui_refs.strip_panel
+	_inventory_panel = ui_refs.inventory_panel
+	_tile_rule_panel = ui_refs.tile_rule_panel
+	_altar_panel = ui_refs.altar_panel
+	_hud = ui_refs.hud
+	_auction_panel = ui_refs.auction_panel
+	_right_sidebar = ui_refs.right_sidebar
+	_service_activate_popup = ui_refs.service_activate_popup
+	_ui_node = ui_refs.ui_node
+	_finish_setup()
+
+func _finish_setup() -> void:
 	get_viewport().physics_object_picking = true
-	await Enemy.preload_all_async(get_tree())
 	_tiles = _build_tiles()
 	player.setup(player_follow, track)
 	game_loop.setup(_tiles, enemies_container, player, combat_system)
-	strip_manager.setup(strip_panel)
-	strip_panel.setup(inventory_panel)
-	hud.setup(inventory_panel)
-	hud.setup_altar(altar_panel, _tiles[0])
+	strip_manager.setup(_strip_panel)
+	_strip_panel.setup(_inventory_panel)
+	_hud.setup(_inventory_panel)
+	_hud.setup_altar(_altar_panel, _tiles[0])
 	rule_engine.set_tiles(_tiles)
 	game_loop.setup_auction(auction_manager)
-	auction_panel.setup(auction_manager)
-	service_activate_popup.setup(auction_manager, _tiles)
-	right_sidebar.setup(auction_manager, service_activate_popup)
-	hud.setup_auction(auction_panel)
+	_auction_panel.setup(auction_manager)
+	_service_activate_popup.setup(auction_manager, _tiles)
+	_right_sidebar.setup(auction_manager, _service_activate_popup)
+	_hud.setup_auction(_auction_panel)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)
@@ -55,14 +68,64 @@ func _ready() -> void:
 	EventBus.tutorial_setup_altar_gift.connect(_setup_tutorial_altar_gift)
 	_initialized = true
 	_phase_transition = PHASE_TRANSITION_SCENE.instantiate()
-	add_child(_phase_transition)
+	_ui_node.add_child(_phase_transition)
 	if not GameState.is_tutorial:
 		_phase_transition.show_for_phase(1)
 	_enemy_inspect = ENEMY_INSPECT_SCENE.instantiate()
-	$UI.add_child(_enemy_inspect)
+	_ui_node.add_child(_enemy_inspect)
 	if GameState.is_tutorial:
-		var overlay: TutorialOverlay = $TutorialOverlay
+		var overlay = _ui_node.get_parent().get_node("TutorialOverlay")
 		TutorialManager.start(overlay)
+
+func _process(_delta: float) -> void:
+	if not _initialized or GameState.is_paused:
+		return
+	_check_player_tile()
+
+func _check_player_tile() -> void:
+	var player_pos = player.global_position
+	for tile in tiles_container.get_children():
+		if tile.has_enemy() and player_pos.distance_to(tile.guard_position) < 70.0:
+			game_loop.check_tile_for_enemy(tile)
+			return
+		if not tile.has_enemy() and player_pos.distance_to(tile.global_position) < 55.0:
+			if not tile.visited_this_loop:
+				tile.visited_this_loop = true
+				tile.pass_count += 1
+				EventBus.tile_passed.emit(tile.tile_index)
+			return
+
+func _on_tile_clicked(tile: Tile) -> void:
+	if tile.is_altar:
+		_altar_panel.open(tile)
+	elif tile.has_enemy():
+		_enemy_inspect.open(tile.enemy)
+	else:
+		_tile_rule_panel.open(tile)
+
+func reset_tiles() -> void:
+	for tile in tiles_container.get_children():
+		tile.pass_count = 0
+		tile.visited_this_loop = false
+		tile.rule_slots.clear()
+		if not tile.is_altar:
+			var max_rules := DataTables.TILE_MAX_RULES[tile.tile_index] if tile.tile_index < DataTables.TILE_MAX_RULES.size() else 1
+			for i in max_rules:
+				tile.rule_slots.append({"trigger": null, "effect": null})
+		else:
+			tile.altar_slots.fill(null)
+
+func _on_player_died() -> void:
+	_ui_node.add_child(GAME_OVER_SCENE.instantiate())
+
+func _on_game_won() -> void:
+	_ui_node.add_child(GAME_WIN_SCENE.instantiate())
+
+func _on_phase_changed(new_phase: int) -> void:
+	_phase_transition.show_for_phase(new_phase)
+	for tile in tiles_container.get_children():
+		if tile.is_altar:
+			tile.resize_altar_for_phase(new_phase)
 
 const TILE_POSITIONS: Array[Vector2] = [
 	Vector2(576, 115),
@@ -109,57 +172,6 @@ func _build_tiles() -> Array:
 		tiles_container.add_child(tile)
 		tiles.append(tile)
 	return tiles
-
-func _process(_delta: float) -> void:
-	if not _initialized or GameState.is_paused:
-		return
-	_check_player_tile()
-
-
-func _check_player_tile() -> void:
-	var player_pos = player.global_position
-	for tile in tiles_container.get_children():
-		if tile.has_enemy() and player_pos.distance_to(tile.guard_position) < 70.0:
-			game_loop.check_tile_for_enemy(tile)
-			return
-		if not tile.has_enemy() and player_pos.distance_to(tile.global_position) < 55.0:
-			if not tile.visited_this_loop:
-				tile.visited_this_loop = true
-				tile.pass_count += 1
-				EventBus.tile_passed.emit(tile.tile_index)
-			return
-
-func _on_tile_clicked(tile: Tile) -> void:
-	if tile.is_altar:
-		altar_panel.open(tile)
-	elif tile.has_enemy():
-		_enemy_inspect.open(tile.enemy)
-	else:
-		tile_rule_panel.open(tile)
-
-func reset_tiles() -> void:
-	for tile in tiles_container.get_children():
-		tile.pass_count = 0
-		tile.visited_this_loop = false
-		tile.rule_slots.clear()
-		if not tile.is_altar:
-			var max_rules := DataTables.TILE_MAX_RULES[tile.tile_index] if tile.tile_index < DataTables.TILE_MAX_RULES.size() else 1
-			for i in max_rules:
-				tile.rule_slots.append({"trigger": null, "effect": null})
-		else:
-			tile.altar_slots.fill(null)
-
-func _on_player_died() -> void:
-	add_child(GAME_OVER_SCENE.instantiate())
-
-func _on_game_won() -> void:
-	add_child(GAME_WIN_SCENE.instantiate())
-
-func _on_phase_changed(new_phase: int) -> void:
-	_phase_transition.show_for_phase(new_phase)
-	for tile in tiles_container.get_children():
-		if tile.is_altar:
-			tile.resize_altar_for_phase(new_phase)
 
 func _spawn_tutorial_enemies() -> void:
 	for child in enemies_container.get_children():
