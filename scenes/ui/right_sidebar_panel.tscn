@@ -45,7 +45,6 @@ offset_bottom = -8.0
 
 [node name="TopMargin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 8
@@ -61,7 +60,6 @@ theme_override_colors/separator_color = Color(0.588, 0.451, 0.196, 0.3)
 
 [node name="BotMargin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
