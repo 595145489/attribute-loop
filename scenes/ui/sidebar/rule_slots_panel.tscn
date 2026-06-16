@@ -6,7 +6,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_slnvk"]
 
 [node name="RuleSlotsPanel" type="PanelContainer" unique_id=1371514495]
-custom_minimum_size = Vector2(150, 0)
 theme_override_styles/panel = SubResource("StyleBoxEmpty_slnvk")
 script = ExtResource("1_slnvk")
 
@@ -25,8 +24,8 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="ExampleEntry1" parent="VBox/SlotsContainer" instance=ExtResource("2_entry")]
+[node name="ExampleEntry1" parent="VBox/SlotsContainer" unique_id=1761217991 instance=ExtResource("2_entry")]
 layout_mode = 2
 
-[node name="ExampleEntry2" parent="VBox/SlotsContainer" instance=ExtResource("2_entry")]
+[node name="ExampleEntry2" parent="VBox/SlotsContainer" unique_id=1873543671 instance=ExtResource("2_entry")]
 layout_mode = 2

@@ -2,32 +2,32 @@
 
 [ext_resource type="Script" uid="uid://cpalthb6l3pcc" path="res://src/ui/ServiceBar.gd" id="1_sb"]
 
-[node name="ServiceBar" type="VBoxContainer"]
+[node name="ServiceBar" type="VBoxContainer" unique_id=1141704883]
 theme_override_constants/separation = 3
 script = ExtResource("1_sb")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=708270040]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.25, 0.15, 0.05, 1)
 theme_override_font_sizes/font_size = 13
 text = "当前道具"
 horizontal_alignment = 1
 
-[node name="ExampleBtn1" type="Button" parent="."]
+[node name="ExampleBtn1" type="Button" parent="." unique_id=2090464389]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
 text = "词条改写"
 
-[node name="ExampleBtn2" type="Button" parent="."]
+[node name="ExampleBtn2" type="Button" parent="." unique_id=573193525]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
 text = "迅捷折纸"
 
-[node name="ExampleBtn3" type="Button" parent="."]
+[node name="ExampleBtn3" type="Button" parent="." unique_id=723445882]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
-text = "—"
 disabled = true
+text = "—"
