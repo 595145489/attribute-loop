@@ -91,6 +91,9 @@ script = ExtResource("15_am")
 
 [node name="HUD" parent="UI" unique_id=1040373391 instance=ExtResource("7_hud")]
 
+[node name="RightSidebarPanel" parent="UI" unique_id=200000001 instance=ExtResource("19_rsp")]
+grow_vertical = 2
+
 [node name="StripPanel" parent="UI" unique_id=285933306 instance=ExtResource("8_strip")]
 
 [node name="InventoryPanel" parent="UI" unique_id=388834648 instance=ExtResource("9_inv")]
@@ -105,9 +108,6 @@ custom_minimum_size = Vector2(450, 350)
 
 [node name="AuctionPanel" parent="UI" unique_id=833979863 instance=ExtResource("16_ap")]
 visible = false
-
-[node name="RightSidebarPanel" parent="UI" unique_id=200000001 instance=ExtResource("19_rsp")]
-grow_vertical = 2
 
 [node name="ServiceActivatePopup" parent="UI" unique_id=547909871 instance=ExtResource("18_sap")]
 grow_horizontal = 2
