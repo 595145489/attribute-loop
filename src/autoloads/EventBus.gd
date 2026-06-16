@@ -44,3 +44,4 @@ signal altar_panel_closed
 signal altar_slot_selected
 signal tutorial_setup_altar_gift
 signal altar_activated
+signal rule_slots_changed
