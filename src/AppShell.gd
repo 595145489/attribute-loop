@@ -1,6 +1,7 @@
 extends Node
 
 @onready var _main: Node2D = $GameRow/SubViewportContainer/GameViewport/Main
+@onready var _game_viewport: SubViewport = $GameRow/SubViewportContainer/GameViewport
 @onready var _hud: HUD = $UI/HUD
 @onready var _strip_panel: StripPanel = $UI/StripPanel
 @onready var _inventory_panel: InventoryPanel = $UI/InventoryPanel
@@ -12,6 +13,7 @@ extends Node
 @onready var _ui: Node = $UI
 
 func _ready() -> void:
+	_game_viewport.size = Vector2i(1152, 648)
 	_main.setup_ui({
 		"strip_panel": _strip_panel,
 		"inventory_panel": _inventory_panel,
