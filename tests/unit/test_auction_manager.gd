@@ -258,3 +258,9 @@ func test_phantom_a_prefers_stat_dmg() -> void:
 	p.init(AuctionManager.PhantomBuyer.Personality.AGGRESSIVE,
 		[AuctionManager.ServiceType.STAT_DMG, AuctionManager.ServiceType.STAT_HP])
 	assert_eq(p.interest(AuctionManager.ServiceType.STAT_DMG), 3)
+
+func test_slot_rule_purchase_emits_rule_slots_changed() -> void:
+	watch_signals(EventBus)
+	var am := AuctionManager.new()
+	am.execute_service(AuctionManager.ServiceType.SLOT_RULE, {})
+	assert_signal_emitted(EventBus, "rule_slots_changed")

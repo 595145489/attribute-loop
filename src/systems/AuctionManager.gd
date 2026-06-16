@@ -169,6 +169,7 @@ func execute_service(service_type: int, params: Dictionary) -> void:
 			GameState.amplify_max_stacks += DataTables.config.auction_amplify_per_purchase
 		ServiceType.SLOT_RULE:
 			GameState.rule_slots.append({"trigger": null, "effect": null})
+			EventBus.rule_slots_changed.emit()
 		ServiceType.SLOT_SERVICE:
 			GameState.service_bar_max += 1
 	EventBus.service_bar_changed.emit()
