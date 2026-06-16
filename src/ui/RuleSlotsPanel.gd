@@ -1,7 +1,7 @@
 class_name RuleSlotsPanel
 extends PanelContainer
 
-const ENTRY = preload("res://scenes/ui/rule_slot_entry.tscn")
+const ENTRY = preload("res://scenes/ui/sidebar/rule_slot_entry.tscn")
 
 @onready var _container: VBoxContainer = $VBox/SlotsContainer
 

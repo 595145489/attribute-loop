@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://brlxm1rvdwiuh"]
 
 [ext_resource type="Script" uid="uid://g6ag25ctcq7l" path="res://src/ui/RightSidebarPanel.gd" id="1_rsp"]
-[ext_resource type="PackedScene" uid="uid://urf1lkq8h276" path="res://scenes/ui/rule_slots_panel.tscn" id="2_rsp"]
-[ext_resource type="PackedScene" uid="uid://cp4m8nb3r5yot" path="res://scenes/ui/service_bar.tscn" id="3_rsp"]
+[ext_resource type="PackedScene" uid="uid://urf1lkq8h276" path="res://scenes/ui/sidebar/rule_slots_panel.tscn" id="2_rsp"]
+[ext_resource type="PackedScene" uid="uid://cp4m8nb3r5yot" path="res://scenes/ui/sidebar/service_bar.tscn" id="3_rsp"]
 [ext_resource type="Texture2D" uid="uid://dr8kqmt4xe2dq" path="res://resources/ui/sidebar_border.png" id="4_border"]
 
 [node name="RightSidebarPanel" type="Control" unique_id=2080777791]
