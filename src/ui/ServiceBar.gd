@@ -29,7 +29,7 @@ func _refresh() -> void:
 
 	for i in MAX_SLOTS:
 		var btn := Button.new()
-		btn.custom_minimum_size = Vector2(144, 28)
+		btn.custom_minimum_size = Vector2(0, 28)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		if i < GameState.service_bar.size():
 			var svc: int = GameState.service_bar[i]
