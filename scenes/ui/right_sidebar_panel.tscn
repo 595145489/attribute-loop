@@ -7,6 +7,7 @@
 
 [node name="RightSidebarPanel" type="Control" unique_id=2080777791]
 layout_mode = 3
+anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,10 +32,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = 76.0
-offset_right = -25.0
-offset_bottom = -92.0
+offset_left = 12.0
+offset_top = 20.0
+offset_right = -12.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8

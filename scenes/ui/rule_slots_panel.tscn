@@ -15,8 +15,8 @@ theme_override_constants/separation = 3
 
 [node name="Title" type="Label" parent="VBox" unique_id=1176699033]
 layout_mode = 2
-theme_override_colors/font_color = Color(1.0, 0.92, 0.6, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.25, 0.15, 0.05, 1)
+theme_override_font_sizes/font_size = 13
 text = "已装备效果"
 horizontal_alignment = 1
 
