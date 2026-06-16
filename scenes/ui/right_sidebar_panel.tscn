@@ -30,6 +30,7 @@ theme_override_constants/separation = 8
 
 [node name="RuleSlotsPanel" parent="VBox" instance=ExtResource("2_rsp")]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="HSep" type="HSeparator" parent="VBox"]
 layout_mode = 2
@@ -37,3 +38,4 @@ theme_override_colors/separator_color = Color(0.588, 0.451, 0.196, 0.3)
 
 [node name="ServiceBar" parent="VBox" instance=ExtResource("3_rsp")]
 layout_mode = 2
+size_flags_vertical = 3
