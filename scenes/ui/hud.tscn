@@ -131,6 +131,7 @@ layout_mode = 2
 text = "祭坛"
 
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_hp")
 
@@ -148,7 +149,7 @@ text = "100 / 100"
 horizontal_alignment = 1
 
 [node name="HPBarContainer" type="Control" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=861021783]
-custom_minimum_size = Vector2(80, 6)
+custom_minimum_size = Vector2(130, 6)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -196,7 +197,6 @@ horizontal_alignment = 1
 
 [node name="PhasePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=741997355]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_phase")
 
 [node name="PhaseLabel" type="Label" parent="BottomBar/HContent/PhasePill" unique_id=1433079038]
@@ -204,6 +204,10 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.75, 1, 1)
 theme_override_font_sizes/font_size = 11
 text = "阶段 1 · 觉醒"
+
+[node name="Spacer" type="Control" parent="BottomBar/HContent" unique_id=1028286716]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="BagButton" type="Button" parent="BottomBar/HContent" unique_id=459070565]
 layout_mode = 2
