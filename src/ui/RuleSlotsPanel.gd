@@ -7,20 +7,16 @@ const ENTRY = preload("res://scenes/ui/rule_slot_entry.tscn")
 
 func _ready() -> void:
 	EventBus.rule_slots_changed.connect(_rebuild)
-	EventBus.rule_fired.connect(_on_rule_fired)
 	EventBus.rule_equipped.connect(_rebuild)
 	_rebuild()
 
 func _rebuild(_ignored = null) -> void:
 	for child in _container.get_children():
-		child.queue_free()
+		child.free()
 	for slot in GameState.rule_slots:
 		var entry: RuleSlotEntry = ENTRY.instantiate()
 		_container.add_child(entry)
 		entry.refresh(slot)
-
-func _on_rule_fired(_slot_idx: int, _effect_id: String, _value: float) -> void:
-	_refresh_all()
 
 func _refresh_all() -> void:
 	var children := _container.get_children()
@@ -28,5 +24,6 @@ func _refresh_all() -> void:
 		if i < GameState.rule_slots.size():
 			children[i].refresh(GameState.rule_slots[i])
 
+# Poll every frame: amplify_stacks/charge_stacks/dmg_boost_stacks have no dedicated change signals
 func _process(_delta: float) -> void:
 	_refresh_all()
