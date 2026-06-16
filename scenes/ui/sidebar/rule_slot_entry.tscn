@@ -1,17 +1,16 @@
 [gd_scene format=3 uid="uid://b6q2dkc5gj53p"]
 
 [ext_resource type="Script" uid="uid://02yb3gr270s6" path="res://src/ui/RuleSlotEntry.gd" id="1_mb6jb"]
-[ext_resource type="Texture2D" path="res://resources/ui/rule_slot_card.png" id="2_card"]
+[ext_resource type="Texture2D" uid="uid://b88k74vsghbv2" path="res://resources/ui/rule_slot_card.png" id="2_card"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
-texture = ExtResource("2_card")
 content_margin_left = 8.0
 content_margin_top = 4.0
 content_margin_right = 8.0
 content_margin_bottom = 4.0
+texture = ExtResource("2_card")
 
 [node name="RuleSlotEntry" type="PanelContainer" unique_id=1687021612]
-custom_minimum_size = Vector2(140, 0)
 theme_override_styles/panel = SubResource("StyleBoxTexture_card")
 script = ExtResource("1_mb6jb")
 
