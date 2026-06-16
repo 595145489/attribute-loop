@@ -29,22 +29,6 @@ var _float_tween: Tween = null
 	$SpeedControl/Speed3x,
 ]
 
-@onready var _t_name: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0/TName0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1/TName1,
-]
-@onready var _t_count: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/TGroup0/TCount0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/TGroup1/TCount1,
-]
-@onready var _e_name: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0/EName0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EName1,
-]
-@onready var _e_value: Array[Label] = [
-	$BottomBar/HContent/RulePanel0/RuleVBox0/EGroup0/EValue0,
-	$BottomBar/HContent/RulePanel1/RuleVBox1/EGroup1/EValue1,
-]
 
 func _ready() -> void:
 	bag_btn.pressed.connect(_on_bag_pressed)
@@ -84,52 +68,10 @@ func _process(_delta: float) -> void:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s  ⚠ Boss圈" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
-		for i in GameState.rule_slots.size():
-			_update_rule_panel(i)
 	else:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 		phase_label.text = "阶段%d · %s" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
-		for i in GameState.rule_slots.size():
-			_update_rule_panel(i)
-
-func _update_rule_panel(i: int) -> void:
-	var slot = GameState.rule_slots[i]
-	var t: ComponentData = slot.get("trigger")
-	var e: ComponentData = slot.get("effect")
-	if t == null or e == null:
-		_t_name[i].text = "— 空槽 —"
-		_t_count[i].text = ""
-		_e_name[i].text = ""
-		_e_value[i].text = ""
-		return
-	_t_name[i].text = t.display_name
-	_t_count[i].text = "%d/%d" % [t.trigger_count, int(t.trigger_value)]
-	_e_name[i].text = e.display_name
-	match e.id:
-		"治愈":
-			_e_value[i].text = "+%d" % int(e.effect_value)
-		"反射":
-			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
-		"护盾":
-			_e_value[i].text = "+%d" % int(e.effect_value)
-		"减伤":
-			_e_value[i].text = "×%d层" % int(e.effect_value)
-		"吸血":
-			_e_value[i].text = "%d%%" % int(e.effect_value * 100)
-		"强化":
-			_e_value[i].text = "×%d/%d" % [GameState.amplify_stacks, GameState.amplify_max_stacks]
-		"增伤":
-			_e_value[i].text = "×%d层" % int(e.effect_value)
-		"蓄能":
-			var potential := GameState.charge_stacks * DataTables.player.dmg_base
-			_e_value[i].text = "%d层 (%d)" % [GameState.charge_stacks, potential]
-		"灼烧":
-			_e_value[i].text = "×%d层" % int(e.effect_value)
-		"侵蚀":
-			_e_value[i].text = "-%d" % int(e.effect_value)
-		_:
-			_e_value[i].text = ""
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
