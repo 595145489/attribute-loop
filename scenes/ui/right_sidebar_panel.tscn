@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://right_sidebar_panel"]
+
+[ext_resource type="Script" path="res://src/ui/RightSidebarPanel.gd" id="1_rsp"]
+[ext_resource type="PackedScene" path="res://scenes/ui/rule_slots_panel.tscn" id="2_rsp"]
+[ext_resource type="PackedScene" path="res://scenes/ui/service_bar.tscn" id="3_rsp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.071, 0.063, 0.055, 0.95)
+border_width_left = 1
+border_color = Color(0.588, 0.451, 0.196, 0.5)
+
+[node name="RightSidebarPanel" type="PanelContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_bottom = -48.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
+script = ExtResource("1_rsp")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RuleSlotsPanel" parent="VBox" instance=ExtResource("2_rsp")]
+layout_mode = 2
+
+[node name="HSep" type="HSeparator" parent="VBox"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.588, 0.451, 0.196, 0.3)
+
+[node name="ServiceBar" parent="VBox" instance=ExtResource("3_rsp")]
+layout_mode = 2
