@@ -2,6 +2,8 @@ extends VBoxContainer
 
 const AuctionManager = preload("res://src/systems/AuctionManager.gd")
 
+const CARD_TEX = preload("res://resources/ui/service_btn_card.png")
+
 var MAX_SLOTS: int:
 	get: return GameState.service_bar_max
 
@@ -33,6 +35,15 @@ func _refresh() -> void:
 		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(0, 28)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var style := StyleBoxTexture.new()
+		style.texture = CARD_TEX
+		style.content_margin_left = 6.0
+		style.content_margin_right = 6.0
+		style.content_margin_top = 4.0
+		style.content_margin_bottom = 4.0
+		btn.add_theme_stylebox_override("normal", style)
+		btn.add_theme_stylebox_override("hover", style)
+		btn.add_theme_color_override("font_color", Color(0.95, 0.88, 0.65, 1))
 		if i < GameState.service_bar.size():
 			var svc: int = GameState.service_bar[i]
 			btn.text = AuctionManager.SERVICE_NAMES.get(svc, "?")
