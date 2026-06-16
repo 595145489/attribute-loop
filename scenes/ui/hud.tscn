@@ -124,10 +124,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bottombar")
 
 [node name="HContent" type="HBoxContainer" parent="BottomBar" unique_id=2110467670]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 12
 
 [node name="AltarButton" type="Button" parent="BottomBar/HContent" unique_id=1939459428]
 layout_mode = 2
+theme_override_font_sizes/font_size = 13
 text = "祭坛"
 
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
@@ -211,12 +212,12 @@ size_flags_horizontal = 3
 
 [node name="BagButton" type="Button" parent="BottomBar/HContent" unique_id=459070565]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 13
 text = "背包 [B] 0/12"
 
 [node name="CharButton" type="Button" parent="BottomBar/HContent" unique_id=123456789]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 13
 text = "角色 [C]"
 
 [node name="GoldPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=98663593]
@@ -254,10 +255,12 @@ text = "压力: 0/10圈"
 
 [node name="LogButton" type="Button" parent="BottomBar/HContent" unique_id=999000001]
 layout_mode = 2
+theme_override_font_sizes/font_size = 13
 text = "日志"
 
 [node name="AuctionBtn" type="Button" parent="BottomBar/HContent" unique_id=777000001]
 layout_mode = 2
+theme_override_font_sizes/font_size = 13
 text = "残市"
 
 [node name="LogPanel" parent="." unique_id=1209956492 instance=ExtResource("2_logpanel")]
