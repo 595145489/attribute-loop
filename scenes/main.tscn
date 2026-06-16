@@ -15,9 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://crqallxam48kt" path="res://resources/backgrounds/bg_ground.png" id="14_bg"]
 [ext_resource type="Script" uid="uid://biuqfw2obivot" path="res://src/systems/AuctionManager.gd" id="15_am"]
 [ext_resource type="PackedScene" uid="uid://bui67km5rawj" path="res://scenes/ui/auction_panel.tscn" id="16_ap"]
-[ext_resource type="PackedScene" path="res://scenes/ui/service_bar.tscn" id="17_sb"]
 [ext_resource type="PackedScene" uid="uid://gycr1575051c" path="res://scenes/tutorial/tutorial_overlay.tscn" id="18_0ld40"]
 [ext_resource type="PackedScene" uid="uid://cygyugu7brhl8" path="res://scenes/ui/service_activate_popup.tscn" id="18_sap"]
+[ext_resource type="PackedScene" path="res://scenes/ui/right_sidebar_panel.tscn" id="19_rsp"]
 [ext_resource type="Script" uid="uid://cnf0x261h6lot" path="res://src/tutorial/TutorialOverlay.gd" id="19_gqmmt"]
 
 [sub_resource type="Gradient" id="Gradient_track"]
@@ -101,8 +101,7 @@ custom_minimum_size = Vector2(450, 350)
 
 [node name="AuctionPanel" parent="UI" unique_id=833979863 instance=ExtResource("16_ap")]
 
-[node name="ServiceBar" parent="UI" unique_id=900275950 instance=ExtResource("17_sb")]
-offset_top = 36.0
+[node name="RightSidebarPanel" parent="UI" unique_id=200000001 instance=ExtResource("19_rsp")]
 
 [node name="ServiceActivatePopup" parent="UI" unique_id=547909871 instance=ExtResource("18_sap")]
 grow_horizontal = 2
