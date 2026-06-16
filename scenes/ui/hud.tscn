@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://bsuchyd2fx4tr" path="res://resources/ui/loop_pill_bg.png" id="13_loop"]
 [ext_resource type="PackedScene" uid="uid://urf1lkq8h276" path="res://scenes/ui/rule_slots_panel.tscn" id="14_gonto"]
 [ext_resource type="Texture2D" uid="uid://d3arel2q1m2sa" path="res://resources/ui/btn_speed_atlas.png" id="14_spd_atlas"]
-[ext_resource type="Script" path="res://src/ui/RuleSlotsPanel.gd" id="15_cwdlq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottombar"]
 bg_color = Color(0.96, 0.91, 0.78, 0.55)
@@ -197,6 +196,7 @@ horizontal_alignment = 1
 
 [node name="PhasePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=741997355]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_phase")
 
 [node name="PhaseLabel" type="Label" parent="BottomBar/HContent/PhasePill" unique_id=1433079038]
@@ -308,7 +308,7 @@ button_group = SubResource("ButtonGroup_speed")
 icon = SubResource("AtlasTexture_3x")
 expand_icon = true
 
-[node name="RuleSlotsPanel" type="PanelContainer" parent="." unique_id=1371514495 instance=ExtResource("14_gonto")]
+[node name="RuleSlotsPanel" parent="." unique_id=1371514495 instance=ExtResource("14_gonto")]
 anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -319,4 +319,3 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 2
-script = ExtResource("15_cwdlq")
