@@ -193,7 +193,7 @@ func _calc_player_dmg() -> int:
 func _calc_charge_bonus() -> int:
     if GameState.charge_stacks <= 0:
         return 0
-    return GameState.charge_stacks * DataTables.player.dmg_base
+    return GameState.charge_stacks * _calc_player_dmg()
 
 func _release_charge_if_any() -> void:
     if GameState.charge_stacks <= 0:
