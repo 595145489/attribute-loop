@@ -3,25 +3,18 @@
 [ext_resource type="Script" uid="uid://g6ag25ctcq7l" path="res://src/ui/RightSidebarPanel.gd" id="1_rsp"]
 [ext_resource type="PackedScene" uid="uid://urf1lkq8h276" path="res://scenes/ui/rule_slots_panel.tscn" id="2_rsp"]
 [ext_resource type="PackedScene" uid="uid://cp4m8nb3r5yot" path="res://scenes/ui/service_bar.tscn" id="3_rsp"]
+[ext_resource type="Texture2D" path="res://resources/ui/sidebar_border.png" id="4_border"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
-content_margin_left = 10.0
-content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
-bg_color = Color(0.08, 0.065, 0.05, 0.97)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.6, 0.45, 0.2, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.4)
-shadow_size = 6
-shadow_offset = Vector2(-2, 0)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sidebar"]
+texture = ExtResource("4_border")
+content_margin_left = 40.0
+content_margin_top = 60.0
+content_margin_right = 20.0
+content_margin_bottom = 60.0
+expand_margin_left = 20.0
+expand_margin_top = 40.0
+expand_margin_right = 10.0
+expand_margin_bottom = 40.0
 
 [node name="RightSidebarPanel" type="PanelContainer"]
 anchors_preset = -1
@@ -31,7 +24,7 @@ anchor_bottom = 1.0
 offset_left = -175.0
 offset_bottom = -48.0
 grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
+theme_override_styles/panel = SubResource("StyleBoxTexture_sidebar")
 script = ExtResource("1_rsp")
 
 [node name="VBox" type="VBoxContainer" parent="."]
