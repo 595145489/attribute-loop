@@ -1,26 +1,18 @@
 [gd_scene format=3 uid="uid://b6q2dkc5gj53p"]
 
 [ext_resource type="Script" uid="uid://02yb3gr270s6" path="res://src/ui/RuleSlotEntry.gd" id="1_mb6jb"]
+[ext_resource type="Texture2D" path="res://resources/ui/rule_slot_card.png" id="2_card"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb6jb"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 2.0
-bg_color = Color(0.15, 0.12, 0.08, 0.6)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.5, 0.38, 0.15, 0.4)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
+texture = ExtResource("2_card")
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
 
 [node name="RuleSlotEntry" type="PanelContainer" unique_id=1687021612]
 custom_minimum_size = Vector2(140, 0)
-theme_override_styles/panel = SubResource("StyleBoxFlat_mb6jb")
+theme_override_styles/panel = SubResource("StyleBoxTexture_card")
 script = ExtResource("1_mb6jb")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1178755540]
@@ -33,7 +25,7 @@ layout_mode = 2
 [node name="TName" type="Label" parent="VBox/TRow" unique_id=1888498434]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.9, 0.85, 0.7, 1)
+theme_override_colors/font_color = Color(0.95, 0.88, 0.65, 1)
 theme_override_font_sizes/font_size = 10
 
 [node name="TCount" type="Label" parent="VBox/TRow" unique_id=1328546788]
@@ -47,10 +39,10 @@ layout_mode = 2
 [node name="EName" type="Label" parent="VBox/ERow" unique_id=1173148936]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.75, 0.9, 0.75, 1)
+theme_override_colors/font_color = Color(0.75, 0.95, 0.75, 1)
 theme_override_font_sizes/font_size = 10
 
 [node name="EValue" type="Label" parent="VBox/ERow" unique_id=616699317]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_font_sizes/font_size = 10
