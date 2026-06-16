@@ -90,4 +90,9 @@ static func _effect_line(comp: ComponentData) -> String:
 		"护盾":    return "获得 %.0f 点护盾" % e
 		"减伤":    return "叠加 %.0f 层减伤，敌方伤害 -%d%%" % [e, int(e) * 10]
 		"吸血":    return "获得 %.0f%% 吸血率" % (e * 100.0)
+		"强化":    return "叠加 1 层强化，下一个效果触发时倍增（当前上限 %d 层）" % GameState.amplify_max_stacks
+		"增伤":    return "叠加 %.0f 层增伤，每层提升 10%% 攻击伤害，每圈衰减 1 层" % e
+		"蓄能":    return "积累 %.0f 层蓄能，下次攻击时释放，每层附加一次基础攻击伤害" % e
+		"灼烧":    return "施加 %.0f 层灼烧，每秒每层造成 5 点伤害，战斗后清除" % e
+		"侵蚀":    return "降低敌人最大生命 %.0f 点，当前生命超出上限立即截断（最低 1）" % e
 	return "效果值 %.1f" % e

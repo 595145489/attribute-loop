@@ -41,6 +41,11 @@ func _load_components() -> void:
 		"res://data/components/effect_护盾.tres",
 		"res://data/components/effect_减伤.tres",
 		"res://data/components/effect_吸血.tres",
+		"res://data/components/effect_强化.tres",
+		"res://data/components/effect_增伤.tres",
+		"res://data/components/effect_蓄能.tres",
+		"res://data/components/effect_灼烧.tres",
+		"res://data/components/effect_侵蚀.tres",
 	]
 	for path in paths:
 		var c: ComponentData = load(path)
