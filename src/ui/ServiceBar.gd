@@ -18,6 +18,13 @@ func _refresh() -> void:
 	for c in get_children():
 		c.queue_free()
 
+	var title := Label.new()
+	title.text = "当前道具"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_color_override("font_color", Color(0.56, 0.5, 0.72, 1))
+	title.add_theme_font_size_override("font_size", 10)
+	add_child(title)
+
 	if _auction_manager != null and _auction_manager._pending_overflow_service >= 0:
 		if _activate_popup != null:
 			_activate_popup.open_discard(
