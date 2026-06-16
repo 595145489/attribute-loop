@@ -75,9 +75,20 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_C:
-			_on_char_pressed()
-			get_viewport().set_input_as_handled()
+		match event.keycode:
+			KEY_C:
+				_on_char_pressed()
+				get_viewport().set_input_as_handled()
+			KEY_A:
+				_on_altar_pressed()
+				get_viewport().set_input_as_handled()
+			KEY_L:
+				log_panel.toggle()
+				get_viewport().set_input_as_handled()
+			KEY_M:
+				if _auction_panel:
+					_auction_panel.toggle()
+				get_viewport().set_input_as_handled()
 
 func _on_char_pressed() -> void:
 	if _char_panel == null:

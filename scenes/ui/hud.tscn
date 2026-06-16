@@ -129,7 +129,7 @@ theme_override_constants/separation = 12
 [node name="AltarButton" type="Button" parent="BottomBar/HContent" unique_id=1939459428]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "祭坛"
+text = "祭坛 [A]"
 
 [node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
 custom_minimum_size = Vector2(160, 0)
@@ -256,12 +256,12 @@ text = "压力: 0/10圈"
 [node name="LogButton" type="Button" parent="BottomBar/HContent" unique_id=999000001]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "日志"
+text = "日志 [L]"
 
 [node name="AuctionBtn" type="Button" parent="BottomBar/HContent" unique_id=777000001]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "残市"
+text = "残市 [M]"
 
 [node name="LogPanel" parent="." unique_id=1209956492 instance=ExtResource("2_logpanel")]
 visible = false
