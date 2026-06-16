@@ -74,7 +74,7 @@ func _input(event: InputEvent) -> void:
 	if local_event == null:
 		return
 	var p := local_event.position
-	var guard_local: Vector2 = guard_position - global_position
+	var guard_local: Vector2 = guard_position - position
 	var hit_tile: bool = abs(p.x) <= 14.0 and abs(p.y) <= 14.0
 	var hit_guard: bool = has_enemy() and (p - guard_local).length() <= 32.0
 	if hit_tile or hit_guard:
