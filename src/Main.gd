@@ -45,7 +45,7 @@ func _ready() -> void:
 	auction_panel.setup(auction_manager)
 	service_activate_popup.setup(auction_manager, _tiles)
 	right_sidebar.setup(auction_manager, service_activate_popup)
-	hud.setup_auction(auction_panel, null)
+	hud.setup_auction(auction_panel)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.phase_changed.connect(_on_phase_changed)
 	EventBus.game_won.connect(_on_game_won)

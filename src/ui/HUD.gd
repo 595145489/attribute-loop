@@ -148,7 +148,6 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	_float_tween.tween_callback(float_label.hide)
 
 var _auction_panel = null
-var _service_bar = null
 
 func _on_combat_enrage(stacks: int) -> void:
 	float_label.text = "激怒 ×%d" % stacks
@@ -160,8 +159,7 @@ func _on_combat_enrage(stacks: int) -> void:
 	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.2)
 	_float_tween.tween_callback(float_label.hide)
 
-func setup_auction(ap, sb) -> void:
+func setup_auction(ap) -> void:
 	_auction_panel = ap
-	_service_bar = sb
 	if _auction_panel:
 		auction_btn.pressed.connect(_auction_panel.toggle)
