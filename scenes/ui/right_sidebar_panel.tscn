@@ -7,38 +7,6 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sidebar"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.05, 0.04, 0.03, 0.6)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.6, 0.45, 0.2, 0.5)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bot"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.05, 0.04, 0.03, 0.6)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.5, 0.38, 0.55, 0.5)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
 [node name="RightSidebarPanel" type="PanelContainer"]
 anchors_preset = -1
 anchor_left = 1.0
@@ -83,12 +51,7 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="TopFrame" type="PanelContainer" parent="VBox/TopMargin"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_top")
-
-[node name="RuleSlotsPanel" parent="VBox/TopMargin/TopFrame" instance=ExtResource("2_rsp")]
+[node name="RuleSlotsPanel" parent="VBox/TopMargin" instance=ExtResource("2_rsp")]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -104,11 +67,6 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 30
 
-[node name="BotFrame" type="PanelContainer" parent="VBox/BotMargin"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_bot")
-
-[node name="ServiceBar" parent="VBox/BotMargin/BotFrame" instance=ExtResource("3_rsp")]
+[node name="ServiceBar" parent="VBox/BotMargin" instance=ExtResource("3_rsp")]
 layout_mode = 2
 size_flags_vertical = 3
