@@ -1,16 +1,39 @@
 [gd_scene format=3 uid="uid://urf1lkq8h276"]
 
-[ext_resource type="Script" path="res://src/ui/RuleSlotsPanel.gd" id="1_slnvk"]
+[ext_resource type="Script" uid="uid://bqmbkcw63shsp" path="res://src/ui/RuleSlotsPanel.gd" id="1_slnvk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slnvk"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.08, 0.06, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.45, 0.2, 0.5)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="RuleSlotsPanel" type="PanelContainer" unique_id=1371514495]
+custom_minimum_size = Vector2(150, 0)
+theme_override_styles/panel = SubResource("StyleBoxFlat_slnvk")
 script = ExtResource("1_slnvk")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=694439308]
 layout_mode = 2
+theme_override_constants/separation = 3
 
 [node name="Title" type="Label" parent="VBox" unique_id=1176699033]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.75, 0.5, 1)
+theme_override_font_sizes/font_size = 10
 text = "装备规则"
+horizontal_alignment = 1
 
 [node name="SlotsContainer" type="VBoxContainer" parent="VBox" unique_id=717246962]
 layout_mode = 2
+theme_override_constants/separation = 4
