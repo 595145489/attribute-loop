@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://urf1lkq8h276"]
 
 [ext_resource type="Script" uid="uid://bqmbkcw63shsp" path="res://src/ui/RuleSlotsPanel.gd" id="1_slnvk"]
+[ext_resource type="PackedScene" uid="uid://b6q2dkc5gj53p" path="res://scenes/ui/sidebar/rule_slot_entry.tscn" id="2_entry"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_slnvk"]
 
@@ -23,3 +24,9 @@ horizontal_alignment = 1
 [node name="SlotsContainer" type="VBoxContainer" parent="VBox" unique_id=717246962]
 layout_mode = 2
 theme_override_constants/separation = 4
+
+[node name="ExampleEntry1" parent="VBox/SlotsContainer" instance=ExtResource("2_entry")]
+layout_mode = 2
+
+[node name="ExampleEntry2" parent="VBox/SlotsContainer" instance=ExtResource("2_entry")]
+layout_mode = 2
