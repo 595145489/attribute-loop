@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cp4m8nb3r5yot"]
 
 [ext_resource type="Script" uid="uid://cpalthb6l3pcc" path="res://src/ui/ServiceBar.gd" id="1_sb"]
+[ext_resource type="PackedScene" uid="uid://dsbtn1a2b3c4d5" path="res://scenes/ui/sidebar/service_btn.tscn" id="2_btn"]
 
 [node name="ServiceBar" type="VBoxContainer" unique_id=1141704883]
 theme_override_constants/separation = 3
@@ -12,3 +13,16 @@ theme_override_colors/font_color = Color(0.25, 0.15, 0.05, 1)
 theme_override_font_sizes/font_size = 13
 text = "当前道具"
 horizontal_alignment = 1
+
+[node name="ExampleBtn1" parent="." instance=ExtResource("2_btn")]
+layout_mode = 2
+text = "词条改写"
+
+[node name="ExampleBtn2" parent="." instance=ExtResource("2_btn")]
+layout_mode = 2
+text = "迅捷折纸"
+
+[node name="ExampleBtn3" parent="." instance=ExtResource("2_btn")]
+layout_mode = 2
+disabled = true
+text = "—"
