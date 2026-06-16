@@ -28,7 +28,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("4_border")
 expand_mode = 1
-stretch_mode = 2
+stretch_mode = 0
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 1
