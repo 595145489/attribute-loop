@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b6q2dkc5gj53p"]
+
+[ext_resource type="Script" path="res://src/ui/RuleSlotEntry.gd" id="1_mb6jb"]
+
+[node name="RuleSlotEntry" type="PanelContainer" unique_id=1687021612]
+script = ExtResource("1_mb6jb")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1178755540]
+layout_mode = 2
+
+[node name="TRow" type="HBoxContainer" parent="VBox" unique_id=935333972]
+layout_mode = 2
+
+[node name="TName" type="Label" parent="VBox/TRow" unique_id=1888498434]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TCount" type="Label" parent="VBox/TRow" unique_id=1328546788]
+layout_mode = 2
+
+[node name="ERow" type="HBoxContainer" parent="VBox" unique_id=103296447]
+layout_mode = 2
+
+[node name="EName" type="Label" parent="VBox/ERow" unique_id=1173148936]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EValue" type="Label" parent="VBox/ERow" unique_id=616699317]
+layout_mode = 2
