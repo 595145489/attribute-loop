@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://urf1lkq8h276"]
+
+[ext_resource type="Script" path="res://src/ui/RuleSlotsPanel.gd" id="1_slnvk"]
+
+[node name="RuleSlotsPanel" type="PanelContainer" unique_id=1371514495]
+script = ExtResource("1_slnvk")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=694439308]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox" unique_id=1176699033]
+layout_mode = 2
+text = "装备规则"
+
+[node name="SlotsContainer" type="VBoxContainer" parent="VBox" unique_id=717246962]
+layout_mode = 2
