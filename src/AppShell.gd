@@ -1,14 +1,13 @@
 extends Node
 
-@onready var _main: Node2D = $GameRow/SubViewportContainer/GameViewport/Main
-@onready var _game_viewport: SubViewport = $GameRow/SubViewportContainer/GameViewport
+@onready var _main: Node2D = $Main
 @onready var _hud: HUD = $UI/HUD
 @onready var _strip_panel: StripPanel = $UI/StripPanel
 @onready var _inventory_panel: InventoryPanel = $UI/InventoryPanel
 @onready var _tile_rule_panel = $UI/TileRulePanel
 @onready var _altar_panel = $UI/AltarPanel
 @onready var _auction_panel = $UI/AuctionPanel
-@onready var _right_sidebar: RightSidebarPanel = $GameRow/RightSidebarPanel
+@onready var _right_sidebar: RightSidebarPanel = $UI/RightSidebarPanel
 @onready var _service_activate_popup = $UI/ServiceActivatePopup
 @onready var _ui: Node = $UI
 
