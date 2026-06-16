@@ -54,7 +54,7 @@ stretch = true
 
 [node name="GameViewport" type="SubViewport" parent="GameRow/SubViewportContainer"]
 own_world_2d = false
-size = Vector2i(922, 600)
+size = Vector2i(1152, 648)
 render_target_update_mode = 3
 
 [node name="Main" type="Node2D" parent="GameRow/SubViewportContainer/GameViewport" unique_id=1791836967]
