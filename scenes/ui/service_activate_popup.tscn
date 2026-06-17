@@ -31,10 +31,10 @@ stretch_mode = 6
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 36.0
-offset_right = -40.0
-offset_bottom = -36.0
+offset_left = 48.0
+offset_top = 60.0
+offset_right = -48.0
+offset_bottom = -60.0
 theme_override_constants/separation = 8
 
 [node name="Header" type="VBoxContainer" parent="VBox" unique_id=932817473]
@@ -45,13 +45,13 @@ theme_override_constants/separation = 2
 [node name="Title" type="Label" parent="VBox/Header" unique_id=792395434]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941, 0.816, 0.502, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "服务"
 
 [node name="Subtitle" type="Label" parent="VBox/Header" unique_id=312984830]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.784, 0.659, 0.333, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 14
 
 [node name="Divider" type="HSeparator" parent="VBox" unique_id=406101731]
 layout_mode = 2
@@ -77,10 +77,12 @@ theme_override_constants/separation = 8
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.690, 0.565, 0.376, 1)
+theme_override_font_sizes/font_size = 15
 text = "取消"
 
 [node name="Confirm" type="Button" parent="VBox/Buttons" unique_id=536145923]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.941, 0.816, 0.502, 1)
+theme_override_font_sizes/font_size = 15
 text = "确认"
