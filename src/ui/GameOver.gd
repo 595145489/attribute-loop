@@ -21,3 +21,15 @@ func _ready() -> void:
 func _on_restart() -> void:
 	GameState.reset()
 	get_tree().reload_current_scene()
+
+func _get_narrative(outcome: String) -> String:
+	if outcome == "win":
+		return "折纸世界的裁决已落下。那个完成了循环的人，是你。愿你的折痕永远清晰。"
+	else:
+		return "你走过了许多圈，见过了许多折叠与展开。这已经足够了。愿你在下一次循环中走得更远。"
+
+func _get_background_path(outcome: String) -> String:
+	if outcome == "win":
+		return "res://resources/backgrounds/bg_game_over_win.png"
+	else:
+		return "res://resources/backgrounds/bg_game_over_lose.png"
