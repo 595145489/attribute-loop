@@ -39,12 +39,13 @@ point_count = 6
 script = ExtResource("20_shell")
 
 [node name="Main" type="Node2D" parent="." unique_id=1791836967]
+position = Vector2(0, 75)
 scale = Vector2(0.85, 0.85)
 script = ExtResource("1_main")
 
 [node name="Background" type="Sprite2D" parent="Main" unique_id=1100000001]
-position = Vector2(585.99994, 350.30493)
-scale = Vector2(1.140625, 0.92291903)
+position = Vector2(575.7058, 265.88235)
+scale = Vector2(1.1205193, 0.9191176)
 texture = ExtResource("14_bg")
 
 [node name="TrackLine" type="Line2D" parent="Main" unique_id=1620710]
@@ -92,7 +93,6 @@ script = ExtResource("15_am")
 [node name="HUD" parent="UI" unique_id=1040373391 instance=ExtResource("7_hud")]
 
 [node name="RightSidebarPanel" parent="UI" unique_id=200000001 instance=ExtResource("19_rsp")]
-grow_vertical = 2
 
 [node name="StripPanel" parent="UI" unique_id=285933306 instance=ExtResource("8_strip")]
 
