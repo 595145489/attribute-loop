@@ -92,6 +92,7 @@ func reset() -> void:
 	boss_circle_pending = false
 	in_boss_circle = false
 	service_bar = []
+	service_bar.append(1)  # debug: start with COMP_REWRITE for popup testing
 	deletion_free = false
 	enemy_pardon_type = ""
 	enemy_pardon_remaining = 0
