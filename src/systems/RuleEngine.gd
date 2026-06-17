@@ -12,6 +12,11 @@ func _ready() -> void:
 	EventBus.loop_completed.connect(_on_loop_completed)
 	EventBus.tile_passed.connect(_on_tile_passed)
 	EventBus.rule_fired.connect(_on_rule_fired)
+	EventBus.shield_absorbed.connect(func(_a): _evaluate_player_triggers(["护盾"]))
+	EventBus.slow_applied.connect(func(_s): _evaluate_player_triggers(["减伤"]))
+	EventBus.lifesteal_healed.connect(func(_a): _evaluate_player_triggers(["吸血"]))
+	EventBus.amplify_consumed.connect(func(): _evaluate_player_triggers(["强化"]))
+	EventBus.dmg_boost_consumed.connect(func(_s): _evaluate_player_triggers(["增伤"]))
 
 func set_tiles(tiles: Array) -> void:
 	_tiles = tiles
@@ -34,6 +39,14 @@ func _on_player_hit(_damage: int) -> void:
 func _on_rule_fired(_slot_idx: int, effect_id: String, _value: float) -> void:
 	if effect_id == "治愈":
 		_evaluate_player_triggers(["治愈"])
+	if effect_id == "反射":
+		_evaluate_player_triggers(["反射"])
+	if effect_id == "蓄能释放":
+		_evaluate_player_triggers(["蓄能"])
+	if effect_id == "灼烧":
+		_evaluate_player_triggers(["灼烧"])
+	if effect_id == "侵蚀":
+		_evaluate_player_triggers(["侵蚀"])
 	if effect_id in ["强化", "增伤", "蓄能", "蓄能释放", "灼烧", "侵蚀"]:
 		return
 	if not _firing_rule_trigger:
@@ -52,6 +65,7 @@ func _on_loop_completed() -> void:
 	GameState.dmg_boost_stacks = max(0, GameState.dmg_boost_stacks - 1)
 
 func _on_tile_passed(tile_idx: int) -> void:
+	GameState.current_tile_index = tile_idx
 	_evaluate_player_triggers(["经过"])
 	if tile_idx < _tiles.size() and _tiles[tile_idx] != null:
 		_evaluate_tile_rules(_tiles[tile_idx])

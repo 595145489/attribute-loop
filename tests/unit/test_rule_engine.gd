@@ -428,3 +428,51 @@ func test_amplify_consumed_not_emitted_without_amplify() -> void:
 	GameState.hp = 50
 	EventBus.loop_completed.emit()
 	assert_signal_not_emitted(EventBus, "amplify_consumed")
+
+func test_shield_trigger_counts_on_shield_absorbed() -> void:
+	_make_rule("护盾", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.shield_absorbed.emit(20)
+	assert_eq(t.trigger_count, 1)
+
+func test_slow_trigger_counts_on_slow_applied() -> void:
+	_make_rule("减伤", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.slow_applied.emit(2)
+	assert_eq(t.trigger_count, 1)
+
+func test_lifesteal_trigger_counts_on_lifesteal_healed() -> void:
+	_make_rule("吸血", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.lifesteal_healed.emit(5)
+	assert_eq(t.trigger_count, 1)
+
+func test_amplify_trigger_counts_on_amplify_consumed() -> void:
+	_make_rule("强化", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.amplify_consumed.emit()
+	assert_eq(t.trigger_count, 1)
+
+func test_dmg_boost_trigger_counts_on_dmg_boost_consumed() -> void:
+	_make_rule("增伤", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.dmg_boost_consumed.emit(2)
+	assert_eq(t.trigger_count, 1)
+
+func test_charge_trigger_counts_on_charge_release() -> void:
+	_make_rule("蓄能", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "蓄能释放", 10.0)
+	assert_eq(t.trigger_count, 1)
+
+func test_burn_trigger_counts_on_burn_rule_fired() -> void:
+	_make_rule("灼烧", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "灼烧", 3.0)
+	assert_eq(t.trigger_count, 1)
+
+func test_erode_trigger_counts_on_erode_rule_fired() -> void:
+	_make_rule("侵蚀", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "侵蚀", 10.0)
+	assert_eq(t.trigger_count, 1)
