@@ -42,6 +42,34 @@ const SERVICE_DESCRIPTIONS: Dictionary = {
 	ServiceType.SLOT_SERVICE:   "永久 服务栏容量 +1",
 }
 
+const SERVICE_SUBTITLES: Dictionary = {
+	ServiceType.COMP_REWRITE:   "效果词条 · 效果值 +20%",
+	ServiceType.COMP_MERGE:     "效果词条 · 总和 × 0.8",
+	ServiceType.ENEMY_PARDON:   "指定敌人 · 持续 3 次遭遇",
+	ServiceType.DELETE_PARDON:  "下次删除 · 0 费用",
+	ServiceType.PRESSURE_DELAY: "世界压力 · 计时 -1 圈",
+	ServiceType.STAT_DMG:       "属性提升 · 永久生效",
+	ServiceType.STAT_HP:        "属性提升 · 永久生效",
+	ServiceType.STAT_SPEED:     "属性提升 · 永久生效",
+	ServiceType.STAT_AMPLIFY:   "属性提升 · 永久生效",
+	ServiceType.SLOT_RULE:      "槽位扩容 · 永久生效",
+	ServiceType.SLOT_SERVICE:   "槽位扩容 · 永久生效",
+}
+
+const SERVICE_FLAVOUR: Dictionary = {
+	ServiceType.COMP_REWRITE:   "折痕可以修正，但代价是更深的刻印。",
+	ServiceType.COMP_MERGE:     "两愿合一，形合则意合，意合则力合。",
+	ServiceType.ENEMY_PARDON:   "折纸之道，非战而胜，乃折而化之。",
+	ServiceType.DELETE_PARDON:  "有些错误，可以抹去，不留痕迹。",
+	ServiceType.PRESSURE_DELAY: "时间是最好的折叠工具，只需多一轮。",
+	ServiceType.STAT_DMG:       "以战磨砺，以血铸意。每一次挥剑，折痕更深。",
+	ServiceType.STAT_HP:        "筋骨强化，承压而不折。",
+	ServiceType.STAT_SPEED:     "迅如流水，折纸无声。",
+	ServiceType.STAT_AMPLIFY:   "潜能深埋，一旦唤醒，层叠无尽。",
+	ServiceType.SLOT_RULE:      "规则愈多，折叠愈深，世界愈复杂。",
+	ServiceType.SLOT_SERVICE:   "容量扩张，选择增多，道路更宽。",
+}
+
 var current_services: Array[int] = []
 var carried_over: Array[int] = []
 var player_bids: Dictionary = {}
