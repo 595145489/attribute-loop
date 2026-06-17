@@ -8,6 +8,11 @@ signal player_died
 signal player_hit(damage: int)
 signal tile_passed(tile_idx: int)
 signal rule_fired(slot_idx: int, effect_id: String, value: float)
+signal shield_absorbed(amount: int)
+signal slow_applied(stacks: int)
+signal lifesteal_healed(amount: int)
+signal amplify_consumed()
+signal dmg_boost_consumed(stacks_used: int)
 signal gold_changed(new_amount: int)
 signal phase_changed(new_phase: int)
 signal verdict_loop_entered
