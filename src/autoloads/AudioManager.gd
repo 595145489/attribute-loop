@@ -4,6 +4,7 @@ enum State { EXPLORE, COMBAT, SILENT }
 
 var state: State = State.EXPLORE
 
+# Paths instead of preload — avoids startup hitches and headless parse errors for audio assets.
 const EXPLORE_PATHS := [
 	"res://resources/audio/bgm/explore_1.mp3",
 	"res://resources/audio/bgm/explore_2.mp3",
