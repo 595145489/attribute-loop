@@ -157,7 +157,7 @@ func _make_row(left_text: String, value_text: String, value_after: String,
 	val_lbl.text = value_text
 	val_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	val_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
-	val_lbl.add_theme_font_size_override("font_size", 11)
+	val_lbl.add_theme_font_size_override("font_size", 15)
 	val_lbl.set_meta("value_text", value_text)
 	val_lbl.set_meta("value_after", value_after)
 	hbox.add_child(val_lbl)
@@ -238,7 +238,7 @@ func _build_instant(svc: int) -> void:
 	desc_lbl.text = AuctionManager.SERVICE_DESCRIPTIONS.get(svc, "")
 	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	desc_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
-	desc_lbl.add_theme_font_size_override("font_size", 12)
+	desc_lbl.add_theme_font_size_override("font_size", 15)
 	content_container.add_child(desc_lbl)
 
 	var flavour_lbl := Label.new()
@@ -246,7 +246,7 @@ func _build_instant(svc: int) -> void:
 	flavour_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	flavour_lbl.add_theme_color_override("font_color", Color(COL_GOLD_MUTED.r,
 			COL_GOLD_MUTED.g, COL_GOLD_MUTED.b, 0.6))
-	flavour_lbl.add_theme_font_size_override("font_size", 10)
+	flavour_lbl.add_theme_font_size_override("font_size", 13)
 	content_container.add_child(flavour_lbl)
 
 func _build_comp_list(multi: bool) -> void:
@@ -254,7 +254,7 @@ func _build_comp_list(multi: bool) -> void:
 	desc_lbl.text = AuctionManager.SERVICE_DESCRIPTIONS.get(_current_service, "")
 	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	desc_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
-	desc_lbl.add_theme_font_size_override("font_size", 11)
+	desc_lbl.add_theme_font_size_override("font_size", 15)
 	content_container.add_child(desc_lbl)
 
 	var header_row := HBoxContainer.new()
@@ -262,12 +262,12 @@ func _build_comp_list(multi: bool) -> void:
 	left_h.text = "词条名称"
 	left_h.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	left_h.add_theme_color_override("font_color", Color(COL_GOLD_MUTED.r, COL_GOLD_MUTED.g, COL_GOLD_MUTED.b, 0.6))
-	left_h.add_theme_font_size_override("font_size", 9)
+	left_h.add_theme_font_size_override("font_size", 13)
 	var right_h := Label.new()
 	right_h.text = "当前 → 改写后" if not multi else "当前值"
 	right_h.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	right_h.add_theme_color_override("font_color", Color(COL_GOLD_MUTED.r, COL_GOLD_MUTED.g, COL_GOLD_MUTED.b, 0.6))
-	right_h.add_theme_font_size_override("font_size", 9)
+	right_h.add_theme_font_size_override("font_size", 13)
 	header_row.add_child(left_h)
 	header_row.add_child(right_h)
 	content_container.add_child(header_row)
@@ -320,7 +320,7 @@ func _build_enemy_list() -> void:
 	var desc_lbl := Label.new()
 	desc_lbl.text = "下 3 次遭遇自动掉落，无需战斗"
 	desc_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
-	desc_lbl.add_theme_font_size_override("font_size", 11)
+	desc_lbl.add_theme_font_size_override("font_size", 15)
 	content_container.add_child(desc_lbl)
 
 	var grp := ButtonGroup.new()
@@ -336,7 +336,7 @@ func _build_discard_content(options: Array[int], new_svc: int) -> void:
 	warn_lbl.text = "选择放弃哪一个服务（放弃后无法找回）"
 	warn_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	warn_lbl.add_theme_color_override("font_color", COL_WARN)
-	warn_lbl.add_theme_font_size_override("font_size", 11)
+	warn_lbl.add_theme_font_size_override("font_size", 15)
 	content_container.add_child(warn_lbl)
 
 	var grp := ButtonGroup.new()
