@@ -27,6 +27,9 @@
 - [ ] effect_charge.png        — 蓄能 · battery or orb filling with energy
 - [x] effect_empower.png       — 强化 · upward arrow wrapped in light
 - [ ] effect_chain.png         — 连锁 · chain links branching outward
+- [x] effect_增伤.png          — 增伤 · flame arrow surging upward, damage boost
+- [x] effect_灼烧.png          — 灼烧 · swirling fire spiral, burn status
+- [x] effect_侵蚀.png          — 侵蚀 · acid drop corroding armor, erosion status
 
 ---
 
