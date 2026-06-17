@@ -294,3 +294,15 @@ func test_charge_resets_on_reset() -> void:
     GameState.charge_stacks = 3
     GameState.reset()
     assert_eq(GameState.charge_stacks, 0)
+
+func test_shield_absorbed_signal_emitted_when_shield_absorbs() -> void:
+    watch_signals(EventBus)
+    GameState.shield = 50
+    GameState.take_damage(20)
+    assert_signal_emitted(EventBus, "shield_absorbed")
+
+func test_shield_absorbed_signal_not_emitted_without_shield() -> void:
+    watch_signals(EventBus)
+    GameState.shield = 0
+    GameState.take_damage(20)
+    assert_signal_not_emitted(EventBus, "shield_absorbed")
