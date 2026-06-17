@@ -92,7 +92,9 @@ func reset() -> void:
 	boss_circle_pending = false
 	in_boss_circle = false
 	service_bar = []
-	service_bar.append(1)  # debug: start with COMP_REWRITE for popup testing
+	# debug: all 11 service types for popup testing
+	for i in range(1, 12):
+		service_bar.append(i)
 	deletion_free = false
 	enemy_pardon_type = ""
 	enemy_pardon_remaining = 0
