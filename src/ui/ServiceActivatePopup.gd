@@ -308,6 +308,7 @@ func _update_merge_labels(rows: Array) -> void:
 		else:
 			if btn.has_meta("comp_ref"):
 				val_lbl.text = "%.1f" % btn.get_meta("comp_ref").effect_value
+	_refresh_confirm()
 
 func _build_enemy_list() -> void:
 	var desc_lbl := Label.new()
