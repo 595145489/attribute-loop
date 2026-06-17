@@ -99,6 +99,7 @@
 - [x] rule_panel_bg.png        — tile rule panel background, ornate parchment frame with decorative header/footer bands, clean minimal center field for UI overlay
 - [x] panel_enemy_inspect_bg.png — enemy inspect panel background, ornate ink border frame with plain clean center area, dark vignette corners
 - [x] panel_character_bg.png   — character attribute panel background, warm parchment with ornate ink border, clean transparent center for stat text overlay
+- [x] service_activate_popup_bg.png — service activate popup background, dark brown leather card with gold filigree corner ornaments, clean dark center for UI overlay
 
 ### Buttons
 - [x] btn_normal.png           — button default state

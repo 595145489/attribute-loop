@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cygyugu7brhl8"]
 
 [ext_resource type="Script" uid="uid://cbe3flmvnqnia" path="res://src/ui/ServiceActivatePopup.gd" id="1_sap"]
-[ext_resource type="Texture2D" uid="uid://bu80cmvscharu" path="res://resources/ui/service_btn_card.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://resources/ui/service_activate_popup_bg.png" id="2_bg"]
 
 [node name="ServiceActivatePopup" type="Control"]
 visible = false
