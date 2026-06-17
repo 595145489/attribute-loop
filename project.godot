@@ -23,6 +23,7 @@ GameState="*res://src/autoloads/GameState.gd"
 DataTables="*res://src/autoloads/DataTables.gd"
 Tooltip="*res://src/autoloads/Tooltip.gd"
 TutorialManager="*res://src/autoloads/TutorialManager.gd"
+AudioManager="*res://src/autoloads/AudioManager.gd"
 
 [display]
 
