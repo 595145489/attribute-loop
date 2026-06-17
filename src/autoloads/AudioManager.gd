@@ -13,7 +13,9 @@ var _player: AudioStreamPlayer
 var _tween: Tween
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_player = AudioStreamPlayer.new()
+	_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	_player.volume_db = DEFAULT_VOLUME_DB
 	_player.autoplay = false
 	add_child(_player)
