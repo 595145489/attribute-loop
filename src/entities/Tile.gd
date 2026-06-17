@@ -39,8 +39,8 @@ var is_altar: bool = false
 var rule_slots: Array = []
 var altar_slots: Array = []
 
-@onready var visual: Sprite2D = $Visual
-@onready var building: Sprite2D = $Building
+@onready var visual: Sprite2D = get_node_or_null("Visual")
+@onready var building: Sprite2D = get_node_or_null("Building")
 
 func _ready() -> void:
 	if is_altar:
@@ -56,6 +56,8 @@ func _process(_delta: float) -> void:
 	_refresh_visual()
 
 func _refresh_visual() -> void:
+	if visual == null or building == null:
+		return
 	var occupied := rule_slots.any(func(s): return s.get("trigger") != null or s.get("effect") != null)
 	if occupied and tile_index < TEX_BUILDINGS.size():
 		building.texture = TEX_BUILDINGS[tile_index]
