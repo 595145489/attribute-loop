@@ -45,14 +45,25 @@ func test_make_row_button_in_group() -> void:
 func test_merge_row_value_label_updates_when_two_selected() -> void:
 	var popup = load("res://scenes/ui/service_activate_popup.tscn").instantiate()
 	add_child_autofree(popup)
-	var row_a = popup._make_row("治愈", "12.5", "12.5", null, null)
-	var row_b = popup._make_row("护盾", "8.0", "8.0", null, null)
+	# Create two component data objects with known values
+	var comp_a = load("res://src/resources/ComponentData.gd").new()
+	comp_a.effect_value = 10.0
+	var comp_b = load("res://src/resources/ComponentData.gd").new()
+	comp_b.effect_value = 5.0
+	# Create rows as merge rows (skip_value_toggle=true)
+	var row_a = popup._make_row("治愈", "10.0", "10.0", null, comp_a, true)
+	var row_b = popup._make_row("护盾", "5.0", "5.0", null, comp_b, true)
 	add_child_autofree(row_a)
 	add_child_autofree(row_b)
 	var btn_a: Button = row_a.get_node("HBox/Btn")
 	var btn_b: Button = row_b.get_node("HBox/Btn")
 	btn_a.button_pressed = true
 	btn_b.button_pressed = true
-	# Both can be pressed simultaneously (no shared ButtonGroup)
-	assert_true(btn_a.button_pressed)
-	assert_true(btn_b.button_pressed)
+	# Manually call _update_merge_labels (signal not emitted by programmatic set)
+	popup._update_merge_labels([row_a, row_b])
+	# Both selected rows should show the merged result
+	var val_a: Label = row_a.get_node("HBox/ValueLabel")
+	var val_b: Label = row_b.get_node("HBox/ValueLabel")
+	# merged = (10.0 + 5.0) * DataTables.config.auction_comp_merge_ratio = 15.0 * 0.8 = 12.0
+	assert_true(val_a.text.begins_with("→"), "Selected merge row A should show → result, got: " + val_a.text)
+	assert_true(val_b.text.begins_with("→"), "Selected merge row B should show → result, got: " + val_b.text)

@@ -276,7 +276,7 @@ func _build_comp_list(multi: bool) -> void:
 		var cur_val := "%.1f" % comp.effect_value
 		var after_val: String
 		if multi:
-			after_val = cur_val
+			after_val = ""
 		else:
 			after_val = "→ %.1f" % (comp.effect_value * (1.0 + delta))
 		var row := _make_row(comp.display_name, cur_val, after_val, grp, comp, multi)
