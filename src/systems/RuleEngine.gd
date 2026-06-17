@@ -95,6 +95,7 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 	if effect.id != "强化" and GameState.amplify_stacks > 0:
 		final_value *= 1.0 + GameState.amplify_stacks * 0.5
 		GameState.amplify_stacks = 0
+		EventBus.amplify_consumed.emit()
 
 	match effect.id:
 		"治愈":

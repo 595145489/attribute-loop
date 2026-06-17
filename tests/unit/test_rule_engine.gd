@@ -412,3 +412,19 @@ func test_erode_emits_rule_fired() -> void:
 	_make_rule("受击", 1.0, "侵蚀", 20.0)
 	EventBus.player_hit.emit(5)
 	assert_signal_emitted(EventBus, "rule_fired")
+
+func test_amplify_consumed_emitted_when_amplify_used() -> void:
+	watch_signals(EventBus)
+	GameState.amplify_stacks = 1
+	_make_rule("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_signal_emitted(EventBus, "amplify_consumed")
+
+func test_amplify_consumed_not_emitted_without_amplify() -> void:
+	watch_signals(EventBus)
+	GameState.amplify_stacks = 0
+	_make_rule("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_signal_not_emitted(EventBus, "amplify_consumed")
