@@ -85,7 +85,7 @@ func _process(_delta: float) -> void:
 func _check_player_tile() -> void:
 	var player_pos = player.global_position
 	for tile in tiles_container.get_children():
-		if tile.has_enemy() and player_pos.distance_to(tile.guard_position) < 70.0:
+		if tile.has_enemy() and player_pos.distance_to(tiles_container.to_global(tile.guard_position)) < 70.0:
 			game_loop.check_tile_for_enemy(tile)
 			return
 		if not tile.has_enemy() and player_pos.distance_to(tile.global_position) < 55.0:
