@@ -113,7 +113,7 @@ func _apply_discard() -> void:
 # comp_ref: optional metadata stored on the button (pass null if not needed).
 # ---------------------------------------------------------------------------
 func _make_row(left_text: String, value_text: String, value_after: String,
-		grp, comp_ref) -> PanelContainer:
+		grp, comp_ref, skip_value_toggle: bool = false) -> PanelContainer:
 	var panel := PanelContainer.new()
 	var style_normal := StyleBoxFlat.new()
 	style_normal.bg_color = COL_DARK_ROW
@@ -165,12 +165,14 @@ func _make_row(left_text: String, value_text: String, value_after: String,
 	btn.toggled.connect(func(pressed: bool) -> void:
 		if pressed:
 			panel.add_theme_stylebox_override("panel", style_selected)
-			val_lbl.text = value_after if value_after != "" else value_text
-			val_lbl.add_theme_color_override("font_color", COL_GREEN)
+			if not skip_value_toggle:
+				val_lbl.text = value_after if value_after != "" else value_text
+				val_lbl.add_theme_color_override("font_color", COL_GREEN)
 		else:
 			panel.add_theme_stylebox_override("panel", style_normal)
-			val_lbl.text = value_text
-			val_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
+			if not skip_value_toggle:
+				val_lbl.text = value_text
+				val_lbl.add_theme_color_override("font_color", COL_GOLD_MUTED)
 		_refresh_confirm()
 	)
 	return panel
@@ -277,7 +279,7 @@ func _build_comp_list(multi: bool) -> void:
 			after_val = cur_val
 		else:
 			after_val = "→ %.1f" % (comp.effect_value * (1.0 + delta))
-		var row := _make_row(comp.display_name, cur_val, after_val, grp, comp)
+		var row := _make_row(comp.display_name, cur_val, after_val, grp, comp, multi)
 		content_container.add_child(row)
 		rows.append(row)
 
@@ -300,7 +302,7 @@ func _update_merge_labels(rows: Array) -> void:
 		if selected.size() == 2:
 			var a_val: float = selected[0]["comp"].effect_value
 			var b_val: float = selected[1]["comp"].effect_value
-			var merged: float = (a_val + b_val) * 0.8
+			var merged: float = (a_val + b_val) * DataTables.config.auction_comp_merge_ratio
 			if btn.button_pressed:
 				val_lbl.text = "→ %.1f" % merged
 			else:
