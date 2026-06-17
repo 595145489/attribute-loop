@@ -16,7 +16,7 @@ const _ICON_MAP: Dictionary = {
 	"吸血":    "res://resources/icons/effect_lifesteal.png",
 	"强化":    "res://resources/icons/effect_empower.png",
 	"增伤":    "res://resources/icons/effect_增伤.png",
-	"蓄能":    "res://resources/icons/effect_haste.png",
+	"蓄能":    "res://resources/icons/effect_蓄能.png",
 	"灼烧":    "res://resources/icons/effect_灼烧.png",
 	"侵蚀":    "res://resources/icons/effect_侵蚀.png",
 }
