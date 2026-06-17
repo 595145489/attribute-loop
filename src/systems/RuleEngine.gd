@@ -6,6 +6,7 @@ var _state_timer: float = 0.0
 var _firing_rule_trigger: bool = false
 const _STATE_INTERVAL: float = 1.0
 var _active_enemy: Enemy = null
+var _executing_self_hit: bool = false
 
 func set_active_enemy(e: Enemy) -> void:
 	_active_enemy = e
@@ -38,6 +39,8 @@ func _check_state_triggers() -> void:
 		_evaluate_player_triggers(["满血"])
 
 func _on_player_hit(_damage: int) -> void:
+	if _executing_self_hit:
+		return
 	_evaluate_player_triggers(["受击"])
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, _value: float) -> void:
@@ -148,16 +151,18 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 			var dmg := maxi(1, int(final_value))
 			GameState.hp = maxi(1, GameState.hp - dmg)
 			EventBus.rule_fired.emit(slot_idx, "受击", float(dmg))
+			_executing_self_hit = true
 			EventBus.player_hit.emit(dmg)
+			_executing_self_hit = false
 		"低血":
 			var dmg := maxi(1, int(final_value))
 			GameState.hp = maxi(1, GameState.hp - dmg)
 			EventBus.rule_fired.emit(slot_idx, "低血", float(dmg))
 		"满血":
 			if GameState.charge_stacks > 0:
-				GameState.charge_stacks += 1
+				GameState.charge_stacks = mini(GameState.charge_stacks + 1, 20)
 			if GameState.dmg_boost_stacks > 0:
-				GameState.dmg_boost_stacks += 1
+				GameState.dmg_boost_stacks = mini(GameState.dmg_boost_stacks + 1, 8)
 			if GameState.amplify_stacks > 0:
 				GameState.amplify_stacks = mini(GameState.amplify_stacks + 1, GameState.amplify_max_stacks)
 			EventBus.rule_fired.emit(slot_idx, "满血", 1.0)

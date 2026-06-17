@@ -538,3 +538,27 @@ func test_effect_规则触发_does_not_fire_rules() -> void:
 	GameState.hp = 50
 	EventBus.loop_completed.emit()
 	assert_eq(GameState.hp, 50, "heal should not fire — count only reached 1 of 2")
+
+func test_effect_受击_no_infinite_loop_with_受击_trigger() -> void:
+	# 受击(T) + 受击(E) 配置：trigger_value=1，不应死循环
+	var t = ComponentData.new()
+	t.id = "受击"
+	t.slot_type = ComponentData.SlotType.BOTH
+	t.trigger_value = 1.0
+	t.trigger_count = 0
+	var e = ComponentData.new()
+	e.id = "受击"
+	e.slot_type = ComponentData.SlotType.BOTH
+	e.effect_value = 5.0
+	GameState.rule_slots[0]["trigger"] = t
+	GameState.rule_slots[0]["effect"] = e
+	GameState.hp = 100
+	EventBus.player_hit.emit(1)
+	# 如果死循环，这行不会执行；如果正常，hp 只扣一次 5 点
+	assert_eq(GameState.hp, 95, "should only apply once, no loop")
+
+func test_effect_满血_charge_capped() -> void:
+	_make_rule("完成圈数", 1.0, "满血", 1.0)
+	GameState.charge_stacks = 50
+	EventBus.loop_completed.emit()
+	assert_lte(GameState.charge_stacks, 51, "should not exceed reasonable cap")

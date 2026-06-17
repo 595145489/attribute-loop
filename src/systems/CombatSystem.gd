@@ -52,8 +52,6 @@ func stop() -> void:
     _player_timer.stop()
     _enemy_timer.stop()
     _active_enemy = null
-    if rule_engine != null:
-        rule_engine.set_active_enemy(null)
     if EventBus.rule_fired.is_connected(_on_rule_fired):
         EventBus.rule_fired.disconnect(_on_rule_fired)
 
@@ -241,3 +239,5 @@ func _finish_combat(enemy: Enemy = null) -> void:
     GameState.lifesteal_ratio = 0.0
     GameState.enemies_killed += 1
     EventBus.enemy_killed.emit(resolved)
+    if rule_engine != null:
+        rule_engine.set_active_enemy(null)
