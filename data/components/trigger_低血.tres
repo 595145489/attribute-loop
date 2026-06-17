@@ -7,4 +7,5 @@ script = ExtResource("1_new01")
 id = "低血"
 display_name = "低血"
 description = "生命低于 30% 时，每持续 N 秒触发一次"
+slot_type = 2
 trigger_formula = "fires_every"

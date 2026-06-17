@@ -40,9 +40,9 @@ func test_get_enemy_returns_correct_data() -> void:
 	var e = DataTables.get_enemy("守卫者")
 	assert_eq(e.id, "守卫者")
 
-func test_get_component_受击_is_trigger_only() -> void:
+func test_get_component_受击_is_both() -> void:
 	var c: ComponentData = DataTables.get_component("受击")
-	assert_eq(c.slot_type, ComponentData.SlotType.TRIGGER_ONLY)
+	assert_eq(c.slot_type, ComponentData.SlotType.BOTH)
 
 func test_get_component_治愈_is_both() -> void:
 	var c: ComponentData = DataTables.get_component("治愈")

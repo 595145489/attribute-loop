@@ -35,6 +35,7 @@ var pending_phase_advance: bool = false
 var verdict_loops_survived: int = 0
 var boss_circle_pending: bool = false
 var in_boss_circle: bool = false
+var current_tile_index: int = -1
 
 # Auction / service bar
 var service_bar: Array[int] = []
@@ -54,6 +55,7 @@ func take_damage(amount: int) -> void:
 		var absorbed := mini(shield, amount)
 		shield -= absorbed
 		amount -= absorbed
+		EventBus.shield_absorbed.emit(absorbed)
 	if amount > 0:
 		hp = max(0, hp - amount)
 		if hp == 0:
@@ -91,6 +93,7 @@ func reset() -> void:
 	verdict_loops_survived = 0
 	boss_circle_pending = false
 	in_boss_circle = false
+	current_tile_index = -1
 	service_bar = []
 	deletion_free = false
 	enemy_pardon_type = ""

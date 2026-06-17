@@ -54,6 +54,7 @@ func _finish_setup() -> void:
 	_hud.setup(_inventory_panel)
 	_hud.setup_altar(_altar_panel, _tiles[0])
 	rule_engine.set_tiles(_tiles)
+	combat_system.rule_engine = rule_engine
 	game_loop.setup_auction(auction_manager)
 	_auction_panel.setup(auction_manager)
 	_service_activate_popup.setup(auction_manager, _tiles)

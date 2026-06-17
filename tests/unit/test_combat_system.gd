@@ -201,3 +201,47 @@ func test_dmg_boost_not_below_zero_on_decay() -> void:
     GameState.dmg_boost_stacks = 0
     EventBus.loop_completed.emit()
     assert_eq(GameState.dmg_boost_stacks, 0)
+
+func test_slow_applied_emitted_when_slow_reduces_damage() -> void:
+    watch_signals(EventBus)
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    GameState.slow_stacks = 3
+    combat._apply_enemy_attack(enemy)
+    assert_signal_emitted(EventBus, "slow_applied")
+
+func test_slow_applied_not_emitted_without_slow_stacks() -> void:
+    watch_signals(EventBus)
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    GameState.slow_stacks = 0
+    combat._apply_enemy_attack(enemy)
+    assert_signal_not_emitted(EventBus, "slow_applied")
+
+func test_lifesteal_healed_emitted_when_lifesteal_heals() -> void:
+    watch_signals(EventBus)
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    enemy.hp = 9999
+    GameState.lifesteal_ratio = 0.5
+    GameState.hp = 100
+    combat._apply_player_attack(enemy)
+    assert_signal_emitted(EventBus, "lifesteal_healed")
+
+func test_dmg_boost_consumed_emitted_when_boost_used() -> void:
+    watch_signals(EventBus)
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    enemy.hp = 9999
+    GameState.dmg_boost_stacks = 2
+    combat._apply_player_attack(enemy)
+    assert_signal_emitted(EventBus, "dmg_boost_consumed")
+
+func test_dmg_boost_consumed_not_emitted_without_boost() -> void:
+    watch_signals(EventBus)
+    var enemy = Enemy.new()
+    enemy.init("汲取者")
+    enemy.hp = 9999
+    GameState.dmg_boost_stacks = 0
+    combat._apply_player_attack(enemy)
+    assert_signal_not_emitted(EventBus, "dmg_boost_consumed")

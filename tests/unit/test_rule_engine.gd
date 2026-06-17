@@ -412,3 +412,153 @@ func test_erode_emits_rule_fired() -> void:
 	_make_rule("受击", 1.0, "侵蚀", 20.0)
 	EventBus.player_hit.emit(5)
 	assert_signal_emitted(EventBus, "rule_fired")
+
+func test_amplify_consumed_emitted_when_amplify_used() -> void:
+	watch_signals(EventBus)
+	GameState.amplify_stacks = 1
+	_make_rule("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_signal_emitted(EventBus, "amplify_consumed")
+
+func test_amplify_consumed_not_emitted_without_amplify() -> void:
+	watch_signals(EventBus)
+	GameState.amplify_stacks = 0
+	_make_rule("完成圈数", 1.0, "治愈", 10.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_signal_not_emitted(EventBus, "amplify_consumed")
+
+func test_shield_trigger_counts_on_shield_absorbed() -> void:
+	_make_rule("护盾", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.shield_absorbed.emit(20)
+	assert_eq(t.trigger_count, 1)
+
+func test_slow_trigger_counts_on_slow_applied() -> void:
+	_make_rule("减伤", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.slow_applied.emit(2)
+	assert_eq(t.trigger_count, 1)
+
+func test_lifesteal_trigger_counts_on_lifesteal_healed() -> void:
+	_make_rule("吸血", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.lifesteal_healed.emit(5)
+	assert_eq(t.trigger_count, 1)
+
+func test_amplify_trigger_counts_on_amplify_consumed() -> void:
+	_make_rule("强化", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.amplify_consumed.emit()
+	assert_eq(t.trigger_count, 1)
+
+func test_dmg_boost_trigger_counts_on_dmg_boost_consumed() -> void:
+	_make_rule("增伤", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.dmg_boost_consumed.emit(2)
+	assert_eq(t.trigger_count, 1)
+
+func test_charge_trigger_counts_on_charge_release() -> void:
+	_make_rule("蓄能", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "蓄能释放", 10.0)
+	assert_eq(t.trigger_count, 1)
+
+func test_burn_trigger_counts_on_burn_rule_fired() -> void:
+	_make_rule("灼烧", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "灼烧", 3.0)
+	assert_eq(t.trigger_count, 1)
+
+func test_erode_trigger_counts_on_erode_rule_fired() -> void:
+	_make_rule("侵蚀", 2.0, "治愈", 10.0)
+	var t = GameState.rule_slots[0]["trigger"]
+	EventBus.rule_fired.emit(-1, "侵蚀", 10.0)
+	assert_eq(t.trigger_count, 1)
+
+func test_effect_受击_deals_self_damage() -> void:
+	_make_rule("完成圈数", 1.0, "受击", 20.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 80)
+
+func test_effect_受击_does_not_kill() -> void:
+	_make_rule("完成圈数", 1.0, "受击", 9999.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 1)
+
+func test_effect_受击_emits_player_hit() -> void:
+	watch_signals(EventBus)
+	_make_rule("完成圈数", 1.0, "受击", 10.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_signal_emitted(EventBus, "player_hit")
+
+func test_effect_低血_deals_self_damage() -> void:
+	_make_rule("完成圈数", 1.0, "低血", 20.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 80)
+
+func test_effect_低血_does_not_kill() -> void:
+	_make_rule("完成圈数", 1.0, "低血", 9999.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 1)
+
+func test_effect_低血_does_not_emit_player_hit() -> void:
+	watch_signals(EventBus)
+	_make_rule("完成圈数", 1.0, "低血", 10.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_signal_not_emitted(EventBus, "player_hit")
+
+func test_effect_满血_adds_one_to_each_nonzero_stack() -> void:
+	_make_rule("受击", 1.0, "满血", 1.0)
+	GameState.charge_stacks = 2
+	GameState.dmg_boost_stacks = 1
+	GameState.amplify_stacks = 0
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.charge_stacks, 3)
+	assert_eq(GameState.dmg_boost_stacks, 2)
+	assert_eq(GameState.amplify_stacks, 0)
+
+func test_effect_规则触发_increments_all_trigger_counts() -> void:
+	_make_rule("受击", 5.0, "治愈", 10.0)
+	_make_rule_slot1("完成圈数", 1.0, "规则触发", 1.0)
+	var t0 = GameState.rule_slots[0]["trigger"]
+	EventBus.loop_completed.emit()
+	assert_eq(t0.trigger_count, 1, "slot 0 trigger count should be incremented")
+
+func test_effect_规则触发_does_not_fire_rules() -> void:
+	_make_rule("受击", 2.0, "治愈", 10.0)
+	_make_rule_slot1("完成圈数", 1.0, "规则触发", 1.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 50, "heal should not fire — count only reached 1 of 2")
+
+func test_effect_受击_no_infinite_loop_with_受击_trigger() -> void:
+	# 受击(T) + 受击(E) 配置：trigger_value=1，不应死循环
+	var t = ComponentData.new()
+	t.id = "受击"
+	t.slot_type = ComponentData.SlotType.BOTH
+	t.trigger_value = 1.0
+	t.trigger_count = 0
+	var e = ComponentData.new()
+	e.id = "受击"
+	e.slot_type = ComponentData.SlotType.BOTH
+	e.effect_value = 5.0
+	GameState.rule_slots[0]["trigger"] = t
+	GameState.rule_slots[0]["effect"] = e
+	GameState.hp = 100
+	EventBus.player_hit.emit(1)
+	# 如果死循环，这行不会执行；如果正常，hp 只扣一次 5 点
+	assert_eq(GameState.hp, 95, "should only apply once, no loop")
+
+func test_effect_满血_charge_capped() -> void:
+	_make_rule("完成圈数", 1.0, "满血", 1.0)
+	GameState.charge_stacks = 50
+	EventBus.loop_completed.emit()
+	assert_lte(GameState.charge_stacks, 51, "should not exceed reasonable cap")
