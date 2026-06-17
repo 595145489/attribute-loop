@@ -5,6 +5,10 @@ var _tiles: Array = []
 var _state_timer: float = 0.0
 var _firing_rule_trigger: bool = false
 const _STATE_INTERVAL: float = 1.0
+var _active_enemy: Enemy = null
+
+func set_active_enemy(e: Enemy) -> void:
+	_active_enemy = e
 
 func _ready() -> void:
 	EventBus.player_hit.connect(_on_player_hit)
@@ -140,3 +144,37 @@ func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> v
 			EventBus.rule_fired.emit(slot_idx, "灼烧", final_value)
 		"侵蚀":
 			EventBus.rule_fired.emit(slot_idx, "侵蚀", final_value)
+		"受击":
+			var dmg := maxi(1, int(final_value))
+			GameState.hp = maxi(1, GameState.hp - dmg)
+			EventBus.rule_fired.emit(slot_idx, "受击", float(dmg))
+			EventBus.player_hit.emit(dmg)
+		"低血":
+			var dmg := maxi(1, int(final_value))
+			GameState.hp = maxi(1, GameState.hp - dmg)
+			EventBus.rule_fired.emit(slot_idx, "低血", float(dmg))
+		"满血":
+			if GameState.charge_stacks > 0:
+				GameState.charge_stacks += 1
+			if GameState.dmg_boost_stacks > 0:
+				GameState.dmg_boost_stacks += 1
+			if GameState.amplify_stacks > 0:
+				GameState.amplify_stacks = mini(GameState.amplify_stacks + 1, GameState.amplify_max_stacks)
+			EventBus.rule_fired.emit(slot_idx, "满血", 1.0)
+		"规则触发":
+			for s in GameState.rule_slots:
+				var t: ComponentData = s.get("trigger")
+				if t != null:
+					t.trigger_count += 1
+			EventBus.rule_fired.emit(slot_idx, "规则触发", 1.0)
+		"击杀":
+			if _active_enemy != null and not _active_enemy.is_dead():
+				var kill_bonus := int(_active_enemy.hp * final_value / 100.0)
+				if kill_bonus > 0:
+					_active_enemy.take_damage(kill_bonus)
+			EventBus.rule_fired.emit(slot_idx, "击杀", final_value)
+		"经过":
+			var idx := GameState.current_tile_index
+			if idx >= 0 and idx < _tiles.size() and _tiles[idx] != null:
+				_evaluate_tile_rules(_tiles[idx])
+			EventBus.rule_fired.emit(slot_idx, "经过", 1.0)

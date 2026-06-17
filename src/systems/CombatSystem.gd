@@ -1,6 +1,7 @@
 class_name CombatSystem
 extends Node
 
+var rule_engine: RuleEngine = null
 var _player_timer: Timer
 var _enemy_timer: Timer
 var _active_enemy: Enemy = null
@@ -42,6 +43,8 @@ func start(enemy: Enemy) -> void:
     _burn_timer = 0.0
     _player_timer.wait_time = maxf(DataTables.player.attack_interval - GameState.attack_interval_bonus, 0.2)
     _enemy_timer.wait_time = enemy.attack_interval
+    if rule_engine != null:
+        rule_engine.set_active_enemy(enemy)
     _player_timer.start()
     _enemy_timer.start()
 
@@ -49,6 +52,8 @@ func stop() -> void:
     _player_timer.stop()
     _enemy_timer.stop()
     _active_enemy = null
+    if rule_engine != null:
+        rule_engine.set_active_enemy(null)
     if EventBus.rule_fired.is_connected(_on_rule_fired):
         EventBus.rule_fired.disconnect(_on_rule_fired)
 

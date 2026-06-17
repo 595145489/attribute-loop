@@ -476,3 +476,65 @@ func test_erode_trigger_counts_on_erode_rule_fired() -> void:
 	var t = GameState.rule_slots[0]["trigger"]
 	EventBus.rule_fired.emit(-1, "侵蚀", 10.0)
 	assert_eq(t.trigger_count, 1)
+
+func test_effect_受击_deals_self_damage() -> void:
+	_make_rule("完成圈数", 1.0, "受击", 20.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 80)
+
+func test_effect_受击_does_not_kill() -> void:
+	_make_rule("完成圈数", 1.0, "受击", 9999.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 1)
+
+func test_effect_受击_emits_player_hit() -> void:
+	watch_signals(EventBus)
+	_make_rule("完成圈数", 1.0, "受击", 10.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_signal_emitted(EventBus, "player_hit")
+
+func test_effect_低血_deals_self_damage() -> void:
+	_make_rule("完成圈数", 1.0, "低血", 20.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 80)
+
+func test_effect_低血_does_not_kill() -> void:
+	_make_rule("完成圈数", 1.0, "低血", 9999.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 1)
+
+func test_effect_低血_does_not_emit_player_hit() -> void:
+	watch_signals(EventBus)
+	_make_rule("完成圈数", 1.0, "低血", 10.0)
+	GameState.hp = 100
+	EventBus.loop_completed.emit()
+	assert_signal_not_emitted(EventBus, "player_hit")
+
+func test_effect_满血_adds_one_to_each_nonzero_stack() -> void:
+	_make_rule("受击", 1.0, "满血", 1.0)
+	GameState.charge_stacks = 2
+	GameState.dmg_boost_stacks = 1
+	GameState.amplify_stacks = 0
+	EventBus.player_hit.emit(5)
+	assert_eq(GameState.charge_stacks, 3)
+	assert_eq(GameState.dmg_boost_stacks, 2)
+	assert_eq(GameState.amplify_stacks, 0)
+
+func test_effect_规则触发_increments_all_trigger_counts() -> void:
+	_make_rule("受击", 5.0, "治愈", 10.0)
+	_make_rule_slot1("完成圈数", 1.0, "规则触发", 1.0)
+	var t0 = GameState.rule_slots[0]["trigger"]
+	EventBus.loop_completed.emit()
+	assert_eq(t0.trigger_count, 1, "slot 0 trigger count should be incremented")
+
+func test_effect_规则触发_does_not_fire_rules() -> void:
+	_make_rule("受击", 2.0, "治愈", 10.0)
+	_make_rule_slot1("完成圈数", 1.0, "规则触发", 1.0)
+	GameState.hp = 50
+	EventBus.loop_completed.emit()
+	assert_eq(GameState.hp, 50, "heal should not fire — count only reached 1 of 2")
