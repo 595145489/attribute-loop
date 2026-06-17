@@ -97,6 +97,7 @@ func _on_enemy_attack() -> void:
 
 func _apply_player_attack(enemy: Enemy) -> void:
     var dmg := _calc_player_dmg()
+    var had_boost := GameState.dmg_boost_stacks > 0
     var charge_bonus := _calc_charge_bonus()
     GameState.charge_stacks = 0
     if enemy.slow_stacks > 0:
@@ -114,7 +115,11 @@ func _apply_player_attack(enemy: Enemy) -> void:
         EventBus.rule_fired.emit(-1, "蓄能释放", float(charge_bonus))
     if GameState.lifesteal_ratio > 0.0:
         var heal := int(dmg * GameState.lifesteal_ratio)
-        GameState.hp = min(GameState.hp + heal, GameState.hp_max)
+        if heal > 0:
+            GameState.hp = min(GameState.hp + heal, GameState.hp_max)
+            EventBus.lifesteal_healed.emit(heal)
+    if had_boost:
+        EventBus.dmg_boost_consumed.emit(GameState.dmg_boost_stacks)
     if enemy.pending_reflect_ratio > 0.0:
         var reflected := int(dmg * enemy.pending_reflect_ratio)
         GameState.take_damage(reflected)
@@ -134,6 +139,7 @@ func _apply_enemy_attack(enemy: Enemy) -> void:
         var stack_cap := mini(GameState.current_phase + 1, 8)
         var capped := mini(GameState.slow_stacks, stack_cap)
         dmg = int(dmg * (1.0 - capped * 0.1))
+        EventBus.slow_applied.emit(capped)
     GameState.take_damage(dmg)
     EventBus.player_hit.emit(dmg)
     if GameState.pending_reflect_ratio > 0.0:
