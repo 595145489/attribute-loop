@@ -3,7 +3,7 @@ extends Control
 const AuctionManager = preload("res://src/systems/AuctionManager.gd")
 
 var _auction_manager = null
-var _tiles: Array = []
+var _tiles: Array = []  # reserved — passed by caller for future enemy-pardon tile filtering
 var _current_service: int = -1
 var _current_bar_idx: int = -1
 var _discard_mode: bool = false
@@ -190,13 +190,10 @@ func _has_discard_selection() -> bool:
 	return false
 
 # ---------------------------------------------------------------------------
-# Content builders
+# Helpers
 # ---------------------------------------------------------------------------
-func _build_content(svc: int) -> void:
-	for c in content_container.get_children():
-		c.queue_free()
-
-	var instant_types := [
+func _instant_types() -> Array:
+	return [
 		AuctionManager.ServiceType.PRESSURE_DELAY,
 		AuctionManager.ServiceType.DELETE_PARDON,
 		AuctionManager.ServiceType.STAT_DMG,
@@ -207,7 +204,14 @@ func _build_content(svc: int) -> void:
 		AuctionManager.ServiceType.SLOT_SERVICE,
 	]
 
-	if svc in instant_types:
+# ---------------------------------------------------------------------------
+# Content builders
+# ---------------------------------------------------------------------------
+func _build_content(svc: int) -> void:
+	for c in content_container.get_children():
+		c.queue_free()
+
+	if svc in _instant_types():
 		_build_instant(svc)
 		confirm_btn.text = "立即使用"
 		confirm_btn.disabled = false
@@ -350,17 +354,7 @@ func _build_discard_content(options: Array[int], new_svc: int) -> void:
 # Param collection (unchanged logic, updated to read PanelContainer rows)
 # ---------------------------------------------------------------------------
 func _collect_params(svc: int):
-	var instant_types := [
-		AuctionManager.ServiceType.PRESSURE_DELAY,
-		AuctionManager.ServiceType.DELETE_PARDON,
-		AuctionManager.ServiceType.STAT_DMG,
-		AuctionManager.ServiceType.STAT_HP,
-		AuctionManager.ServiceType.STAT_SPEED,
-		AuctionManager.ServiceType.STAT_AMPLIFY,
-		AuctionManager.ServiceType.SLOT_RULE,
-		AuctionManager.ServiceType.SLOT_SERVICE,
-	]
-	if svc in instant_types:
+	if svc in _instant_types():
 		return {}
 
 	match svc:
