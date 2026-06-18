@@ -34,7 +34,7 @@ const SERVICE_DESCRIPTIONS: Dictionary = {
 	ServiceType.ENEMY_PARDON:   "下3只指定类型敌人不战斗，自动掉落组件",
 	ServiceType.DELETE_PARDON:  "下次删除词条0费用且不计入全局计数",
 	ServiceType.PRESSURE_DELAY: "世界压力计时 -1 圈",
-	ServiceType.STAT_DMG:       "永久 基础攻击 +1",
+	ServiceType.STAT_DMG:       "永久 基础攻击 +2",
 	ServiceType.STAT_HP:        "永久 最大HP +15，立即回复等量血量",
 	ServiceType.STAT_SPEED:     "永久 攻击间隔 -0.05s（最低0.2s）",
 	ServiceType.STAT_AMPLIFY:   "永久 强化层上限 +1",
@@ -85,9 +85,9 @@ var _first_loop_done: bool = false
 
 func _ready() -> void:
 	phantom_a = PhantomBuyer.new()
-	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.STAT_DMG, ServiceType.STAT_HP])
+	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.STAT_DMG, ServiceType.STAT_HP, ServiceType.STAT_SPEED])
 	phantom_b = PhantomBuyer.new()
-	phantom_b.init(PhantomBuyer.Personality.PATIENT, [ServiceType.COMP_REWRITE])
+	phantom_b.init(PhantomBuyer.Personality.PATIENT, [ServiceType.COMP_REWRITE, ServiceType.COMP_MERGE])
 	EventBus.loop_completed.connect(_on_loop_completed)
 
 func register_kill(enemy_id: String) -> void:
@@ -285,7 +285,7 @@ class PhantomBuyer:
 
 	func earn(phase: int) -> void:
 		var income_table: Array[int] = DataTables.config.auction_phantom_income_per_phase
-		gold += income_table[clampi(phase, 1, 10)]
+		gold += income_table[clampi(phase, 1, income_table.size() - 1)]
 
 	func interest(service_type: int) -> int:
 		if personality == Personality.AGGRESSIVE:
