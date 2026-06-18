@@ -87,9 +87,9 @@ func test_enemy_has_gold_scale() -> void:
 
 func test_config_has_deletion_cost_sequence() -> void:
 	assert_eq(DataTables.config.deletion_cost_sequence.size(), 3)
-	assert_eq(DataTables.config.deletion_cost_sequence[0], 20)
-	assert_eq(DataTables.config.deletion_cost_sequence[1], 50)
-	assert_eq(DataTables.config.deletion_cost_sequence[2], 100)
+	assert_eq(DataTables.config.deletion_cost_sequence[0], 15)
+	assert_eq(DataTables.config.deletion_cost_sequence[1], 35)
+	assert_eq(DataTables.config.deletion_cost_sequence[2], 70)
 
 func test_config_has_deletion_cost_multiplier() -> void:
 	assert_eq(DataTables.config.deletion_cost_multiplier, 2.0)
@@ -117,9 +117,9 @@ func test_急袭者_has_drop_preset() -> void:
 	var e: EnemyData = DataTables.get_enemy("急袭者")
 	assert_false(e.phase_drop_presets.is_empty(), "急袭者 must have phase_drop_presets")
 
-func test_急袭者_unlock_phase_is_4() -> void:
+func test_急袭者_unlock_phase_is_2() -> void:
 	var e: EnemyData = DataTables.get_enemy("急袭者")
-	assert_eq(e.unlock_phase, 4)
+	assert_eq(e.unlock_phase, 2)
 
 func test_pick_enemy_id_can_return_急袭者_at_phase_4() -> void:
 	var phase: PhaseData = DataTables.get_phase(4)

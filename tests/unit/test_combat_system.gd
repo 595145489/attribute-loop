@@ -135,10 +135,9 @@ func test_enrage_no_stack_before_threshold() -> void:
     combat._check_enrage()
     assert_eq(combat._enrage_stacks, 0)
 
-func test_enrage_multiplier_formula() -> void:
+func test_enrage_bonus_per_stack_is_positive() -> void:
     var cfg: GameConfig = DataTables.config
-    var result := pow(cfg.combat_enrage_multiplier, 2)
-    assert_almost_eq(result, cfg.combat_enrage_multiplier * cfg.combat_enrage_multiplier, 0.001)
+    assert_gt(cfg.combat_enrage_bonus_per_stack, 0.0)
 
 func test_enrage_resets_via_reset_enrage() -> void:
     combat._enrage_stacks = 3

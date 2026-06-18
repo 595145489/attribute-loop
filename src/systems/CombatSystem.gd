@@ -71,6 +71,7 @@ func _process(delta: float) -> void:
             _burn_timer = 0.0
             var burn_dmg := _active_enemy.burn_stacks * cfg.combat_burn_dmg_per_stack
             _active_enemy.take_damage(burn_dmg)
+            EventBus.rule_fired.emit(-1, "灼烧伤害", float(burn_dmg))
             if _active_enemy.is_dead():
                 _finish_combat(_active_enemy)
                 return
@@ -111,8 +112,10 @@ func _apply_player_attack(enemy: Enemy) -> void:
         var absorbed := mini(enemy.shield, dmg)
         enemy.shield -= absorbed
         dmg -= absorbed
+        enemy._refresh_label()
     if dmg > 0:
         enemy.take_damage(dmg)
+        EventBus.player_attacked.emit(dmg)
     if charge_bonus > 0:
         enemy.take_damage(charge_bonus)
         EventBus.rule_fired.emit(-1, "蓄能释放", float(charge_bonus))
@@ -137,7 +140,7 @@ func _apply_player_attack(enemy: Enemy) -> void:
 func _apply_enemy_attack(enemy: Enemy) -> void:
     var dmg := enemy.dmg
     if _enrage_stacks > 0:
-        dmg = int(dmg * pow(DataTables.config.combat_enrage_multiplier, _enrage_stacks))
+        dmg = int(dmg * (1.0 + DataTables.config.combat_enrage_bonus_per_stack * _enrage_stacks))
     if GameState.slow_stacks > 0:
         var stack_cap := mini(GameState.current_phase + 1, 8)
         var capped := mini(GameState.slow_stacks, stack_cap)
@@ -181,6 +184,7 @@ func _execute_enemy_effect(effect: ComponentData) -> void:
             _active_enemy._refresh_label()
         "护盾":
             _active_enemy.shield += int(val)
+            _active_enemy._refresh_label()
         "反射":
             _active_enemy.pending_reflect_ratio = val
         "减伤":
@@ -223,6 +227,7 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
             _active_enemy.hp_max = max(1, _active_enemy.hp_max - int(value))
             _active_enemy.hp = min(_active_enemy.hp, _active_enemy.hp_max)
             _active_enemy._refresh_label()
+            EventBus.rule_fired.emit(-1, "侵蚀伤害", value)
             if _active_enemy.is_dead():
                 _finish_combat(_active_enemy)
 

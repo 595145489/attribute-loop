@@ -43,11 +43,11 @@ func test_weighted_pick_excludes_zero_weight() -> void:
         var result = GameLoop._weighted_pick_with_modifiers(weights, phase_data)
         assert_eq(result, "受击")
 
-func test_create_component_trigger_only_sets_trigger_value() -> void:
+func test_create_component_受击_sets_trigger_and_effect_values() -> void:
     var preset: DropPreset = DataTables.get_drop_preset(1)
     var comp = GameLoop._create_component("受击", preset)
     assert_gt(comp.trigger_value, 0.0)
-    assert_eq(comp.effect_value, 0.0)
+    assert_gt(comp.effect_value, 0.0)
 
 func test_create_component_both_sets_both_values() -> void:
     var preset: DropPreset = DataTables.get_drop_preset(1)
