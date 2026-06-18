@@ -6,21 +6,21 @@
 script = ExtResource("1_dp03")
 preset_name = "tier_03"
 component_ranges = {
-"受击": {"trigger": Vector2(1, 2)},
-"击杀": {"trigger": Vector2(1, 2)},
-"完成圈数": {"trigger": Vector2(1, 2)},
-"经过": {"trigger": Vector2(2, 3)},
-"低血": {"trigger": Vector2(1, 2)},
-"满血": {"trigger": Vector2(1, 2)},
-"规则触发": {"trigger": Vector2(2, 3)},
-"治愈": {"trigger": Vector2(1, 2), "effect": Vector2(15, 25)},
-"反射": {"trigger": Vector2(1, 2), "effect": Vector2(0.4, 0.6)},
-"护盾": {"effect": Vector2(55, 80)},
-"减伤": {"effect": Vector2(2, 4)},
-"吸血": {"effect": Vector2(0.12, 0.22)},
-"强化": {"effect": Vector2(1, 1)},
-"增伤": {"effect": Vector2(2, 4)},
-"蓄能": {"effect": Vector2(1, 2)},
-"灼烧": {"effect": Vector2(3, 5)},
-"侵蚀": {"effect": Vector2(25, 45)}
+"受击": {"trigger": Vector2(2, 4), "effect": Vector2(18, 30)},
+"击杀": {"trigger": Vector2(1, 1), "effect": Vector2(22, 35)},
+"完成圈数": {"trigger": Vector2(1, 1)},
+"经过": {"trigger": Vector2(3, 5), "effect": Vector2(1, 1)},
+"低血": {"trigger": Vector2(2, 2), "effect": Vector2(10, 18)},
+"满血": {"trigger": Vector2(2, 2), "effect": Vector2(1, 1)},
+"规则触发": {"trigger": Vector2(3, 5), "effect": Vector2(1, 1)},
+"治愈": {"trigger": Vector2(2, 2), "effect": Vector2(35, 50)},
+"反射": {"trigger": Vector2(1, 2), "effect": Vector2(0.50, 0.70)},
+"护盾": {"trigger": Vector2(2, 2), "effect": Vector2(45, 65)},
+"减伤": {"trigger": Vector2(1, 2), "effect": Vector2(2, 4)},
+"吸血": {"trigger": Vector2(2, 2), "effect": Vector2(0.35, 0.50)},
+"强化": {"trigger": Vector2(1, 2), "effect": Vector2(1, 1)},
+"增伤": {"trigger": Vector2(1, 2), "effect": Vector2(3, 5)},
+"蓄能": {"trigger": Vector2(1, 2), "effect": Vector2(2, 3)},
+"灼烧": {"trigger": Vector2(1, 2), "effect": Vector2(5, 8)},
+"侵蚀": {"trigger": Vector2(1, 2), "effect": Vector2(30, 45)}
 }
