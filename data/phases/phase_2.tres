@@ -5,10 +5,16 @@
 [resource]
 script = ExtResource("1_fe2go")
 phase_id = 2
-phase_name = "萌动"
+phase_name = "涌动"
 altar_requirement = 3
-world_pressure_window = 1
+world_pressure_window = 7
+spawn_count_min = 2
+spawn_count_max = 3
 spawn_weights = {
-"守卫者": 45,
-"汲取者": 45
+"守卫者": 35,
+"急袭者": 30,
+"汲取者": 35
 }
+enemy_component_count_min = 2
+enemy_component_count_max = 2
+tier_drop_weights = Array[int]([70, 25, 5])

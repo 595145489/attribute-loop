@@ -5,16 +5,18 @@
 [resource]
 script = ExtResource("1_krfrh")
 phase_id = 4
-phase_name = "侵蚀"
+phase_name = "失衡"
 altar_requirement = 5
-world_pressure_window = 1
-component_count_bonus = 1
-spawn_count_min = 2
+world_pressure_window = 5
+spawn_count_min = 3
 spawn_count_max = 4
 spawn_weights = {
-"守卫者": 40,
-"急袭者": 20,
-"汲取者": 40
+"守卫者": 15,
+"急袭者": 25,
+"复制者": 25,
+"先驱者": 20,
+"汲取者": 15
 }
-enemy_component_count_min = 2
+enemy_component_count_min = 3
 enemy_component_count_max = 3
+tier_drop_weights = Array[int]([20, 55, 25])

@@ -4,10 +4,16 @@
 
 [resource]
 script = ExtResource("1_dfe55")
+phase_id = 1
 phase_name = "觉醒"
 altar_requirement = 2
-world_pressure_window = 1
+world_pressure_window = 8
+spawn_count_min = 2
+spawn_count_max = 3
 spawn_weights = {
 "守卫者": 50,
 "汲取者": 50
 }
+enemy_component_count_min = 1
+enemy_component_count_max = 2
+tier_drop_weights = Array[int]([85, 12, 3])

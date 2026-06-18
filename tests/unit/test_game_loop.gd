@@ -62,9 +62,9 @@ func test_create_component_returns_duplicate_not_original() -> void:
     assert_ne(comp, original)
     assert_eq(comp.id, "受击")
 
-func test_resolve_drop_preset_picks_closest_lower_phase() -> void:
-    var enemy_data: EnemyData = DataTables.get_enemy("汲取者")
-    var preset = GameLoop._resolve_drop_preset(enemy_data, 2)
+func test_roll_tier_preset_returns_valid_preset() -> void:
+    var phase_data: PhaseData = DataTables.get_phase(1)
+    var preset = GameLoop._roll_tier_preset(phase_data)
     assert_not_null(preset)
 
 func test_pick_tile_indices_never_returns_zero() -> void:
@@ -97,11 +97,11 @@ func test_altar_is_full_true_when_all_slots_filled() -> void:
     assert_true(GameLoop._altar_is_full(tile))
     tile.free()
 
-func test_pick_enemy_id_phase11_includes_all_five_types() -> void:
-    var phase_11: PhaseData = DataTables.get_phase(11)
+func test_pick_enemy_id_phase7_includes_all_five_types() -> void:
+    var phase_7: PhaseData = DataTables.get_phase(7)
     var found: Dictionary = {}
     for i in 300:
-        found[GameLoop._pick_enemy_id(phase_11, 10)] = true
+        found[GameLoop._pick_enemy_id(phase_7, 7)] = true
     assert_true(found.has("汲取者"), "汲取者 should appear in 裁决圈 spawns")
     assert_true(found.has("守卫者"), "守卫者 should appear in 裁决圈 spawns")
     assert_true(found.has("急袭者"), "急袭者 should appear in 裁决圈 spawns")

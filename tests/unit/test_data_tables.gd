@@ -22,8 +22,8 @@ func test_enemy_data_values_valid() -> void:
 	assert_gt(e.dmg_base, 0)
 	assert_gt(e.attack_interval, 0.0)
 
-func test_all_ten_phases_loaded() -> void:
-	for i in range(1, 11):
+func test_all_seven_phases_loaded() -> void:
+	for i in range(1, 8):
 		assert_true(DataTables.phases.has(i), "Missing phase %d" % i)
 
 func test_phase_data_values_valid() -> void:
@@ -67,9 +67,9 @@ func test_enemy_汲取者_has_trigger_weights() -> void:
 	var e: EnemyData = DataTables.get_enemy("汲取者")
 	assert_false(e.trigger_weights.is_empty())
 
-func test_enemy_汲取者_has_phase_drop_preset() -> void:
+func test_enemy_汲取者_has_effect_weights() -> void:
 	var e: EnemyData = DataTables.get_enemy("汲取者")
-	assert_true(e.phase_drop_presets.has(1))
+	assert_false(e.effect_weights.is_empty())
 
 func test_phase1_has_component_count_bonus() -> void:
 	var p: PhaseData = DataTables.get_phase(1)
@@ -113,9 +113,9 @@ func test_急袭者_has_effect_weights() -> void:
 	var e: EnemyData = DataTables.get_enemy("急袭者")
 	assert_false(e.effect_weights.is_empty(), "急袭者 must have effect_weights")
 
-func test_急袭者_has_drop_preset() -> void:
+func test_急袭者_has_unlock_phase() -> void:
 	var e: EnemyData = DataTables.get_enemy("急袭者")
-	assert_false(e.phase_drop_presets.is_empty(), "急袭者 must have phase_drop_presets")
+	assert_gt(e.unlock_phase, 0, "急袭者 must have a valid unlock_phase")
 
 func test_急袭者_unlock_phase_is_2() -> void:
 	var e: EnemyData = DataTables.get_enemy("急袭者")

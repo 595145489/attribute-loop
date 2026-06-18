@@ -24,7 +24,7 @@ func _load_enemies() -> void:
 		enemies[id] = load("res://data/enemies/enemy_%s.tres" % id)
 
 func _load_phases() -> void:
-	for i in range(1, 12):
+	for i in range(1, 8):
 		phases[i] = load("res://data/phases/phase_%d.tres" % i)
 
 func _load_components() -> void:
