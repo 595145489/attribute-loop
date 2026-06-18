@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cq6tjscutptne"]
 
 [ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_0fmkg"]
-[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_03.tres" id="2_jirush"]
 
 [resource]
 script = ExtResource("1_0fmkg")
@@ -50,7 +49,4 @@ effect_weights = {
 "减伤": 3,
 "吸血": 3,
 "侵蚀": 3
-}
-phase_drop_presets = {
-4: ExtResource("2_jirush")
 }

@@ -17,3 +17,5 @@ extends Resource
 @export var boss_hp_multiplier: float = 2.0
 @export var boss_damage_multiplier: float = 2.0
 @export var boss_scale: float = 1.6
+## Tier drop probabilities: [tier_01_weight, tier_02_weight, tier_03_weight]
+@export var tier_drop_weights: Array[int] = [85, 12, 3]

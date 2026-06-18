@@ -1,8 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d1gs2mqm66w8m"]
 
 [ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_o7c7t"]
-[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_02.tres" id="2_rpl4x"]
-[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_03.tres" id="3_yqw8m"]
 
 [resource]
 script = ExtResource("1_o7c7t")
@@ -51,8 +49,4 @@ effect_weights = {
 "吸血": 3,
 "增伤": 3,
 "蓄能": 3
-}
-phase_drop_presets = {
-7: ExtResource("2_rpl4x"),
-9: ExtResource("3_yqw8m")
 }

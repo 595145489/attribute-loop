@@ -1,8 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://chwip1x7enndm"]
 
 [ext_resource type="Script" uid="uid://c4nlyntn501y2" path="res://src/resources/EnemyData.gd" id="1_0u2md"]
-[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_01.tres" id="1_gnx0n"]
-[ext_resource type="Resource" path="res://data/drop_presets/drop_tier_02.tres" id="2_2fu4y"]
 
 [resource]
 script = ExtResource("1_0u2md")
@@ -49,8 +47,4 @@ effect_weights = {
 "增伤": 3,
 "蓄能": 3,
 "侵蚀": 3
-}
-phase_drop_presets = {
-1: ExtResource("1_gnx0n"),
-3: ExtResource("2_2fu4y")
 }

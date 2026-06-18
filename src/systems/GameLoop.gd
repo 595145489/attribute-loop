@@ -89,6 +89,8 @@ func check_tile_for_enemy(tile: Tile) -> void:
 	tile.enemy.play_activate()
 	_player.enter_combat()
 	_combat_tile = tile
+	if _combat_system.rule_engine != null:
+		_combat_system.rule_engine.evaluate_tile_combat_effects(tile)
 	_combat_system.start(tile.enemy)
 
 func _on_loop_completed() -> void:
@@ -164,29 +166,31 @@ func _assign_components(enemy: Enemy, stat_phase: int = -1) -> void:
 	var enemy_data: EnemyData = DataTables.get_enemy(enemy.enemy_id)
 	var effective_phase := stat_phase if stat_phase > 0 else GameState.current_phase
 	var phase_data: PhaseData = DataTables.get_phase(effective_phase)
-	var preset: DropPreset = _resolve_drop_preset(enemy_data, effective_phase)
-	if preset == null:
-		return
 	var pairs = randi_range(
 		enemy_data.component_pair_min + phase_data.component_count_bonus,
 		enemy_data.component_pair_max + phase_data.component_count_bonus
 	)
 	for i in pairs:
+		var preset: DropPreset = _roll_tier_preset(phase_data)
+		if preset == null:
+			continue
 		var t_id = _weighted_pick_with_modifiers(enemy_data.trigger_weights, phase_data)
 		var e_id = _weighted_pick_with_modifiers(enemy_data.effect_weights, phase_data)
 		enemy.components.append(_create_component(t_id, preset))
 		enemy.components.append(_create_component(e_id, preset))
 
-static func _resolve_drop_preset(enemy_data: EnemyData, current_phase: int) -> DropPreset:
-	if enemy_data.phase_drop_presets.is_empty():
-		return null
-	var best_key = -1
-	for key in enemy_data.phase_drop_presets:
-		if key <= current_phase and key > best_key:
-			best_key = key
-	if best_key == -1:
-		return null
-	return enemy_data.phase_drop_presets[best_key]
+static func _roll_tier_preset(phase_data: PhaseData) -> DropPreset:
+	var weights: Array[int] = phase_data.tier_drop_weights
+	var total := 0
+	for w in weights:
+		total += w
+	var roll := randi_range(1, total)
+	var acc := 0
+	for idx in weights.size():
+		acc += weights[idx]
+		if roll <= acc:
+			return DataTables.get_drop_preset(idx + 1)
+	return DataTables.get_drop_preset(1)
 
 static func _weighted_pick_with_modifiers(weights: Dictionary, phase_data: PhaseData) -> String:
 	var final_weights: Dictionary = {}
