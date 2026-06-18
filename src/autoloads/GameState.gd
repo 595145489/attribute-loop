@@ -1,7 +1,7 @@
 extends Node
 
 var hp: int
-var hp_max: int = 250
+var hp_max: int = 200
 var loops_completed: int = 0
 var enemies_killed: int = 0
 var current_phase: int = 1
@@ -101,6 +101,9 @@ func reset() -> void:
 	tutorial_tile_clickable = false
 	for i in 2:
 		rule_slots.append({"trigger": null, "effect": null})
+
+var is_panel_paused: bool:
+	get: return _panel_pause_count > 0
 
 func pause_for_panel() -> void:
 	_panel_pause_count += 1

@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_wd03v")
+hp_base = 200
+dmg_base = 10
