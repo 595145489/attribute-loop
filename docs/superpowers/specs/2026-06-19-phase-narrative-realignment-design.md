@@ -54,18 +54,25 @@ assets, by editing only `PhaseTransition.gd` and renaming the image files.
 
 ### Narrative — `_COPY` (6 entries)
 
-| phase | label                         | copy direction (compressed from the 10-phase arc; final wording polished at implementation time) |
-|-------|-------------------------------|----------------------------------------------------------------------------------------------------|
-| 1     | Phase 1 · 觉醒               | 发光的小路,亭子里一盏灯和一朵不知谁放的花。你走了进去。                                          |
-| 2     | Phase 2 · 涌动               | 路边的石子被摆成某种太刻意的形状。你也摆了一个问号。                                            |
-| 3     | Phase 3 · 侵蚀               | 亭子木头上出现文字,你也刻了自己的。这是真实的吗?                                              |
-| 4     | Phase 4 · 失衡               | 你开始期待入睡。白天模糊,梦里的小路反而清晰。喜欢上了一个没见过脸的人。                          |
-| 5     | Phase 5 · 裁决前夜          | 他们写了一句只有真实的人才会写的话。怀疑消失,木头再也没有空白。                                  |
-| 6     | Phase 6 · 裁决前夜Boss      | 亭子的灯第一次灭了。最后一行字字迹很乱:"我可能回不来了。"                                       |
+The copy below is the approved final text. At implementation time, **only wording polish is
+permitted** — no imagery, plot beat, connecting line (承上启下), or motif bookend may be deleted or
+rewritten.
 
-The spirit of the old "觉醒II / 压制 / 律法" entries (试探 → 真心话 → 说完了) is folded into
-entry 5. The original "裁决前夜" closing beat ("灯灭了 + 乱字") is retained as entry 6's boss
-lead-in. Wording is indicative; refined during implementation.
+| phase | label | text |
+|-------|-------|------|
+| 1 | Phase 1 · 觉醒 | `一条发光的小路。\n亭子里有一盏灯，还有一朵不知道谁放的花。\n\n你走了进去。\n你也不知道为什么。` |
+| 2 | Phase 2 · 涌动 | `路边的石子被摆成了某种形状，太刻意，不像偶然。\n\n你摆了一个问号。\n第二天，问号旁边多了一个感叹号。\n\n也许这里不只有你。\n有人回答了你。` |
+| 3 | Phase 3 · 侵蚀 | `亭子的木头上开始出现文字。你也刻了自己的。\n\n但有时你会想——\n这是真实的吗？还是你一个人在自言自语？` |
+| 4 | Phase 4 · 失衡 | `你开始期待入睡了。\n\n白天的事情变得模糊，梦里的小路反而更清晰。\n\n你喜欢上了一个从未见过脸的人。` |
+| 5 | Phase 5 · 裁决前夜 | `那个石子摆成的问号，早已经有了答案。\n\n他们写了一句只有真实的人才会写的话。\n怀疑消失了。\n你们开始说真心话，不再试探。\n\n亭子的木头再也没有空白的地方。\n你们之间的事是真实的——\n这是这个梦唯一的规则。` |
+| 6 | Phase 6 · 裁决前夜Boss | `亭子的灯第一次灭了。\n\n最后一行字，字迹很乱，不像平时：\n[i]"我可能回不回来了。"[/i]\n\n你拿起刻字的工具，在旁边写：\n[i]"我会在现实里找到你。"[/i]` |
+
+Key narrative notes:
+- **Stone (石子) thread** is the deliberate 承上启下 motif: introduced in phase 2 (the 问号/感叹号
+  exchange, plus the connecting line "也许这里不只有你"), then bookended at the opening of phase 5
+  ("那个石子摆成的问号，早已经有了答案") so the question raised in phase 2 is resolved in phase 5.
+- Entry 5 folds in the spirit of the old "觉醒II / 压制 / 律法" entries (试探 → 真心话 → 说完了).
+- Entry 6 retains the original "裁决前夜" closing beat verbatim (灯灭了 + 乱字).
 
 ### Backgrounds — `_BACKGROUNDS` (6 keys → 5 images)
 
