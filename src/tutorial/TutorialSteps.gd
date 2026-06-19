@@ -43,7 +43,7 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "open_bag",
-			"text": "打开背包查看取到的词条\n点击左上角「背包」按钮",
+			"text": "打开背包查看取到的词条\n点击左上角「背包」按钮，或按 B 键打开",
 			"highlight_node": "",
 			"highlight_contains": "背包",
 			"complete_signal": "inventory_opened",
