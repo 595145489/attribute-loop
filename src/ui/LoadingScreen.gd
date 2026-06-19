@@ -1,3 +1,4 @@
+class_name LoadingScreen
 extends Control
 
 @onready var _progress: ProgressBar = $UI/Progress
@@ -29,10 +30,27 @@ func _start_loading() -> void:
 		_on_start_pressed()
 
 func _on_start_pressed() -> void:
+	if _should_block_start():
+		_show_must_play_tutorial_prompt()
+		return
 	GameState.reset()
 	GameState.is_tutorial = false
 	_start_button.disabled = true
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func _should_block_start() -> bool:
+	return not OnboardingState.is_tutorial_completed() \
+		and not FileAccess.file_exists("res://tests/.test_mode")
+
+func _show_must_play_tutorial_prompt() -> void:
+	var dialog := AcceptDialog.new()
+	dialog.title = "提示"
+	dialog.dialog_text = "请先完成教程后再开始游戏"
+	dialog.ok_button_text = "知道了"
+	dialog.confirmed.connect(dialog.queue_free)
+	dialog.canceled.connect(dialog.queue_free)
+	add_child(dialog)
+	dialog.popup_centered()
 
 func _on_progress(_ratio: float, label: String) -> void:
 	_step += 1
