@@ -34,6 +34,10 @@ func setup(am, tiles: Array) -> void:
 	hide()
 
 func open(svc: int, bar_idx: int) -> void:
+	# Idempotent: only pause on the hidden→visible transition. ServiceBar can
+	# re-invoke this while the popup is already open; re-pausing would drift
+	# the panel-pause refcount and freeze Engine.time_scale.
+	var was_visible := visible
 	_discard_mode = false
 	_current_service = svc
 	_current_bar_idx = bar_idx
@@ -42,10 +46,15 @@ func open(svc: int, bar_idx: int) -> void:
 	cancel_btn.text = "取消"
 	_set_warning_mode(false)
 	_build_content(svc)
-	GameState.pause_for_panel()
-	show()
+	if not was_visible:
+		GameState.pause_for_panel()
+		show()
 
 func open_discard(options: Array[int], new_svc: int, am) -> void:
+	# Idempotent: see open(). A single auction settlement can award multiple
+	# services to a full bar, emitting service_bar_changed repeatedly while
+	# _pending_overflow_service >= 0 — each would re-open this popup.
+	var was_visible := visible
 	_discard_mode = true
 	_discard_options = options
 	_discard_new_svc = new_svc
@@ -55,8 +64,9 @@ func open_discard(options: Array[int], new_svc: int, am) -> void:
 	cancel_btn.text = "取消（放弃新的）"
 	_set_warning_mode(true)
 	_build_discard_content(options, new_svc)
-	GameState.pause_for_panel()
-	show()
+	if not was_visible:
+		GameState.pause_for_panel()
+		show()
 
 func _set_warning_mode(warning: bool) -> void:
 	var col := COL_WARN if warning else COL_GOLD

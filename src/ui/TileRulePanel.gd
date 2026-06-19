@@ -19,11 +19,15 @@ func _ready() -> void:
 	_close_btn.pressed.connect(close)
 
 func open(tile: Tile) -> void:
+	# Idempotent: only pause on the hidden→visible transition so repeated
+	# open() calls can't drift the panel-pause refcount.
+	var was_visible := visible
 	_tile = tile
 	_selecting_slot_idx = -1
 	_inv_picker.hide()
-	GameState.pause_for_panel()
-	show()
+	if not was_visible:
+		GameState.pause_for_panel()
+		show()
 	_refresh()
 	EventBus.tile_rule_panel_opened.emit()
 

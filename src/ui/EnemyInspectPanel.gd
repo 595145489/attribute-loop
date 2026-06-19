@@ -8,10 +8,16 @@ func _ready() -> void:
 	$Margin/VBox/CloseButton.pressed.connect(close)
 
 func open(enemy: Enemy) -> void:
+	# Idempotent: only pause on the hidden→visible transition. Re-opening
+	# (e.g. clicking another enemy while already inspecting) must NOT push the
+	# panel-pause refcount again, or unpause_for_panel() on close leaves the
+	# count stuck > 0 and freezes Engine.time_scale.
+	var was_visible := visible
 	_enemy = enemy
 	_build()
-	show()
-	GameState.pause_for_panel()
+	if not was_visible:
+		show()
+		GameState.pause_for_panel()
 	EventBus.enemy_inspected.emit()
 
 func close() -> void:

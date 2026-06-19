@@ -33,6 +33,15 @@ The keyboard speed shortcuts (`1`/`2`/`3`/`Space`) are ignored while a panel is 
 
 Note: `GameState.is_paused` is a separate combat flag and does **not** affect `Engine.time_scale`.
 
+### Panel-pause refcount must stay balanced (freeze hazard)
+Because the panel-pause system is a plain integer refcount, **every `pause_for_panel()` must be matched by exactly one `unpause_for_panel()`**. If a panel's `open()` calls `pause_for_panel()` twice without two matching closes, `_panel_pause_count` drifts above zero permanently: `Engine.time_scale` is pinned to `0.0` and the speed/pause shortcuts silently no-op (they early-return on `is_panel_paused`). Symptom: the game looks frozen and "adjusting speed does nothing."
+
+The drift historically came from `open()` functions that paused unconditionally without checking `visible`:
+- `EnemyInspectPanel.open()`, `AltarPanel.open()`, `TileRulePanel.open()` — `Main._on_tile_clicked` calls these without a visibility check, and `Tile._input` only blocks clicks on non-enemy tiles while a panel is open, so clicking an enemy tile while its inspect panel was already open pushed the refcount a second time.
+- `ServiceActivatePopup.open()` / `open_discard()` — `ServiceBar._refresh` is signal-driven (`service_bar_changed`); a single auction settlement awarding multiple services to a full bar re-invoked `open_discard()` while the popup was already open.
+
+**Fix (applied):** every `open()` is now idempotent — it captures `was_visible := visible` up front and only calls `pause_for_panel()` + `show()` on the hidden→visible transition. Re-opening an already-visible panel just refreshes its content. Any new modal panel added to the project must follow the same pattern (or use `toggle()`-style paired open/close). `unpause_for_panel()` clamps with `max(0, …)` so a stray extra close cannot push the count negative, but there is no clamp against over-pausing — the `open()` guard is the protection.
+
 ## Dependencies
 - `GameState` (autoload)
 - `EventBus` (autoload, `speed_changed` signal)
