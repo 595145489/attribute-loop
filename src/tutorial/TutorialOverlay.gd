@@ -15,6 +15,7 @@ const DARK_COLOR := Color(0.0, 0.0, 0.0, 0.72)
 @onready var _skip_btn: Button = $SkipButton
 
 var _highlight_rect: Rect2 = Rect2()
+var _pending_skip_dialog: ConfirmationDialog = null
 var _block_input: bool = false
 var _highlight_node_path: String = ""
 var _highlight_contains: String = ""
@@ -80,8 +81,8 @@ func show_step(step: Dictionary, step_index: int, total: int) -> void:
 	visible = true
 	_skip_btn.show()
 	var vp := get_viewport().get_visible_rect().size
-	_skip_btn.position = Vector2(vp.x - _skip_btn.size.x - 16.0, 16.0)
 	_skip_btn.size = Vector2(120, 36)
+	_skip_btn.position = Vector2(vp.x - _skip_btn.size.x - 16.0, 16.0)
 	if _highlight_node_path == "" and _highlight_contains == "":
 		return
 	_highlight_rect = Rect2()
@@ -275,19 +276,26 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 func _on_skip_pressed() -> void:
-	var dialog := ConfirmationDialog.new()
-	dialog.title = "跳过教程"
-	dialog.dialog_text = "确定跳过教程？\n跳过后将返回主菜单。"
-	dialog.ok_button_text = "跳过"
-	dialog.cancel_button_text = "继续教程"
-	dialog.confirmed.connect(_on_skip_confirmed)
-	dialog.canceled.connect(dialog.queue_free)
-	add_child(dialog)
-	dialog.popup_centered()
+	if _pending_skip_dialog != null:
+		return
+	_pending_skip_dialog = ConfirmationDialog.new()
+	_pending_skip_dialog.title = "跳过教程"
+	_pending_skip_dialog.dialog_text = "确定跳过教程？\n跳过后将返回主菜单。"
+	_pending_skip_dialog.ok_button_text = "跳过"
+	_pending_skip_dialog.cancel_button_text = "继续教程"
+	_pending_skip_dialog.confirmed.connect(_on_skip_confirmed)
+	_pending_skip_dialog.canceled.connect(_on_skip_canceled)
+	add_child(_pending_skip_dialog)
+	_pending_skip_dialog.popup_centered()
 
 func _on_skip_confirmed() -> void:
-	# The confirmation dialog is freed by the caller path; queue_free the dialog.
-	for child in get_children():
-		if child is ConfirmationDialog:
-			child.queue_free()
+	_clear_skip_dialog()
 	TutorialManager.skip()
+
+func _on_skip_canceled() -> void:
+	_clear_skip_dialog()
+
+func _clear_skip_dialog() -> void:
+	if _pending_skip_dialog != null:
+		_pending_skip_dialog.queue_free()
+		_pending_skip_dialog = null
