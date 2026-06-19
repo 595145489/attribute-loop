@@ -44,41 +44,32 @@ As the phases progress, the dream sharpens. Early on: abstract, impressionistic,
 
 ## Story by Phase
 
+The in-game story is told in six phases (aligned with the phase data files). It is a compression
+of an earlier ten-phase draft; the imagery, beats, and closing tension are preserved.
+
 ### Phase 1 · 觉醒 · Awakening
-First arrival. A glowing path. A pavilion with a lit lamp. A flower placed by someone you cannot see. You walk. You don't know why.
+First arrival. A glowing path. A pavilion with a lit lamp. A flower placed by someone you cannot see. You walk in. You don't know why.
 
-### Phase 2 · 萌动 · Stirring
-The flower changed color overnight. Stones have been arranged in a pattern that feels deliberate. Something stirs in you — maybe this is not just a dream.
+### Phase 2 · 涌动 · Surging
+The stones beside the path have been arranged into a shape that is too deliberate to be accidental. You arrange your own into a question mark. The next time you arrive, there is an exclamation point beside it. Maybe this place holds more than just you. Someone answered. Feeling surges through you — and the question you left has become a thread between you.
 
-### Phase 3 · 涌动 · Surging
-You leave your first deliberate trace: stones rearranged into a question mark. The next time you arrive, there is an exclamation point beside it. Someone answered. Feeling surges through you.
+### Phase 3 · 侵蚀 · Erosion
+Words begin appearing on the pavilion's wooden walls — and you begin carving your own beside them. But doubt erodes certainty: is any of this real? Are you imagining the other person entirely — just talking to yourself?
 
-### Phase 4 · 侵蚀 · Erosion
-Words begin appearing on the pavilion's wooden walls — and you begin carving your own beside them. But doubt erodes certainty: is any of this real? Are you imagining the other person entirely?
+### Phase 4 · 失衡 · Imbalance
+You begin looking forward to sleeping. Your waking hours blur; the dream path grows clearer instead. You are falling for someone you have never seen, and that knowledge tilts everything off balance.
 
-### Phase 5 · 失衡 · Imbalance
-You begin looking forward to sleeping. The dream feels more real than your waking hours. You are falling for someone you have never seen, and that knowledge tilts everything off balance.
+### Phase 5 · 裁决前夜 · Eve of Verdict
+That stone question mark you left — it already has its answer. They wrote something only a real person, a specific person, would write. The doubt breaks. You stop being careful; you both start writing honestly. The pavilion walls have no blank space left. What is between you is real — and that is the only law this dream runs on.
 
-### Phase 6 · 碰撞 · Collision
-They write something intimate. Something only a real person, a specific person, would write. Your worlds collide. The doubt breaks. They exist.
-
-### Phase 7 · 觉醒II · Second Awakening
-You stop being careful. You write honestly. So do they. The walls of the pavilion are nearly full. Whatever this is, you are both in it.
-
-### Phase 8 · 压制 · Suppression
-The path grows a little darker each night. Their messages come less often. Something is being held back — by them, and by you. You feel them pulling away and press down your fear.
-
-### Phase 9 · 律法 · Law
-Everything that needed to be said has been said. The pavilion walls are full. The connection is real. That is the only law this dream runs on.
-
-### Phase 10 · 裁决前夜 · Eve of Verdict
+### Phase 6 · 裁决前夜Boss · Eve of Verdict (Boss)
 The pavilion lamp goes out for the first time.
 
-On the wall, in rushed and uneven letters:
+On the wall, in rushed and uneven letters — not like their usual careful carving:
 
 *"I may not come back."*
 
-You stand there for a long time. Then you write beside it:
+You stand there for a long time. Then you pick up the carving tool, and beside those words you write:
 
 *"I will find you in the real world."*
 
@@ -117,7 +108,7 @@ The third night, the stones beside the path have been rearranged into a shape th
 
 ---
 
-By the tenth loop, they are leaving messages for each other. Rearranging stones in response. A question mark answered by an exclamation point. Two people, speaking in a language made entirely of things left behind.
+By the sixth loop, they are leaving messages for each other. Rearranging stones in response. A question mark answered by an exclamation point. Two people, speaking in a language made entirely of things left behind.
 
 Then the words start appearing on the pavilion walls. Carved small, careful at first. *Who are you. Are you real. I keep coming back here.*
 
@@ -141,11 +132,11 @@ Something is wrong, and neither of them says it.
 
 ---
 
-By Phase 9, the walls are almost full. Everything important has been written. The handwriting on both sides has changed from the first careful letters — looser now, more honest, more themselves. Two people who only know each other through wood and stone and words, and yet.
+By Phase 5 (裁决前夜), the walls are almost full. Everything important has been written. The handwriting on both sides has changed from the first careful letters — looser now, more honest, more themselves. Two people who only know each other through wood and stone and words, and yet.
 
 ---
 
-Phase 10. The lamp goes out.
+Phase 6 (裁决前夜Boss). The lamp goes out.
 
 In the darkness, lit only by the soft glow of the path, there is one final message. The handwriting is rushed and uneven, not like their usual careful carving:
 
