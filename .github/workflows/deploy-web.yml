@@ -23,6 +23,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install export templates
+        run: |
+          TPL_DIR="${HOME}/.local/share/godot/export_templates/4.6.2.stable"
+          mkdir -p "${TPL_DIR}"
+          # Copy templates bundled in the image (installed under /root)
+          cp -r /root/.local/share/godot/export_templates/4.6.2.stable/* "${TPL_DIR}/" 2>/dev/null || true
+          # Ensure the nothreads web template exists by downloading the full set
+          if [ ! -f "${TPL_DIR}/web_nothreads_release.zip" ]; then
+            cd /tmp
+            wget -q https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
+            unzip -q Godot_v4.6.2-stable_export_templates.tpz
+            cp -f templates/* "${TPL_DIR}/"
+          fi
+          echo "=== templates present ==="
+          ls "${TPL_DIR}/" | grep web
+
       - name: Import project
         run: godot --headless --import || true
 
