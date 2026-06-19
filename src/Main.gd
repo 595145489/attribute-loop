@@ -107,6 +107,7 @@ func _on_tile_clicked(tile: Tile) -> void:
 func reset_tiles() -> void:
 	for tile in tiles_container.get_children():
 		tile.pass_count = 0
+		tile.combat_count = 0
 		tile.visited_this_loop = false
 		tile.rule_slots.clear()
 		if not tile.is_altar:

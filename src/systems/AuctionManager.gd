@@ -31,7 +31,7 @@ const SERVICE_NAMES: Dictionary = {
 const SERVICE_DESCRIPTIONS: Dictionary = {
 	ServiceType.COMP_REWRITE:   "修改某个词条的N值(1-3)或基础数值(最多+50%)",
 	ServiceType.COMP_MERGE:     "将两个同类词条合并为一个（结果 = 总和×0.8）",
-	ServiceType.ENEMY_PARDON:   "下3只指定类型敌人不战斗，自动掉落组件",
+	ServiceType.ENEMY_PARDON:   "下3只指定类型敌人不战斗，自动掉落词条",
 	ServiceType.DELETE_PARDON:  "下次删除词条0费用且不计入全局计数",
 	ServiceType.PRESSURE_DELAY: "世界压力计时 -1 圈",
 	ServiceType.STAT_DMG:       "永久 基础攻击 +2",

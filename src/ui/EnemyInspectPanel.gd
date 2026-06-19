@@ -44,7 +44,7 @@ func _build() -> void:
 		vbox.add_child(sep)
 
 		var comp_lbl := Label.new()
-		comp_lbl.text = "携带组件："
+		comp_lbl.text = "携带词条："
 		vbox.add_child(comp_lbl)
 
 		var i := 0

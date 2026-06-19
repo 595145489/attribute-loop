@@ -63,7 +63,7 @@ func _build_altar_slots() -> void:
 			var preview_bonus: float = comp.effect_value * comp.altar_ratio
 			slot_btn.text = "%s → +%.2f %s" % [comp.display_name, preview_bonus, comp.id]
 		else:
-			slot_btn.text = "[空 — 放入E组件]"
+			slot_btn.text = "[空 — 放入E词条]"
 		var idx = i
 		slot_btn.pressed.connect(func(): _on_altar_slot_clicked(idx))
 		hbox.add_child(slot_btn)

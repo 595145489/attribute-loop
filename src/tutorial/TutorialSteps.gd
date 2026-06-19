@@ -34,7 +34,7 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "strip_component",
-			"text": "击败敌人后可剥取组件\n点击「取走」按钮逐一取走全部4个组件",
+			"text": "击败敌人后可剥取词条\n点击「取走」按钮逐一取走全部4个词条",
 			"highlight_node": "",
 			"highlight_contains": "取走",
 			"complete_signal": "component_stripped",
@@ -43,7 +43,7 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "open_bag",
-			"text": "打开背包查看取到的组件\n点击左上角「背包」按钮",
+			"text": "打开背包查看取到的词条\n点击左上角「背包」按钮",
 			"highlight_node": "",
 			"highlight_contains": "背包",
 			"complete_signal": "inventory_opened",
@@ -110,7 +110,7 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "tile_rule_equip",
-			"text": "点击 T 槽，再从列表选择「经过」词条放入\n装在地块上时：每经过该格 N 次触发一次\n注意：是针对这个地块单独计数，和装在人物身上不同",
+			"text": "点击 T 槽，再从列表选择「经过」词条放入\n装在地块上时：每经过该格 N 次触发一次\n注意：是针对这个地块单独计数，和装在人物身上不同\n特殊：灼烧/侵蚀/吸血/反射装在地块上时，改为每触发 N 场战斗触发一次",
 			"highlight_node": "",
 			"highlight_contains": "[T 空 — 放入经过]",
 			"highlight_next": "每",
@@ -186,7 +186,7 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "altar_gift",
-			"text": "【教程赠礼】已为你添加2个治愈组件\n祭坛可将组件永久转化为阶段加成\n点击「祭坛」按钮进入",
+			"text": "【教程赠礼】已为你添加2个治愈词条\n祭坛可将词条永久转化为阶段加成\n点击「祭坛」按钮进入",
 			"highlight_node": "",
 			"highlight_contains": "祭坛",
 			"complete_signal": "altar_panel_opened",
@@ -195,16 +195,16 @@ static func get_steps() -> Array:
 		},
 		{
 			"id": "altar_slot",
-			"text": "点击空槽放入治愈组件\n祭坛会将其效果值转化为永久加成",
+			"text": "点击空槽放入治愈词条\n祭坛会将其效果值转化为永久加成",
 			"highlight_node": "",
-			"highlight_contains": "[空 — 放入E组件]",
+			"highlight_contains": "[空 — 放入E词条]",
 			"highlight_next": "治愈 (",
 			"complete_signal": "altar_component_added",
 			"block_outside_input": true
 		},
 		{
 			"id": "altar_activate",
-			"text": "组件已放入！点击「激活祭坛」将其永久转化为规则加成\n激活后祭坛面板自动关闭，加成立即生效",
+			"text": "词条已放入！点击「激活祭坛」将其永久转化为规则加成\n激活后祭坛面板自动关闭，加成立即生效",
 			"highlight_node": "",
 			"highlight_contains": "激活祭坛",
 			"complete_signal": "altar_activated",

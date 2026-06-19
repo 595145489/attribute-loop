@@ -1,16 +1,18 @@
 class_name TileRulePanel
 extends PanelContainer
 
+const SLOT_ENTRY_SCENE = preload("res://scenes/ui/tile_rule_slot_entry.tscn")
+
 var _tile: Tile = null
 var _selecting_slot_idx: int = -1
 var _selecting_trigger: bool = false
 
-@onready var _title: Label = $VBox/Title
-@onready var _slots_container: VBoxContainer = $VBox/Slots
-@onready var _inv_picker: VBoxContainer = $VBox/InvPicker
-@onready var _inv_label: Label = $VBox/InvPicker/InvLabel
-@onready var _inv_grid: GridContainer = $VBox/InvPicker/InvGrid
-@onready var _close_btn: Button = $VBox/CloseButton
+@onready var _title: Label = $MarginContainer/VBox/Title
+@onready var _slots_container: VBoxContainer = $MarginContainer/VBox/Slots
+@onready var _inv_picker: VBoxContainer = $MarginContainer/VBox/InvPicker
+@onready var _inv_label: Label = $MarginContainer/VBox/InvPicker/InvLabel
+@onready var _inv_grid: GridContainer = $MarginContainer/VBox/InvPicker/InvGrid
+@onready var _close_btn: Button = $MarginContainer/VBox/CloseButton
 
 func _ready() -> void:
 	hide()
@@ -41,35 +43,13 @@ func _build_slots() -> void:
 		child.queue_free()
 
 	for i in _tile.rule_slots.size():
-		var slot = _tile.rule_slots[i]
-		var t: ComponentData = slot["trigger"]
-		var e: ComponentData = slot["effect"]
-
-		var hbox := HBoxContainer.new()
-		_slots_container.add_child(hbox)
-
-		var t_btn := Button.new()
-		t_btn.text = ("每%d次 → %s" % [int(t.trigger_value), t.display_name]) if t else "[T 空 — 放入经过]"
-		var idx = i
-		t_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, true))
-		hbox.add_child(t_btn)
-
-		var e_btn := Button.new()
-		if e:
-			var scale_factor = 1.0 + e.growth_rate * pow(float(_tile.pass_count), e.scale_exponent)
-			var val = e.effect_value * scale_factor
-			e_btn.text = "%s +%.1f" % [e.display_name, val]
-		else:
-			e_btn.text = "[E 空]"
-		e_btn.pressed.connect(func(): _on_sub_slot_clicked(idx, false))
-		hbox.add_child(e_btn)
-
-		var remove_btn := Button.new()
-		var cost = GameState.get_deletion_cost()
-		remove_btn.text = "移除 ¥%d" % cost
-		remove_btn.disabled = (t == null and e == null) or not GameState.can_afford_deletion()
-		remove_btn.pressed.connect(func(): _on_remove_slot(idx))
-		hbox.add_child(remove_btn)
+		var entry: TileRuleSlotEntry = SLOT_ENTRY_SCENE.instantiate()
+		entry.slot_idx = i
+		_slots_container.add_child(entry)
+		entry.refresh(_tile.rule_slots[i], _tile)
+		entry.trigger_clicked.connect(_on_sub_slot_clicked.bind(true))
+		entry.effect_clicked.connect(_on_sub_slot_clicked.bind(false))
+		entry.remove_clicked.connect(_on_remove_slot)
 
 func _on_sub_slot_clicked(slot_idx: int, is_trigger: bool) -> void:
 	_selecting_slot_idx = slot_idx
@@ -81,7 +61,7 @@ func _on_sub_slot_clicked(slot_idx: int, is_trigger: bool) -> void:
 func _show_inv_picker(trigger_only: bool) -> void:
 	for child in _inv_grid.get_children():
 		child.queue_free()
-	_inv_label.text = "选择%s组件" % ("经过触发" if trigger_only else "效果")
+	_inv_label.text = "选择%s词条" % ("经过触发" if trigger_only else "效果")
 	for comp in GameState.inventory:
 		var ok: bool
 		if trigger_only:
