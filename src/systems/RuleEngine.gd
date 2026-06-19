@@ -1,6 +1,8 @@
 class_name RuleEngine
 extends Node
 
+const COMBAT_TILE_EFFECTS: Array[String] = ["吸血", "反射", "灼烧", "侵蚀"]
+
 var _tiles: Array = []
 var _state_timer: float = 0.0
 var _firing_rule_trigger: bool = false
@@ -97,8 +99,23 @@ func _evaluate_tile_rules(tile: Tile) -> void:
 		var e: ComponentData = slot.get("effect")
 		if t == null or e == null:
 			continue
+		if e.id in COMBAT_TILE_EFFECTS:
+			continue
 		var n := int(t.trigger_value)
 		if n > 0 and tile.pass_count % n == 0:
+			_execute_effect(-1, e, tile.pass_count)
+
+func evaluate_tile_combat_effects(tile: Tile) -> void:
+	tile.combat_count += 1
+	for slot in tile.rule_slots:
+		var t: ComponentData = slot.get("trigger")
+		var e: ComponentData = slot.get("effect")
+		if t == null or e == null:
+			continue
+		if e.id not in COMBAT_TILE_EFFECTS:
+			continue
+		var n := int(t.trigger_value)
+		if n > 0 and tile.combat_count % n == 0:
 			_execute_effect(-1, e, tile.pass_count)
 
 func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> void:

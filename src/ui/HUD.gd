@@ -11,8 +11,6 @@ var _float_tween: Tween = null
 @onready var altar_btn: Button = $BottomBar/HContent/AltarButton
 @onready var log_btn: Button = $BottomBar/HContent/LogButton
 @onready var log_panel: LogPanel = $LogPanel
-@onready var hp_label: Label = $BottomBar/HContent/HPPill/HPVBox/HPLabel
-@onready var hp_bar: ProgressBar = $BottomBar/HContent/HPPill/HPVBox/HPBarContainer/HPBar
 @onready var loop_label: Label = $BottomBar/HContent/LoopPill/LoopLabel
 @onready var phase_label: Label = $BottomBar/HContent/PhasePill/PhaseLabel
 @onready var bag_btn: Button = $BottomBar/HContent/BagButton
@@ -49,14 +47,8 @@ func setup_altar(panel, tile) -> void:
 	_altar_tile = tile
 
 func _process(_delta: float) -> void:
-	if hp_label == null:
+	if loop_label == null:
 		return
-	if GameState.shield > 0:
-		hp_label.text = " %d / %d  (+%d)" % [GameState.hp, GameState.hp_max, GameState.shield]
-	else:
-		hp_label.text = " %d / %d" % [GameState.hp, GameState.hp_max]
-	hp_bar.max_value = GameState.hp_max
-	hp_bar.value = GameState.hp
 	loop_label.text = "圈 × %d" % GameState.loops_completed
 	bag_btn.text = "背包 [B] %d/%d" % [GameState.inventory.size(), DataTables.config.inventory_cap]
 	gold_label.text = "%d" % GameState.gold
@@ -66,7 +58,7 @@ func _process(_delta: float) -> void:
 		pressure_label.text = "进度: %d/%d圈" % [GameState.verdict_loops_survived, cfg.verdict_survive_loops]
 	elif GameState.in_boss_circle:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-		phase_label.text = "阶段%d · %s  ⚠ Boss圈" % [GameState.current_phase, phase_data.phase_name]
+		phase_label.text = "阶段%d · %s\nBoss圈" % [GameState.current_phase, phase_data.phase_name]
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
 	else:
 		var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)

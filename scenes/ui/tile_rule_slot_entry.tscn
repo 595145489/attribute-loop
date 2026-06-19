@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bivcm4s0fdvvn"]
+
+[ext_resource type="Script" uid="uid://ggy6ek4qlvf4" path="res://src/ui/TileRuleSlotEntry.gd" id="1_k1w2p"]
+
+[node name="TileRuleSlotEntry" type="HBoxContainer" unique_id=1387296882]
+script = ExtResource("1_k1w2p")
+
+[node name="TriggerBtn" type="Button" parent="." unique_id=687982751]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[T 空]"
+
+[node name="EffectBtn" type="Button" parent="." unique_id=1330725485]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[E 空]"
+
+[node name="RemoveBtn" type="Button" parent="." unique_id=686475082]
+layout_mode = 2
+text = "移除"

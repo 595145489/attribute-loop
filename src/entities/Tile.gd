@@ -35,6 +35,7 @@ var guard_position: Vector2 = Vector2.ZERO
 var enemy: Enemy = null
 var visited_this_loop: bool = false
 var pass_count: int = 0
+var combat_count: int = 0
 var is_altar: bool = false
 var rule_slots: Array = []
 var altar_slots: Array = []
@@ -68,7 +69,7 @@ func _refresh_visual() -> void:
 		visual.visible = true
 
 func _input(event: InputEvent) -> void:
-	if Engine.time_scale == 0.0 and not has_enemy() and not GameState.tutorial_tile_clickable:
+	if GameState.is_panel_paused and not has_enemy() and not GameState.tutorial_tile_clickable:
 		return
 	if not (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		return

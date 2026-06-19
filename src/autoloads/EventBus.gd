@@ -6,6 +6,7 @@ signal combat_enrage(stacks: int)
 signal loop_completed
 signal player_died
 signal player_hit(damage: int)
+signal player_attacked(damage: int)
 signal tile_passed(tile_idx: int)
 signal rule_fired(slot_idx: int, effect_id: String, value: float)
 signal shield_absorbed(amount: int)

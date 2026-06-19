@@ -50,7 +50,7 @@ func open_discard(options: Array[int], new_svc: int, am) -> void:
 	_discard_options = options
 	_discard_new_svc = new_svc
 	_auction_manager = am
-	title_label.text = "服务栏已满"
+	title_label.text = "道具栏已满"
 	subtitle_label.text = "新赢得：%s · 选择一个放弃" % AuctionManager.SERVICE_NAMES.get(new_svc, "?")
 	cancel_btn.text = "取消（放弃新的）"
 	_set_warning_mode(true)
@@ -102,9 +102,9 @@ func _apply_discard() -> void:
 		GameState.service_bar.append(_discard_new_svc)
 	if _auction_manager != null:
 		_auction_manager._pending_overflow_service = -1
-	EventBus.service_bar_changed.emit()
 	GameState.unpause_for_panel()
 	hide()
+	EventBus.service_bar_changed.emit()
 
 # ---------------------------------------------------------------------------
 # Row builder

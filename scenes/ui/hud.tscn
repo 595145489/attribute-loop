@@ -3,23 +3,19 @@
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" uid="uid://ccifkk3pn72d2" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
 [ext_resource type="PackedScene" uid="uid://difjlwj75lnvk" path="res://scenes/ui/character_panel.tscn" id="3_charpanel"]
-[ext_resource type="Texture2D" uid="uid://clql2jautp8yl" path="res://resources/ui/pill_bg.png" id="4_pill"]
 [ext_resource type="Texture2D" uid="uid://dcv1wt2bf6ap1" path="res://resources/ui/phase_badge_bg.png" id="5_phase"]
-[ext_resource type="Texture2D" uid="uid://qoifsw1obrb2" path="res://resources/ui/hp_bar_bg.png" id="6_hpbg"]
 [ext_resource type="Texture2D" uid="uid://betwg86i8vuip" path="res://resources/ui/gold_icon.png" id="8_gold"]
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="9_theme"]
 [ext_resource type="Texture2D" uid="uid://em33neewlp0n" path="res://resources/ui/gold_pill_bg.png" id="11_gold_pill"]
 [ext_resource type="Texture2D" uid="uid://ck2a1syv1shcu" path="res://resources/ui/pressure_pill_bg.png" id="12_pressure"]
 [ext_resource type="Texture2D" uid="uid://bsuchyd2fx4tr" path="res://resources/ui/loop_pill_bg.png" id="13_loop"]
 [ext_resource type="Texture2D" uid="uid://d3arel2q1m2sa" path="res://resources/ui/btn_speed_atlas.png" id="14_spd_atlas"]
+[ext_resource type="Texture2D" uid="uid://bxjckxdngovmr" path="res://resources/ui/logo_attributeloop.png" id="99_logo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottombar"]
-bg_color = Color(0.96, 0.91, 0.78, 0.55)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.65, 0.35, 0.6)
+bg_color = Color(0.28, 0.17, 0.06, 0.97)
+border_width_top = 3
+border_color = Color(0.85, 0.62, 0.18, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gold"]
 content_margin_left = 6.0
@@ -31,31 +27,6 @@ expand_margin_left = 20.0
 expand_margin_top = 10.0
 expand_margin_right = 17.0
 expand_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hp"]
-content_margin_left = 6.0
-content_margin_top = 5.0
-content_margin_right = 6.0
-content_margin_bottom = 2.0
-texture = ExtResource("4_pill")
-expand_margin_left = 5.0
-expand_margin_top = 16.0
-expand_margin_right = 5.0
-expand_margin_bottom = 16.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hptransparent"]
-content_margin_left = 12.0
-content_margin_top = 4.0
-content_margin_right = 12.0
-content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpfill"]
-bg_color = Color(0.75, 0.15, 0.15, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_loop"]
 content_margin_left = 6.0
@@ -109,6 +80,7 @@ atlas = ExtResource("14_spd_atlas")
 region = Rect2(2250, 332, 680, 680)
 
 [node name="HUD" type="CanvasLayer" unique_id=690159846]
+layer = 2
 script = ExtResource("1_hud")
 
 [node name="BottomBar" type="PanelContainer" parent="." unique_id=1267164164]
@@ -153,60 +125,6 @@ theme_override_font_sizes/font_size = 11
 text = "0"
 horizontal_alignment = 1
 
-[node name="HPPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=174777209]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_hp")
-
-[node name="HPVBox" type="VBoxContainer" parent="BottomBar/HContent/HPPill" unique_id=1813492612]
-custom_minimum_size = Vector2(170, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="HPLabel" type="Label" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=410069382]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-theme_override_colors/font_color = Color(1, 0.533, 0.533, 1)
-theme_override_font_sizes/font_size = 11
-text = "100 / 100"
-horizontal_alignment = 1
-
-[node name="HPBarContainer" type="Control" parent="BottomBar/HContent/HPPill/HPVBox" unique_id=861021783]
-custom_minimum_size = Vector2(80, 6)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 7.0
-
-[node name="HPBar" type="ProgressBar" parent="BottomBar/HContent/HPPill/HPVBox/HPBarContainer" unique_id=197631942]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 9.5
-offset_right = -10.0
-offset_bottom = -8.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 0.785)
-theme_override_styles/background = SubResource("StyleBoxFlat_hptransparent")
-theme_override_styles/fill = SubResource("StyleBoxFlat_hpfill")
-value = 50.0
-show_percentage = false
-
-[node name="HPBarFrame" type="TextureRect" parent="BottomBar/HContent/HPPill/HPVBox/HPBarContainer" unique_id=154362788]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("6_hpbg")
-expand_mode = 1
-
 [node name="LoopPill" type="PanelContainer" parent="BottomBar/HContent" unique_id=1632057987]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -230,6 +148,7 @@ theme_override_colors/font_color = Color(0.85, 0.75, 1, 1)
 theme_override_font_sizes/font_size = 11
 text = "阶段 1 · 觉醒"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="PressurePill" type="PanelContainer" parent="BottomBar/HContent" unique_id=312987654]
 custom_minimum_size = Vector2(100, 0)
@@ -242,6 +161,27 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 11
 text = "压力: 0/10圈"
 horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="BottomBar/HContent" unique_id=555000001]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Logo" type="TextureRect" parent="BottomBar/HContent/Spacer" unique_id=556000001]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -188.88889
+offset_top = -20.0
+offset_right = 188.88889
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("99_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="AltarButton" type="Button" parent="BottomBar/HContent" unique_id=1939459428]
 custom_minimum_size = Vector2(80, 0)

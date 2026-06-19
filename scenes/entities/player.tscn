@@ -2,9 +2,31 @@
 
 [ext_resource type="Script" uid="uid://cfeli8prlofrd" path="res://src/entities/Player.gd" id="1_ht6vl"]
 
-[node name="Player" type="Node2D" unique_id="488126183"]
+[node name="Player" type="Node2D" unique_id=488126183]
 z_index = 1
 script = ExtResource("1_ht6vl")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=247472396]
 scale = Vector2(0.08, 0.08)
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=139725557]
+custom_minimum_size = Vector2(56, 6)
+offset_left = -34.0
+offset_top = 45.0
+offset_right = 35.0
+offset_bottom = 53.0
+value = 100.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="." unique_id=2028427378]
+custom_minimum_size = Vector2(56, 0)
+offset_left = -55.0
+offset_top = 41.0
+offset_right = 53.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.8, 0.1, 0.1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "?/?"
+horizontal_alignment = 1

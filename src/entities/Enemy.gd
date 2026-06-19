@@ -18,7 +18,9 @@ var _firing_rule_trigger: bool = false
 
 @onready var _visual: ColorRect = $Visual
 @onready var _anim_sprite: AnimatedSprite2D = $AnimSprite
+@onready var _hp_bar: ProgressBar = $HPBar
 @onready var _hp_label: Label = $HPLabel
+@onready var _shield_label: Label = $ShieldLabel
 
 func init(id: String, stat_phase: int = -1) -> void:
 	enemy_id = id
@@ -46,6 +48,22 @@ func is_dead() -> bool:
 func _refresh_label() -> void:
 	if _hp_label:
 		_hp_label.text = "%d/%d" % [hp, hp_max]
+	if _hp_bar and hp_max > 0:
+		_hp_bar.max_value = hp_max
+		_hp_bar.value = hp
+		var ratio := float(hp) / float(hp_max)
+		if ratio > 0.6:
+			_hp_bar.modulate = Color(0.2, 0.85, 0.2)
+		elif ratio > 0.3:
+			_hp_bar.modulate = Color(1.0, 0.6, 0.1)
+		else:
+			_hp_bar.modulate = Color(0.9, 0.15, 0.15)
+	if _shield_label:
+		if shield > 0:
+			_shield_label.text = "🛡 %d" % shield
+			_shield_label.show()
+		else:
+			_shield_label.hide()
 
 const SPRITE_FOLDERS: Dictionary = {
 	"急袭者": "rusher",

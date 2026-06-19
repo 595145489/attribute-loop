@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://7hjjdl8fqkue"]
+
+[ext_resource type="Script" path="res://tests/screenshot_enemy_hp.gd" id="1_ctpwf"]
+
+[node name="screenshot_enemy_hp" type="Node" unique_id=231352031]
+script = ExtResource("1_ctpwf")

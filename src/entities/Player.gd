@@ -2,6 +2,8 @@ class_name Player
 extends Node2D
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _hp_bar: ProgressBar = $HPBar
+@onready var _hp_label: Label = $HPLabel
 
 var _path_follow: PathFollow2D
 var _walk_speed: float = 0.0
@@ -63,11 +65,29 @@ func enter_combat() -> void:
 	_in_combat = true
 	_sprite.play("idle")
 
+func _refresh_hp() -> void:
+	if _hp_bar == null or _hp_label == null:
+		return
+	_hp_bar.max_value = GameState.hp_max
+	_hp_bar.value = GameState.hp
+	var ratio := float(GameState.hp) / float(GameState.hp_max) if GameState.hp_max > 0 else 1.0
+	if ratio > 0.6:
+		_hp_bar.modulate = Color(0.2, 0.85, 0.2)
+	elif ratio > 0.3:
+		_hp_bar.modulate = Color(1.0, 0.6, 0.1)
+	else:
+		_hp_bar.modulate = Color(0.9, 0.15, 0.15)
+	if GameState.shield > 0:
+		_hp_label.text = "%d/%d+%d" % [GameState.hp, GameState.hp_max, GameState.shield]
+	else:
+		_hp_label.text = "%d/%d" % [GameState.hp, GameState.hp_max]
+
 func exit_combat() -> void:
 	_in_combat = false
 	_sprite.play("walk")
 
 func _process(delta: float) -> void:
+	_refresh_hp()
 	if _path_follow == null:
 		return
 	if GameState.is_paused:

@@ -4,14 +4,15 @@
 [ext_resource type="Theme" uid="uid://caq3yemgttbxw" path="res://resources/ui_theme.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://bxwhlygc61u1t" path="res://resources/ui/rule_panel_bg.png" id="3_panel"]
 [ext_resource type="Texture2D" uid="uid://vrn0ygysg553" path="res://resources/ui/btn_normal.png" id="4_btn_n"]
+[ext_resource type="PackedScene" uid="uid://bivcm4s0fdvvn" path="res://scenes/ui/tile_rule_slot_entry.tscn" id="4_o3afp"]
 [ext_resource type="Texture2D" uid="uid://dvhho51wmumrl" path="res://resources/ui/btn_hover.png" id="5_btn_h"]
 [ext_resource type="Texture2D" uid="uid://dxwv28af6rtpj" path="res://resources/ui/btn_pressed.png" id="6_btn_p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
-content_margin_left = 100.0
-content_margin_top = 100.0
-content_margin_right = 100.0
-content_margin_bottom = 100.0
+content_margin_left = 80.0
+content_margin_top = 120.0
+content_margin_right = 80.0
+content_margin_bottom = 40.0
 texture = ExtResource("3_panel")
 expand_margin_left = 20.0
 expand_margin_top = 20.0
@@ -47,38 +48,48 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -160.0
+offset_top = -192.0
 offset_right = 200.0
-offset_bottom = 230.0
+offset_bottom = 287.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 script = ExtResource("1_ynhln")
 
-[node name="VBox" type="VBoxContainer" parent="." unique_id=310248638]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=100000001]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer" unique_id=310248638]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBox" unique_id=1920989337]
+[node name="Title" type="Label" parent="MarginContainer/VBox" unique_id=1920989337]
 layout_mode = 2
 text = "地块规则"
 
-[node name="Slots" type="VBoxContainer" parent="VBox" unique_id=1687061272]
-layout_mode = 2
-
-[node name="InvPicker" type="VBoxContainer" parent="VBox" unique_id=809690828]
+[node name="TileRuleSlotEntry" parent="MarginContainer/VBox" unique_id=1387296882 instance=ExtResource("4_o3afp")]
 visible = false
 layout_mode = 2
 
-[node name="InvLabel" type="Label" parent="VBox/InvPicker" unique_id=716484426]
+[node name="Slots" type="VBoxContainer" parent="MarginContainer/VBox" unique_id=1687061272]
+layout_mode = 2
+
+[node name="InvPicker" type="VBoxContainer" parent="MarginContainer/VBox" unique_id=809690828]
+layout_mode = 2
+
+[node name="InvLabel" type="Label" parent="MarginContainer/VBox/InvPicker" unique_id=716484426]
 layout_mode = 2
 text = "选择组件"
 
-[node name="InvGrid" type="GridContainer" parent="VBox/InvPicker" unique_id=1066206457]
+[node name="InvGrid" type="GridContainer" parent="MarginContainer/VBox/InvPicker" unique_id=1066206457]
 layout_mode = 2
 columns = 3
 
-[node name="CloseButton" type="Button" parent="VBox" unique_id=337841513]
+[node name="CloseButton" type="Button" parent="MarginContainer/VBox" unique_id=337841513]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.961, 0.902, 0.784, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_btn_n")

@@ -1,9 +1,10 @@
 extends Control
 
-@onready var _progress: ProgressBar = $Center/VBox/Progress
-@onready var _status: Label = $Center/VBox/Status
-@onready var _start_button: Button = $Center/VBox/StartButton
-@onready var _tutorial_button: Button = $Center/VBox/TutorialButton
+@onready var _progress: ProgressBar = $UI/Progress
+@onready var _status: Label = $UI/Status
+@onready var _start_button: Button = $UI/StartButton
+@onready var _tutorial_button: Button = $UI/TutorialButton
+@onready var _particles = $ParticleLayer/Particles
 
 const TOTAL_STEPS := 6
 
@@ -22,7 +23,7 @@ func _start_loading() -> void:
 	_status.hide()
 	_start_button.visible = true
 	_tutorial_button.visible = true
-	_start_button.grab_focus()
+	_particles.start()
 	if FileAccess.file_exists("res://tests/.test_mode"):
 		await get_tree().process_frame
 		_on_start_pressed()

@@ -25,7 +25,7 @@ const SERVICE_NAMES: Dictionary = {
 	ServiceType.STAT_SPEED:     "迅捷折纸",
 	ServiceType.STAT_AMPLIFY:   "强化潜能",
 	ServiceType.SLOT_RULE:      "装备槽扩容",
-	ServiceType.SLOT_SERVICE:   "服务栏扩容",
+	ServiceType.SLOT_SERVICE:   "道具栏扩容",
 }
 
 const SERVICE_DESCRIPTIONS: Dictionary = {
@@ -39,7 +39,7 @@ const SERVICE_DESCRIPTIONS: Dictionary = {
 	ServiceType.STAT_SPEED:     "永久 攻击间隔 -0.05s（最低0.2s）",
 	ServiceType.STAT_AMPLIFY:   "永久 强化层上限 +1",
 	ServiceType.SLOT_RULE:      "永久 装备规则槽 +1",
-	ServiceType.SLOT_SERVICE:   "永久 服务栏容量 +1",
+	ServiceType.SLOT_SERVICE:   "永久 道具栏容量 +1",
 }
 
 const SERVICE_SUBTITLES: Dictionary = {
