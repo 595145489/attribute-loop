@@ -49,3 +49,13 @@ offset_right = 72.0
 offset_bottom = 28.0
 size_flags_horizontal = 4
 text = "开始冒险"
+
+[node name="SkipButton" type="Button" parent="." unique_id=1992001001]
+custom_minimum_size = Vector2(120, 36)
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 44.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "跳过教程"

@@ -87,5 +87,15 @@ func _advance() -> void:
 	_enter_step(current_step + 1)
 
 func _on_confirm_pressed() -> void:
+	_complete_and_exit()
+
+func skip() -> void:
+	_complete_and_exit()
+
+func _complete_and_exit() -> void:
+	_mark_completed()
 	stop()
 	get_tree().change_scene_to_file("res://scenes/ui/loading_screen.tscn")
+
+func _mark_completed() -> void:
+	OnboardingState.mark_tutorial_completed()
