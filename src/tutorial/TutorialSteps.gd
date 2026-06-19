@@ -88,7 +88,7 @@ static func get_steps() -> Array:
 			"id": "close_bag",
 			"text": "了解完毕，关闭背包继续",
 			"highlight_node": "",
-			"highlight_contains": "关闭 [Tab]",
+			"highlight_contains": "关闭 [B]",
 			"complete_signal": "inventory_closed",
 			"block_outside_input": true
 		},

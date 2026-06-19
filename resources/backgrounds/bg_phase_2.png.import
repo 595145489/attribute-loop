@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqd2l7v1m7wqm"
-path="res://.godot/imported/bg_phase_2.png-c9bc3d49de015cef3c50ddb36dc3b00c.ctex"
+path="res://.godot/imported/bg_phase_2.png-4ad596a10e10abfa7b8907949447e75e.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://resources/backgrounds/bg_phase_2.png"
-dest_files=["res://.godot/imported/bg_phase_2.png-c9bc3d49de015cef3c50ddb36dc3b00c.ctex"]
+dest_files=["res://.godot/imported/bg_phase_2.png-4ad596a10e10abfa7b8907949447e75e.ctex"]
 
 [params]
 

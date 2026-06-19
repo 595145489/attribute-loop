@@ -17,12 +17,8 @@ func _ready() -> void:
     _delete_btn.pressed.connect(_on_delete)
     _close_btn.pressed.connect(toggle)
 
-func _input(event: InputEvent) -> void:
-    if not visible:
-        return
-    if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
-        toggle()
-        get_viewport().set_input_as_handled()
+# Opening/closing the inventory is driven by the B key and the bag button,
+# both routed through HUD._on_bag_pressed -> toggle(). No key handling here.
 
 func toggle() -> void:
     if visible:

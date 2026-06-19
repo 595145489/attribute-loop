@@ -3,6 +3,7 @@ extends CanvasLayer
 
 const SPEEDS: Array[float] = [0.0, 1.0, 2.0, 3.0]
 
+var _last_speed: float = 1.0
 var _inventory_panel = null
 var _altar_panel = null
 var _altar_tile = null
@@ -66,21 +67,33 @@ func _process(_delta: float) -> void:
 		pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo:
-		match event.keycode:
-			KEY_C:
-				_on_char_pressed()
-				get_viewport().set_input_as_handled()
-			KEY_A:
-				_on_altar_pressed()
-				get_viewport().set_input_as_handled()
-			KEY_L:
-				log_panel.toggle()
-				get_viewport().set_input_as_handled()
-			KEY_M:
-				if _auction_panel:
-					_auction_panel.toggle()
-				get_viewport().set_input_as_handled()
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	match event.keycode:
+		KEY_C:
+			_on_char_pressed()
+			get_viewport().set_input_as_handled()
+		KEY_A:
+			_on_altar_pressed()
+			get_viewport().set_input_as_handled()
+		KEY_L:
+			log_panel.toggle()
+			get_viewport().set_input_as_handled()
+		KEY_M:
+			if _auction_panel:
+				_auction_panel.toggle()
+			get_viewport().set_input_as_handled()
+		KEY_B:
+			_on_bag_pressed()
+			get_viewport().set_input_as_handled()
+		KEY_1:
+			_try_set_speed(1)
+		KEY_2:
+			_try_set_speed(2)
+		KEY_3:
+			_try_set_speed(3)
+		KEY_SPACE:
+			_try_toggle_pause()
 
 func _on_char_pressed() -> void:
 	if _char_panel == null:
@@ -102,8 +115,35 @@ func _on_altar_pressed() -> void:
 		_altar_panel.open(_altar_tile)
 
 func _on_speed_pressed(index: int) -> void:
-	GameState.speed_multiplier = SPEEDS[index]
+	var speed: float = SPEEDS[index]
+	if speed > 0.0:
+		_last_speed = speed
+	GameState.speed_multiplier = speed
+	_sync_speed_buttons(index)
 	EventBus.speed_changed.emit()
+
+func _try_set_speed(index: int) -> void:
+	# Speed keys only drive the live game; ignore while a modal panel is open.
+	if GameState.is_panel_paused:
+		return
+	_on_speed_pressed(index)
+	get_viewport().set_input_as_handled()
+
+func _try_toggle_pause() -> void:
+	if GameState.is_panel_paused:
+		return
+	if GameState.speed_multiplier == 0.0:
+		var idx: int = SPEEDS.find(_last_speed)
+		if idx <= 0:
+			idx = 1
+		_on_speed_pressed(idx)
+	else:
+		_on_speed_pressed(0)
+	get_viewport().set_input_as_handled()
+
+func _sync_speed_buttons(index: int) -> void:
+	for i in _speed_btns.size():
+		_speed_btns[i].set_pressed_no_signal(i == index)
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	match effect_id:

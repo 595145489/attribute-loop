@@ -84,7 +84,7 @@ static func preload_all_async(tree: SceneTree, on_progress: Callable = Callable(
 			var base_path := "res://resources/sprites/enemies/%s/" % folder
 			var sf := SpriteFrames.new()
 			_load_anim(sf, base_path + "idle/", "idle", true)
-			_load_anim(sf, base_path + "activate/", "activate", false)
+			_load_anim(sf, base_path + "activate/", "activate", true)
 			_frames_cache[id] = sf if sf.has_animation("idle") else null
 			await tree.process_frame
 		if on_progress.is_valid():
@@ -97,7 +97,7 @@ func _load_animation() -> void:
 		var base_path := "res://resources/sprites/enemies/%s/" % folder
 		sf = SpriteFrames.new()
 		_load_anim(sf, base_path + "idle/", "idle", true)
-		_load_anim(sf, base_path + "activate/", "activate", false)
+		_load_anim(sf, base_path + "activate/", "activate", true)
 		if sf.has_animation("idle"):
 			_frames_cache[enemy_id] = sf
 		else:
