@@ -80,9 +80,6 @@ func show_step(step: Dictionary, step_index: int, total: int) -> void:
 	_center_text_box()
 	visible = true
 	_skip_btn.show()
-	var vp := get_viewport().get_visible_rect().size
-	_skip_btn.size = Vector2(120, 36)
-	_skip_btn.position = Vector2(vp.x - _skip_btn.size.x - 16.0, 16.0)
 	if _highlight_node_path == "" and _highlight_contains == "":
 		return
 	_highlight_rect = Rect2()
