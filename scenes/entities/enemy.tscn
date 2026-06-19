@@ -15,7 +15,7 @@ color = Color(0.8, 0.2, 0.2, 1)
 
 [node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1920170813]
 visible = false
-scale = Vector2(0.055, 0.055)
+scale = Vector2(0.155, 0.155)
 
 [node name="HPBar" type="ProgressBar" parent="." unique_id=1222800531]
 custom_minimum_size = Vector2(56, 6)
