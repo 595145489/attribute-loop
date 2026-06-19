@@ -17,7 +17,9 @@ func after_all() -> void:
 # @onready children stay null and preload never fires. _should_block_start()
 # only touches OnboardingState + the sentinel file, so this is safe.
 func _make_screen() -> Control:
-	return SCREEN_SCRIPT.new()
+	var screen := SCREEN_SCRIPT.new()
+	autofree(screen)
+	return screen
 
 func test_blocks_when_not_completed_and_not_test_mode() -> void:
 	var screen := _make_screen()
