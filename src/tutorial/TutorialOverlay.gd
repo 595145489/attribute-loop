@@ -12,6 +12,7 @@ const DARK_COLOR := Color(0.0, 0.0, 0.0, 0.72)
 @onready var _instruction: Label = $TextBox/VBox/InstructionLabel
 @onready var _step_label: Label = $TextBox/VBox/StepLabel
 @onready var _confirm_btn: Button = $ConfirmButton
+@onready var _skip_btn: Button = $SkipButton
 
 var _highlight_rect: Rect2 = Rect2()
 var _block_input: bool = false
@@ -31,6 +32,8 @@ func _ready() -> void:
 		panel.color = DARK_COLOR
 	_confirm_btn.pressed.connect(func(): confirm_pressed.emit())
 	_confirm_btn.hide()
+	_skip_btn.pressed.connect(_on_skip_pressed)
+	_skip_btn.hide()
 	var style := StyleBoxFlat.new()
 	style.border_color = Color(0.94, 0.75, 0.25, 1.0)
 	style.set_border_width_all(2)
@@ -75,6 +78,10 @@ func show_step(step: Dictionary, step_index: int, total: int) -> void:
 	_hide_dark_panels()
 	_center_text_box()
 	visible = true
+	_skip_btn.show()
+	var vp := get_viewport().get_visible_rect().size
+	_skip_btn.position = Vector2(vp.x - _skip_btn.size.x - 16.0, 16.0)
+	_skip_btn.size = Vector2(120, 36)
 	if _highlight_node_path == "" and _highlight_contains == "":
 		return
 	_highlight_rect = Rect2()
@@ -100,6 +107,7 @@ func show_complete() -> void:
 	_left.visible = false
 	_right.visible = false
 	_border.visible = false
+	_skip_btn.hide()
 	_instruction.text = "教程结束！\n返回主界面开始冒险吧"
 	_step_label.hide()
 	_text_box.reset_size()
@@ -121,6 +129,7 @@ func hide_overlay() -> void:
 		_paused_for_complete = false
 	visible = false
 	set_process(false)
+	_skip_btn.hide()
 	_highlight_rect = Rect2()
 	_highlight_contains = ""
 	_highlight_contains_2 = ""
@@ -264,3 +273,21 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton or event is InputEventMouseMotion:
 		if not _highlight_rect.has_point(event.position):
 			get_viewport().set_input_as_handled()
+
+func _on_skip_pressed() -> void:
+	var dialog := ConfirmationDialog.new()
+	dialog.title = "跳过教程"
+	dialog.dialog_text = "确定跳过教程？\n跳过后将返回主菜单。"
+	dialog.ok_button_text = "跳过"
+	dialog.cancel_button_text = "继续教程"
+	dialog.confirmed.connect(_on_skip_confirmed)
+	dialog.canceled.connect(dialog.queue_free)
+	add_child(dialog)
+	dialog.popup_centered()
+
+func _on_skip_confirmed() -> void:
+	# The confirmation dialog is freed by the caller path; queue_free the dialog.
+	for child in get_children():
+		if child is ConfirmationDialog:
+			child.queue_free()
+	TutorialManager.skip()
