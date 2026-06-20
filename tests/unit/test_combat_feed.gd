@@ -9,7 +9,7 @@ func test_player_hit_adds_red_entry() -> void:
 	feed._on_player_hit(42)
 	var entries = feed.get_node("Entries")
 	assert_eq(entries.get_child_count(), 1)
-	assert_eq(entries.get_child(0).text, "你 −42")
+	assert_eq(entries.get_child(0).text, "怪物对你造成 42 点伤害")
 
 func test_player_attacked_adds_blue_entry() -> void:
 	var feed = preload("res://scenes/ui/combat_feed.tscn").instantiate()
@@ -18,7 +18,7 @@ func test_player_attacked_adds_blue_entry() -> void:
 	feed._on_player_attacked(17)
 	var entries = feed.get_node("Entries")
 	assert_eq(entries.get_child_count(), 1)
-	assert_eq(entries.get_child(0).text, "敌 −17")
+	assert_eq(entries.get_child(0).text, "你对怪物造成 17 点伤害")
 
 func test_cap_trims_oldest() -> void:
 	var feed = preload("res://scenes/ui/combat_feed.tscn").instantiate()
@@ -31,7 +31,7 @@ func test_cap_trims_oldest() -> void:
 	assert_eq(entries.get_child_count(), CombatFeed.MAX_VISIBLE)
 	# Newest surviving entry is the last emitted value.
 	assert_eq(entries.get_child(entries.get_child_count() - 1).text,
-		"你 −%d" % (CombatFeed.MAX_VISIBLE + 2))
+		"怪物对你造成 %d 点伤害" % (CombatFeed.MAX_VISIBLE + 2))
 
 func test_rule_fired_damage_effects_surface() -> void:
 	var feed = preload("res://scenes/ui/combat_feed.tscn").instantiate()
@@ -44,5 +44,5 @@ func test_rule_fired_damage_effects_surface() -> void:
 	feed._on_rule_fired(0, "护盾", 8.0)
 	var entries = feed.get_node("Entries")
 	assert_eq(entries.get_child_count(), 2)
-	assert_eq(entries.get_child(0).text, "灼烧 −5")
-	assert_eq(entries.get_child(1).text, "蓄能释放 −30")
+	assert_eq(entries.get_child(0).text, "怪物受到灼烧伤害 5 点")
+	assert_eq(entries.get_child(1).text, "蓄能释放对怪物造成 30 点伤害")
