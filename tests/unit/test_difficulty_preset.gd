@@ -28,3 +28,21 @@ func test_make_easy_slot_duplicates_instances() -> void:
 	var slot: Dictionary = DataTables.make_easy_slot(spec)
 	assert_false(slot["trigger"] == DataTables.get_component("经过"))
 	assert_false(slot["effect"] == DataTables.get_component("护盾"))
+
+func test_apply_easy_player_slots_fills_three_slots() -> void:
+	GameState.difficulty = "easy"
+	GameState.reset()
+	GameState.apply_easy_player_slots()
+	assert_eq(GameState.rule_slots.size(), 3)
+	assert_eq(GameState.rule_slots[0]["trigger"].id, "受击")
+	assert_eq(GameState.rule_slots[0]["effect"].id, "治愈")
+	assert_eq(GameState.rule_slots[1]["trigger"].id, "治愈")
+	assert_eq(GameState.rule_slots[1]["effect"].id, "灼烧")
+	assert_eq(GameState.rule_slots[2]["trigger"].id, "治愈")
+	assert_eq(GameState.rule_slots[2]["effect"].id, "护盾")
+
+func test_apply_easy_player_slots_owns_distinct_instances() -> void:
+	GameState.difficulty = "easy"
+	GameState.reset()
+	GameState.apply_easy_player_slots()
+	assert_false(GameState.rule_slots[1]["trigger"] == GameState.rule_slots[2]["trigger"])

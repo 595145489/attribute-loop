@@ -153,6 +153,11 @@ func unequip(slot_idx: int, as_trigger: bool) -> void:
 		slot[sub_key] = null
 		inventory.append(c)
 
+func apply_easy_player_slots() -> void:
+	rule_slots.clear()
+	for spec in DataTables.EASY_PLAYER_SLOTS:
+		rule_slots.append(DataTables.make_easy_slot(spec))
+
 func get_deletion_cost() -> int:
 	var seq: Array = DataTables.config.deletion_cost_sequence
 	if deletion_count < seq.size():
