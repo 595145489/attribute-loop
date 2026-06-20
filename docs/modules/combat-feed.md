@@ -18,8 +18,12 @@ It complements two other UI elements:
 - `src/ui/CombatFeed.gd` (`class_name CombatFeed extends Control`)
 - `scenes/ui/combat_feed.tscn` — root `Panel` (semi-transparent, `mouse_filter =
   IGNORE`) with an `Entries` `VBoxContainer` (bottom-aligned).
-- Instanced into `scenes/ui/hud.tscn` as a child of the HUD `CanvasLayer`,
-  anchored to screen center over the track-loop interior.
+- Instanced into `scenes/main.tscn` as a child of the `Main` node (world space,
+  base canvas), positioned so its center sits at the track-loop center
+  (Main-local 576, 300). Parenting to `Main` (not the HUD `CanvasLayer`) does two
+  things: (1) the feed inherits Main's `(0,75)+0.85` transform so it stays
+  centered on the map, and (2) it renders on the base canvas, below every
+  CanvasLayer UI (HUD, panels, tutorial overlay).
 
 ### Exposed surface
 
@@ -60,7 +64,7 @@ Buff-stacking effects (治愈 / 护盾 / 强化 / 增伤 / 蓄能 / 反射 / 减
 
 - `EventBus` (autoload) — signal source.
 - `Enemy` — type used in the `enemy_killed` handler signature.
-- Hosted by `HUD` (`scenes/ui/hud.tscn`).
+- Hosted by `Main` (`scenes/main.tscn`), not the HUD.
 
 ## Tests
 

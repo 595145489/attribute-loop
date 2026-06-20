@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dmm2ns1b5o1w7" path="res://src/systems/RuleEngine.gd" id="4_re"]
 [ext_resource type="Script" uid="uid://bgc11ai00kpvo" path="res://src/systems/StripManager.gd" id="5_sm"]
 [ext_resource type="PackedScene" uid="uid://dtro6q0mcaml" path="res://scenes/entities/player.tscn" id="6_player"]
+[ext_resource type="PackedScene" uid="uid://cdkkgf1mwc8nk" path="res://scenes/ui/combat_feed.tscn" id="21_feed"]
 [ext_resource type="Script" uid="uid://dxgdd1ivtcf8b" path="res://src/systems/EconomyManager.gd" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://c6x1nyk4wvrgq" path="res://scenes/ui/hud.tscn" id="7_hud"]
 [ext_resource type="PackedScene" uid="uid://bemgonmkm7v1t" path="res://scenes/ui/strip_panel.tscn" id="8_strip"]
@@ -87,6 +88,12 @@ script = ExtResource("7_choun")
 
 [node name="AuctionManager" type="Node" parent="Main/Systems" unique_id=1996440489]
 script = ExtResource("15_am")
+
+[node name="CombatFeed" parent="Main" instance=ExtResource("21_feed")]
+offset_left = 416.0
+offset_top = 200.0
+offset_right = 736.0
+offset_bottom = 400.0
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2098422999]
 
