@@ -90,6 +90,16 @@ func make_easy_slot(spec: Dictionary) -> Dictionary:
 	e.trigger_count = 0
 	return {"trigger": t, "effect": e}
 
+func apply_easy_tile_rules(tiles: Array) -> void:
+	for tile in tiles:
+		if not (tile is Tile):
+			continue
+		if not EASY_TILE_RULES.has(tile.tile_index):
+			continue
+		if tile.rule_slots.is_empty():
+			continue
+		tile.rule_slots[0] = make_easy_slot(EASY_TILE_RULES[tile.tile_index])
+
 func get_drop_preset(tier: int) -> DropPreset:
 	return drop_presets[tier]
 

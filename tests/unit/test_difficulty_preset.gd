@@ -46,3 +46,45 @@ func test_apply_easy_player_slots_owns_distinct_instances() -> void:
 	GameState.reset()
 	GameState.apply_easy_player_slots()
 	assert_false(GameState.rule_slots[1]["trigger"] == GameState.rule_slots[2]["trigger"])
+
+func _make_tile(idx: int, altar: bool = false) -> Tile:
+	var t := Tile.new()
+	t.tile_index = idx
+	t.is_altar = altar
+	add_child_autofree(t)
+	return t
+
+func _make_all_tiles() -> Array:
+	var tiles: Array = []
+	for i in range(13):
+		tiles.append(_make_tile(i, i == 0))
+	return tiles
+
+func test_apply_easy_tile_rules_fills_five_tiles() -> void:
+	var tiles := _make_all_tiles()
+	DataTables.apply_easy_tile_rules(tiles)
+	var filled: Array = []
+	for t in tiles:
+		if t.tile_index > 0 and not t.rule_slots.is_empty() and t.rule_slots[0]["trigger"] != null:
+			filled.append(t.tile_index)
+	assert_eq(filled.size(), 5)
+	for idx in [1, 5, 8, 9, 12]:
+		assert_true(filled.has(idx), "expected tile %d filled" % idx)
+
+func test_apply_easy_tile_rules_skips_altar() -> void:
+	var tiles := _make_all_tiles()
+	DataTables.apply_easy_tile_rules(tiles)
+	assert_eq(tiles[0].rule_slots.size(), 0)
+
+func test_apply_easy_tile_rules_tile9_is_护盾() -> void:
+	var tiles := _make_all_tiles()
+	DataTables.apply_easy_tile_rules(tiles)
+	var t9: Tile = tiles[9]
+	assert_eq(t9.rule_slots[0]["trigger"].id, "经过")
+	assert_eq(t9.rule_slots[0]["effect"].id, "护盾")
+
+func test_apply_easy_tile_rules_leaves_other_tiles_empty() -> void:
+	var tiles := _make_all_tiles()
+	DataTables.apply_easy_tile_rules(tiles)
+	var t2: Tile = tiles[2]
+	assert_null(t2.rule_slots[0]["trigger"])
