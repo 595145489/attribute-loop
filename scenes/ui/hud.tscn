@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://tkq53wp5xvx5" path="res://src/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" uid="uid://ccifkk3pn72d2" path="res://scenes/ui/log_panel.tscn" id="2_logpanel"]
+[ext_resource type="PackedScene" uid="uid://cdkkgf1mwc8nk" path="res://scenes/ui/combat_feed.tscn" id="2b_feed"]
 [ext_resource type="PackedScene" uid="uid://difjlwj75lnvk" path="res://scenes/ui/character_panel.tscn" id="3_charpanel"]
 [ext_resource type="Texture2D" uid="uid://dcv1wt2bf6ap1" path="res://resources/ui/phase_badge_bg.png" id="5_phase"]
 [ext_resource type="Texture2D" uid="uid://betwg86i8vuip" path="res://resources/ui/gold_icon.png" id="8_gold"]
@@ -215,6 +216,8 @@ text = "残市 [M]"
 
 [node name="LogPanel" parent="." unique_id=1209956492 instance=ExtResource("2_logpanel")]
 visible = false
+
+[node name="CombatFeed" parent="." instance=ExtResource("2b_feed")]
 
 [node name="FloatLabel" type="Label" parent="." unique_id=249889570]
 offset_left = 400.0
