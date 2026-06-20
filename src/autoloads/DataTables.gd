@@ -3,6 +3,23 @@ extends Node
 # Index 0 = altar (capacity managed by AltarPanel). Indices 1-12 = normal tiles.
 const TILE_MAX_RULES: Array[int] = [0, 1, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 2]
 
+# Easy difficulty starter build. trigger_value = N for fires_every triggers;
+# effect_value = magnitude for the paired effect. Components are duplicated at
+# apply time so each slot owns its own instance.
+const EASY_PLAYER_SLOTS := [
+	{"trigger": "受击", "trigger_value": 5, "effect": "治愈", "effect_value": 12},
+	{"trigger": "治愈", "trigger_value": 3, "effect": "灼烧", "effect_value": 2},
+	{"trigger": "治愈", "trigger_value": 3, "effect": "护盾", "effect_value": 15},
+]
+
+const EASY_TILE_RULES := {
+	1: {"trigger": "经过", "trigger_value": 6, "effect": "增伤", "effect_value": 1},
+	5: {"trigger": "经过", "trigger_value": 6, "effect": "减伤", "effect_value": 1},
+	8: {"trigger": "经过", "trigger_value": 6, "effect": "治愈", "effect_value": 12},
+	9: {"trigger": "经过", "trigger_value": 6, "effect": "护盾", "effect_value": 15},
+	12: {"trigger": "经过", "trigger_value": 6, "effect": "护盾", "effect_value": 15},
+}
+
 var config: GameConfig
 var player: PlayerData
 var enemies: Dictionary = {}   # String -> EnemyData
@@ -63,6 +80,15 @@ func get_phase(phase_id: int) -> PhaseData:
 
 func get_component(id: String) -> ComponentData:
 	return components[id]
+
+func make_easy_slot(spec: Dictionary) -> Dictionary:
+	var t: ComponentData = get_component(spec["trigger"]).duplicate()
+	t.trigger_value = float(spec["trigger_value"])
+	t.trigger_count = 0
+	var e: ComponentData = get_component(spec["effect"]).duplicate()
+	e.effect_value = float(spec["effect_value"])
+	e.trigger_count = 0
+	return {"trigger": t, "effect": e}
 
 func get_drop_preset(tier: int) -> DropPreset:
 	return drop_presets[tier]
