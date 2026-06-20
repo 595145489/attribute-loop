@@ -19,7 +19,7 @@ A `ConfigFile` at `user://onboarding.cfg`, section `onboarding`, key `tutorial_c
 1. On boot, `OnboardingState._ready()` calls `reload()`, reading `user://onboarding.cfg`.
 2. `LoadingScreen._on_start_pressed()` checks `_should_block_start()`: if the tutorial is not completed and the test-mode sentinel is absent, it shows an `AcceptDialog` ("请先完成教程后再开始游戏") and refuses to start.
 3. The player enters the tutorial via the "教程" button. On finish (`TutorialManager._on_confirm_pressed`, the terminal "开始冒险 →" button) or skip (`TutorialManager.skip`, wired to `TutorialOverlay`'s "跳过教程" button via a confirmation dialog), `_complete_and_exit()` calls `OnboardingState.mark_tutorial_completed()`, then returns to the loading screen.
-4. On subsequent launches the gate passes and "开始游戏" starts the game directly.
+4. On subsequent launches the gate passes and "开始游戏" shows the **difficulty selection panel** (Easy/Hard) instead of starting immediately. Choosing a difficulty launches the game. See [difficulty-selection.md](difficulty-selection.md).
 
 ## Components
 
@@ -36,7 +36,7 @@ A `ConfigFile` at `user://onboarding.cfg`, section `onboarding`, key `tutorial_c
 
 ## Test Mode
 
-The `tests/.test_mode` sentinel exempts the gate (`_should_block_start` returns false when it exists) so the CLAUDE.md self-test screenshot flow auto-starts the game without being blocked.
+The `tests/.test_mode` sentinel exempts the gate (`_should_block_start` returns false when it exists) so the CLAUDE.md self-test screenshot flow auto-starts the game without being blocked. It also skips the difficulty panel, auto-launching Hard directly (see [difficulty-selection.md](difficulty-selection.md)).
 
 ## Tests
 
