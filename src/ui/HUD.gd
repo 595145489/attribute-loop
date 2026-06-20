@@ -38,7 +38,12 @@ func _ready() -> void:
 	EventBus.rule_fired.connect(_on_rule_fired)
 	EventBus.combat_enrage.connect(_on_combat_enrage)
 	for i in _speed_btns.size():
-		_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
+		if i == 0:
+			# Pause is a standalone toggle (not in the speed radio group) so it
+			# stays clickable while already pressed — see _on_pause_pressed.
+			_speed_btns[i].pressed.connect(_on_pause_pressed)
+		else:
+			_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
@@ -113,6 +118,19 @@ func _on_altar_pressed() -> void:
 		_altar_panel.close()
 	else:
 		_altar_panel.open(_altar_tile)
+
+func _on_pause_pressed() -> void:
+	# The pause button toggles between running and paused. When the game is not
+	# running (time_scale == 0 — either speed-paused, or panel-paused such as at
+	# tutorial entry), resume to the last chosen speed, defaulting to X1 when no
+	# speed has ever been selected. Otherwise, pause.
+	if Engine.time_scale > 0.0:
+		_on_speed_pressed(0)
+	else:
+		var idx: int = SPEEDS.find(_last_speed)
+		if idx <= 0:
+			idx = 1  # default to X1
+		_on_speed_pressed(idx)
 
 func _on_speed_pressed(index: int) -> void:
 	var speed: float = SPEEDS[index]

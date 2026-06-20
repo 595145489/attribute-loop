@@ -236,7 +236,6 @@ alignment = 1
 custom_minimum_size = Vector2(40, 36)
 layout_mode = 2
 toggle_mode = true
-button_group = SubResource("ButtonGroup_speed")
 icon = SubResource("AtlasTexture_pause")
 expand_icon = true
 
