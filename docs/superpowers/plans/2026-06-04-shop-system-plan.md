@@ -1365,7 +1365,7 @@ func _process(_delta: float) -> void:
     if _auction_panel != null and _auction_panel._auction_manager != null:
         var am = _auction_panel._auction_manager
         phantom_a_label.text = "甲 %dg" % am.phantom_a.gold
-        phantom_b_label.text = "乙 %dg%s" % [am.phantom_b.gold, " ⚠" if am.phantom_b.gold >= 180 else ""]
+        phantom_b_label.text = "乙 %dg%s" % [am.phantom_b.gold, " !" if am.phantom_b.gold >= 180 else ""]
 ```
 
 - [ ] **Step 6: Run full self-test**

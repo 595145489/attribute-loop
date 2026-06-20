@@ -104,7 +104,7 @@ Two phantom buyers participate in every auction throughout the entire run.
 
 ### HUD Constant Bar (always visible)
 - Displays both phantom gold balances.
-- Shows ⚠ warning when a phantom's balance approaches their threshold.
+- Shows a warning (!) when a phantom's balance approaches their threshold.
 - Auction open/closed indicator with click-to-expand.
 
 ### Auction Panel (slides in from side, no pause)

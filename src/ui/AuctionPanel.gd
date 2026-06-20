@@ -53,8 +53,8 @@ func _refresh_footer(_gold: int = -1) -> void:
 	if _auction_manager != null:
 		var pa_gold: int = _auction_manager.phantom_a.gold
 		var pb_gold: int = _auction_manager.phantom_b.gold
-		phantom_a_label.text = "影子甲: %dg%s" % [pa_gold, " ⚠" if pa_gold >= 180 else ""]
-		phantom_b_label.text = "影子乙: %dg%s" % [pb_gold, " ⚠" if pb_gold >= 180 else ""]
+		phantom_a_label.text = "影子甲: %dg%s" % [pa_gold, " !" if pa_gold >= 180 else ""]
+		phantom_b_label.text = "影子乙: %dg%s" % [pb_gold, " !" if pb_gold >= 180 else ""]
 
 func _refresh_last_results() -> void:
 	for c in last_results_container.get_children():

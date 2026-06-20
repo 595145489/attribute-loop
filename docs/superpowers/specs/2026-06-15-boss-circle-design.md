@@ -52,7 +52,7 @@ In `_process()`, add a branch between `in_verdict_loop` and the normal else:
 ```gdscript
 elif GameState.boss_circle_pending:
     var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
-    phase_label.text = "阶段%d · %s  ⚠ Boss圈" % [GameState.current_phase, phase_data.phase_name]
+    phase_label.text = "阶段%d · %s  Boss圈" % [GameState.current_phase, phase_data.phase_name]
     pressure_label.text = "压力: %d/%d圈" % [GameState.loops_in_phase, phase_data.world_pressure_window]
     for i in GameState.rule_slots.size():
         _update_rule_panel(i)

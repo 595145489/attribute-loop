@@ -60,7 +60,7 @@ func _refresh_label() -> void:
 			_hp_bar.modulate = Color(0.9, 0.15, 0.15)
 	if _shield_label:
 		if shield > 0:
-			_shield_label.text = "🛡 %d" % shield
+			_shield_label.text = "护盾 %d" % shield
 			_shield_label.show()
 		else:
 			_shield_label.hide()
