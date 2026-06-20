@@ -23,8 +23,12 @@ func _ready() -> void:
 	EventBus.player_died.connect(_on_stop)
 	EventBus.game_won.connect(_on_stop)
 
+	# Load the stream and enable native looping so BGM plays continuously
+	# instead of falling silent after one pass. Loading is cheap in
+	# headless mode; only actual playback is guarded.
+	_player.stream = load(BGM_PATH)
+	_player.stream.loop = true
 	if not OS.has_feature("headless"):
-		_player.stream = load(BGM_PATH)
 		_player.play()
 
 	state = State.PLAYING
