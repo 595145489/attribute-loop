@@ -42,6 +42,9 @@
 New elements in `hud.tscn`:
 - `RulesLabel`: shows `"受击→治愈 / 空"` style summary, updated every frame
 - `BagButton`: opens InventoryPanel; shows current inventory usage `"背包 [B] 3/12"`
-- `FloatLabel`: floating text on `rule_fired` signal (e.g. "+15 治愈"), fades out over 1s via Tween
+
+> Note: the center `FloatLabel` popup that Phase 2 originally added has since been
+> removed — real-time combat text now lives in `CombatFeed` (damage) and `LogPanel`
+> (full history). See [combat-feed.md](combat-feed.md).
 
 `HUD.setup(inv_panel)` must be called from `Main._ready()` to wire the bag button.

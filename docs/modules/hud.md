@@ -2,7 +2,7 @@
 
 ## Responsibility
 
-Renders the full-width pill-style bottom bar and the floating rule-fired text. Reads `GameState` every frame to keep all labels current. Bridges the bag button to `InventoryPanel`.
+Renders the full-width pill-style bottom bar. Reads `GameState` every frame to keep all labels current. Bridges the bag button to `InventoryPanel`.
 
 ## Node Structure
 
@@ -18,7 +18,6 @@ HUD (CanvasLayer)
         ERow0      — ETag0 | EName0 | EValue0
       RulePanel1   (same structure, slot index 1)
       BagButton    — right-aligned, opens InventoryPanel
-  FloatLabel       — center-upper, fades out on rule_fired
 ```
 
 ## Key Methods
@@ -38,8 +37,6 @@ HUD (CanvasLayer)
 
 ## Signals Consumed
 
-- `EventBus.rule_fired(slot_idx, effect_id, value)` — triggers FloatLabel fade animation
-- `EventBus.combat_enrage(stacks)` — shows enrage float text
 - `EventBus.speed_changed` — emitted after any speed change (button or key)
 
 ## Keyboard Shortcuts (`_input`)
@@ -62,5 +59,5 @@ Speed keys (`1`/`2`/`3`/`Space`) are ignored while a modal panel is open (`GameS
 
 - `GameState` — hp, hp_max, loops_completed, current_phase, inventory, rule_slots, speed_multiplier, is_panel_paused
 - `DataTables` — phase name lookup, inventory_cap
-- `EventBus` — rule_fired, combat_enrage, speed_changed signals
+- `EventBus` — speed_changed signal
 - `InventoryPanel` — toggled by BagButton or `B` key (both via `HUD._on_bag_pressed`)

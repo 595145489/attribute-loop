@@ -7,7 +7,6 @@ var _last_speed: float = 1.0
 var _inventory_panel = null
 var _altar_panel = null
 var _altar_tile = null
-var _float_tween: Tween = null
 
 @onready var altar_btn: Button = $BottomBar/HContent/AltarButton
 @onready var log_btn: Button = $BottomBar/HContent/LogButton
@@ -19,7 +18,6 @@ var _float_tween: Tween = null
 @onready var _char_panel: CharacterPanel = $CharacterPanel
 @onready var gold_label: Label = $BottomBar/HContent/GoldPill/GoldHBox/GoldLabel
 @onready var pressure_label: Label = $BottomBar/HContent/PressurePill/PressureLabel
-@onready var float_label: Label = $FloatLabel
 @onready var auction_btn: Button = $BottomBar/HContent/AuctionBtn
 @onready var _speed_btns: Array[Button] = [
 	$SpeedControl/Pause,
@@ -34,9 +32,6 @@ func _ready() -> void:
 	char_btn.pressed.connect(_on_char_pressed)
 	log_btn.pressed.connect(log_panel.toggle)
 	altar_btn.pressed.connect(_on_altar_pressed)
-	float_label.hide()
-	EventBus.rule_fired.connect(_on_rule_fired)
-	EventBus.combat_enrage.connect(_on_combat_enrage)
 	for i in _speed_btns.size():
 		if i == 0:
 			# Pause is a standalone toggle (not in the speed radio group) so it
@@ -163,67 +158,7 @@ func _sync_speed_buttons(index: int) -> void:
 	for i in _speed_btns.size():
 		_speed_btns[i].set_pressed_no_signal(i == index)
 
-func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
-	match effect_id:
-		"治愈":
-			float_label.text = "+%.0f 治愈" % value
-		"反射":
-			float_label.text = "反射 %.0f%%" % (value * 100)
-		"护盾":
-			float_label.text = "+%.0f 护盾" % value
-		"减伤":
-			float_label.text = "减伤 ×%.0f层" % value
-		"吸血":
-			float_label.text = "吸血 %.0f%%" % (value * 100)
-		"强化":
-			float_label.text = "强化 ×%d层" % GameState.amplify_stacks
-		"增伤":
-			float_label.text = "增伤 ×%d层" % GameState.dmg_boost_stacks
-		"蓄能":
-			float_label.text = "蓄能 %d层" % GameState.charge_stacks
-		"蓄能释放":
-			float_label.text = "蓄能释放 +%.0f" % value
-		"灼烧":
-			float_label.text = "灼烧 ×%.0f层" % value
-		"侵蚀":
-			float_label.text = "侵蚀 -%.0f" % value
-		"灼烧伤害":
-			float_label.text = "灼烧 −%.0f" % value
-		"侵蚀伤害":
-			float_label.text = "侵蚀 −%.0f" % value
-		"受击":
-			float_label.text = "自伤 −%.0f" % value
-		"低血":
-			float_label.text = "自伤 −%.0f" % value
-		"满血":
-			float_label.text = "叠层 +1"
-		"规则触发":
-			float_label.text = "触发计数 +1"
-		"击杀":
-			float_label.text = "斩首 −%.0f%%" % value
-		"经过":
-			float_label.text = "地块额外触发"
-		_:
-			float_label.text = effect_id
-	float_label.show()
-	float_label.modulate = Color.WHITE
-	if _float_tween:
-		_float_tween.kill()
-	_float_tween = create_tween()
-	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.0)
-	_float_tween.tween_callback(float_label.hide)
-
 var _auction_panel = null
-
-func _on_combat_enrage(stacks: int) -> void:
-	float_label.text = "激怒 ×%d" % stacks
-	float_label.show()
-	float_label.modulate = Color(1.0, 0.3, 0.1)
-	if _float_tween:
-		_float_tween.kill()
-	_float_tween = create_tween()
-	_float_tween.tween_property(float_label, "modulate:a", 0.0, 1.2)
-	_float_tween.tween_callback(float_label.hide)
 
 func setup_auction(ap) -> void:
 	_auction_panel = ap

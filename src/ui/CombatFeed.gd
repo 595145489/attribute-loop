@@ -2,8 +2,8 @@ class_name CombatFeed
 extends Control
 
 # Real-time scrolling combat stream shown in the center of the map.
-# Complements LogPanel (retained history) and FloatLabel (single buff popup)
-# by surfacing the live damage flow as short-lived, fading entries.
+# Complements LogPanel (retained history) by surfacing the live damage flow
+# as short-lived, fading entries.
 
 const MAX_VISIBLE := 6
 const LIFETIME := 3.5  # seconds before an entry finishes fading out
@@ -81,7 +81,7 @@ func _on_player_attacked(damage: int) -> void:
 
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
-	# Only damage-bearing effects; buff stacks stay in FloatLabel + LogPanel.
+	# Only damage-bearing effects; buff stacks stay in LogPanel only.
 	match effect_id:
 		"灼烧伤害", "侵蚀伤害", "蓄能释放", "受击", "低血", "击杀":
 			_add_entry(CombatText.rule_effect(effect_id, value), _color_for_effect(effect_id))

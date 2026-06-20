@@ -6,12 +6,11 @@
 the empty center of the map loop. It surfaces the live damage flow between player
 and monsters so combat is legible at a glance, without opening the log.
 
-It complements two other UI elements:
+It complements one other UI element:
 
 - **`LogPanel`** — the complete, retained, toggable history (right side).
-- **`FloatLabel`** — a single transient buff popup (center-top).
 
-`CombatFeed` is the third leg: a live, ephemeral, fading stream of damage events.
+`CombatFeed` is the live, ephemeral, fading stream of damage events.
 
 ## Key Nodes / Class
 
@@ -47,8 +46,8 @@ It complements two other UI elements:
 | `combat_enrage(stacks)` | `激怒 ×{n}` | orange-red |
 
 Buff-stacking effects (治愈 / 护盾 / 强化 / 增伤 / 蓄能 / 反射 / 减伤 / 吸血 / 满血 /
-规则触发 / 经过) are intentionally excluded — they remain in `FloatLabel` and
-`LogPanel` to keep the feed focused on damage.
+规则触发 / 经过) are intentionally excluded — they remain in `LogPanel` only to keep
+the feed focused on damage.
 
 ## Execution Flow
 

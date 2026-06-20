@@ -3,8 +3,7 @@ extends RefCounted
 
 # Single source of truth for combat event descriptions.
 # Both the real-time CombatFeed and the LogPanel (history) render these strings
-# so the two surfaces never drift apart. FloatLabel keeps its own short popup
-# phrasing (different purpose).
+# so the two surfaces never drift apart.
 
 static func player_hit(damage: int) -> String:
 	return "怪物对你造成 %d 点伤害" % damage
