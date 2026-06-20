@@ -187,6 +187,22 @@ func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 			float_label.text = "灼烧 ×%.0f层" % value
 		"侵蚀":
 			float_label.text = "侵蚀 -%.0f" % value
+		"灼烧伤害":
+			float_label.text = "灼烧 −%.0f" % value
+		"侵蚀伤害":
+			float_label.text = "侵蚀 −%.0f" % value
+		"受击":
+			float_label.text = "自伤 −%.0f" % value
+		"低血":
+			float_label.text = "自伤 −%.0f" % value
+		"满血":
+			float_label.text = "叠层 +1"
+		"规则触发":
+			float_label.text = "触发计数 +1"
+		"击杀":
+			float_label.text = "斩首 −%.0f%%" % value
+		"经过":
+			float_label.text = "地块额外触发"
 		_:
 			float_label.text = effect_id
 	float_label.show()
