@@ -73,27 +73,31 @@ func _free_entry(label: Label) -> void:
 
 
 func _on_player_hit(damage: int) -> void:
-	_add_entry("怪物对你造成 %d 点伤害" % damage, COL_PLAYER_HIT)
+	_add_entry(CombatText.player_hit(damage), COL_PLAYER_HIT)
 
 
 func _on_player_attacked(damage: int) -> void:
-	_add_entry("你对怪物造成 %d 点伤害" % damage, COL_PLAYER_ATK)
+	_add_entry(CombatText.player_attacked(damage), COL_PLAYER_ATK)
 
 
 func _on_rule_fired(_slot_idx: int, effect_id: String, value: float) -> void:
 	# Only damage-bearing effects; buff stacks stay in FloatLabel + LogPanel.
 	match effect_id:
-		"灼烧伤害": _add_entry("怪物受到灼烧伤害 %.0f 点" % value, COL_ENEMY_DMG)
-		"侵蚀伤害": _add_entry("怪物受到侵蚀伤害 %.0f 点" % value, COL_ENEMY_DMG)
-		"蓄能释放": _add_entry("蓄能释放对怪物造成 %.0f 点伤害" % value, COL_PLAYER_ATK)
-		"受击":     _add_entry("你受到 %.0f 点伤害" % value, COL_SELF_DMG)
-		"低血":     _add_entry("你受到 %.0f 点伤害" % value, COL_SELF_DMG)
-		"击杀":     _add_entry("你对怪物斩首 %.0f%%" % value, COL_PLAYER_ATK)
+		"灼烧伤害", "侵蚀伤害", "蓄能释放", "受击", "低血", "击杀":
+			_add_entry(CombatText.rule_effect(effect_id, value), _color_for_effect(effect_id))
 
 
 func _on_enemy_killed(enemy: Enemy) -> void:
-	_add_entry("击杀 %s" % enemy.enemy_id, COL_KILL)
+	_add_entry(CombatText.enemy_killed(enemy), COL_KILL)
 
 
 func _on_combat_enrage(stacks: int) -> void:
-	_add_entry("怪物激怒 ×%d" % stacks, COL_ENRAGE)
+	_add_entry(CombatText.combat_enrage(stacks), COL_ENRAGE)
+
+
+func _color_for_effect(effect_id: String) -> Color:
+	match effect_id:
+		"灼烧伤害", "侵蚀伤害": return COL_ENEMY_DMG
+		"蓄能释放", "击杀":    return COL_PLAYER_ATK
+		"受击", "低血":        return COL_SELF_DMG
+		_:                     return COL_ENEMY_DMG
