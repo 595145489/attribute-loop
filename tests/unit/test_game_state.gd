@@ -1,6 +1,7 @@
 ﻿extends GutTest
 
 func before_each() -> void:
+    GameState.difficulty = "hard"
     GameState.reset()
 
 func test_initial_hp_equals_hp_max() -> void:
@@ -306,3 +307,23 @@ func test_shield_absorbed_signal_not_emitted_without_shield() -> void:
     GameState.shield = 0
     GameState.take_damage(20)
     assert_signal_not_emitted(EventBus, "shield_absorbed")
+
+func test_difficulty_defaults_hard() -> void:
+    GameState.difficulty = "hard"
+    GameState.reset()
+    assert_eq(GameState.difficulty, "hard")
+
+func test_reset_creates_2_slots_for_hard() -> void:
+    GameState.difficulty = "hard"
+    GameState.reset()
+    assert_eq(GameState.rule_slots.size(), 2)
+
+func test_reset_creates_3_slots_for_easy() -> void:
+    GameState.difficulty = "easy"
+    GameState.reset()
+    assert_eq(GameState.rule_slots.size(), 3)
+
+func test_reset_does_not_clear_difficulty() -> void:
+    GameState.difficulty = "easy"
+    GameState.reset()
+    assert_eq(GameState.difficulty, "easy")
