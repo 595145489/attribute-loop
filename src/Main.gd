@@ -47,6 +47,9 @@ func setup_ui(ui_refs: Dictionary) -> void:
 func _finish_setup() -> void:
 	get_viewport().physics_object_picking = true
 	_tiles = _build_tiles()
+	if GameState.difficulty == "easy":
+		GameState.apply_easy_player_slots()
+		DataTables.apply_easy_tile_rules(_tiles)
 	player.setup(player_follow, track)
 	game_loop.setup(_tiles, enemies_container, player, combat_system)
 	strip_manager.setup(_strip_panel)
