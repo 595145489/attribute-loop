@@ -279,7 +279,14 @@ if amplify active:
 ```
 
 - Player rule slots always use `pass_count = 0` (no growth)
-- Tile rules use the tile's `pass_count` (increments each loop the player passes)
+- Tile rules use `age = tile.pass_count - slot.placed_pass`, where `placed_pass`
+  is stamped when the effect is placed on the tile. Growth counts from **effect
+  placement**, not the tile's total pass count — so a rule placed on an
+  already-worn tile starts at age 0 and grows from there. `placed_pass` defaults
+  to 0 for rules present at game start (easy presets) and is reset whenever an
+  effect is (re)placed via `TileRulePanel` or copied via `Tile.copy_rule_to`.
+  The trigger rhythm (`tile.pass_count % N`) still uses the tile's total
+  pass_count — only the growth input changed.
 
 **Growth rates by component**:
 | Component | growth_rate | ×30 loops approx |

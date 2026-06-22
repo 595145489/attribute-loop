@@ -105,7 +105,11 @@ func _evaluate_tile_rules(tile: Tile) -> void:
 			continue
 		var n := int(t.trigger_value)
 		if n > 0 and tile.pass_count % n == 0:
-			_execute_effect(-1, e, tile.pass_count)
+			# Growth counts from when the effect was placed on this tile, not the
+			# tile's total pass_count — otherwise a rule placed on an already-worn
+			# tile would jump straight to late-game power. See spec 4.5.
+			var age := maxi(0, tile.pass_count - int(slot.get("placed_pass", 0)))
+			_execute_effect(-1, e, age)
 
 func evaluate_tile_combat_effects(tile: Tile) -> void:
 	tile.combat_count += 1
@@ -118,7 +122,8 @@ func evaluate_tile_combat_effects(tile: Tile) -> void:
 			continue
 		var n := int(t.trigger_value)
 		if n > 0 and tile.combat_count % n == 0:
-			_execute_effect(-1, e, tile.pass_count)
+			var age := maxi(0, tile.pass_count - int(slot.get("placed_pass", 0)))
+			_execute_effect(-1, e, age)
 
 func _execute_effect(slot_idx: int, effect: ComponentData, pass_count: int) -> void:
 	var exponent := effect.scale_exponent if effect.scale_exponent > 0.0 else 1.0

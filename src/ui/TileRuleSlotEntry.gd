@@ -43,7 +43,8 @@ func refresh(slot: Dictionary, tile: Tile) -> void:
 		pass  # keeps tscn value
 
 	if e:
-		var scale_factor := 1.0 + e.growth_rate * pow(float(tile.pass_count), e.scale_exponent)
+		var age := maxi(0, tile.pass_count - int(slot.get("placed_pass", 0)))
+		var scale_factor := 1.0 + e.growth_rate * pow(float(age), e.scale_exponent)
 		var val := e.effect_value * scale_factor
 		_e_btn.text = "%s +%.1f" % [e.display_name, val]
 	else:

@@ -183,6 +183,22 @@ func test_tile_rule_scales_with_pass_count() -> void:
 	EventBus.tile_passed.emit(1)
 	assert_eq(GameState.hp, 20)
 
+func test_tile_rule_growth_starts_from_placement() -> void:
+	# Regression: a rule placed on a tile that has already been passed many times
+	# must grow from placement (age), not the tile's total pass_count. Without the
+	# fix, placing on a pass_count=20 tile then passing once (21) would apply
+	# 21 passes of growth on the first fire.
+	var tile := _make_tile_with_rule(1, 1, "治愈", 10.0, 0.1)
+	# Simulate the effect being placed AFTER the tile was already passed 20 times.
+	tile.rule_slots[0]["placed_pass"] = 20
+	tile.pass_count = 21  # one pass after placement
+	engine.set_tiles([null, tile])
+	GameState.hp = 0
+	GameState.hp_max = 9999
+	EventBus.tile_passed.emit(1)
+	# age = 21 - 20 = 1 → heal = 10 × (1 + 0.1×1) = 11 (not 10 × (1 + 0.1×21) = 31)
+	assert_eq(GameState.hp, 11, "growth should count from placement, not tile total pass_count")
+
 func test_altar_bonus_applied_to_player_rule() -> void:
 	_make_rule("受击", 1.0, "治愈", 10.0)
 	GameState.altar_bonuses["治愈"] = 5.0

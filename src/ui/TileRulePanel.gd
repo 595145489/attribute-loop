@@ -93,6 +93,11 @@ func _on_inv_pick(comp: ComponentData) -> void:
 	if displaced != null:
 		GameState.add_to_inventory(displaced)
 	slot[key] = comp
+	# Growth counts from effect placement (spec 4.5) — stamp the tile's current
+	# pass_count so a freshly placed effect starts at age 0 instead of inheriting
+	# the tile's accumulated passes.
+	if not _selecting_trigger:
+		slot["placed_pass"] = _tile.pass_count
 	GameState.remove_from_inventory(comp)
 	EventBus.tile_rule_set.emit()
 	_selecting_slot_idx = -1

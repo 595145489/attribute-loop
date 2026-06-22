@@ -157,7 +157,10 @@ All 17 components have `slot_type = BOTH` except 完成圈数 (TRIGGER_ONLY).
 final_value = base_value × (1.0 + growth_rate × pass_count ^ scale_exponent)
 ```
 
-Player rule slots always use `pass_count = 0` (no growth).
+Player rule slots always use `pass_count = 0` (no growth). Tile rules use
+`age = tile.pass_count - slot.placed_pass` — growth counts from when the effect
+was placed on the tile, not the tile's total pass count (so a rule placed on an
+already-worn tile starts at age 0).
 
 **Growth rate summary and 30-loop multiplier:**
 

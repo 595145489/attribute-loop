@@ -118,4 +118,6 @@ func copy_rule_to(target: Tile) -> bool:
 		dest_slot["trigger"] = source_slot["trigger"].duplicate()
 	if source_slot["effect"] != null:
 		dest_slot["effect"] = source_slot["effect"].duplicate()
+	# Copied rule starts growing from the target tile's current state.
+	dest_slot["placed_pass"] = target.pass_count
 	return true
