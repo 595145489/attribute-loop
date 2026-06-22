@@ -2,6 +2,12 @@ class_name HUD
 extends CanvasLayer
 
 const SPEEDS: Array[float] = [0.0, 1.0, 2.0, 3.0]
+const _SPEED_TIPS: Array[String] = [
+	"暂停 / 继续（空格）",
+	"1 倍速（按 1）",
+	"2 倍速（按 2）",
+	"3 倍速（按 3）",
+]
 
 var _last_speed: float = 1.0
 var _inventory_panel = null
@@ -39,6 +45,8 @@ func _ready() -> void:
 			_speed_btns[i].pressed.connect(_on_pause_pressed)
 		else:
 			_speed_btns[i].pressed.connect(_on_speed_pressed.bind(i))
+		_speed_btns[i].mouse_entered.connect(_show_speed_tip.bind(i))
+		_speed_btns[i].mouse_exited.connect(Tooltip.hide_tip)
 
 func setup(inv_panel) -> void:
 	_inventory_panel = inv_panel
@@ -113,6 +121,9 @@ func _on_altar_pressed() -> void:
 		_altar_panel.close()
 	else:
 		_altar_panel.open(_altar_tile)
+
+func _show_speed_tip(idx: int) -> void:
+	Tooltip.show_tip(_SPEED_TIPS[idx])
 
 func _on_pause_pressed() -> void:
 	# The pause button toggles between running and paused. When the game is not
