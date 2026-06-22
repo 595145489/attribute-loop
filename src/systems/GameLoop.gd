@@ -59,6 +59,11 @@ func spawn_enemies() -> void:
 	var count = _roll_spawn_count(phase_data)
 	var indices = _pick_tile_indices(count, _tiles.size())
 
+	# Every other loop, one enemy carries a bonus 经过 + effect pair as loot, so
+	# the player has a steady supply of 经过 triggers to enable tile rules (base
+	# drop weight for 经过 is 3 — too low to keep tiles supplied on its own).
+	var bonus_pending := GameState.loops_completed % 2 == 1
+	var bonus_applied := false
 	for idx in indices:
 		var enemy_id = _pick_enemy_id(phase_data, spawn_phase)
 		var enemy: Enemy = _enemy_scene.instantiate()
@@ -67,6 +72,9 @@ func spawn_enemies() -> void:
 		enemy.position = _tiles[idx].guard_position
 		_tiles[idx].place_enemy(enemy)
 		_assign_components(enemy, stat_phase)
+		if bonus_pending and not bonus_applied:
+			_append_bonus_pair(enemy, phase_data)
+			bonus_applied = true
 
 func check_tile_for_enemy(tile: Tile) -> void:
 	if state != State.WALKING:
@@ -178,6 +186,16 @@ static func _assign_components(enemy: Enemy, stat_phase: int = -1, extra_pairs: 
 		var e_id = _weighted_pick_with_modifiers(enemy_data.effect_weights, phase_data)
 		enemy.components.append(_create_component(t_id, preset))
 		enemy.components.append(_create_component(e_id, preset))
+
+## Bonus loot: append a 经过 trigger + a random effect to one enemy's components.
+## The pair is inert for the enemy (经过 never fires as an enemy trigger — only
+## 受击/低血/满血/规则触发 are evaluated) but shows in the strip panel so the
+## player can take the 经过 to enable a tile rule. Called every other loop.
+static func _append_bonus_pair(enemy: Enemy, phase_data: PhaseData) -> void:
+	var preset: DropPreset = _roll_tier_preset(phase_data)
+	var effect_id := _weighted_pick_with_modifiers(DataTables.get_enemy(enemy.enemy_id).effect_weights, phase_data)
+	enemy.components.append(_create_component("经过", preset))
+	enemy.components.append(_create_component(effect_id, preset))
 
 static func _roll_tier_preset(phase_data: PhaseData) -> DropPreset:
 	var weights: Array[int] = phase_data.tier_drop_weights

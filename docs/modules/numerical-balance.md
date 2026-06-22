@@ -364,6 +364,25 @@ effect_value  = rand_float(preset.component_ranges[id].effect.x,
 
 Values come from the `DropPreset` matching the rolled tier (1/2/3).
 
+### 4.10b Bonus 经过 Loot
+
+**Location**: `src/systems/GameLoop.gd` (`_append_bonus_pair`, called from `spawn_enemies`)
+
+Tile rules require a 经过 trigger, but 经过 sits in the enemy `trigger_weights`
+"Others" bucket at weight 3 — too low to keep tiles supplied (≈1 经过 drop per
+phase). To keep tiles viable without weakening enemies or distorting drop
+weights, every other loop (`loops_completed % 2 == 1`) the first spawned enemy
+gets a bonus pair appended to its components:
+
+```
+enemy.components.append(_create_component("经过", preset))   # tile-enabling trigger
+enemy.components.append(_create_component(<random effect>, preset))
+```
+
+The pair is **inert for the enemy** — 经过 is never evaluated as an enemy trigger
+(only 受击/低血/满血/规则触发 are), so it never fires — but it appears in the
+strip panel so the player can take it. Yields ≈1 bonus 经过 every 2 loops.
+
 ### 4.11 Deletion Cost
 
 **Location**: `src/autoloads/GameState.gd:154` (`get_deletion_cost`)

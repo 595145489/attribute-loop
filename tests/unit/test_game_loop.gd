@@ -179,6 +179,18 @@ func test_assign_components_boss_bonus_adds_pairs() -> void:
         assert_lte(pairs, pd.enemy_component_count_max + 2)
         enemy.free()
 
+func test_append_bonus_pair_adds_passage_and_effect() -> void:
+    # Every-other-loop bonus loot: appends a 经过 trigger + a random effect,
+    # so the player can strip a 经过 to enable a tile rule.
+    var enemy := Enemy.new()
+    enemy.enemy_id = "汲取者"
+    var phase_data: PhaseData = DataTables.get_phase(1)
+    var before := enemy.components.size()
+    GameLoop._append_bonus_pair(enemy, phase_data)
+    assert_eq(enemy.components.size(), before + 2, "bonus pair should add 2 components")
+    assert_eq(enemy.components[before].id, "经过", "first bonus component must be 经过")
+    enemy.free()
+
 func test_apply_boss_modifiers_scales_hp() -> void:
     var enemy := Enemy.new()
     enemy.hp_max = 100
