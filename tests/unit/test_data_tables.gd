@@ -58,10 +58,10 @@ func test_get_drop_preset_tier1_has_受击_range() -> void:
 	var r = dp.component_ranges["受击"]
 	assert_true(r.has("trigger"))
 
-func test_enemy_汲取者_has_component_pair_range() -> void:
-	var e: EnemyData = DataTables.get_enemy("汲取者")
-	assert_gte(e.component_pair_max, e.component_pair_min)
-	assert_gte(e.component_pair_min, 1)
+func test_phase1_enemy_component_count_range() -> void:
+	var p: PhaseData = DataTables.get_phase(1)
+	assert_gte(p.enemy_component_count_max, p.enemy_component_count_min)
+	assert_gte(p.enemy_component_count_min, 1)
 
 func test_enemy_汲取者_has_trigger_weights() -> void:
 	var e: EnemyData = DataTables.get_enemy("汲取者")
@@ -71,10 +71,6 @@ func test_enemy_汲取者_has_effect_weights() -> void:
 	var e: EnemyData = DataTables.get_enemy("汲取者")
 	assert_false(e.effect_weights.is_empty())
 
-func test_phase1_has_component_count_bonus() -> void:
-	var p: PhaseData = DataTables.get_phase(1)
-	assert_eq(p.component_count_bonus, 0)
-
 func test_config_has_inventory_cap() -> void:
 	assert_eq(DataTables.config.inventory_cap, 12)
 
@@ -83,7 +79,7 @@ func test_config_has_rule_slot_count() -> void:
 
 func test_enemy_has_gold_scale() -> void:
 	var ed: EnemyData = DataTables.get_enemy("汲取者")
-	assert_eq(ed.gold_scale, 0.3)
+	assert_eq(ed.gold_scale, 0.4)
 
 func test_config_has_deletion_cost_sequence() -> void:
 	assert_eq(DataTables.config.deletion_cost_sequence.size(), 3)

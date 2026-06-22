@@ -24,7 +24,6 @@ func setup(tiles: Array, enemies_container: Node, player: Player, combat: Combat
 	EventBus.combat_resolved.connect(_on_combat_resolved)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.altar_activated.connect(_on_altar_activated)
-	EventBus.verdict_loop_entered.connect(spawn_enemies)
 	spawn_enemies()
 
 func spawn_enemies() -> void:
@@ -47,7 +46,7 @@ func spawn_enemies() -> void:
 		b_enemy.init(b_enemy_id, b_phase)
 		b_enemy.position = _tiles[last_idx].guard_position
 		_tiles[last_idx].place_enemy(b_enemy)
-		_assign_components(b_enemy, b_phase)
+		_assign_components(b_enemy, b_phase, _BOSS_RULE_PAIR_BONUS)
 		_apply_boss_modifiers(b_enemy, b_phase_data)
 		return
 
@@ -122,17 +121,11 @@ func _on_loop_completed() -> void:
 				var phase_data: PhaseData = DataTables.get_phase(GameState.current_phase)
 				if GameState.loops_in_phase >= phase_data.world_pressure_window:
 					if not _altar_is_full(_tiles[0]):
-						var cfg_vt: GameConfig = DataTables.config
-						if GameState.current_phase >= cfg_vt.verdict_trigger_phase:
-							# Verdict: skip boss circle
-							GameState.in_verdict_loop = true
-							GameState.verdict_loops_survived = 0
-							GameState.loops_in_phase = 0
-							EventBus.verdict_loop_entered.emit()
-						else:
-							# Normal advance: boss circle first, then phase advance
-							GameState.boss_circle_pending = true
-							GameState.pending_phase_advance = true
+						# Every phase ends its pressure window with a boss circle;
+						# the next loop_completed then advances the phase (or, at the
+						# verdict threshold, enters the verdict loop after the boss).
+						GameState.boss_circle_pending = true
+						GameState.pending_phase_advance = true
 		for tile in _tiles:
 			tile.visited_this_loop = false
 		spawn_enemies()
@@ -162,13 +155,20 @@ func _on_player_died() -> void:
 func _on_altar_activated() -> void:
 	GameState.boss_circle_pending = true
 
-func _assign_components(enemy: Enemy, stat_phase: int = -1) -> void:
+# Boss enemies get this many extra rule pairs on top of the phase's normal range.
+# Spec 7.4: "Boss multipliers: HP x2.0, Attack x2.0, Rule pairs +2".
+const _BOSS_RULE_PAIR_BONUS: int = 2
+
+static func _assign_components(enemy: Enemy, stat_phase: int = -1, extra_pairs: int = 0) -> void:
 	var enemy_data: EnemyData = DataTables.get_enemy(enemy.enemy_id)
 	var effective_phase := stat_phase if stat_phase > 0 else GameState.current_phase
 	var phase_data: PhaseData = DataTables.get_phase(effective_phase)
+	# Pair count is driven by the phase's enemy_component_count_min/max (spec 5.1),
+	# not by per-enemy fields — this is what makes enemies gain rule pairs as phases
+	# advance. `extra_pairs` adds the boss bonus (spec 7.4).
 	var pairs = randi_range(
-		enemy_data.component_pair_min + phase_data.component_count_bonus,
-		enemy_data.component_pair_max + phase_data.component_count_bonus
+		phase_data.enemy_component_count_min + extra_pairs,
+		phase_data.enemy_component_count_max + extra_pairs
 	)
 	for i in pairs:
 		var preset: DropPreset = _roll_tier_preset(phase_data)

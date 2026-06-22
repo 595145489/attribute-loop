@@ -85,9 +85,11 @@ var _first_loop_done: bool = false
 
 func _ready() -> void:
 	phantom_a = PhantomBuyer.new()
-	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.STAT_DMG, ServiceType.STAT_HP, ServiceType.STAT_SPEED])
+	# Spec 9.4: 战意磨砺 / 筋骨强化 / 迅捷折纸 / 装备槽扩容
+	phantom_a.init(PhantomBuyer.Personality.AGGRESSIVE, [ServiceType.STAT_DMG, ServiceType.STAT_HP, ServiceType.STAT_SPEED, ServiceType.SLOT_RULE])
 	phantom_b = PhantomBuyer.new()
-	phantom_b.init(PhantomBuyer.Personality.PATIENT, [ServiceType.COMP_REWRITE, ServiceType.COMP_MERGE])
+	# Spec 9.4: 词条改写 / 词条融合 / 强化潜能 / 服务栏扩容
+	phantom_b.init(PhantomBuyer.Personality.PATIENT, [ServiceType.COMP_REWRITE, ServiceType.COMP_MERGE, ServiceType.STAT_AMPLIFY, ServiceType.SLOT_SERVICE])
 	EventBus.loop_completed.connect(_on_loop_completed)
 
 func register_kill(enemy_id: String) -> void:
@@ -293,7 +295,10 @@ class PhantomBuyer:
 		else:
 			if preferred_types.has(service_type):
 				return 3 if gold >= PATIENT_THRESHOLD else 2
-			return 0
+			# Non-preferred: B still token-bids 10-20g (see calculate_bid), and
+			# spec 9.4 gives "Others (each) | 3" (low). So this is 低, not 无 —
+			# showing 无 would mislead the player into thinking B won't compete.
+			return 1
 
 	func calculate_bid(service_type: int, pool: Array[int]) -> int:
 		if personality == Personality.AGGRESSIVE:

@@ -17,7 +17,7 @@ Three tiers live in `data/drop_presets/drop_tier_0N.tres`. EnemyData maps phases
 
 `GameLoop._assign_components(enemy)` runs after `enemy.init()` at spawn:
 1. Resolves the correct DropPreset via `_resolve_drop_preset` (closest-lower-phase key in enemy_data.phase_drop_presets)
-2. Rolls a number of T+E pairs based on `component_pair_min/max + phase.component_count_bonus`
+2. Rolls a number of T+E pairs based on `phase.enemy_component_count_min/max` (bosses add `+2` via `_BOSS_RULE_PAIR_BONUS`)
 3. Picks component IDs via `_weighted_pick_with_modifiers` (enemy base weights × phase multipliers)
 4. Calls `_create_component(id, preset)` which duplicates the base ComponentData and rolls trigger/effect values
 

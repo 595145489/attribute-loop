@@ -6,3 +6,5 @@
 script = ExtResource("1_wd03v")
 hp_base = 200
 dmg_base = 10
+attack_interval = 0.8
+walk_speed = 120.0

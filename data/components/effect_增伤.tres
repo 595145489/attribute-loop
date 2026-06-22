@@ -6,7 +6,7 @@
 script = ExtResource("1_new10")
 id = "增伤"
 display_name = "增伤"
-description = "叠加增伤层，每层使攻击伤害提升 10%，每圈结束衰减 1 层"
+description = "叠加增伤层，每层使攻击伤害提升 10%；有效层数上限随阶段增长（最高 8 层），每圈结束按阶段衰减"
 slot_type = 2
 trigger_formula = "fires_every"
 trigger_value = 0.0

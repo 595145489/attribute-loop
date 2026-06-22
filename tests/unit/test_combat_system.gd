@@ -176,6 +176,29 @@ func test_dmg_boost_increases_player_damage() -> void:
     var expected := int((pd.dmg_base + GameState.dmg_bonus) * (1.0 + 2 * 0.1))
     assert_eq(combat._calc_player_dmg(), expected)
 
+func test_dmg_boost_capped_by_phase_in_formula() -> void:
+    # Stacks far above the phase cap must be clamped (phase 1 -> cap 2).
+    GameState.current_phase = 1
+    GameState.dmg_boost_stacks = 50
+    var pd: PlayerData = DataTables.player
+    var expected := int((pd.dmg_base + GameState.dmg_bonus) * (1.0 + 2 * 0.1))
+    assert_eq(combat._calc_player_dmg(), expected)
+
+func test_dmg_boost_cap_scales_with_phase() -> void:
+    # Cap grows with phase (phase 5 -> cap 6), hard-capped at 8.
+    GameState.current_phase = 5
+    GameState.dmg_boost_stacks = 50
+    var pd: PlayerData = DataTables.player
+    var expected := int((pd.dmg_base + GameState.dmg_bonus) * (1.0 + 6 * 0.1))
+    assert_eq(combat._calc_player_dmg(), expected)
+
+func test_dmg_boost_cap_hard_eight_at_high_phase() -> void:
+    GameState.current_phase = 20
+    GameState.dmg_boost_stacks = 50
+    var pd: PlayerData = DataTables.player
+    var expected := int((pd.dmg_base + GameState.dmg_bonus) * (1.0 + 8 * 0.1))
+    assert_eq(combat._calc_player_dmg(), expected)
+
 func test_charge_release_deals_bonus_damage() -> void:
     GameState.charge_stacks = 3
     var pd: PlayerData = DataTables.player
@@ -193,6 +216,15 @@ func test_dmg_boost_decays_on_loop_completed() -> void:
     GameState.dmg_boost_stacks = 3
     EventBus.loop_completed.emit()
     assert_eq(GameState.dmg_boost_stacks, 2)
+
+func test_dmg_boost_decay_scales_with_phase() -> void:
+    # Decay mirrors slow_stacks: ceili(phase / 2). Phase 5 -> decay 3.
+    var re := RuleEngine.new()
+    add_child_autofree(re)
+    GameState.current_phase = 5
+    GameState.dmg_boost_stacks = 10
+    EventBus.loop_completed.emit()
+    assert_eq(GameState.dmg_boost_stacks, 7)
 
 func test_dmg_boost_not_below_zero_on_decay() -> void:
     var re := RuleEngine.new()

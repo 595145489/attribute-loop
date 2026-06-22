@@ -1,7 +1,7 @@
 class_name GameConfig
 extends Resource
 
-# stat = base × (1 + (phase - 1) × stat_scale_factor)
+# stat = base × (1 + stat_scale_factor)^(phase - 1)   [compound]
 @export var stat_scale_factor: float = 0.25
 @export var inventory_cap: int = 12
 @export var rule_slot_count_base: int = 2
@@ -9,7 +9,7 @@ extends Resource
 @export var low_hp_threshold: float = 0.3
 @export var deletion_cost_sequence: Array[int] = [15, 35, 70]
 @export var deletion_cost_multiplier: float = 2.0
-@export var verdict_trigger_phase: int = 5
+@export var verdict_trigger_phase: int = 6
 @export var verdict_survive_loops: int = 5
 @export var verdict_enemy_phase: int = 6
 @export var verdict_spawn_phase: int = 7
@@ -27,7 +27,7 @@ extends Resource
 @export var auction_enemy_pardon_count: int = 3
 @export var auction_comp_merge_ratio: float = 0.8
 @export var auction_comp_rewrite_delta: float = 0.2
-@export var auction_phantom_income_per_phase: Array[int] = [0, 40, 40, 70, 70, 110, 110]
+@export var auction_phantom_income_per_phase: Array[int] = [0, 20, 20, 35, 35, 55, 55]
 @export var auction_phantom_a_spend_ratio: float = 0.75
 @export var auction_phantom_a_token_bid: int = 15
 @export var auction_phantom_b_threshold: int = 200

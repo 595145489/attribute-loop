@@ -57,5 +57,9 @@ phase 6 (boss) reuses `bg_phase_5.png`.
 
 - Background images under `resources/backgrounds/` (`bg_phase_1.png` … `bg_phase_5.png`).
 - Driven by `src/Main.gd`, which calls `show_for_phase` on phase changes.
-- Verdict loop (`verdict_trigger_phase = 5`) has **no** dedicated transition screen — it is treated
-  as a looping extension of phase 5 and reuses `bg_phase_5.png`.
+- Phase 6 ("裁决前夜Boss") is a normal phase with its own pressure window; its narrative
+  plays via `phase_changed(6)` exactly like phases 1–5 (it shows when the player advances
+  into phase 6 after beating phase 5's boss, before phase 6's own boss).
+- The verdict loop (`verdict_trigger_phase = 6`, entered after phase 6's boss is beaten)
+  has no transition screen of its own — it is treated as a looping extension of phase 6
+  and reuses `bg_phase_5.png`.

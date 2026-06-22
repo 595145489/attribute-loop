@@ -9,11 +9,9 @@ hp_base = 180
 dmg_base = 2
 gold_min = 18
 gold_max = 30
-gold_scale = 0.3
+gold_scale = 0.4
 unlock_phase = 4
 attack_interval = 1.2
-component_pair_min = 2
-component_pair_max = 3
 trigger_weights = {
 "受击": 6,
 "击杀": 6,

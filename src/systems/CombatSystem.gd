@@ -200,7 +200,11 @@ func _calc_player_dmg() -> int:
     var pd: PlayerData = DataTables.player
     var dmg := pd.dmg_base + GameState.dmg_bonus
     if GameState.dmg_boost_stacks > 0:
-        dmg = int(dmg * (1.0 + GameState.dmg_boost_stacks * 0.1))
+        # Cap effective stacks the same way 减伤/slow does (mini(phase + 1, 8))
+        # so 增伤 can't snowball infinitely — raw stacks still decay per loop.
+        var stack_cap := mini(GameState.current_phase + 1, 8)
+        var capped := mini(GameState.dmg_boost_stacks, stack_cap)
+        dmg = int(dmg * (1.0 + capped * 0.1))
     return dmg
 
 func _calc_charge_bonus() -> int:

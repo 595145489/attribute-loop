@@ -1,5 +1,50 @@
 extends GutTest
 
+# Verdict-threshold flow: reaching the pressure window at verdict_trigger_phase
+# must queue a boss circle (the 裁决前夜Boss) — NOT jump straight into the verdict
+# loop. The verdict loop (and its phase-6 narrative) only starts after the boss is
+# beaten, mirroring how a normal phase's narrative plays after its boss dies.
+func _make_loop_with_altar() -> GameLoop:
+    var gl := GameLoop.new()
+    var altar := Tile.new()
+    altar.is_altar = true
+    altar.altar_slots = []
+    gl._tiles = [altar]
+    add_child_autofree(gl)
+    # Tutorial mode short-circuits spawn_enemies so we can test the decision
+    # logic without spinning up real enemies.
+    GameState.is_tutorial = true
+    return gl
+
+func test_verdict_threshold_queues_boss_circle() -> void:
+    GameState.reset()
+    var gl := _make_loop_with_altar()
+    GameState.current_phase = DataTables.config.verdict_trigger_phase
+    # One short of the pressure window so the +1 inside _on_loop_completed trips it.
+    var pw: int = DataTables.get_phase(GameState.current_phase).world_pressure_window
+    GameState.loops_in_phase = pw - 1
+    watch_signals(EventBus)
+    EventBus.loop_completed.connect(gl._on_loop_completed)
+    EventBus.loop_completed.emit()
+    assert_true(GameState.boss_circle_pending, "verdict threshold should queue a boss circle")
+    assert_true(GameState.pending_phase_advance)
+    assert_false(GameState.in_verdict_loop, "verdict loop must not start before the boss is beaten")
+    assert_signal_not_emitted(EventBus, "verdict_loop_entered")
+    GameState.is_tutorial = false
+
+func test_verdict_loop_starts_after_boss_beaten() -> void:
+    GameState.reset()
+    var gl := _make_loop_with_altar()
+    GameState.current_phase = DataTables.config.verdict_trigger_phase
+    GameState.pending_phase_advance = true
+    GameState.boss_circle_pending = false
+    watch_signals(EventBus)
+    EventBus.loop_completed.connect(gl._on_loop_completed)
+    EventBus.loop_completed.emit()
+    assert_true(GameState.in_verdict_loop)
+    assert_signal_emitted(EventBus, "verdict_loop_entered")
+    GameState.is_tutorial = false
+
 func test_roll_spawn_count_within_range() -> void:
     var phase: PhaseData = DataTables.get_phase(1)
     for i in 100:
@@ -107,6 +152,32 @@ func test_pick_enemy_id_phase7_includes_all_five_types() -> void:
     assert_true(found.has("急袭者"), "急袭者 should appear in 裁决圈 spawns")
     assert_true(found.has("复制者"), "复制者 should appear in 裁决圈 spawns")
     assert_true(found.has("先驱者"), "先驱者 should appear in 裁决圈 spawns")
+
+func test_assign_components_pair_count_scales_with_phase() -> void:
+    # Regression: pair count must come from the phase's enemy_component_count_min/max
+    # (spec 5.1), not a flat 1-2 default. Phase 1 = 1-2, Phase 6 = 4-4.
+    for phase in [1, 6]:
+        var pd: PhaseData = DataTables.get_phase(phase)
+        for i in 50:
+            var enemy := Enemy.new()
+            enemy.enemy_id = "汲取者"
+            GameLoop._assign_components(enemy, phase)
+            var pairs := enemy.components.size() / 2
+            assert_gte(pairs, pd.enemy_component_count_min, "phase %d pairs below min" % phase)
+            assert_lte(pairs, pd.enemy_component_count_max, "phase %d pairs above max" % phase)
+            enemy.free()
+
+func test_assign_components_boss_bonus_adds_pairs() -> void:
+    # Spec 7.4: boss gets +2 rule pairs on top of the phase range.
+    var pd: PhaseData = DataTables.get_phase(1)
+    for i in 50:
+        var enemy := Enemy.new()
+        enemy.enemy_id = "汲取者"
+        GameLoop._assign_components(enemy, 1, 2)
+        var pairs := enemy.components.size() / 2
+        assert_gte(pairs, pd.enemy_component_count_min + 2)
+        assert_lte(pairs, pd.enemy_component_count_max + 2)
+        enemy.free()
 
 func test_apply_boss_modifiers_scales_hp() -> void:
     var enemy := Enemy.new()

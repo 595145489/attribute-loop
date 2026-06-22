@@ -104,4 +104,8 @@ func get_drop_preset(tier: int) -> DropPreset:
 	return drop_presets[tier]
 
 func calc_stat(base: int, phase: int) -> int:
-	return int(base * (1.0 + (phase - 1) * config.stat_scale_factor))
+	# Compound scaling: base × (1 + stat_scale_factor)^(phase - 1).
+	# Spec numerical-balance.md §4.1 — the multiplier table (×1.00/1.25/1.56/1.95/
+	# 2.44/3.05) is compound, not linear, so late-game enemy stats rise sharply
+	# and rules become mandatory by Phase 3+.
+	return int(base * pow(1.0 + config.stat_scale_factor, phase - 1))

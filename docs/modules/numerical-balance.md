@@ -22,8 +22,8 @@ This document is the authoritative reference for all numerical values in Attribu
 | `data/phases/phase_3.tres` | `PhaseData` | Phase 3 config |
 | `data/phases/phase_4.tres` | `PhaseData` | Phase 4 config |
 | `data/phases/phase_5.tres` | `PhaseData` | Phase 5 config |
-| `data/phases/phase_6.tres` | `PhaseData` | Verdict Loop config |
-| `data/phases/phase_7.tres` | `PhaseData` | Reserved / boss spawn phase |
+| `data/phases/phase_6.tres` | `PhaseData` | Phase 6 (裁决前夜Boss) — last normal phase before verdict |
+| `data/phases/phase_7.tres` | `PhaseData` | Verdict-loop spawn-weight table only |
 | `data/drop_presets/drop_tier_01.tres` | `DropPreset` | Component value ranges for Tier 1 (common) |
 | `data/drop_presets/drop_tier_02.tres` | `DropPreset` | Component value ranges for Tier 2 (uncommon) |
 | `data/drop_presets/drop_tier_03.tres` | `DropPreset` | Component value ranges for Tier 3 (rare) |
@@ -143,13 +143,14 @@ GameConfig.deletion_cost_sequence [15, 35, 70] / deletion_cost_multiplier (2.0)
         └── First 3 deletions: 15 / 35 / 70
         └── Deletion 4+: 70 × 2.0^(n - 3)
 
-GameConfig.auction_phantom_income_per_phase [0, 40, 40, 70, 70, 110, 110]
+GameConfig.auction_phantom_income_per_phase [0, 20, 20, 35, 35, 55, 55]
     └── PhantomBuyer.earn(phase) — called once per loop for each phantom
-        └── Drives phantom bid budgets which compete against player gold
+        └── Two phantoms → combined 40/70/110 per phase, matches player income (spec 9.2)
 
-GameConfig.verdict_trigger_phase (5)
+GameConfig.verdict_trigger_phase (6)
     └── GameLoop._on_loop_completed()
-        └── When current_phase == 5 and altar is filled → enter Verdict Loop
+        └── Phases 1–6 are normal (each ends its pressure window with a boss circle);
+            after the phase-6 boss is beaten, the next loop_completed enters the Verdict Loop
         └── DataTables._load_phases() loads phases 1–7 (range(1, 8))
 ```
 
@@ -166,15 +167,15 @@ Use this table whenever you modify a value. The left column is the thing you cha
 | **`PlayerData.attack_interval`** | Naked kill time for all enemies; auction_speed_delta relevance (is -0.05s per purchase still meaningful relative to 0.8s?); min clamp at 0.2s still safe |
 | **`GameConfig.stat_scale_factor`** | All enemy kill times at all phases; gold drop scaling (does income keep pace with difficulty?); Phase 3+ "rules mandatory" checkpoint — validate with spec tables |
 | **`EnemyData.hp_base` or `dmg_base`** | Naked kill time (target 8-12s for that enemy); enrage trigger time (must fire before the fight would naturally end); gold_min/gold_max (drops should feel proportional to fight difficulty); boss multiplier outcome |
-| **`EnemyData.gold_min/gold_max/gold_scale`** | Per-loop gold income vs phantom buyer income (phantom earns 40/70/110 per phase — player should be competitive); deletion cost affordability progression |
-| **`GameConfig.combat_enrage_time`** | Must be ≥ target maximum fight duration (12s). If shorter, enrage fires during normal fights. Compare against all enemy naked kill times at all phases |
+| **`EnemyData.gold_min/gold_max/gold_scale`** | Per-loop gold income vs phantom buyer income (both phantoms combined earn 40/70/110 per phase — player should be competitive); deletion cost affordability progression |
+| **`GameConfig.combat_enrage_time`** | When the fight runs past this, enrage starts stacking. Set to 10s deliberately: the longest normal naked kill is Guardian at ~12s, so a Guardian fight trips 1-2 enrage stacks near the end — intended pressure on the tankiest enemy, not a bug. Rusher (5s) and Drainer (8s) finish well before it. Re-check this if any enemy's naked kill time drops below 10s (enrage would never fire) or rises far above 12s (enrage would stack heavily during normal fights) |
 | **`GameConfig.combat_enrage_bonus_per_stack`** | Enrage curve shape; at what stack count does sustain become impossible? Validate with spec Section 6 table |
 | **`GameConfig.combat_burn_dmg_per_stack`** | Burn DPS relative to enemy HP; burn .tres effect_value ranges (how many stacks is "meaningful"?); interaction with enrage |
 | **`PhaseData.tier_drop_weights`** | Component power curve by phase; player rule power growth; if Tier 3 rate rises too fast, fights become trivial before stat scaling catches up |
 | **`PhaseData.world_pressure_window`** | Total loops per phase; total game length estimate; altar requirement feasibility within the window |
 | **`PhaseData.spawn_count_min/max`** | Gold income per loop (more enemies = more gold); player HP attrition per loop; component collection rate |
 | **`PhaseData.boss_hp_multiplier` / `boss_damage_multiplier`** | Boss survivability; boss as gate — too easy = no tension, too hard = wall. Cross-check with player DPS and heal values at that phase |
-| **`PhaseData.component_count_bonus`** | Number of rule pairs per enemy; enemy power spike; also affects boss (pairs = component_pair_min + bonus .. component_pair_max + bonus + 2) |
+| **`PhaseData.enemy_component_count_min/max`** | Number of rule pairs per enemy at this phase (spec 5.1); the primary lever for the late-game enemy power curve. Boss adds `+2` on top (`GameLoop._BOSS_RULE_PAIR_BONUS`, spec 7.4) |
 | **`PhaseData.component_weight_modifiers`** | Which components appear more often in that phase; emergent enemy strategies |
 | **`DropPreset.component_ranges` (trigger values)** | Frequency of effect firing; lower trigger N = more frequent, higher effect throughput. Cross-check against enrage timeline |
 | **`DropPreset.component_ranges` (effect values)** | Effect magnitude at each tier; scaling formula ceiling; heal/shield significance vs HP baseline |
@@ -201,10 +202,13 @@ Use this table whenever you modify a value. The left column is the thing you cha
 **Location**: `src/autoloads/DataTables.gd:70` (`calc_stat`)
 
 ```
-scaled_stat = int(base_stat × (1.0 + (phase - 1) × stat_scale_factor))
+scaled_stat = int(base_stat × (1.0 + stat_scale_factor) ^ (phase - 1))
 ```
 
 - `stat_scale_factor = 0.25` (in `game_config.tres`)
+- **Compound** growth — the multiplier table below is `1.25^(phase-1)`, not linear.
+  This is intentional: late-game stats rise sharply so raw attacks can't keep up and
+  rule combinations become mandatory by Phase 3+ (spec §3).
 - Applied at spawn time; boss multipliers stack on top
 
 **Phase multipliers**:
@@ -226,7 +230,11 @@ mult = 1.0 + (phase - 1) × enemy.gold_scale
 drop = int(rand(gold_min, gold_max) × mult)
 ```
 
-- `gold_scale` is per-enemy (typically 0.3)
+- `gold_scale` is per-enemy (0.4 for all enemies). Tuned so the continuous formula
+  lands inside spec 9.1's bracket table at each phase — `1 + (phase-1) × 0.4` ≈
+  ×1.0/1.4/1.8/2.2/2.6/3.0 vs spec brackets P1-2/P3-4/P5-6 (the spec's flat
+  brackets can't be matched exactly by a linear scale; 0.4 is the least-error
+  single value, vs the old 0.3 which undershot late game by ~30%).
 
 ### 4.3 Player Damage
 
@@ -235,8 +243,16 @@ drop = int(rand(gold_min, gold_max) × mult)
 ```
 dmg = PlayerData.dmg_base + GameState.dmg_bonus
 if dmg_boost_stacks > 0:
-    dmg = int(dmg × (1.0 + dmg_boost_stacks × 0.1))
+    # 增伤 is capped the same way as 减伤/slow: mini(phase + 1, 8) effective stacks.
+    var stack_cap = mini(current_phase + 1, 8)
+    var capped = mini(dmg_boost_stacks, stack_cap)
+    dmg = int(dmg × (1.0 + capped × 0.1))
 ```
+
+Raw `dmg_boost_stacks` can still accumulate past the cap (e.g. from frequent tile-pass
+rules), but only the capped count feeds the multiplier, and the surplus is brought back
+down by the per-loop decay (see 4.x below). This mirrors `slow_stacks`, which is also
+uncapped in storage but capped in the damage formula.
 
 ### 4.4 Charge Bonus Damage
 
@@ -368,15 +384,25 @@ enemy.dmg    = int(enemy.dmg    × phase_data.boss_damage_multiplier) # 2.0
 enemy.scale  = Vector2.ONE × phase_data.boss_scale                   # 1.6
 ```
 
+Bosses also get `+2` rule pairs on top of the phase's `enemy_component_count_min/max`
+via `GameLoop._BOSS_RULE_PAIR_BONUS` (spec 7.4). The bonus is applied in
+`_assign_components(..., _BOSS_RULE_PAIR_BONUS)` at the boss-spawn call site,
+not inside `_apply_boss_modifiers`.
+
 ### 4.13 Loop-End Stat Decay
 
 **Location**: `src/systems/RuleEngine.gd:71` (`_on_loop_completed`)
 
 ```
-slow_stacks     = max(0, slow_stacks - ceil(current_phase / 2.0))
-shield          = int(shield × 0.65)
-dmg_boost_stacks = max(0, dmg_boost_stacks - 1)
+decay = ceil(current_phase / 2.0)
+slow_stacks      = max(0, slow_stacks - decay)
+shield           = int(shield × 0.65)
+dmg_boost_stacks = max(0, dmg_boost_stacks - decay)
 ```
+
+`增伤` and `减伤` share the same phase-scaled decay (`ceil(phase / 2)`), so neither
+snowballs across loops. 增伤 is additionally capped in the damage formula
+(`mini(phase + 1, 8)` effective stacks — see 4.3).
 
 ### 4.14 Auction Phantom Income
 
@@ -384,11 +410,24 @@ dmg_boost_stacks = max(0, dmg_boost_stacks - 1)
 
 ```
 income_table = config.auction_phantom_income_per_phase
-              # [0, 40, 40, 70, 70, 110, 110]
+              # [0, 20, 20, 35, 35, 55, 55]
 gold += income_table[clamp(phase, 1, len(income_table) - 1)]
 ```
 
-Both phantoms earn once per loop end.
+Both phantoms earn once per loop end. Values are **per-phantom**: with two
+phantoms the combined phantom budget per loop is 40 / 40 / 70 / 70 / 110 / 110,
+which matches the player's per-loop gold income by phase (spec 9.2). Halving the
+per-phantom table from the earlier [0,40,40,70,70,110,110] fixed a 2× phantom
+overbid that let phantoms dominate every auction.
+
+**Preferred types & interest (spec 9.4).** `preferred_types` is set in
+`AuctionManager._ready`, not in config. Shadow A (AGGRESSIVE) prefers
+`STAT_DMG / STAT_HP / STAT_SPEED / SLOT_RULE`; Shadow B (PATIENT) prefers
+`COMP_REWRITE / COMP_MERGE / STAT_AMPLIFY / SLOT_SERVICE`. `interest()` returns
+0–3 (无/低/中/高) for the UI label. B returns **1 (低)** for non-preferred
+services — not 0 — because B still token-bids 10-20g on them (spec 9.4 "Others
+weight 3" = low). Returning 0 would display "无竞拍意愿" while B actually bids,
+misleading the player.
 
 ### 4.15 Comp Merge Formula
 

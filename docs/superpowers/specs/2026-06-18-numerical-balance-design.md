@@ -50,7 +50,7 @@ A complete numerical rebalance of AttributeLoop, anchored on the target combat d
 
 ## 3. Enemy Stat Scaling
 
-**Formula**: `stat = base_stat × (1.0 + (phase - 1) × 0.25)`
+**Formula**: `stat = base_stat × (1.0 + 0.25) ^ (phase - 1)` (compound)
 
 | Phase | Multiplier | Drainer HP | Drainer Attack | Naked Kill Time |
 |-------|-----------|------------|----------------|-----------------|
@@ -338,7 +338,11 @@ All tile rules trigger when the player **passes** the tile:
 |------|--------------|
 | Slow stacks | `max(0, stacks - ceil(phase / 2.0))` |
 | Shield | `shield × 0.65` |
-| Damage boost stacks | `max(0, stacks - 1)` |
+| Damage boost stacks | `max(0, stacks - ceil(phase / 2.0))` |
+
+`增伤` and `减伤` share the same phase-scaled decay (`ceil(phase / 2)`) so neither
+buff nor debuff snowballs across loops. `增伤` is additionally capped in the damage
+formula (`mini(phase + 1, 8)` effective stacks — see 4.3).
 
 ---
 
@@ -363,13 +367,17 @@ Gold drops scale with phase bracket, not component tier.
 
 ### 9.2 Phantom Buyer Income
 
-| Phase | Income/Loop |
-|-------|------------|
-| 1-2 | 40 gold |
-| 3-4 | 70 gold |
-| 5-6 | 110 gold |
+| Phase | Income/Loop (both phantoms combined) | Per phantom |
+|-------|--------------------------------------|-------------|
+| 1-2 | 40 gold | 20 |
+| 3-4 | 70 gold | 35 |
+| 5-6 | 110 gold | 55 |
 
-Design: Player income ≈ phantom income — cannot outbid everything, must choose strategically.
+`auction_phantom_income_per_phase = [0, 20, 20, 35, 35, 55, 55]` — each phantom
+earns the per-phantom value once per loop, so two phantoms combined match the
+player's per-loop gold income by phase.
+
+Design: Player income ≈ phantom income (combined) — cannot outbid everything, must choose strategically.
 
 ### 9.3 Component Deletion Costs
 
